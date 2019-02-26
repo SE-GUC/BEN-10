@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/SE-GUC/BEN-10.git"
   },
-  "author": "",
+  "author": "BEN10",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/SE-GUC/BEN-10/issues"
@@ -21,5 +21,6 @@
     "express": "^4.16.4",
     "joi": "^14.3.1",
     "mongoose": "^5.4.15"
-  }
+  },
+  "devDependencies": {}
 }
