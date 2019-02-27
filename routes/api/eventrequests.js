@@ -18,7 +18,7 @@ router.get('/:id', async (req,res) => {
 
 router.post('/', async (req,res) => {
     try {
-     const isValidated = validator.createValidation(req.body)
+     const isValidated = validator.createValidationEventRequest(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
      const newEventRequest = await EventRequest.create(req.body)
      res.json({msg:'Event Request was created successfully', data: newEventRequest})
@@ -35,7 +35,7 @@ router.post('/', async (req,res) => {
      const id = req.params.id
      const eventrequest = await EventRequest.findById(id)
      if(!eventrequest) return res.status(404).send({error: 'Event Request does not exist'})
-     const isValidated = validator.updateValidation(req.body)
+     const isValidated = validator.updateValidationEventRequest(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
      const updatedEventRequest = await EventRequest.updateOne(req.body)
      res.json({msg: 'Event Request updated successfully'})

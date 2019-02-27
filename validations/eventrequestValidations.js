@@ -1,7 +1,7 @@
 const Joi = require('joi')
 
 module.exports = {
-    createValidation: request => {
+    createValidationEventRequest: request => {
         const createSchema = {
             requestedBy: Joi.string().max(500).required(),
             description: Joi.string().required(),
@@ -14,7 +14,7 @@ module.exports = {
         return Joi.validate(request, createSchema)
     },
 
-    updateValidation: request => {
+    updateValidationEventRequest: request => {
         const updateSchema = {
             requestedBy: Joi.string().max(500),
             description: Joi.string(),
