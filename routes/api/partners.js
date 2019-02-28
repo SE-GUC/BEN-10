@@ -59,7 +59,7 @@ router.delete('/:id', async (req,res) => {
         res.json({msg: 'Partner was deleted successfully', data: deletedPartner})
        }
        else {
-           return res.status(404).send({error: "not a Partner id"})
+           return res.status(404).send({error: 'not a Partner id'})
        }
     }
     catch(error) {
