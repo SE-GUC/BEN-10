@@ -61,6 +61,7 @@ router.delete('/:id', async (req,res) => {
      res.json({msg:'Book was deleted successfully', data: deletedmember})
 
 
+
      if(!deletedmember) return res.status(404).send({error: 'member is not found'})
      res.json({msg:'member was deleted successfully', data: deletedmember})
     }
