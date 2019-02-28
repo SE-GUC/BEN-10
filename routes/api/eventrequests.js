@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
+const ObjectId = require('mongodb').ObjectID;
+mongoose.set('useFindAndModify', false);
 
 const EventRequest = require('../../models/EventRequest')
 const validator = require('../../validations/eventrequestValidations')
@@ -11,9 +13,16 @@ router.get('/', async (req,res) => {
 })
 
 router.get('/:id', async (req,res) => {
+    if(ObjectId.isValid(req.params.id)){
     const id = req.params.id
     const eventrequests = await EventRequest.findById(id)
+    if (!eventrequests) return res.status(404).send({error: 'Request does not exist'})
     res.json({data: eventrequests})
+    }
+    else{
+        return res.status(404).send({error: 'Event Request does not exist'})
+    }
+
 })
 
 router.post('/', async (req,res) => {
@@ -30,27 +39,57 @@ router.post('/', async (req,res) => {
       
  })
 
- router.put('/:id', async (req,res) => {
-    try {
-     const id = req.params.id
-     const eventrequest = await EventRequest.findById(id)
-     if(!eventrequest) return res.status(404).send({error: 'Event Request does not exist'})
-     const isValidated = validator.updateValidationEventRequest(req.body)
-     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedEventRequest = await EventRequest.updateOne(req.body)
-     res.json({msg: 'Event Request updated successfully'})
+//  router.put('/:id', async (req,res) => {
+//     try {
+//      const id = new mongoose.Types.ObjectId(req.param.id)
+//      const eventrequest = await EventRequest.findById(id)
+//      console.log(id)
+//      if(!eventrequest) return res.status(404).send({error: 'Event Request does not exist'})
+//      const isValidated = validator.updateValidationEventRequest(req.body)
+//      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+//      const updatedEventRequest = await EventRequest.findByIdAndUpdate(req.body)
+//      console.log(eventrequest)
+//      res.json({msg: 'Event Request updated successfully'})
+//     }
+//     catch(error) {
+//         console.log(error)
+//         return res.status(404).send({error: 'Event Request does not exist'})
+//     }  
+//  })
+
+
+router.put('/:id', async (req,res) => {
+    try{
+        if(ObjectId.isValid(req.params.id)){
+        const isValidated = validator.updateValidationEventRequest(req.body)
+        if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+        const updatedEventRequest = await EventRequest.findByIdAndUpdate({_id: req.params.id}, req.body)
+        if (!updateValidationEventRequest) return res.status(404).send({error: 'Request does not exist'})
+        res.json({msg: 'Event Request updated successfully'})
+        }
+        else{
+        return res.status(404).send({error: 'Event Request does not exist'})
+        }
+        
     }
-    catch(error) {
+    catch{
         console.log(error)
         return res.status(404).send({error: 'Event Request does not exist'})
-    }  
- })
+    }
+
+})
 
  router.delete('/:id', async (req,res) => {
     try {
-     const id = req.params.id
-     const deletedEventRequest = await EventRequest.findByIdAndRemove(id)
-     res.json({msg:'Event Request was deleted successfully', data: deletedEventRequest})
+        if(ObjectId.isValid(req.params.id)){
+        const id = req.params.id
+        const deletedEventRequest = await EventRequest.findByIdAndRemove(id)
+        if(!deletedEventRequest) return res.status(400).send({ error: 'Request does not exist'})
+        res.json({msg:'Event Request was deleted successfully', data: deletedEventRequest})
+        }else{
+            return res.status(404).send({error: 'Event Request does not exist'})
+
+        }
     }
     catch(error) {
         console.log(error)

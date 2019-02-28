@@ -41,7 +41,9 @@ router.put('/:id', async (req,res) => {
      if(!mem) return res.status(404).send({error: 'member is not found'})
      const isValidated = validator.updateValidation(req.body)
      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+ 
      const updatedmember = await member.updateOne(req.body)
+
      res.json({msg: 'member updated successfully'})
     }
     catch(error) {
@@ -57,6 +59,10 @@ router.delete('/:id', async (req,res) => {
      const id = req.params.id
      const deletedmember = await member.findByIdAndRemove(id)
      res.json({msg:'Book was deleted successfully', data: deletedmember})
+
+
+     if(!deletedmember) return res.status(404).send({error: 'member is not found'})
+     res.json({msg:'member was deleted successfully', data: deletedmember})
     }
     catch(error) {
         // error is to be handled later
