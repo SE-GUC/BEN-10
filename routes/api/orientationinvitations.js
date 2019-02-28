@@ -58,7 +58,7 @@ router.put('/:id', async (req,res) => {
             const id = req.params.id 
             const deletedOrientationInvitation = await OrientationInvitation.findByIdAndRemove(id)
             if (!deletedOrientationInvitation) return res.status(400).send({ error: 'Orientation Invitation does not exists' })
-            res.json({msg: 'Orientation Invitation was deleted successfully', data: deletedPartner})
+            res.json({msg: 'Orientation Invitation was deleted successfully', data: deletedOrientationInvitation})
            }
            else {
                return res.status(404).send({error: "not an Orientation Invitation id"})
