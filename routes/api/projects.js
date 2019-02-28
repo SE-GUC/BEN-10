@@ -48,10 +48,14 @@ router.put('/:id', async (req,res) => {
  // Delete a project
  router.delete('/:id',async(req,res)=>{
     try {
+        if(ObjectId.isValid(req.params.id)){
         const id = req.params.id
         const deletedProject = await Project.findByIdAndRemove(id)
         if(!deletedProject) return res.status(400).send({ error: 'Project does not exist'})
-        res.json({msg:'Project was deleted successfully', data: deletedProject})
+        res.json({msg:'Project was deleted successfully', data: deletedProject})}
+        else{
+            return res.status(404).send({ error: "not a project id" })
+        }
        }
        catch(error) {
            console.log(error)
