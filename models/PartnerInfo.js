@@ -8,7 +8,7 @@ const PartnerSchema = new Schema({
         required: true
     },
     age: {
-        type: number,
+        type: Number,
         required: true
     },
     gender: {
@@ -24,7 +24,7 @@ const PartnerSchema = new Schema({
         required: true  
     },
     phone_number: {
-        type: number,
+        type: Number,
         required: true  
     }
 })
