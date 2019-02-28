@@ -4,6 +4,8 @@ const mongoose = require('mongoose')
 
 const PartnerInfo = require('../../models/PartnerInfo')
 const validator = require('../../validations/partnerValidations')
+const ObjectId = require('mongodb').ObjectID;
+mongoose.set('useFindAndModify', false);
 
 router.get('/', async (req,res) => {
     const partners = await PartnerInfo.find()
@@ -32,13 +34,14 @@ router.post('/', async (req,res) => {
 
  router.put('/:id', async (req,res) => {
     try {
-     const id = req.params.id
-     const partners = await PartnerInfo.findById(id)
-     if(!partners) return res.status(404).send({error: 'Partner does not exist'})
-     const isValidated = validator.updateValidationPartnerInfo(req.body)
-     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedPartnerInfo = await PartnerInfo.updateOne(req.body)
+     if(ObjectId.isValid(req.params.id)){
+     const updatedPartner = await PartnerInfo.findByIdAndUpdate({_id: req.params.id}, req.body)
+     if (!updatedPartner) return res.status(404).send({error: 'Partner does not exists' })
      res.json({msg: 'Partner updated successfully'})
+    }
+    else {
+        return res.status(404).send({error: "not a Partner id"})
+    }
     }
     catch(error) {
         console.log(error)
@@ -49,9 +52,15 @@ router.post('/', async (req,res) => {
 
 router.delete('/:id', async (req,res) => {
     try {
-     const id = req.params.id
-     const deletedPartnerInfo = await PartnerInfo.findByIdAndRemove(id)
-     res.json({msg:'Partner was deleted successfully', data: deletedPartnerInfo})
+        if(ObjectId.isValid(req.params.id)){
+        const id = req.params.id 
+        const deletedPartner = await PartnerInfo.findByIdAndRemove(id)
+        if (!deletedPartner) return res.status(400).send({ error: 'Partner does not exists' })
+        res.json({msg: 'Partner was deleted successfully', data: deletedPartner})
+       }
+       else {
+           return res.status(404).send({error: "not a Partner id"})
+       }
     }
     catch(error) {
         console.log(error)
