@@ -43,7 +43,7 @@ router.put('/:id', async (req,res) => {
      res.json({msg: 'Admin updated successfully'})
     }
     catch(error) {
-        // We will be handling the error later
+        
         console.log(error)
         return res.status(404).send({error: 'Admin does not exist'})
     }  
@@ -56,7 +56,7 @@ router.put('/:id', async (req,res) => {
      res.json({msg:'Admin was deleted successfully', data: deletedAdmin})
     }
     catch(error) {
-        // We will be handling the error later
+       
         console.log(error)
         return res.status(400).send('Error')
     }  

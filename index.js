@@ -6,6 +6,8 @@ const eventrequests = require('./routes/api/eventrequests')
 const projects = require('./routes/api/projects')
 const orientationinvitations = require('./routes/api/orientationinvitations')
 const partners = require('./routes/api/partners')
+const admins = require('./routes/api/admins')
+
 
 const app = express()
 
@@ -30,7 +32,7 @@ app.get('/test', (req,res) => res.send(`<h1>Deployed on Heroku</h1>`))
 // Direct to Route Handlers
 app.use('/api/eventrequests', eventrequests)
 app.use('/api/projects', projects)
-
+app.use('/api/admins', admins)
 app.use('/api/orientationinvitations', orientationinvitations)
 app.use('/api/partners', partners)
  
