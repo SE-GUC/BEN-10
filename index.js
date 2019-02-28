@@ -1,5 +1,6 @@
-const express = require('express')
-const mongoose = require('mongoose')
+const express = require('express');
+const path=require('path');
+const mongoose = require('mongoose');
 
 // Require Router Handlers
 const eventrequests = require('./routes/api/eventrequests')
@@ -10,7 +11,8 @@ const admins = require('./routes/api/admins')
 const member = require('./routes/api/member')
 
 
-const app = express()
+
+const app = express();
 
 // DB Config
 const db = require('./config/keys').mongoURI
@@ -20,6 +22,7 @@ mongoose
     .connect(db)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.log(err))
+
 
 // Init middleware
 app.use(express.json())
@@ -32,6 +35,11 @@ app.get('/test', (req,res) => res.send(`<h1>Deployed on Heroku</h1>`))
 
 // Direct to Route Handlers
 app.use('/api/eventrequests', eventrequests)
+app.use('/api/projects', projects);
+app.use('/api/admins', admins);
+app.use('/api/events',require('./routes/api/events'));
+app.use('/api/partners', partners);
+
 app.use('/api/projects', projects)
 app.use('/api/admins', admins)
 app.use('/api/orientationinvitations', orientationinvitations)

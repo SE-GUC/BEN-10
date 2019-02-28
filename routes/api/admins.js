@@ -4,6 +4,8 @@ const mongoose = require('mongoose')
 
 const Admin = require('../../models/Admin')
 const validator = require('../../validations/adminValidations')
+const ObjectId = require('mongodb').ObjectID;
+mongoose.set('useFindAndModify',false);
 
 router.get('/', async (req,res) => {
     const admins = await Admin.find()
@@ -34,13 +36,14 @@ router.post('/', async (req,res) => {
 
 router.put('/:id', async (req,res) => {
     try {
-     const id = req.params.id
-     const admin = await Admin.findById(id)
-     if(!admin) return res.status(404).send({error: 'Admin does not exist'})
-     const isValidated = validator.updateValidationAdmin(req.body)
-     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-     const updatedAdmin = await Admin.updateOne(req.body)
-     res.json({msg: 'Admin updated successfully'})
+        if(ObjectId.isValid(req.params.id))
+        {const updatedAdmin = await Admin.findByIdAndUpdate({_id: req.params.id}, req.body)
+        if (!updatedAdmin) return res.status(404).send({ error: "Admin does not exist"})
+        res.json({msg: 'Admin updated successfully'})
+        }
+        else {
+            return res.status(404).send({ error: "Not an admin id"})
+        }
     }
     catch(error) {
         
@@ -51,9 +54,14 @@ router.put('/:id', async (req,res) => {
 
  router.delete('/:id', async (req,res) => {
     try {
-     const id = req.params.id
-     const deletedAdmin = await Admin.findByIdAndRemove(id)
-     res.json({msg:'Admin was deleted successfully', data: deletedAdmin})
+        if(ObjectId.isValid(req.params.id)){
+         const id = req.params.id
+         const deletedAdmin = await Admin.findByIdAndRemove(id)
+         if(!deletedAdmin) return res.status(404).send({error: 'Admin does not exist'})
+        res.json({msg:'Admin was deleted successfully', data: deletedAdmin})
+        }else {
+            return res.status(404).send({error: 'Admin does not exist'})
+        }
     }
     catch(error) {
        
