@@ -44,6 +44,7 @@ router.put('/:id', async (req,res) => {
  
      const updatedmember = await member.updateOne(req.body)
 
+
      res.json({msg: 'member updated successfully'})
     }
     catch(error) {
@@ -59,6 +60,7 @@ router.delete('/:id', async (req,res) => {
      const id = req.params.id
      const deletedmember = await member.findByIdAndRemove(id)
      res.json({msg:'Book was deleted successfully', data: deletedmember})
+
 
 
 

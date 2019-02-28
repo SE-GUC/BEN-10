@@ -13,7 +13,7 @@ router.get('/', async (req,res) => {
 })
 
 
-// Create a project
+// Create a projectt
 router.post('/', async (req,res) => {
    try {
     const isValidated = validator.createValidation(req.body)
@@ -61,13 +61,23 @@ router.put('/:id', async (req,res) => {
         else{
             return res.status(404).send({ error: "not a project id" })
         }
+       
+
+        if(ObjectId.isValid(req.params.id)){
+            const id = req.params.id
+            const deletedProject = await Project.findByIdAndRemove(id)
+            if(!deletedProject) return res.status(400).send({ error: 'Project does not exist'})
+            res.json({msg:'Project was deleted successfully', data: deletedProject})
+       }else{
+            return res.status(404).send({error: 'Project does not exist'})
        }
+    }
        catch(error) {
            console.log(error)
            return res.status(400).send('not a project id')
    
        }  
-});
+    });
 
  
 
