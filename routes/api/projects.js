@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 
-const Book = require('../../models/Project')
+const Project = require('../../models/Project')
 const validator = require('../../validations/projectValidations')
 
 router.get('/', async (req,res) => {
