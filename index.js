@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 
 // Require Router Handlers
 const projects = require('./routes/api/projects')
+const partners = require('./routes/api/partners')
 
 const app = express()
 
@@ -26,7 +27,7 @@ app.get('/test', (req,res) => res.send(`<h1>Deployed on Heroku</h1>`))
 
 // Direct to Route Handlers
 app.use('/api/projects', projects)
-
+app.use('/api/partners', partners)
 
 app.use((req,res) => res.status(404).send(`<h1>Can not find what you're looking for</h1>`))
 
