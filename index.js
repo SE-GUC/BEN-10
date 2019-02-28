@@ -4,8 +4,11 @@ const mongoose = require('mongoose')
 // Require Router Handlers
 const eventrequests = require('./routes/api/eventrequests')
 const projects = require('./routes/api/projects')
-const admins = require('./routes/api/admins')
+const orientationinvitations = require('./routes/api/orientationinvitations')
 const partners = require('./routes/api/partners')
+const admins = require('./routes/api/admins')
+const member = require('./routes/api/member')
+
 
 const app = express()
 
@@ -31,8 +34,11 @@ app.get('/test', (req,res) => res.send(`<h1>Deployed on Heroku</h1>`))
 app.use('/api/eventrequests', eventrequests)
 app.use('/api/projects', projects)
 app.use('/api/admins', admins)
-
+app.use('/api/orientationinvitations', orientationinvitations)
 app.use('/api/partners', partners)
+app.use('/api/member',member)
+
+
 
 app.use((req,res) => res.status(404).send(`<h1>Can not find what you're looking for</h1>`))
 
