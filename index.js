@@ -7,6 +7,7 @@ const projects = require('./routes/api/projects')
 const orientationinvitations = require('./routes/api/orientationinvitations')
 const partners = require('./routes/api/partners')
 const admins = require('./routes/api/admins')
+const applications = require('./routes/api/applications')
 
 
 const app = express()
@@ -35,6 +36,7 @@ app.use('/api/projects', projects)
 app.use('/api/admins', admins)
 app.use('/api/orientationinvitations', orientationinvitations)
 app.use('/api/partners', partners)
+app.use('/api/applications', applications)
  
 
 
