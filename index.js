@@ -51,7 +51,7 @@ app.use('/api/partners', partners)
 
 app.use('/api/applications', applications)
  
-app.use('/api/consultancyagency',consultancyagency)
+app.use('/api/consultancyagency',consultancyagencys)
 app.use('/api/member',member)
 
 
