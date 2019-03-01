@@ -7,6 +7,7 @@ const projects = require('./routes/api/projects')
 const orientationinvitations = require('./routes/api/orientationinvitations')
 const partners = require('./routes/api/partners')
 const admins = require('./routes/api/admins')
+const member = require('./routes/api/member')
 
 
 const app = express()
