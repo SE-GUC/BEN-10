@@ -4,6 +4,8 @@ const mongoose = require('mongoose')
 
 const Admin = require('../../models/Admin')
 const validator = require('../../validations/adminValidations')
+const notificationValidator = require('../../validations/memberValidations')
+
 const ObjectId = require('mongodb').ObjectID;
 mongoose.set('useFindAndModify',false);
 

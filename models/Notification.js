@@ -7,9 +7,9 @@ const NotificationSchema = new Schema({
         type: String,
         required: true
     },
-    NotifiedPerson: {
-        type: String,
-        required: true
+    Notified_member:{
+        type:Schema.Types.ObjectId,ref:'member',
+        required:true
     },
     date: {
         type: Date, 
@@ -19,4 +19,5 @@ const NotificationSchema = new Schema({
         type: Boolean,
         required: true
     }
+
 })
