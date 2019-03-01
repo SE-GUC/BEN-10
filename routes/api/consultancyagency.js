@@ -7,8 +7,6 @@ mongoose.set('useFindAndModify', false);
 const ConsultancyAgency = require('../../models/ConsultancyAgency')
 const validator = require('../../validations/consultancyagencyValidations')
 
-
-
 router.get('/', async (req,res) => {
     const consultancyAgency = await ConsultancyAgency.find()
     res.json({data: consultancyAgency})
