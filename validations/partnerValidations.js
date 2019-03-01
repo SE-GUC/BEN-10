@@ -8,7 +8,10 @@ module.exports = {
             gender: Joi.string().max(10).required(),
             e_mail: Joi.string().max(60).required(),
             experience_level: Joi.string().required(),
-            phone_number: Joi.number().required()
+            phone_number: Joi.number().required(),
+            events: Joi.array().items(Joi.objectId()),
+            projects: Joi.array().items(Joi.objectId()),
+            partners: Joi.array().items(Joi.objectId())
         }
 
         return Joi.validate(request, createSchema)
@@ -21,7 +24,10 @@ module.exports = {
             gender: Joi.string().max(10),
             e_mail: Joi.string().max(60),
             experience_level: Joi.string(),
-            phone_number: Joi.number()
+            phone_number: Joi.number(),
+            events: Joi.array().items(Joi.objectId()),
+            projects: Joi.array().items(Joi.objectId()),
+            partners: Joi.array().items(Joi.objectId())
         }
 
         return Joi.validate(request, updateSchema)

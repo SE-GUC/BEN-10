@@ -1,10 +1,12 @@
 const Joi = require('joi')
+Joi.objectId = require('joi-objectid')(Joi);
+
 
 module.exports = {
     createValidationNotification: request => {
         const createSchema = {
             description: Joi.string().required(),
-            NotifiedPerson: Joi.string().max(300).required(),
+            NotifiedPerson: Joi.objectId().required(),
             date: Joi.date().required(),
             seen: Joi.boolean().required()
         }

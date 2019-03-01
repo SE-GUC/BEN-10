@@ -1,9 +1,10 @@
-
-const Joi = require('joi')
+const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
 
 module.exports = {
     createValidation: request => {
         const createSchema = {
+            applicantId: Joi.objectId(),
             applicantName: Joi.string().required(),
             gender: Joi.string().max(100).required(),
             age: Joi.number().max(200).required(),

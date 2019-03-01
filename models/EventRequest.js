@@ -3,6 +3,10 @@ const Schema = mongoose.Schema
 
 // Create the schema
 const EventRequestSchema = new Schema({
+    requestorId: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
     requestedBy: {
         type: String,
         required: true

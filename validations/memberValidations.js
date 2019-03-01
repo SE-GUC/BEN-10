@@ -1,4 +1,5 @@
 const Joi = require('joi')
+Joi.objectId = require('joi-objectid')(Joi);
 
 module.exports = {
     createValidation: request => {
@@ -23,7 +24,9 @@ module.exports = {
             email: Joi.string().max(100).required(),
             password: Joi.string().min(8).max(50).required(),
             Mobile_number:Joi.string().required(),
-            Alternative_Mobile_number:Joi.string()
+            Alternative_Mobile_number:Joi.string(),
+            events: Joi.array().items(Joi.objectId()),
+            projects: Joi.array().items(Joi.objectId())
         }
 
         return Joi.validate(request, createSchema)
@@ -51,7 +54,10 @@ module.exports = {
             email: Joi.string().max(100),
             password: Joi.string().min(8).max(50),
             Mobile_number:Joi.string(),
-            Alternative_Mobile_number:Joi.string()
+            Alternative_Mobile_number:Joi.string(),
+            events: Joi.array().items(Joi.objectId()),
+            projects: Joi.array().items(Joi.objectId())
+
         }
 
         return Joi.validate(request, updateSchema)

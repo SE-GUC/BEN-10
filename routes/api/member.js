@@ -3,8 +3,8 @@ const router = express.Router()
 const mongoose = require('mongoose')
 
 const member = require('../../models/member')
-const validator = require('../../validations/notificationsValidation')
-const notificationValidator = require('../../validations/memberValidations')
+const validator = require('../../validations/memberValidations')
+const notificationValidator = require('../../validations/notificationsValidation')
 
 
 // GET method to retrieve all members

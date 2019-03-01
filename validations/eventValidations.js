@@ -1,4 +1,6 @@
 const Joi = require('joi')
+Joi.objectId = require('joi-objectid')(Joi);
+
 
 module.exports = {
     createValidationEvent: Eventrequest => {
@@ -14,7 +16,8 @@ module.exports = {
             speaker:Joi.string().required(),
             feedback:Joi.array().items(Joi.string()).required(),
             regist_start_date:  Joi.date().required(),
-            regist_expiry_date:Joi.date().required()    
+            regist_expiry_date:Joi.date().required(),
+            requestorId: Joi.objectId().required()
         
         }
 

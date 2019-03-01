@@ -26,6 +26,15 @@ const PartnerSchema = new Schema({
     phone_number: {
         type: Number,
         required: true  
+    },
+    events: {
+        type: [{ type: Schema.Types.ObjectId, ref: "Event" }]
+    },
+    projects: {
+        type: [{ type: Schema.Types.ObjectId, ref: "Project" }]
+    },
+    partners: {
+        type: [{ type: Schema.Types.ObjectId, ref: "PartnerInfo" }]
     }
 })
 
