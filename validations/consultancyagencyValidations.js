@@ -6,12 +6,12 @@ module.exports = {
         const createSchema = {
             name: Joi.string().max(50).required(),
             about: Joi.string().min(30),
-            telephoneNumber: Joi.number().max(12).required(),
+            telephoneNumber: Joi.string().max(12).required(),
             email: Joi.string().email().required(),
             location: Joi.string().min(10).max(50).required(),
             yearsOfExperience: Joi.number().required(),
             rating: Joi.number().positive().max(5),
-            reports: Joi.array().items(joi.string()),
+            reports: Joi.array().items(Joi.string()),
 
         }
 
@@ -20,9 +20,10 @@ module.exports = {
 
     updateValidationconsultancyagency: request => {
         const updateSchema = {
+            name: Joi.string().max(50),
             telephoneNumber: Joi.number().max(12),
             location: Joi.string().min(10).max(50),
-            reports: Joi.array().items(joi.string()),
+            reports: Joi.array().items(Joi.string()),
             yearsOfExperience: Joi.number(),
             rating: Joi.number().positive().max(5),
             email: Joi.string().email(),

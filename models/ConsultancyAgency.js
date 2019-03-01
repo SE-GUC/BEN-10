@@ -9,10 +9,10 @@ const ConsultancyAgencySchema = new Schema({
     },
     about: {
         type: String,
-        required: true
+        required: false
     },
     telephoneNumber: {
-        type: Number,
+        type: String,
         required: true
     },
     email: {
@@ -29,6 +29,10 @@ const ConsultancyAgencySchema = new Schema({
     },
     rating: {
         type: Number,
+        required: false
+    },
+    reports: {
+        type: Array,
         required: false
     }
     
