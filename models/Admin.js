@@ -12,7 +12,7 @@ const AdminSchema = new Schema({
         required: true
     },
     birthdate: {
-        type: date,
+        type: Date,
         required: true
     },
     password: {

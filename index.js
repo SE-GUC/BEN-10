@@ -6,6 +6,7 @@ const eventrequests = require('./routes/api/eventrequests')
 const projects = require('./routes/api/projects')
 const orientationinvitations = require('./routes/api/orientationinvitations')
 const partners = require('./routes/api/partners')
+const member = require('./routes/api/member')
 
 const app = express()
 
@@ -33,7 +34,7 @@ app.use('/api/projects', projects)
 
 app.use('/api/orientationinvitations', orientationinvitations)
 app.use('/api/partners', partners)
- 
+app.use('/api/member',member) 
 
 
 
