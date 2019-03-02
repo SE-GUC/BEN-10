@@ -16,6 +16,7 @@ router.get('/:id/notifications', async (req,res) => {
     });
     res.json({data: notifications})
 })
+
 // GET method to retrieve all members
 router.get('/', async (req,res) => {
     const members = await member.find()
