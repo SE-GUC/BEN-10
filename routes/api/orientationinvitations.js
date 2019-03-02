@@ -36,6 +36,8 @@ router.post('/', async (req,res) => {
 router.put('/:id', async (req,res) => {
     try {
         if(ObjectId.isValid(req.params.id)){
+            const isValidated = validator.updateValidationOrientationInvitation(req.body)
+            if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
             const updatedOrientationInvitation = await OrientationInvitation.findByIdAndUpdate({_id: req.params.id}, req.body)
             if (!updatedOrientationInvitation) return res.status(404).send({error: 'Orientation Invitation does not exists' })
             res.json({msg: 'Orientation Invitation updated successfully'})
