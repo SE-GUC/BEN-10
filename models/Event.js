@@ -45,10 +45,10 @@ const EventSchema={
         required:true
     },
 
-    request_id:{
+    request_id:[{
         type:Schema.Types.ObjectId,ref:'EventRequest',
         required:false
-    },
+    }],
     eventDate:{
         type:Date,
         required:true
