@@ -3,6 +3,10 @@ const Schema = mongoose.Schema
 
 // Create the schema
 const ApplicationSchema = new Schema({
+    applicantId: {
+        type: Schema.Types.ObjectId,ref:"member",
+        required: true
+    },
     applicantName: {
         type: String,
         required: true

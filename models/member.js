@@ -78,6 +78,12 @@ const memberSchema = new Schema({
     Alternative_Mobile_number: {
         type: String, 
         required: false
+    },
+    events: {
+        type: [{ type: Schema.Types.ObjectId, ref: "Event" }]
+    },
+    projects: {
+        type: [{ type: Schema.Types.ObjectId, ref: "Project" }]
     }
 })
 

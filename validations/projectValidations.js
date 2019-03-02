@@ -1,5 +1,5 @@
-
 const Joi = require('joi')
+Joi.objectId = require('joi-objectid')(Joi);
 
 module.exports = {
     createValidation: request => {
@@ -16,7 +16,10 @@ module.exports = {
             estimated_time: Joi.string().max(50),
             experience_level_needed: Joi.string().max(100),
             required_skills_set: Joi.string(),
-            final_draft: Joi.string()
+            final_draft: Joi.string(),
+            companyID: Joi.objectId().required,
+            consultancyID: Joi.objectId().required,
+            memberID: Joi.objectId().required
         }
 
         return Joi.validate(request, createSchema)
