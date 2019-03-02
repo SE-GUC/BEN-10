@@ -12,6 +12,7 @@ const admins = require('./routes/api/admins')
 const applications = require('./routes/api/applications')
 const consultancyagencys = require('./routes/api/consultancyagency')
 const member = require('./routes/api/member')
+const notification = require('./routes/api/notifications')
 
 
 
@@ -52,6 +53,7 @@ app.use('/api/applications', applications)
  
 app.use('/api/consultancyagency',consultancyagencys)
 app.use('/api/member',member)
+app.use('/api/notifications',notification)
 
 
 

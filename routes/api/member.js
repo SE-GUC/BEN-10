@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-
 const member = require('../../models/member')
+
 const validator = require('../../validations/memberValidations')
 const notificationValidator = require('../../validations/notificationsValidation')
+
 
 
 // GET method to retrieve all members
@@ -62,6 +63,7 @@ router.delete('/:id', async (req,res) => {
     if(ObjectId.isValid(req.params.id)){
      const id = req.params.id
      const deletedmember = await member.findByIdAndRemove(id)
+
      if(!deletedmember) return res.status(404).send({error: 'member is not found'})
      res.json({msg:'member was deleted successfully', data: deletedmember})
     }
