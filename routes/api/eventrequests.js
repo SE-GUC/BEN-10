@@ -66,7 +66,7 @@ router.put('/:id', async (req,res) => {
         const isValidated = validator.updateValidationEventRequest(req.body)
         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
         const updatedEventRequest = await EventRequest.findByIdAndUpdate({_id: req.params.id}, req.body)
-        if (!updateValidationEventRequest) return res.status(404).send({error: 'Request does not exist'})
+        if (!updatedEventRequest) return res.status(404).send({error: 'Request does not exist'})
         res.json({msg: 'Event Request updated successfully'})
         }
         else{
