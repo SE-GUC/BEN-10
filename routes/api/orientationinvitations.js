@@ -42,21 +42,30 @@ router.post('/', async (req,res) => {
 router.put('/:id', async (req,res) => {
     try{
         if(ObjectId.isValid(req.params.id)){
-        const isValidated = validator.updateValidationOrientationInvitation(req.body)
-        if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-        const updatedOrientationInvitation = await OrientationInvitation.findByIdAndUpdate({_id: req.params.id}, req.body)
-        if (!updatedOrientationInvitation) return res.status(404).send({error: 'orientation invitation does not exist'})
-        res.json({msg: 'Orientation Invitation updated successfully'})
-        }
-        else{
-        return res.status(404).send({error: 'not an Orientation Invitation id'})
-        }
         
-    }
+            const isValidated = validator.updateValidationOrientationInvitation(req.body)
+            if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+            const updatedOrientationInvitation = await OrientationInvitation.findByIdAndUpdate({_id: req.params.id}, req.body)
+            if (!updatedOrientationInvitation) return res.status(404).send({error: 'Orientation Invitation does not exists' })
+            return res.json({msg: 'Orientation Invitation updated successfully'})
+           }
+           else {
+               return res.status(404).send({error: "not an Orientation Invitation id"})
+           }
+        }
+       
+        
+    
     catch{
         return res.status(404).send({error: 'Orientation Invitation does not exist'});
 }
+
+
+
     })
+
+
+
 
  router.delete('/:id', async (req,res) => {
     try {

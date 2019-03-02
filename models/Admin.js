@@ -8,7 +8,7 @@ const AdminSchema = new Schema({
         required: true
     },
     gender: {
-        type: Boolean,
+        type: String,
         required: true
     },
     nationality: {
@@ -24,7 +24,7 @@ const AdminSchema = new Schema({
         required: true
     },
     drivingLicense: {
-        type: Number,
+        type: String,
         required: true
     },
     country: {
@@ -40,11 +40,11 @@ const AdminSchema = new Schema({
         required: true
     },
     postalCode: {
-        type: Number,
+        type: String,
         required: true
     },
     mobileNumber: {
-        type: Number,
+        type: String,
         required: true
     },
     email: {
