@@ -20,6 +20,7 @@ module.exports = {
             companyID: Joi.objectId().required(),
             consultancyID: Joi.objectId(),
             memberID: Joi.objectId()
+
         }
 
         return Joi.validate(request, createSchema)
