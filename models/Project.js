@@ -12,7 +12,8 @@ const ProjectSchema = new Schema({
         required: true
     },
     companyID: {
-        type: Schema.Types.ObjectId, ref: "PartnerInfo"
+        type: Schema.Types.ObjectId,ref: "PartnerInfo",
+        required:false
     },
     category: {
         type: String,
@@ -27,7 +28,8 @@ const ProjectSchema = new Schema({
         required: false
     },
     consultancyID: {
-        type: Schema.Types.ObjectId, ref: "ConsultancyAgency"
+        type: Schema.Types.ObjectId,ref: "ConsultancyAgency",
+        required:false
     },
     posted_date: {
         type: Date,
@@ -38,7 +40,8 @@ const ProjectSchema = new Schema({
         required: false
     },
     memberID: {
-        type: Schema.Types.ObjectId, ref: "member"
+        type: Schema.Types.ObjectId,ref: "member",
+        required:false
     },
     life_cycle:{
         type: String,

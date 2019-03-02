@@ -9,7 +9,7 @@ module.exports = {
             about: Joi.string().min(30),
             telephoneNumber: Joi.string().max(12).required(),
             email: Joi.string().email().required(),
-            location: Joi.string().min(10).max(50).required(),
+            location: Joi.string().max(50).required(),
             yearsOfExperience: Joi.number().required(),
             rating: Joi.number().positive().max(5),
             reports: Joi.array().items(Joi.string()),

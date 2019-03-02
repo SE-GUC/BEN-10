@@ -40,7 +40,7 @@ const EventSchema={
         required:true
     },feedback:{
         type:[String],
-        required:true
+        required:false
     },regist_start_date:{
         type: Date,
         required:true

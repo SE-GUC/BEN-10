@@ -12,9 +12,15 @@ router.get('/', async (req,res) => {
     res.json({data: orientationinvitations})
 })
 router.get('/:id', async (req,res) => {
-    const id = req.params.id
-    const orientationinvitations = await OrientationInvitation.findById(id)
-    res.json({data: orientationinvitations})
+    if(ObjectId.isValid(req.params.id)){
+        const id = req.params.id
+        const orientationinvitations = await OrientationInvitation.findById(id)
+        if (!orientationinvitations) return res.status(404).send({error: 'OrientationInvitation does not exist'})
+        res.json({data: orientationinvitations})
+        }
+        else{
+            return res.status(404).send({error: 'orientationinvitations does not exist'})
+        }
 })
 
 
@@ -34,23 +40,32 @@ router.post('/', async (req,res) => {
 
 // Update an OrientationInvitation
 router.put('/:id', async (req,res) => {
-    try {
+    try{
         if(ObjectId.isValid(req.params.id)){
+        
+            const isValidated = validator.updateValidationOrientationInvitation(req.body)
+            if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
             const updatedOrientationInvitation = await OrientationInvitation.findByIdAndUpdate({_id: req.params.id}, req.body)
             if (!updatedOrientationInvitation) return res.status(404).send({error: 'Orientation Invitation does not exists' })
-            res.json({msg: 'Orientation Invitation updated successfully'})
+            return res.json({msg: 'Orientation Invitation updated successfully'})
            }
            else {
                return res.status(404).send({error: "not an Orientation Invitation id"})
            }
         }
+       
+        
     
-    
-    catch(error) {
-        console.log(error)
-        return res.status(404).send({error: 'Orientation Invitation does not exist'})
-    }  
- })
+    catch{
+        return res.status(404).send({error: 'Orientation Invitation does not exist'});
+}
+
+
+
+    })
+
+
+
 
  router.delete('/:id', async (req,res) => {
     try {

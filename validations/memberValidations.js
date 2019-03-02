@@ -51,6 +51,7 @@ module.exports = {
             Area: Joi.string().max(50),
             PostalCode:Joi.number().max(200),
             //
+
             email: Joi.string().max(100).regex(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
             password: Joi.string().min(8).max(50).regex(/^(?=.*\d).{4,20}$/),
             Mobile_number:Joi.string(),

@@ -39,26 +39,6 @@ router.post('/', async (req,res) => {
       
  })
 
-//  router.put('/:id', async (req,res) => {
-//     try {
-//      const id = new mongoose.Types.ObjectId(req.param.id)
-//      const eventrequest = await EventRequest.findById(id)
-//      console.log(id)
-//      if(!eventrequest) return res.status(404).send({error: 'Event Request does not exist'})
-//      const isValidated = validator.updateValidationEventRequest(req.body)
-//      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-//      const updatedEventRequest = await EventRequest.findByIdAndUpdate(req.body)
-//      console.log(eventrequest)
-//      res.json({msg: 'Event Request updated successfully'})
-//     }
-//     catch(error) {
-//         console.log(error)
-//         return res.status(404).send({error: 'Event Request does not exist'})
-//     }  
-//  })
-
-
-
 
 router.put('/:id', async (req,res) => {
     try{
