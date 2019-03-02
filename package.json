@@ -4,7 +4,8 @@
   "description": "Lirten Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index",
+    "dev": "nodemon index"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,12 @@
   "dependencies": {
     "config": "^3.0.1",
     "express": "^4.16.4",
-    "joi": "^14.3.1"
+    "joi": "^14.3.1",
+    "joi-mongodb-objectid": "^0.1.0",
+    "joi-objectid": "^2.0.0",
+    "mongoose": "^5.4.16",
+    "moongoose": "0.0.5",
+    "nodemon": "^1.18.10",
+    "uuid": "^3.3.2"
   }
 }
