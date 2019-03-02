@@ -18,8 +18,8 @@ module.exports = {
             required_skills_set: Joi.string(),
             final_draft: Joi.string(),
             companyID: Joi.objectId().required(),
-            consultancyID: Joi.objectId().required(),
-            memberID: Joi.objectId().required()
+            consultancyID: Joi.objectId(),
+            memberID: Joi.objectId()
         }
 
         return Joi.validate(request, createSchema)
