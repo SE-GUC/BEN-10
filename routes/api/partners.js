@@ -14,8 +14,19 @@ router.get('/', async (req,res) => {
 
 router.get('/:id', async (req,res) => {
     const id = req.params.id
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        // it's an ObjectID    
+    
     const partners = await PartnerInfo.findById(id)
-    res.json({data: partners})
+    if(partners){
+      return res.json({data: partners})
+    }else{
+        return res.json({msg:"it doesn't exist"});
+    }
+}
+ else{
+    return res.status(400).json({msg:`a partner  with id ${id} not found`});}
+    
 })
 
 router.post('/', async (req,res) => {
@@ -35,6 +46,8 @@ router.post('/', async (req,res) => {
  router.put('/:id', async (req,res) => {
     try {
      if(ObjectId.isValid(req.params.id)){
+     const isValidated = validator.updateValidationPartnerInfo(req.body)
+     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
      const updatedPartner = await PartnerInfo.findByIdAndUpdate({_id: req.params.id}, req.body)
      if (!updatedPartner) return res.status(404).send({error: 'Partner does not exists' })
      res.json({msg: 'Partner updated successfully'})
