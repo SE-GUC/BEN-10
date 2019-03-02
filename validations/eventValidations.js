@@ -14,7 +14,7 @@ module.exports = {
             remainingPlace:Joi.number().required(),
             topics:Joi.array().items(Joi.string()).required(),
             speaker:Joi.string().required(),
-            feedback:Joi.array().items(Joi.string()).required(),
+            feedback:Joi.array().items(Joi.string()),
             regist_start_date:  Joi.date().required(),
             regist_expiry_date:Joi.date().required(),
             requestorId: Joi.objectId().required()

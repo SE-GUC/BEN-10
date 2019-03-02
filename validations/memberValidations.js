@@ -21,7 +21,7 @@ module.exports = {
             Area: Joi.string().max(50),
             PostalCode: Joi.number().max(200),
             //
-            email: Joi.string().max(100).required(),
+            email: Joi.string().email().max(100).required(),
             password: Joi.string().min(8).max(50).required(),
             Mobile_number:Joi.string().required(),
             Alternative_Mobile_number:Joi.string(),
@@ -51,7 +51,7 @@ module.exports = {
             Area: Joi.string().max(50),
             PostalCode:Joi.number().max(200),
             //
-            email: Joi.string().max(100),
+            email: Joi.string().email().max(100),
             password: Joi.string().min(8).max(50),
             Mobile_number:Joi.string(),
             Alternative_Mobile_number:Joi.string(),
