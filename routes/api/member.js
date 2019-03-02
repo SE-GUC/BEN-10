@@ -59,15 +59,17 @@ router.put('/:id', async (req,res) => {
 // DELETE method to delete a member
 router.delete('/:id', async (req,res) => {
     try {
+    if(ObjectId.isValid(req.params.id)){
      const id = req.params.id
      const deletedmember = await member.findByIdAndRemove(id)
-     res.json({msg:'Book was deleted successfully', data: deletedmember})
-
-
-
-
      if(!deletedmember) return res.status(404).send({error: 'member is not found'})
      res.json({msg:'member was deleted successfully', data: deletedmember})
+    }
+    else{
+        return res.status(404).send({error: 'Event Request does not exist'})}
+
+
+
     }
     catch(error) {
         // error is to be handled later
