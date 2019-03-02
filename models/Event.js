@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const EventSchema={
 
+    requestorId: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
     requestedBy:{
         type:String,
         required:true
@@ -44,11 +48,10 @@ const EventSchema={
         type:Date,
         required:true
     },
-
-    request_id:{
+    request_id:[{
         type:Schema.Types.ObjectId,ref:'EventRequest',
         required:false
-    },
+    }],
     eventDate:{
         type:Date,
         required:true
