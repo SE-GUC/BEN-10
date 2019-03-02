@@ -17,9 +17,9 @@ module.exports = {
             experience_level_needed: Joi.string().max(100),
             required_skills_set: Joi.string(),
             final_draft: Joi.string(),
-            companyID: Joi.objectId().required,
-            consultancyID: Joi.objectId().required,
-            memberID: Joi.objectId().required
+            companyID: Joi.objectId().required(),
+            consultancyID: Joi.objectId().required(),
+            memberID: Joi.objectId().required()
         }
 
         return Joi.validate(request, createSchema)
