@@ -6,7 +6,7 @@ const NotificationSchema = new Schema({
         type: String,
         required: true
     },
-    Notified_member:{
+    NotifiedPerson:{
         type:Schema.Types.ObjectId,ref:'member',
         required:true
     },
@@ -16,7 +16,8 @@ const NotificationSchema = new Schema({
     },
     seen: {
         type: Boolean,
-        required: true
+        required: true,
+        default:false
     }
 
 })

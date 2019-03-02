@@ -12,6 +12,7 @@ const admins = require('./routes/api/admins')
 const applications = require('./routes/api/applications')
 const consultancyagencys = require('./routes/api/consultancyagency')
 const member = require('./routes/api/member')
+const notification = require('./routes/api/notifications')
 
 
 
@@ -35,7 +36,6 @@ app.use(express.urlencoded({extended: false}))
 
 // Entry point
 app.get('/', (req,res) => res.send(`<h1>Lirten Hub </h1>`))
-app.get('/test', (req,res) => res.send(`<h1>Deployed on Heroku</h1>`))
 
 // Direct to Route Handlers
 app.use('/api/eventrequests', eventrequests)
@@ -53,6 +53,7 @@ app.use('/api/applications', applications)
  
 app.use('/api/consultancyagency',consultancyagencys)
 app.use('/api/member',member)
+app.use('/api/notifications',notification)
 
 
 
