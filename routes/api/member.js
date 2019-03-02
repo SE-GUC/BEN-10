@@ -1,21 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-
 const member = require('../../models/member')
 const validator = require('../../validations/notificationsValidation')
-const notificationValidator = require('../../validations/memberValidations')
-const notification = require('../../models/Notification')
- //GET ALL NOTIFICATIONS FOR A MEMBER
-router.get('/:id/notifications', async (req,res) => {
-    const id = req.params.id
-    const mem = await member.findById(id)
-    const allNotifications = await notification.find();
-    const notifications = allNotifications.filter(function(obj){
-        obj instanceof notification 
-    });
-    res.json({data: notifications})
-})
+
+
 
 // GET method to retrieve all members
 router.get('/', async (req,res) => {
@@ -71,7 +60,7 @@ router.delete('/:id', async (req,res) => {
     try {
      const id = req.params.id
      const deletedmember = await member.findByIdAndRemove(id)
-     res.json({msg:'Book was deleted successfully', data: deletedmember})
+     res.json({msg:'member was deleted successfully', data: deletedmember})
 
 
 
