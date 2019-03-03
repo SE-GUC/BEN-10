@@ -17,8 +17,15 @@ router.get('/', async (req,res) => {
 // GET method to retirve a member by his id
 router.get('/:id', async (req,res) => {
     const id = req.params.id
-    const mem = await member.findById(id)
-    res.json({data: mem})
+    try{
+        (id.match(/^[0-9a-fA-F]{24}$/))
+        const mem = await member.findById(id)
+        res.json({data: mem})
+     }catch{
+        //console.log('Invalid Object id');
+        return res.status(400).send({error:"the provided id is not valid one "})
+     }
+   
 })
 
 //POST method to create a new member
@@ -40,6 +47,14 @@ router.post('/', async (req,res) => {
 router.put('/:id', async (req,res) => {
     try {
      const id = req.params.id
+     try{
+        (id.match(/^[0-9a-fA-F]{24}$/))
+        const mem = await member.findById(id)
+       // res.json({data: mem})
+     }catch{
+        //console.log('Invalid Object id');
+        return res.status(400).send({error:"the provided id is not valid one "})
+     }
      const mem = await member.findByIdAndUpdate({_id:req.params.id},req.body)
      if(!mem) return res.status(404).send({error: 'member is not found'})
      const isValidated = validator.updateValidation(req.body)
@@ -58,9 +73,15 @@ router.put('/:id', async (req,res) => {
 router.delete('/:id', async (req,res) => {
     try {
      const id = req.params.id
-     const deletedmember = await member.findByIdAndRemove(id)
-     if(!deletedmember) return res.status(404).send({error: 'member is not found'})
-     res.json({msg:'member was deleted successfully', data: deletedmember})
+        if
+           (!id.match(/^[0-9a-fA-F]{24}$/)){
+           return res.status(400).send({error:"the provided id is not valid one "})
+        }
+    
+        //---
+        const deletedmember = await member.findByIdAndRemove(id)
+        if(!deletedmember) return res.status(404).send({error: 'member is not found'})
+        res.json({msg:'member was deleted successfully', data: deletedmember})
     }
     catch(error) {
         // error is to be handled later
