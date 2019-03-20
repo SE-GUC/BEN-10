@@ -20,7 +20,7 @@ const notification = require('./routes/api/notifications')
 const app = express();
 
 // DB Config
-const db = require('./config/keys').mongoURI
+const db = require('./config/keys').mongoURI.toString
 
 // Connect to mongo
 mongoose
