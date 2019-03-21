@@ -82,6 +82,41 @@ router.delete('/:id', async (req,res) => {
     }  
  })
 
+
+ //1.0 as a partner i want to submit a description on a task
+async function addDescription(id,decription){
+    const url  = `${server}/api/projects/${id}`;
+    await fetch(url, {
+                      method:'put',
+                      body : JSON.stringify({description : decription}),
+                      headers: { 'Content-Type': 'application/json' }
+                      })
+                .then(res =>{  console.log(res.status)  
+                               return res.json()}
+                     )
+                .then(json =>{ console.log(json)})
+                .catch(err =>{ console.log(err)})
+}
+
+// 1.1 as a partner i want to assign a consultancy agency to a project 
+
+
+//1.2 as a partner i want to approve / disapprove a final draft 
+async function DecideOnProject(id,decision){
+    const url  = `${server}/api/projects/${id}`;
+    await fetch(url, {
+                      method:'put',
+                      body : JSON.stringify({life_cycle : decision}),
+                      headers: { 'Content-Type': 'application/json' }
+                      })
+                .then(res =>{  console.log(res.status)  
+                               return res.json()}
+                     )
+                .then(json =>{ console.log(json)})
+                .catch(err =>{ console.log(err)})
+}
+
+
  
 
 module.exports = router
