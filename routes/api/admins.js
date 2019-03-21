@@ -75,6 +75,37 @@ router.put('/:id', async (req,res) => {
     }  
  })
 
+
+ //3.2 --As an admin I want to send a final draft of the task/project so that the partner can approve posting it.
+ async function sendFinalDraft(projectID, draft){
+     const body = {
+         life_cycle: "Waiting for draft approval",
+         final_draft: draft
+     }
+     var error = true;
+     await fetch(`${server}/api/projects/${projectID}`, {
+        method: 'put',
+        body:    JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res => {
+        if(res.status === 200){
+            error = false;
+        }
+        console.log(res.status)
+        return res.json()
+    })
+    .then(json => {
+        if(!error){
+            json = { msg: 'Final draft sent to partner successfully'}
+        }
+        console.log(json)
+        
+    })
+    .catch((err) => console.log("Error",err));
+
+ }
+
  //3.3 --As an admin I want to post the task/project to the website so that candidates can apply for it.
  async function postProject(id){
     const body = { life_cycle: "Posted" };
@@ -107,6 +138,8 @@ router.put('/:id', async (req,res) => {
         .catch((err) => console.log("Error",err));
         
  }
+ //Test 3.2
+ sendFinalDraft('5c93e6b3c362c56245ec9da0','TESTING DRAFT')
  //Test 3.3
  postProject('5c7a795e53f1ba0c1b351f75');
  module.exports = router
