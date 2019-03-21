@@ -15,9 +15,9 @@ module.exports = {
             estimated_effort: Joi.string().max(50),
             estimated_time: Joi.string().max(50),
             experience_level_needed: Joi.string().max(100),
-            required_skills_set: Joi.string(),
+            required_skills_set: Joi.array(),
             final_draft: Joi.string(),
-            companyID: Joi.objectId().required(),
+            companyID: Joi.objectId(),
             consultancyID: Joi.objectId(),
             memberID: Joi.objectId()
 
