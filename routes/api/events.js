@@ -8,7 +8,10 @@ const validator = require('../../validations/eventValidations')
 
 // gets all events
 router.get('/',async(req,res)=>{
-    const event = await Event.find()
+    const event = await Event.find();
+    event.forEach(function(value){
+        console.log(value.eventType);
+      });
     res.json({data: event})
 }
 );

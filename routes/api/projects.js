@@ -11,7 +11,7 @@ var member_id=null;
 var project_id=null;
 
 router.get('/', async (req,res) => {
-    const projects = await Project.find()
+    const projects = await Project.find();
     res.json({data: projects})
     if(req.query.Member_id!=null){
       member_id=req.query.Member_id;
@@ -20,7 +20,7 @@ router.get('/', async (req,res) => {
 
 })
 
-// choose a project to apply for
+// choose a project to apply for a task
 
 router.post('/:id/apply',async (req,res) => {
     project_id=req.params.id;
@@ -42,7 +42,7 @@ router.post('/:id/apply',async (req,res) => {
         projectId:project_id
     };
  
-fetch('http://localhost:5000/api/applications', {
+  fetch('http://localhost:5000/api/applications', {
         method: 'post',
         body:    JSON.stringify(application),
         headers: { 'Content-Type': 'application/json' },

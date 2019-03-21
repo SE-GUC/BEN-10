@@ -14,6 +14,11 @@ router.get('/', async (req,res) => {
     res.json({data: members})
 })
 
+
+// as a member i want to view my projects 
+
+
+
 // GET method to retirve a member by his id
 router.get('/:id', async (req,res) => {
     const id = req.params.id
@@ -49,21 +54,7 @@ router.get('/:id/notifications',async (req,res) => {
     res.redirect('/api/notifications/?Member_id='+id);
 }
 
-
-
-
 )
-
-
-
-
-
-
-
-
-
-
-
 
 
 //POST method to create a new member
