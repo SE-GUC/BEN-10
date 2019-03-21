@@ -3,6 +3,9 @@ const router = express.Router()
 const mongoose = require('mongoose')
 const ObjectId = require('mongodb').ObjectID;
 mongoose.set('useFindAndModify', false);
+//FETCH REQUIERMENTS
+const fetch = require('node-fetch');
+const server = require('../../config/config');
 
 const ConsultancyAgency = require('../../models/ConsultancyAgency')
 const validator = require('../../validations/consultancyagencyValidations')
@@ -80,5 +83,38 @@ router.delete('/:id', async (req,res) => {
 
     }  
  })
+//As a consultancy agency I want to assign one of the candidates who applied for the task/project.
+ async function assignCandidate(projectID,candidatID){
+
+    const body = { 'memberID': candidatID };
+    var error = true;
+
+    await fetch (`${server}/api/projects/${projectID}`, {
+        method: 'put',
+        body:    JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res => {
+        if(res.status === 200){
+            error = false;
+        }
+        console.log(res.status)
+        if(!error){
+            result = res
+        }
+        return res.json()
+    })
+    .then(json => {
+        if(!error){
+            json = { msg: 'Candidate is assigned successfully'}
+        }
+        console.log(json)
+        
+    })
+    .catch((err) => console.log("Error",err));
+
+ }
+
+ assignCandidate('5c7a795e53f1ba0c1b351f75','5c92fffe676da108728b0def');
 
  module.exports = router
