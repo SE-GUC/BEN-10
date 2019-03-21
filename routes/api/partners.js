@@ -85,20 +85,46 @@ router.delete('/:id', async (req,res) => {
  })
 
 
- //1.0 as a partner i want to submit a description on a task
-async function addDescription(id,decription){
-    const url  = `${server}/api/projects/${id}`;
-    await fetch(url, {
-                      method:'put',
-                      body : JSON.stringify({description : decription}),
-                      headers: { 'Content-Type': 'application/json' }
-                      })
-                .then(res =>{  console.log(res.status)  
-                               return res.json()}
-                     )
-                .then(json =>{ console.log(json)})
-                .catch(err =>{ console.log(err)})
-}
+ //1.0 as a partner i want to submit a description on a task/project 
+ async function addProject(description, company, companyID, category,
+     want_consultancy, consultancy, consultancyID, posted_date, assigned_member, memberID,
+      life_cycle, estimated_effort, estimated_time, experience_level_needed, required_skills_set,
+       final_draft){
+    const body = { description : description ,
+        company:company , companyID:companyID, category:category, want_consultancy : want_consultancy,
+         consultancy : consultancy, consultancyID:consultancyID, posted_date:posted_date, assigned_member:assigned_member,
+        memberID:memberID, life_cycle:life_cycle, estimated_effort:estimated_effort, estimated_time:estimated_time, 
+        experience_level_needed:experience_level_needed, required_skills_set:required_skills_set, 
+         final_draft:final_draft};
+    var error = true;
+    var result;
+ 
+    await fetch(`${server}/api/projects/`, {
+            method: 'post',
+            body:    JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        // .then(checkStatus)
+        .then(res => {
+            if(res.status === 200){
+                error = false;
+            }
+            console.log(res.status)
+            if(!error){
+                result = res
+            }
+            return res.json()
+        })
+        .then(json => {
+            if(!error){
+                json = { msg: 'Project is posted successfully'}
+            }
+            console.log(json)
+            
+        })
+        .catch((err) => console.log("Error",err));
+        
+ }
 
 // 1.1 as a partner i want to assign a consultancy agency to a project 
 
@@ -120,8 +146,8 @@ async function DecideOnProject(id,decision){
 
 
 //Test 1.0
-postProject('5c7a795e53f1ba0c1b351f75', 'adding a description here to the project' );
+addProject('adding a description here to the project' );
 //Test 1.3
-decideEventRequest('5c7a4b2df59c3f032eb6b2dc','approved');
+DecideOnProject('5c7a4b2df59c3f032eb6b2dc','approved');
  
 module.exports = router
