@@ -125,7 +125,30 @@ router.put('/:id', async (req,res) => {
 //     return Promise.reject(err)
 //  }
 
+
+// 3.7 As an admin i want to Accept / reject an event request
+
+async function decideEventRequest(id,decision){
+    const url  = `${server}/api/eventrequests/${id}`;
+    await fetch(url, {
+                      method:'put',
+                      body : JSON.stringify({isAccepted : decision}),
+                      headers: { 'Content-Type': 'application/json' }
+                      })
+                .then(res =>{  console.log(res.status)  
+                               return res.json()}
+                     )
+                .then(json =>{ console.log(json)})
+                .catch(err =>{ console.log(err)})
+}
+
+
+
  //Test 3.3
  postProject('5c7a795e53f1ba0c1b351f75');
+ //Test 3.7
+ decideEventRequest('5c7a4b2df59c3f032eb6b2dc',true);
+
+
 
  module.exports = router
