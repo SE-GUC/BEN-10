@@ -105,27 +105,8 @@ router.put('/:id', async (req,res) => {
             
         })
         .catch((err) => console.log("Error",err));
-
-        // if(!error){
-        //     result.redirect(`${server}/api/projects/${id}`)
-        //     console.log("yees")
-        // }
-        
         
  }
-
- //check if there exists an error in response
-//  function checkStatus(res){
-//     if(res.ok){
-//         return res 
-//     }
-//     console.log(res)
-//     let err = new Error(res);
-//     err.res = res;
-//     return Promise.reject(err)
-//  }
-
  //Test 3.3
  postProject('5c7a795e53f1ba0c1b351f75');
-
  module.exports = router
