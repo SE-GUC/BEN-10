@@ -114,6 +114,7 @@ router.put('/:id', async (req,res) => {
         
  }
 
+ 
  //check if there exists an error in response
 //  function checkStatus(res){
 //     if(res.ok){
