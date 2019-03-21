@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-
+//FETCH REQUIERMENTS
+const fetch = require('node-fetch');
+const server = require('../../config/config');
 const PartnerInfo = require('../../models/PartnerInfo')
 const validator = require('../../validations/partnerValidations')
 const ObjectId = require('mongodb').ObjectID;
@@ -117,6 +119,9 @@ async function DecideOnProject(id,decision){
 }
 
 
+//Test 1.0
+postProject('5c7a795e53f1ba0c1b351f75', 'adding a description here to the project' );
+//Test 1.3
+decideEventRequest('5c7a4b2df59c3f032eb6b2dc','approved');
  
-
 module.exports = router
