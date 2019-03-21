@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const member = require('../../models/member')
-
+const fetch = require('node-fetch');
 const validator = require('../../validations/memberValidations')
 const notificationValidator = require('../../validations/notificationsValidation')
 
@@ -33,13 +33,26 @@ router.get('/:id/projects', async (req,res) => {
     const id = req.params.id;
     try{
         if(id.match(/^[0-9a-fA-F]{24}$/))
-        res.redirect('/api/projects/?Member_id='+id);
+            res.redirect('/api/projects/?Member_id='+id);
 
      }catch{
         //console.log('Invalid Object id');
         return res.status(400).send({error:"the provided id is not valid one "})
      }
 })
+
+
+// view my notifications
+
+router.get('/:id/notifications',async (req,res) => {
+    const id = req.params.id;
+    res.redirect('/api/notifications/?Member_id='+id);
+}
+
+
+
+
+)
 
 
 
