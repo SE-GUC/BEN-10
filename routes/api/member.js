@@ -18,15 +18,40 @@ router.get('/', async (req,res) => {
 router.get('/:id', async (req,res) => {
     const id = req.params.id
     try{
-        (id.match(/^[0-9a-fA-F]{24}$/))
+        if(id.match(/^[0-9a-fA-F]{24}$/)){
         const mem = await member.findById(id)
         res.json({data: mem})
+        }
      }catch{
         //console.log('Invalid Object id');
         return res.status(400).send({error:"the provided id is not valid one "})
      }
    
 })
+// Get all projects for a member
+router.get('/:id/projects', async (req,res) => {
+    const id = req.params.id;
+    try{
+        if(id.match(/^[0-9a-fA-F]{24}$/))
+        res.redirect('/api/projects/?Member_id='+id);
+
+     }catch{
+        //console.log('Invalid Object id');
+        return res.status(400).send({error:"the provided id is not valid one "})
+     }
+})
+
+
+
+
+
+
+
+
+
+
+
+
 
 //POST method to create a new member
 router.post('/', async (req,res) => {
@@ -88,5 +113,7 @@ router.delete('/:id', async (req,res) => {
         console.log(error)
     }
  })
+
+
 
  module.exports = router
