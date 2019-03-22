@@ -11,6 +11,7 @@ const server = require('../../config/config');
 // GET method to retrieve all members
 router.get('/', async (req,res) => {
     const members = await member.find()
+    
     res.json({data: members})
 
 })
@@ -51,6 +52,7 @@ router.get('/:id/projects', async (req,res) => {
                return res.json()
            })
            .then(json => {
+               console.log(json.data[0]);
             res.json({data:json.data})
                
         
@@ -119,7 +121,6 @@ router.post('/:id1/projects/:id2',async (req,res) => {
         activeTasks:active_task,
         projectId:project_id
     };
- 
   fetch(`${server}/api/applications`, {
         method: 'post',
         body:    JSON.stringify(application),
