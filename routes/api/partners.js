@@ -3,7 +3,7 @@ const router = express.Router()
 const mongoose = require('mongoose')
 const fetch = require("node-fetch")
 const server = require('../../config/config');
-
+const Project = require('../../models/Project')
 const PartnerInfo = require('../../models/PartnerInfo')
 const validator = require('../../validations/partnerValidations')
 const ObjectId = require('mongodb').ObjectID;
@@ -70,7 +70,7 @@ router.post('/', async (req,res) => {
             if(req.body.requestedBy!=null && req.body.description!=null&&req.body.eventType!=null &&
                req.body.eventLocation!=null && req.body.eventDate!=null){    
         
-                const j = await CARequestEvent(req.body.requestedBy, req.body.description, 
+                const j = await PartnerRequestEvent(req.body.requestedBy, req.body.description, 
                                                req.body.eventType, req.body.eventLocation, req.body.eventDate);
                 res.status(200).send(j)
                 
@@ -133,7 +133,7 @@ router.delete('/:id', async (req,res) => {
      console.log('fssss')
  }
 }
- async function editProject(description,company,companyID,category,want_consultancy,posted_date,life_cycle){
+ async function editProject(id,description,company,companyID,category,want_consultancy,posted_date,life_cycle){
     const body = { 
         description:description,
         company: company,
@@ -144,9 +144,8 @@ router.delete('/:id', async (req,res) => {
         life_cycle: life_cycle
      };
     var error = true;
-    var result;
     const pr = await Project.findById(id)
-    if(pr.lifecycle === 'Not Posted'){
+    //if(pr.lifecycle === 'Not Posted'){
  
     await fetch(`${server}/api/projects/${id}`, {
             method: 'put',
@@ -167,32 +166,11 @@ router.delete('/:id', async (req,res) => {
 
         .catch((err) => console.log("Error",err));
         
- }else{
-     console.log('fssss')
- }}
- async function requestEvent(id){
-    var error = true;
-    var result;
-    await fetch(`${server}/api/eventrequests/${id}`, {
-            method: 'post',
-            body:    JSON.stringify(body),
-            headers: { 'Content-Type': 'application/json' }
-        })
-        .then(res => {
-            if(res.status === 200){
-                error = false;
-            }
-            console.log(res.status)
-            if(!error){
-                result = res
-            }
-            return res.json()
-        })
-
-        .catch((err) => console.log("Error",err));
-        
+ //}else{
+    // console.log('fssss')
+// }
+}
  
- }
  async function PartnerRequestEvent(requestedBy, description, eventType, eventLocation, eventDate){
     const body = { 
         requestedBy:requestedBy,
@@ -226,7 +204,7 @@ router.delete('/:id', async (req,res) => {
 }
 
  // test 1.3 delete
-//deleteProject('5c94f8f67902ff137cbc9b03')
+editProject('5c955ea2ea7dd51a0c16c38e','bla','blabla','5c786899f8a8e026447d212f','se','false','1/1/2000','Not Posted')
  
 
  
