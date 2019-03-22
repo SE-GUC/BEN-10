@@ -94,7 +94,6 @@ router.delete('/:id', async (req,res) => {
     else {
         return res.status(404).send({ error: "ID NOT FOUND" })
     }
-
     
   });
 
@@ -107,14 +106,13 @@ router.delete('/:id', async (req,res) => {
       .then(res => res.json())
       .then(json => {
         const projects = json.data;
-        const hisProjects = projects.filter(m => m.companyID === partnerid && m.life_cycle==="Final review");
+        const hisProjects = projects.filter(m => m.companyID === partnerid && m.life_cycle==="Final Review");
         result = hisProjects;
         return hisProjects;
       })
       .catch(err => console.log("Error", err));
+      console.log(result)
     return result;
   }
-  getProjects('5c93d983f3fe6358b41ccd7a');
-
 
 module.exports = router
