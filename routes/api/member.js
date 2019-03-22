@@ -93,7 +93,7 @@ router.delete('/:id', async (req,res) => {
  })
  //as a candidate i want to view tasks so that i can apply for them 
 
- router.get('/:id/getProjects', async (req,res)=> {
+ router.get('/:id/getProject', async (req,res)=> {
     const id = req.params.id
     if(ObjectId.isValid(id))
     {
@@ -129,7 +129,7 @@ router.delete('/:id', async (req,res) => {
     const id = req.params.id
     if(ObjectId.isValid(id))
     {
-        const j = await getEvent(id);
+        const j = await getEvents(id);
         res.json({data:j});
     }
     else {
@@ -138,7 +138,7 @@ router.delete('/:id', async (req,res) => {
     
   });
 
- async function getEvent() {
+ async function getEvents() {
     var result = [];
     await fetch(`${server}/api/events`)
       .then(res => res.json())
