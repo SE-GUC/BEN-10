@@ -25,6 +25,7 @@
     "joi-objectid": "^2.0.0",
     "mongoose": "^5.4.16",
     "moongoose": "0.0.5",
+    "node-fetch": "^2.3.0",
     "nodemon": "^1.18.10",
     "uuid": "^3.3.2"
   }
