@@ -86,7 +86,7 @@ router.delete('/:id', async (req,res) => {
     if(ObjectId.isValid(id))
     {
         const j = await getProjects(id);
-        res.status(200).send(j) ;
+        res.json({data:j});
     }
     else {
         return res.status(404).send({ error: "ID NOT FOUND" })
@@ -99,15 +99,17 @@ router.delete('/:id', async (req,res) => {
 
 
  async function getProjects(partnerid) {
+    var result = [];
     await fetch(`${server}/api/projects`)
       .then(res => res.json())
       .then(json => {
         const projects = json.data;
-        const hisProjects = projects.filter(m => m.companyID === partnerid && m.life_cycle=="Final review");
+        const hisProjects = projects.filter(m => m.companyID === partnerid && m.life_cycle==="Final review");
+        result =hisProjects;
         return hisProjects;
       })
       .catch(err => console.log("Error", err));
-    return hisProjects;
+    return result;
   }
 
 
