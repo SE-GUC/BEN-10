@@ -132,7 +132,6 @@ router.delete('/:id', async (req,res) => {
                     .catch((err) => console.log("Error",err));
                     return result
 
-            res.status(200).send(j)
         }
         else {
             return res.status(404).send({ error: "Error" })
