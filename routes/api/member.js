@@ -92,7 +92,7 @@ router.delete('/:id', async (req,res) => {
  })
 
 
- //As a candidate I want to book a place in an event (based on the event’s type).
+ //4.8//As a candidate I want to book a place in an event (based on the event’s type).
  router.put('/:id1/bookEvent/:id2',async (req,res) => {
             const canId=req.params.id1;
             const  eventId =req.params.id2;
@@ -147,5 +147,5 @@ async function bookEvent(eid,members){
     .catch((err) => console.log("Error",err));
     return j;
 }
-
+//test 4.8 
  module.exports = router
