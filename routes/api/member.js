@@ -6,6 +6,8 @@ const fetch = require("node-fetch");
 const server = require("../../config/config");
 const validator = require('../../validations/memberValidations')
 const notificationValidator = require('../../validations/notificationsValidation')
+const ObjectId = require('mongodb').ObjectID;
+
 
 
 
@@ -127,7 +129,7 @@ router.delete('/:id', async (req,res) => {
     const id = req.params.id
     if(ObjectId.isValid(id))
     {
-        const j = await getProjects(id);
+        const j = await getEvent(id);
         res.json({data:j});
     }
     else {
@@ -136,10 +138,6 @@ router.delete('/:id', async (req,res) => {
     
   });
 
-
- 
-  
-getEvent();
  async function getEvent() {
     var result = [];
     await fetch(`${server}/api/events`)
@@ -150,13 +148,12 @@ getEvent();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0');
         var yyyy = today.getFullYear();
-        today = mm + '/' + dd + '/' + yyyy;
+        today = yyyy + '-' + mm + '-' + dd +'T00:00:00.000Z';
         const hisEvents = events.filter(m => m.eventDate >= today );
         result =hisEvents;
         return hisEvents;
     })
     .catch(err => console.log("Error", err));
-    console.log(result)
     
     return result;
 
