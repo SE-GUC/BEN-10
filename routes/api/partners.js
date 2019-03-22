@@ -86,7 +86,23 @@ router.delete('/:id', async (req,res) => {
 
 
  //1.0 as a partner i want to submit a description on a task/project 
- 
+ router.post('/:id/addProject/', async (req,res) => {
+    try {
+        if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
+        {
+            const j = await addProject(req.params.pid)
+            res.status(200).send(j)
+        }
+        else {
+            return res.status(404).send({ error: "Error" })
+        }
+    }
+    catch(error) {
+        console.log(error)
+        return res.status(400).send('Error')
+    }
+      
+ })
  async function addProject(description, company, companyID, category,
      want_consultancy, consultancy, consultancyID, posted_date, assigned_member, memberID,
       life_cycle, estimated_effort, estimated_time, experience_level_needed, required_skills_set,
@@ -129,6 +145,89 @@ router.delete('/:id', async (req,res) => {
 
 // 1.1 as a partner i want to assign a consultancy agency to a project 
 
+//1.1 part1 View consultancy agency
+router.get("/:id/assignCAtoProject/:pid", async (req, res) => {
+    var j = await getApplyingConsultancyAgency(req.params.pid);
+    var result = [];
+    var i;
+    for (i = 0; i < j.length; i++) {
+      await fetch(`${server}/api/consultancyagency/${j[i]}`)
+        .then(res => res.json())
+        .then(json => {
+          const consultancyagency = json.data;
+          result.push(consultancyagency);
+        })
+        .catch(err => console.log("Error", err));
+    }
+    res.json({ data: result });
+  });
+  
+  async function getApplyingConsultancyAgency(pid) {
+    var result = [];
+    await fetch(`${server}/api/applications`)
+      .then(res => res.json())
+      .then(json => {
+        const ConsultancyAgency = json.data;
+        const appliedConsultancies = ConsultancyAgency.filter(c => c.projectId === pid);
+        appliedConsultancies.forEach(c => {
+          result.push(c.applicantId);
+        });
+        return result;
+      })
+      .catch(err => console.log("Error", err));
+    return result;
+  }
+  
+  //1.1 part2 assign a CA to a project
+  router.put("/:id/assignCAtoProject/:pid", async (req, res) => {
+    const members = await getApplyingConsultancyAgency(req.params.pid);
+    if (req.body.consultancyID != null) {
+      candidatID = req.body.consultancyID;
+    } else {
+      return res.status(400).send({ error: "Please enter consultancy agency ID" });
+    }
+    const canBeAssigned = consultancyagency.includes(candidatID);
+    var j;
+    if (canBeAssigned) {
+      j = await assigning(req.params.pid, candidatID);
+      res.status(200).send(j);
+    } else {
+      res.status(400).send({ error: "Consultancy Agency did not apply" });
+    }
+  });
+  
+  async function assigning(projectID, candidatID) {
+    const body = { consultancyID: candidatID };
+    var error = true;
+    var j;
+  
+    await fetch(`${server}/api/projects/${projectID}`, {
+      method: "put",
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" }
+    })
+      .then(res => {
+        if (res.status === 200) {
+          error = false;
+        }
+        if (!error) {
+          result = res;
+        }
+        return res.json();
+      })
+      .then(json => {
+        if (!error) {
+          json = { msg: "Consultancy Agency is assigned successfully" };
+        }
+        j = json;
+      })
+      .catch(err => {
+        console.log("Error", err);
+        j = { msg: "Error" };
+      });
+  
+    return j;
+  }
 
 //1.2 as a partner i want to approve / disapprove a final draft 
 router.put('/:id/DecideOnProject/:pid', async (req,res)=>{
@@ -162,9 +261,5 @@ async function DecideOnProject(id,decision){
 }
 
 
-//Test 1.0
-addProject('adding a description here to the project' );
-//Test 1.3
-DecideOnProject('5c7a4b2df59c3f032eb6b2dc','approved');
  
 module.exports = router
