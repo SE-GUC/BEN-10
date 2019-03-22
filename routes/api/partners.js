@@ -107,7 +107,7 @@ router.delete('/:id', async (req,res) => {
              
                 await fetch(`${server}/api/projects/`, {
                         method: 'post',
-                        body:    JSON.stringify(body),
+                        body:    JSON.stringify(Project),
                         headers: { 'Content-Type': 'application/json' },
                     })
                     // .then(checkStatus)
