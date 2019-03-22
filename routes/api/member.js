@@ -88,6 +88,7 @@ router.delete('/:id', async (req,res) => {
         console.log(error)
     }
  })
+ //as a candidate i want to view tasks so that i can apply for them 
 
  router.get('/:id/getProjects', async (req,res)=> {
     const id = req.params.id
@@ -118,6 +119,40 @@ router.delete('/:id', async (req,res) => {
       })
       .catch(err => console.log("Error", err));
     return result;
+
+  }
+  //as a candidate i want to view an events so that i can book a place in it 
+  router.get('/:id/getEvent', async (req,res)=> {
+    const id = req.params.id
+    if(ObjectId.isValid(id))
+    {
+        const j = await getProjects(id);
+        res.json({data:j});
+    }
+    else {
+        return res.status(404).send({ error: "ID NOT FOUND" })
+    }
+    
+  });
+
+
+ 
+  
+
+ async function getEvent() {
+    var result = [];
+    await fetch(`${server}/api/events`)
+      .then(res => res.json())
+      .then(json => {
+        const events = json.data;
+        const hisEvents = events.filter(m => m.eventDate>= Date.now() );
+        result =hisEvents;
+        return hisEvents;
+      })
+      .catch(err => console.log("Error", err));
+    return result;
+
+
 
   }
 
