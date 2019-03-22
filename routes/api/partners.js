@@ -88,9 +88,9 @@ router.delete('/:id', async (req,res) => {
  //1.0 as a partner i want to submit a description on a task/project 
  router.post('/:id/addProject/', async (req,res) => {
     try {
-        if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
+        if(ObjectId.isValid(req.params.id))
         {
-            const j = await addProject(req.params.pid)
+            const j = await addProject(req.body)
             res.status(200).send(j)
         }
         else {
@@ -103,16 +103,7 @@ router.delete('/:id', async (req,res) => {
     }
       
  })
- async function addProject(description, company, companyID, category,
-     want_consultancy, consultancy, consultancyID, posted_date, assigned_member, memberID,
-      life_cycle, estimated_effort, estimated_time, experience_level_needed, required_skills_set,
-       final_draft){
-    const body = { description : description ,
-        company:company , companyID:companyID, category:category, want_consultancy : want_consultancy,
-         consultancy : consultancy, consultancyID:consultancyID, posted_date:posted_date, assigned_member:assigned_member,
-        memberID:memberID, life_cycle:life_cycle, estimated_effort:estimated_effort, estimated_time:estimated_time, 
-        experience_level_needed:experience_level_needed, required_skills_set:required_skills_set, 
-         final_draft:final_draft};
+ async function addProject(body){
     var error = true;
     var result;
  
@@ -136,10 +127,12 @@ router.delete('/:id', async (req,res) => {
             if(!error){
                 json = { msg: 'Project is posted successfully'}
             }
+            res = json
             console.log(json)
             
         })
         .catch((err) => console.log("Error",err));
+        return res
         
  }
 
@@ -164,7 +157,7 @@ router.get("/:id/assignCAtoProject/:pid", async (req, res) => {
   
   async function getApplyingConsultancyAgency(pid) {
     var result = [];
-    await fetch(`${server}/api/applications`)
+    await fetch(`${server}/api/consultancyagency`)
       .then(res => res.json())
       .then(json => {
         const ConsultancyAgency = json.data;
