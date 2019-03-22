@@ -26,7 +26,8 @@ module.exports = {
             Mobile_number:Joi.string().required(),
             Alternative_Mobile_number:Joi.string(),
             events: Joi.array().items(Joi.objectId()),
-            projects: Joi.array().items(Joi.objectId())
+            projects: Joi.array().items(Joi.objectId()),
+            skill_set:Joi.array().items(Joi.string())
         }
 
         return Joi.validate(request, createSchema)
@@ -57,7 +58,8 @@ module.exports = {
             Mobile_number:Joi.string(),
             Alternative_Mobile_number:Joi.string(),
             events: Joi.array().items(Joi.objectId()),
-            projects: Joi.array().items(Joi.objectId())
+            projects: Joi.array().items(Joi.objectId()),
+            skill_set:Joi.array().items(Joi.string())
 
         }
 
