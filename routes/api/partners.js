@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
+const fetch = require("node-fetch");
+const server = require("../../config/config");
 
 const PartnerInfo = require('../../models/PartnerInfo')
 const validator = require('../../validations/partnerValidations')
@@ -86,6 +88,7 @@ router.delete('/:id', async (req,res) => {
  
  router.get("/:id/ShowFinalDraft", async (req, res) => {
     const id = req.params.id;
+
     if(ObjectId.isValid(id))
     {
         const j = await getProjects(id);
@@ -94,7 +97,6 @@ router.delete('/:id', async (req,res) => {
     else {
         return res.status(404).send({ error: "ID NOT FOUND" })
     }
-    
     
   });
 
@@ -115,6 +117,5 @@ router.delete('/:id', async (req,res) => {
       .catch(err => console.log("Error", err));
     return result;
   }
-
 
 module.exports = router
