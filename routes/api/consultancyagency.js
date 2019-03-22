@@ -111,8 +111,7 @@ async function getApplyingMembers(pid){
     .then(res => res.json())
     .then(json => {
         const members = json.data;
-        console.log(pid)
-        const appliedmembers = members.filter(m => m.projectID == pid)
+        const appliedmembers = members.filter(m => m.projectID === '5c784feb3696f059c13f5764')
         const result = []
         appliedmembers.forEach(m => {
             result.push(m.applicantID)            
