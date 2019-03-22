@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
+const fetch = require("node-fetch")
+const server = require('../../config/config');
 
 const PartnerInfo = require('../../models/PartnerInfo')
 const validator = require('../../validations/partnerValidations')
@@ -81,6 +83,89 @@ router.delete('/:id', async (req,res) => {
 
     }  
  })
+ async function deleteProject(id){
+    var error = true;
+    var result;
+    const p = await Project.findById(id)
+    if(p.lifecycle === 'Not Posted'){
+ 
+    await fetch(`${server}/api/projects/${id}`, {
+            method: 'delete',
+            body:    JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(res => {
+            if(res.status === 200){
+                error = false;
+            }
+            console.log(res.status)
+            if(!error){
+                result = res
+            }
+            return res.json()
+        })
+
+        .catch((err) => console.log("Error",err));
+        
+ }else{
+     console.log('fssss')
+ }
+}
+ async function editProject(id){
+    var error = true;
+    var result;
+    const pr = await Project.findById(id)
+    if(pr.lifecycle === 'Not Posted'){
+ 
+    await fetch(`${server}/api/projects/${id}`, {
+            method: 'put',
+            body:    JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' }     
+        })
+         
+        .then(res => {
+            if(res.status === 200){
+                error = false;
+            }
+            console.log(res.status)
+            if(!error){
+                result = res
+            }
+            return res.json()
+        })
+
+        .catch((err) => console.log("Error",err));
+        
+ }else{
+     console.log('fssss')
+ }}
+ async function requestEvent(id){
+    var error = true;
+    var result;
+    await fetch(`${server}/api/eventrequests/${id}`, {
+            method: 'post',
+            body:    JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(res => {
+            if(res.status === 200){
+                error = false;
+            }
+            console.log(res.status)
+            if(!error){
+                result = res
+            }
+            return res.json()
+        })
+
+        .catch((err) => console.log("Error",err));
+        
+ 
+ }
+
+ // test 1.3 delete
+editProject('5c94f8f67902ff137cbc9b03')
+ 
 
  
 
