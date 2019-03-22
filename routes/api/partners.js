@@ -86,7 +86,7 @@ router.delete('/:id', async (req,res) => {
 
 
  //1.0 as a partner i want to submit a description on a task/project 
- router.post('/:id/addProject/', async (req,res) => {
+ router.post('/:id/addProject', async (req,res) => {
     try {
         if(ObjectId.isValid(req.params.id))
         {
@@ -102,7 +102,7 @@ router.delete('/:id', async (req,res) => {
             experience_level_needed:req.params.experience_level_needed,
             required_skills_set:req.params.required_skills_set
             }
-                var error = true;
+               var error = true;
                 var result;
              
                 await fetch(`${server}/api/projects/`, {
@@ -131,7 +131,8 @@ router.delete('/:id', async (req,res) => {
                     })
                     .catch((err) => console.log("Error",err));
                     return result
-
+                    
+             
         }
         else {
             return res.status(404).send({ error: "Error" })
