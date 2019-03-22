@@ -12,11 +12,11 @@ const notificationValidator = require('../../validations/notificationsValidation
 router.get('/', async (req,res) => {
     const members = await member.find()
     res.json({data: members})
+
 })
 
 
 // as a member i want to view my projects 
-
 
 
 // GET method to retirve a member by his id
@@ -37,8 +37,26 @@ router.get('/:id', async (req,res) => {
 router.get('/:id/projects', async (req,res) => {
     const id = req.params.id;
     try{
-        if(id.match(/^[0-9a-fA-F]{24}$/))
-            res.redirect('/api/projects/?Member_id='+id);
+        if(id.match(/^[0-9a-fA-F]{24}$/)){
+            // res.redirect('/api/projects/?Member_id='+id);
+            var error = true;
+            await fetch('http://localhost:5000/api/projects', {
+               method: 'get',
+               headers: { 'Content-Type': 'application/json' },
+           })
+           .then(res => {
+               if(res.status === 200){
+                   error = false;
+               }
+               return res.json()
+           })
+           .then(json => {
+            res.json({data:json.data})
+               
+        
+           })
+           .catch((err) => console.log("Error",err));
+        }
 
      }catch{
         //console.log('Invalid Object id');
@@ -47,14 +65,71 @@ router.get('/:id/projects', async (req,res) => {
 })
 
 
+
 // view my notifications
 
 router.get('/:id/notifications',async (req,res) => {
     const id = req.params.id;
-    res.redirect('/api/notifications/?Member_id='+id);
+    // res.redirect('/api/notifications/?Member_id='+id);
+    var error = true;
+    await fetch('http://localhost:5000/api/notifications', {
+       method: 'get',
+       headers: { 'Content-Type': 'application/json' },
+   })
+   .then(res => {
+       if(res.status === 200){
+           error = false;
+       }
+       return res.json()
+   })
+   .then(json => {
+      
+    const mynotification=json.data;
+    const notif=mynotification.filter(mynotification => mynotification.NotifiedPerson===id)
+    res.json({data:notif})
+
+   })
+   .catch((err) => console.log("Error",err));
+
 }
 
 )
+
+
+// i want to be able to apply for a task or a project
+router.post('/:id1/projects/:id2',async (req,res) => {
+    const project_id=req.params.id2;
+    const member_id=req.params.id1;
+    if(project_id.match(/^[0-9a-fA-F]{24}$/)&&member_id.match(/^[0-9a-fA-F]{24}$/)){
+    var active_task=req.body.activeTasks;
+    if(typeof active_task === "undefined")
+          active_task=0;
+
+    const application = { 
+        applicantId:member_id,
+        applicantName:req.body.applicantName,
+        gender:req.body.gender,
+        age:req.body.age,
+        email:req.body.email,
+        mobile:req.body.mobile,
+        applyingDate:req.body.applyingDate,
+        skills:req.body.skills,
+        yearsOfExp:req.body.yearsOfExp,
+        hasJob:req.body.hasJob,
+        activeTasks:active_task,
+        projectId:project_id
+    };
+ 
+  fetch('http://localhost:5000/api/applications', {
+        method: 'post',
+        body:    JSON.stringify(application),
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res =>res.json())
+    .then(json =>res.json(json));
+}
+
+})
 
 
 //POST method to create a new member

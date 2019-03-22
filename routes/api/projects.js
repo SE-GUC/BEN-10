@@ -7,50 +7,50 @@ const validator = require('../../validations/projectValidations')
 const ObjectId = require('mongodb').ObjectID;
 mongoose.set('useFindAndModify', false);
 
-var member_id=null;
-var project_id=null;
+// var member_id=null;
+// var project_id=null;
 
 router.get('/', async (req,res) => {
     const projects = await Project.find();
     res.json({data: projects})
-    if(req.query.Member_id!=null){
-      member_id=req.query.Member_id;
+    // if(req.query.Member_id!=null){
+    //   member_id=req.query.Member_id;
 
-    }
+    // }
 
 })
 
 // choose a project to apply for a task
 
-router.post('/:id/apply',async (req,res) => {
-    project_id=req.params.id;
-    var active_task=req.body.activeTasks;
-    if(typeof active_task === "undefined")
-          active_task=0;
+// router.post('/:id/apply',async (req,res) => {
+//     project_id=req.params.id;
+//     var active_task=req.body.activeTasks;
+//     if(typeof active_task === "undefined")
+//           active_task=0;
 
-    const application = { applicantId:member_id,
-        applicantName:req.body.applicantName,
-        gender:req.body.gender,
-        age:req.body.age,
-        email:req.body.email,
-        mobile:req.body.mobile,
-        applyingDate:req.body.applyingDate,
-        skills:req.body.skills,
-        yearsOfExp:req.body.yearsOfExp,
-        hasJob:req.body.hasJob,
-        activeTasks:active_task,
-        projectId:project_id
-    };
+//     const application = { applicantId:member_id,
+//         applicantName:req.body.applicantName,
+//         gender:req.body.gender,
+//         age:req.body.age,
+//         email:req.body.email,
+//         mobile:req.body.mobile,
+//         applyingDate:req.body.applyingDate,
+//         skills:req.body.skills,
+//         yearsOfExp:req.body.yearsOfExp,
+//         hasJob:req.body.hasJob,
+//         activeTasks:active_task,
+//         projectId:project_id
+//     };
  
-  fetch('http://localhost:5000/api/applications', {
-        method: 'post',
-        body:    JSON.stringify(application),
-        headers: { 'Content-Type': 'application/json' },
-    })
-    .then(res =>res.json())
-    .then(json =>console.log(json));
+//   fetch('http://localhost:5000/api/applications', {
+//         method: 'post',
+//         body:    JSON.stringify(application),
+//         headers: { 'Content-Type': 'application/json' },
+//     })
+//     .then(res =>res.json())
+//     .then(json =>console.log(json));
 
-})
+// })
 
 
 // select a project
