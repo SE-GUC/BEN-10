@@ -97,6 +97,7 @@ router.delete('/:id', async (req,res) => {
 
   
 
+
  async function getProjects(partnerid) {
     await fetch(`${server}/api/projects`)
       .then(res => res.json())
