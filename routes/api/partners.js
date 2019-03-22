@@ -86,7 +86,7 @@ router.delete('/:id', async (req,res) => {
 
 
  //1.0 as a partner i want to submit a description on a task/project 
- router.post('/:id/addProject', async (req,res) => {
+ router.post('/:id/addProject/', async (req,res) => {
     try {
         if(ObjectId.isValid(req.params.id))
         {
