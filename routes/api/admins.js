@@ -7,7 +7,6 @@ const server = require('../../config/config');
 
 const Admin = require('../../models/Admin')
 const validator = require('../../validations/adminValidations')
-const pvalidator = require('../../validations/projectValidations')
 const notificationValidator = require('../../validations/memberValidations')
 
 const ObjectId = require('mongodb').ObjectID;
@@ -76,17 +75,18 @@ router.put('/:id', async (req,res) => {
     }  
  })
 
- router.put('/:id/:pid/sendDraft', async (req,res)=>{
+ //3.2 --As an admin I want to send a final draft of the task/project so that the partner can approve posting it.
+ router.put('/:id/sendDraft/:pid', async (req,res)=>{
     try {
         if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
-            {
-            const admin = await Admin.findById(id)
-            if (!admin) return res.status(404).send({error: 'Admin does not exist'})
-            const isValidated = pvalidator.updateValidation(req.body)
-            if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-            const updatedProject = await Project.findByIdAndUpdate({_id: req.params.pid}, req.body)
-            if (!updatedProject) return res.status(404).send({error: 'Project does not exist'})
-            res.json({msg: 'Draft sent successfully'})
+        {
+            if(req.body.final_draft != null){           
+            const j = await sendFinalDraft(req.params.pid,req.body.final_draft)
+            res.status(200).send(j)
+            }
+            else{
+                return res.status(400).send({ error: "Please insert thr final" })
+            }
         }
         else {
             return res.status(404).send({ error: "ID NOT FOUND" })
@@ -98,13 +98,13 @@ router.put('/:id', async (req,res) => {
     }    
  })
 
- //3.2 --As an admin I want to send a final draft of the task/project so that the partner can approve posting it.
  async function sendFinalDraft(projectID, draft){
      const body = {
          life_cycle: "Waiting for draft approval",
          final_draft: draft
      }
      var error = true;
+     var j;
      await fetch(`${server}/api/projects/${projectID}`, {
         method: 'put',
         body:    JSON.stringify(body),
@@ -121,10 +121,12 @@ router.put('/:id', async (req,res) => {
         if(!error){
             json = { msg: 'Final draft sent to partner successfully'}
         }
-        console.log(json)
+        j = json
         
     })
     .catch((err) => console.log("Error",err));
+    
+    return j
 
  }
 
