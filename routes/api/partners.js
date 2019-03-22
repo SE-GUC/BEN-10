@@ -102,7 +102,6 @@ router.delete('/:id', async (req,res) => {
             experience_level_needed:req.params.experience_level_needed,
             required_skills_set:req.params.required_skills_set
             }
-            async function addProject(body){
                 var error = true;
                 var result;
              
@@ -132,8 +131,7 @@ router.delete('/:id', async (req,res) => {
                     })
                     .catch((err) => console.log("Error",err));
                     return result
-                    
-             }
+
             res.status(200).send(j)
         }
         else {
