@@ -86,7 +86,8 @@ router.delete('/:id', async (req,res) => {
  })
 
  
- 
+ //1.5 As a partner I want to review the final work of the candidate who is working on my task/project.
+
  router.get("/:id/ShowFinalDraft", async (req, res) => {
     const id = req.params.id;
 
@@ -96,14 +97,10 @@ router.delete('/:id', async (req,res) => {
         res.json({data:j});
     }
     else {
-        return res.status(404).send({ error: "ID NOT FOUND" })
+        return res.status(404).send({ error: "ID not found" })
     }
     
   });
-
-
- 
-  
 
  async function getProjects(partnerid) {
     var result = [];
@@ -118,5 +115,7 @@ router.delete('/:id', async (req,res) => {
       .catch(err => console.log("Error", err));
     return result;
   }
+
+//test 1.5
 
 module.exports = router
