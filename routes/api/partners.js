@@ -231,12 +231,12 @@ router.get("/:id/assignCAtoProject/:pid", async (req, res) => {
     return j;
   }
 
-//1.2 as a partner i want to approve / disapprove a final draft 
-router.put('/:id/DecideOnProject/:pid', async (req,res)=>{
+//1.2 as a partner i want to approve 
+router.put('/:id/ApproveProject/:pid', async (req,res)=>{
   try {
       if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
       {
-          const j = await DecideOnProject(req.params.pid)
+          const j = await ApproveProject(req.params.pid)
           res.status(200).send(j)
       }
       else {
@@ -248,11 +248,11 @@ router.put('/:id/DecideOnProject/:pid', async (req,res)=>{
       return res.status(404).send({ error: "not a project id" })
   }    
 })
-async function DecideOnProject(id,decision){
+async function ApproveProject(id){
   const url  = `${server}/api/projects/${id}`;
   await fetch(url, {
                     method:'put',
-                    body : JSON.stringify({life_cycle : decision}),
+                    body : JSON.stringify({life_cycle : "Approved"}),
                     headers: { 'Content-Type': 'application/json' }
                     })
               .then(res =>{  console.log(res.status)  
@@ -261,7 +261,36 @@ async function DecideOnProject(id,decision){
               .then(json =>{ console.log(json)})
               .catch(err =>{ console.log(err)})
 }
-
+//1.2 parte 2 as a partner i want to disapprove 
+router.put('/:id/DisapproveProject/:pid', async (req,res)=>{
+  try {
+      if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
+      {
+          const j = await DisapproveProject(req.params.pid)
+          res.status(200).send(j)
+      }
+      else {
+          return res.status(404).send({ error: "ID NOT FOUND" })
+      }
+  }
+  catch{
+      console.log(error)
+      return res.status(404).send({ error: "not a project id" })
+  }    
+})
+async function DisapproveProject(id){
+  const url  = `${server}/api/projects/${id}`;
+  await fetch(url, {
+                    method:'put',
+                    body : JSON.stringify({life_cycle : "Disapproved"}),
+                    headers: { 'Content-Type': 'application/json' }
+                    })
+              .then(res =>{  console.log(res.status)  
+                             return res.json()}
+                   )
+              .then(json =>{ console.log(json)})
+              .catch(err =>{ console.log(err)})
+}
 
  
 module.exports = router
