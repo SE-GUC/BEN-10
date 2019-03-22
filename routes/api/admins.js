@@ -114,7 +114,6 @@ router.put('/:id', async (req,res) => {
         if(res.status === 200){
             error = false;
         }
-        console.log(res.status)
         return res.json()
     })
     .then(json => {
@@ -124,19 +123,40 @@ router.put('/:id', async (req,res) => {
         j = json
         
     })
-    .catch((err) => console.log("Error",err));
+    .catch((err) => {
+        console.log("Error",err);
+        j = ({ msg: 'Error'})
+    })
     
     return j
 
  }
 
  //3.3 --As an admin I want to post the task/project to the website so that candidates can apply for it.
+ router.put('/:id/postProject/:pid', async (req,res)=>{
+    try {
+        if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
+        {
+            const j = await postProject(req.params.pid)
+            res.status(200).send(j)
+        }
+        else {
+            return res.status(404).send({ error: "ID NOT FOUND" })
+        }
+    }
+    catch{
+        console.log(error)
+        return res.status(404).send({ error: "not a project id" })
+    }    
+ })
+
+
  async function postProject(id){
     const body = { life_cycle: "Posted" };
     var error = true;
-    var result;
+    var j;
  
-    await fetch(`${server}/api/projects/${id}`, {
+    await fetch(`${server}/api/proects/${id}`, {
             method: 'put',
             body:    JSON.stringify(body),
             headers: { 'Content-Type': 'application/json' },
@@ -146,24 +166,22 @@ router.put('/:id', async (req,res) => {
             if(res.status === 200){
                 error = false;
             }
-            console.log(res.status)
-            if(!error){
-                result = res
-            }
+            
             return res.json()
         })
         .then(json => {
             if(!error){
                 json = { msg: 'Project is posted successfully'}
             }
-            console.log(json)
-            
+            j = json            
         })
-        .catch((err) => console.log("Error",err));
+        .catch((err) => {
+            console.log("Error",err)
+            j = ({ msg: 'Error'})
+    });
+
+        return j
         
  }
- //Test 3.2
-//  sendFinalDraft('5c93e6b3c362c56245ec9da0','TESTING DRAFT')
- //Test 3.3
-//  postProject('5c7a795e53f1ba0c1b351f75');
+
  module.exports = router
