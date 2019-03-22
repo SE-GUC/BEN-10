@@ -1,7 +1,7 @@
 const express=require('express');
 // const uuid=require('uuid');
 const router=express.Router();
-const events=require('../../models/Event');
+const Event=require('../../models/Event');
 const validator = require('../../validations/eventValidations')
 
 
@@ -9,9 +9,6 @@ const validator = require('../../validations/eventValidations')
 // gets all events
 router.get('/',async(req,res)=>{
     const event = await Event.find();
-    event.forEach(function(value){
-        console.log(value.eventType);
-      });
     res.json({data: event})
 }
 );
