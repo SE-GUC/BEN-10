@@ -127,12 +127,12 @@ router.delete('/:id', async (req,res) => {
             if(!error){
                 json = { msg: 'Project is posted successfully'}
             }
-            res = json
+            result = json
             console.log(json)
             
         })
         .catch((err) => console.log("Error",err));
-        return res
+        return result
         
  }
 
