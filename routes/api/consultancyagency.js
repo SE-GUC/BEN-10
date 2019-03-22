@@ -105,11 +105,21 @@ router.get('/:id/applyingMembers/:pid', async (req,res)=>{
 
 
 })
-getApplyingMembers()
-async function getApplyingMembers(){
+getApplyingMembers('5c784feb3696f059c13f5764')
+async function getApplyingMembers(pid){
     fetch(`${server}/api/applications`)
     .then(res => res.json())
-    .then(json => console.log(json))
+    .then(json => {
+        const members = json.data;
+        console.log(pid)
+        const appliedmembers = members.filter(m => m.projectID == pid)
+        const result = []
+        appliedmembers.forEach(m => {
+            result.push(m.applicantID)            
+        });
+        console.log(appliedmembers)
+        console.log(result)
+    })
 }
 
 async function assignCandidate(projectID, candidatID) {
