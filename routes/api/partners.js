@@ -164,7 +164,7 @@ router.delete('/:id', async (req,res) => {
  }
 
  // test 1.3 delete
-editProject('5c94f8f67902ff137cbc9b03')
+deleteProject('5c94f8f67902ff137cbc9b03')
  
 
  
