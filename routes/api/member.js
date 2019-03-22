@@ -145,7 +145,7 @@ router.delete('/:id', async (req,res) => {
       .then(res => res.json())
       .then(json => {
         const events = json.data;
-        const hisEvents = events.filter(m => m.eventDate>= Date.now() );
+        const hisEvents = events.filter(m => m.eventDate>= new Date() );
         result =hisEvents;
         return hisEvents;
       })
