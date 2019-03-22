@@ -81,4 +81,7 @@ router.delete('/:id', async (req,res) => {
     }  
  })
 
+ // 2.1 As a consultancy agency i want to apply for task/project 
+async function caApplyTask
+
  module.exports = router
