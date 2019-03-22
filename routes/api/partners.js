@@ -95,7 +95,7 @@ router.delete('/:id', async (req,res) => {
     
   });
 
-  
+
 
 
  async function getProjects(partnerid) {
