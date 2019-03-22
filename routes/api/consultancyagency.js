@@ -82,6 +82,46 @@ router.delete('/:id', async (req,res) => {
  })
 
  // 2.1 As a consultancy agency i want to apply for task/project 
-async function caApplyTask
+router.put("\:id\caApplyProject\:pid",async(req,res)=>{
+    if(ObjectId.isValid(req.params.caID) && ObjectId.isValid(req.params.pID)){
+        const ca= await ConsultancyAgency.findById(req.params.caID);
+        const project= await Project.findById(req.params.pID);
+        if (ca&& project){
+            const applying= project.applyingCA;
+            applying.push(req.params.caID);
+            const j = await caApplyProject(req.params.pID,applying);
+            res.status(200).send(j);
+        }
+        else
+            return res.status(404).send({error: 'invalid inputs'})
+    }else{
+        return res.status(404).send({error: 'invalid inputs'})
+    }
 
+})
+async function caApplyProject(pID,applying){
+
+    var error = true;
+    const body = { applyingCA: applying};
+    var j;
+    await fetch(`${server}/api/project/${pID}`, {
+            method: 'put',
+            body:    JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res => {
+        if(res.status === 200){
+            error = false;
+        }
+        return res.json()
+    })
+    .then(json => {
+        if(!error){
+            json = { msg: 'Consultancy agent applied successfully'}
+        }
+        j = json;
+    })
+    .catch((err) => console.log("Error",err));
+    return j;
+}
  module.exports = router
