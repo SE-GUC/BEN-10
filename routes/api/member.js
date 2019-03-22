@@ -90,7 +90,7 @@ router.delete('/:id', async (req,res) => {
  })
  //as a candidate i want to view tasks so that i can apply for them 
 
- router.get('/:id/getProjects', async (req,res)=> {
+ router.get('/:id/getProject', async (req,res)=> {
     const id = req.params.id
     if(ObjectId.isValid(id))
     {
@@ -107,7 +107,7 @@ router.delete('/:id', async (req,res) => {
  
   
 
- async function getProjects() {
+ async function getProject() {
     var result = [];
     await fetch(`${server}/api/projects`)
       .then(res => res.json())
