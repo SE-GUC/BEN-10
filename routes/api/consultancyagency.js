@@ -101,13 +101,12 @@ router.delete("/:id", async (req, res) => {
 
 //2.2 --As a consultancy agency I want to assign one of the candidates who applied for the task/project.
 
-//2.2 part1 View candidates assigned to a project
-router.get("/:id/applyingMembers/:pid", async (req, res) => {
+//2.2 part1 View candidates applying for a project
+router.get("/:id/assignMembers/:pid", async (req, res) => {
   var j = await getApplyingMembers(req.params.pid);
   var result = [];
   var i;
   for (i = 0; i < j.length; i++) {
-    console.log(j[i]);
     await fetch(`${server}/api/member/${j[i]}`)
       .then(res => res.json())
       .then(json => {
@@ -135,13 +134,28 @@ async function getApplyingMembers(pid) {
   return result;
 }
 
-router.put("/:id/applyingMembers/:pid", async (req, res) =>{
-    const members = await getApplyingMembers(req.params.pid)
-})
+//2.2 part2 assign a candidate to a project
+router.put("/:id/assignMembers/:pid", async (req, res) => {
+  const members = await getApplyingMembers(req.params.pid);
+  if (req.body.memberID != null) {
+    candidatID = req.body.memberID;
+  } else {
+    return res.status(400).send({ error: "Please enter Memeber ID" });
+  }
+  const canBeAssigned = members.includes(candidatID);
+  var j;
+  if (canBeAssigned) {
+    j = await assignCandidate(req.params.pid, candidatID);
+    res.status(200).send(j);
+  } else {
+    res.status(400).send({ error: "Candidate did not apply on this project" });
+  }
+});
 
 async function assignCandidate(projectID, candidatID) {
   const body = { memberID: candidatID };
   var error = true;
+  var j;
 
   await fetch(`${server}/api/projects/${projectID}`, {
     method: "put",
@@ -152,7 +166,6 @@ async function assignCandidate(projectID, candidatID) {
       if (res.status === 200) {
         error = false;
       }
-      console.log(res.status);
       if (!error) {
         result = res;
       }
@@ -162,9 +175,14 @@ async function assignCandidate(projectID, candidatID) {
       if (!error) {
         json = { msg: "Candidate is assigned successfully" };
       }
-      console.log(json);
+      j = json;
     })
-    .catch(err => console.log("Error", err));
+    .catch(err => {
+      console.log("Error", err);
+      j = { msg: "Error" };
+    });
+
+  return j;
 }
 
 // assignCandidate("5c7a795e53f1ba0c1b351f75", "5c92fffe676da108728b0def");
