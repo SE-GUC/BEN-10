@@ -48,10 +48,10 @@ router.post('/:id/eventrequests/',async (req,res) => {
         const cid=await ConsultancyAgency.findById(req.params.id);
         if(cid){
             if(req.body.requestedBy!=null && req.body.description!=null&&req.body.eventType!=null &&
-            req.body.eventLocation!=null && req.body.eventDate!=null){    
+               req.body.eventLocation!=null && req.body.eventDate!=null){    
         
-                const j = await CARequestEvent(req.params.id, req.body.requestedBy, req.body.description, 
-                                            req.body.eventType, req.body.eventLocation, req.body.eventDate);
+                const j = await CARequestEvent(req.body.requestedBy, req.body.description, 
+                                               req.body.eventType, req.body.eventLocation, req.body.eventDate);
                 res.status(200).send(j)
                 
             }else{
@@ -106,9 +106,8 @@ router.delete('/:id', async (req,res) => {
  })
 
  //2.4 --As a consultancy agency I want to request to organize an event.
- async function CARequestEvent(requestorId, requestedBy, description, eventType, eventLocation, eventDate){
+ async function CARequestEvent(requestedBy, description, eventType, eventLocation, eventDate){
     const body = { 
-        requestorId:requestorId,
         requestedBy:requestedBy,
         description: description,
         eventType: eventType,
