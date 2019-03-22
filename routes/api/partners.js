@@ -86,6 +86,7 @@ router.delete('/:id', async (req,res) => {
 
 
  //1.0 as a partner i want to submit a description on a task/project 
+ 
  async function addProject(description, company, companyID, category,
      want_consultancy, consultancy, consultancyID, posted_date, assigned_member, memberID,
       life_cycle, estimated_effort, estimated_time, experience_level_needed, required_skills_set,
@@ -130,6 +131,22 @@ router.delete('/:id', async (req,res) => {
 
 
 //1.2 as a partner i want to approve / disapprove a final draft 
+router.put('/:id/DecideOnProject/:pid', async (req,res)=>{
+    try {
+        if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
+        {
+            const j = await DecideOnProject(req.params.pid)
+            res.status(200).send(j)
+        }
+        else {
+            return res.status(404).send({ error: "ID NOT FOUND" })
+        }
+    }
+    catch{
+        console.log(error)
+        return res.status(404).send({ error: "not a project id" })
+    }    
+ })
 async function DecideOnProject(id,decision){
     const url  = `${server}/api/projects/${id}`;
     await fetch(url, {
