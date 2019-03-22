@@ -101,6 +101,38 @@ router.delete('/:id', async (req,res) => {
             experience_level_needed:req.params.experience_level_needed,
             required_skills_set:req.params.required_skills_set
             }
+            async function addProject(body){
+                var error = true;
+                var result;
+             
+                await fetch(`${server}/api/projects/`, {
+                        method: 'post',
+                        body:    JSON.stringify(body),
+                        headers: { 'Content-Type': 'application/json' },
+                    })
+                    // .then(checkStatus)
+                    .then(res => {
+                        if(res.status === 200){
+                            error = false;
+                        }
+                        console.log(res.status)
+                        if(!error){
+                            result = res
+                        }
+                        return res.json()
+                    })
+                    .then(json => {
+                        if(!error){
+                            json = { msg: 'Project is posted successfully'}
+                        }
+                        result = json
+                        console.log(json)
+                        
+                    })
+                    .catch((err) => console.log("Error",err));
+                    return result
+                    
+             }
             res.status(200).send(j)
         }
         else {
@@ -113,38 +145,7 @@ router.delete('/:id', async (req,res) => {
     }
       
  })
- async function addProject(body){
-    var error = true;
-    var result;
  
-    await fetch(`${server}/api/projects/`, {
-            method: 'post',
-            body:    JSON.stringify(body),
-            headers: { 'Content-Type': 'application/json' },
-        })
-        // .then(checkStatus)
-        .then(res => {
-            if(res.status === 200){
-                error = false;
-            }
-            console.log(res.status)
-            if(!error){
-                result = res
-            }
-            return res.json()
-        })
-        .then(json => {
-            if(!error){
-                json = { msg: 'Project is posted successfully'}
-            }
-            result = json
-            console.log(json)
-            
-        })
-        .catch((err) => console.log("Error",err));
-        return result
-        
- }
 
 // 1.1 as a partner i want to assign a consultancy agency to a project 
 
