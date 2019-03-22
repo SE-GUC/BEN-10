@@ -1,13 +1,15 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
+const ObjectId = require('mongodb').ObjectID;
+const fetch = require('node-fetch');
+const server = require('../../config/config');
+
+const Event = require('../../models/Event')
 const member = require('../../models/member')
 
 const validator = require('../../validations/memberValidations')
 const notificationValidator = require('../../validations/notificationsValidation')
-
-
-
 // GET method to retrieve all members
 router.get('/', async (req,res) => {
     const members = await member.find()
@@ -68,6 +70,25 @@ router.put('/:id', async (req,res) => {
     }
  })
 
+//4.9 --As a candidate I want that the events I attended be added on my profile.
+router.put('/:id1/events/:id2',async (req,res) => {
+    if(ObjectId.isValid(req.params.id1) && ObjectId.isValid(req.params.id2)){
+        const mem = await member.findById(req.params.id1);
+        const event = await Event.findById(req.params.id2);
+        if (mem && event){
+            const events = mem.events;
+            events.push(req.params.id2);
+            const j = await postevent(req.params.id1,events);
+            res.status(200).send(j);
+        }
+        else
+            return res.status(404).send({error: 'invalid inputs'})
+    }else{
+        return res.status(404).send({error: 'invalid inputs'})
+    }
+
+})
+
 
 // DELETE method to delete a member
 router.delete('/:id', async (req,res) => {
@@ -88,5 +109,35 @@ router.delete('/:id', async (req,res) => {
         console.log(error)
     }
  })
+
+ //4.9 --As a candidate I want that the events I attended be added on my profile.
+ async function postevent(cid,events){
+
+    var error = true;
+    const body = { events: events };
+    var j;
+    await fetch(`${server}/api/member/${cid}`, {
+            method: 'put',
+            body:    JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res => {
+        if(res.status === 200){
+            error = false;
+        }
+        return res.json()
+    })
+    .then(json => {
+        if(!error){
+            json = { msg: 'event is added successfully'}
+        }
+        j = json;
+    })
+    .catch((err) => console.log("Error",err));
+    return j;
+}
+
+//Test 4.9
+//postevent('5c93d983f3fe6358b41ccd7a',['5c7a6d0613ebebeb99a41689']);
 
  module.exports = router
