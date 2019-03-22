@@ -232,7 +232,7 @@ router.get("/:id/assignCAtoProject/:pid", async (req, res) => {
   }
 
 //1.2 as a partner i want to approve / disapprove a final draft 
-router.post('/:id/addProject', async (req,res) => {
+router.post('/:id/DecideOnProject', async (req,res) => {
   try {
       if(ObjectId.isValid(req.params.id))
       {
