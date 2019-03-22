@@ -232,55 +232,35 @@ router.get("/:id/assignCAtoProject/:pid", async (req, res) => {
   }
 
 //1.2 as a partner i want to approve / disapprove a final draft 
-router.post('/:id/DecideOnProject', async (req,res) => {
+router.put('/:id/DecideOnProject/:pid', async (req,res)=>{
   try {
-      if(ObjectId.isValid(req.params.id))
+      if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
       {
-          const company_id=req.params.id
-          const Project={
-          life_cycle : req.body.life_cycle 
-          }
-           
-           var error = true
-          await fetch(`${server}/api/projects/`, {
-              method: 'put',
-              body:    JSON.stringify(Project),
-              headers: { 'Content-Type': 'application/json' },
-          })
-          // .then(checkStatus)
-          .then(res => {
-              if(res.status === 200){
-                  error = false;
-              }
-              console.log(res.status)
-              if(!error){
-                  result = res
-              }
-              return res.json()
-          })
-          .then(json => {
-              if(!error){
-                  res.json(json)
-              }
-              result = json
-              console.log(json)
-              
-          })
-          .catch((err) => console.log("Error",err));
-          return result
-                  
-           
+          const j = await DecideOnProject(req.params.pid)
+          res.status(200).send(j)
       }
       else {
-          return res.status(404).send({ error: "Error" })
+          return res.status(404).send({ error: "ID NOT FOUND" })
       }
   }
-  catch(error) {
+  catch{
       console.log(error)
-      return res.status(400).send('Error')
-  }
-    
+      return res.status(404).send({ error: "not a project id" })
+  }    
 })
+async function DecideOnProject(id,decision){
+  const url  = `${server}/api/projects/${id}`;
+  await fetch(url, {
+                    method:'put',
+                    body : JSON.stringify({life_cycle : decision}),
+                    headers: { 'Content-Type': 'application/json' }
+                    })
+              .then(res =>{  console.log(res.status)  
+                             return res.json()}
+                   )
+              .then(json =>{ console.log(json)})
+              .catch(err =>{ console.log(err)})
+}
 
 
  
