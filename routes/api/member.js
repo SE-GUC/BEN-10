@@ -2,7 +2,8 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const member = require('../../models/member')
-
+const fetch = require("node-fetch");
+const server = require("../../config/config");
 const validator = require('../../validations/memberValidations')
 const notificationValidator = require('../../validations/notificationsValidation')
 
@@ -138,18 +139,25 @@ router.delete('/:id', async (req,res) => {
 
  
   
-
+getEvent();
  async function getEvent() {
     var result = [];
     await fetch(`${server}/api/events`)
       .then(res => res.json())
       .then(json => {
         const events = json.data;
-        const hisEvents = events.filter(m => m.eventDate>= Date.now() );
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        today = mm + '/' + dd + '/' + yyyy;
+        const hisEvents = events.filter(m => m.eventDate >= today );
         result =hisEvents;
         return hisEvents;
-      })
-      .catch(err => console.log("Error", err));
+    })
+    .catch(err => console.log("Error", err));
+    console.log(result)
+    
     return result;
 
 
