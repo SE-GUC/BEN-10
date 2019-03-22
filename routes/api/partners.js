@@ -83,5 +83,30 @@ router.delete('/:id', async (req,res) => {
  })
 
  
+    if(ObjectId.isValid(id))
+    {
+        const j = await getApplyingMembers(req.params.pid);
+        res.status(200).send(j) ;
+    }
+    else {
+        return res.status(404).send({ error: "ID NOT FOUND" })
+    }
+    
+    
+  });
+
+
+ async function getProjects(partnerid) {
+    await fetch(`${server}/api/projects`)
+      .then(res => res.json())
+      .then(json => {
+        const projects = json.data;
+        const hisProjects = projects.filter(m => m.companyID === partnerid && m.life_cycle=="Final review");
+        return hisProjects;
+      })
+      .catch(err => console.log("Error", err));
+    return hisProjects;
+  }
+
 
 module.exports = router
