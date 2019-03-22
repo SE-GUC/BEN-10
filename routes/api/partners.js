@@ -86,51 +86,50 @@ router.delete('/:id', async (req,res) => {
 
 
  //1.0 as a partner i want to submit a description on a task/project 
- router.post('/:id/addProject/', async (req,res) => {
+ router.post('/:id/addProject', async (req,res) => {
     try {
         if(ObjectId.isValid(req.params.id))
         {
             const company_id=req.params.id
             const Project={
-            description:req.params.description,
-            company:req.params.company,
+            description:req.body.description,
+            company:req.body.company,
             companyID: company_id,
-            category:req.params.category,
-            want_consultancy:req.params.want_consultancy,
-            posted_date:req.params.posted_date,
-            life_cycle : life_cycle ,
-            experience_level_needed:req.params.experience_level_needed,
-            required_skills_set:req.params.required_skills_set
+            category:req.body.category,
+            want_consultancy:req.body.want_consultancy,
+            posted_date:req.body.posted_date,
+            life_cycle : "started" ,
+            experience_level_needed:req.body.experience_level_needed,
+            required_skills_set:req.body.required_skills_set
             }
-               var error = true;
-                var result;
              
-                await fetch(`${server}/api/projects/`, {
-                        method: 'post',
-                        body:    JSON.stringify(Project),
-                        headers: { 'Content-Type': 'application/json' },
-                    })
-                    // .then(checkStatus)
-                    .then(res => {
-                        if(res.status === 200){
-                            error = false;
-                        }
-                        console.log(res.status)
-                        if(!error){
-                            result = res
-                        }
-                        return res.json()
-                    })
-                    .then(json => {
-                        if(!error){
-                            json = { msg: 'Project is posted successfully'}
-                        }
-                        result = json
-                        console.log(json)
-                        
-                    })
-                    .catch((err) => console.log("Error",err));
-                    return result
+             
+            await fetch(`${server}/api/projects/`, {
+                method: 'post',
+                body:    JSON.stringify(Project),
+                headers: { 'Content-Type': 'application/json' },
+            })
+            // .then(checkStatus)
+            .then(res => {
+                if(res.status === 200){
+                    error = false;
+                }
+                console.log(res.status)
+                if(!error){
+                    result = res
+                }
+                return res.json()
+            })
+            .then(json => {
+                if(!error){
+                    res.json(json)
+                }
+                result = json
+                console.log(json)
+                
+            })
+            .catch((err) => console.log("Error",err));
+            return result
                     
              
         }
