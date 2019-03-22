@@ -3,6 +3,8 @@ const router = express.Router()
 const mongoose = require('mongoose')
 const ObjectId = require('mongodb').ObjectID;
 mongoose.set('useFindAndModify', false);
+const fetch = require("node-fetch");
+const server = require("../../config/config");
 
 const ConsultancyAgency = require('../../models/ConsultancyAgency')
 const validator = require('../../validations/consultancyagencyValidations')
@@ -82,14 +84,14 @@ router.delete('/:id', async (req,res) => {
  })
 
  // 2.1 As a consultancy agency i want to apply for task/project 
-router.put("\:id\caApplyProject\:pid",async(req,res)=>{
-    if(ObjectId.isValid(req.params.caID) && ObjectId.isValid(req.params.pID)){
-        const ca= await ConsultancyAgency.findById(req.params.caID);
-        const project= await Project.findById(req.params.pID);
+router.put("/:id/caApplyProject/:pid",async(req,res)=>{
+    if(ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)){
+        const ca= await ConsultancyAgency.findById(req.params.id);
+        const project= await Project.findById(req.params.pid);
         if (ca&& project){
             const applying= project.applyingCA;
-            applying.push(req.params.caID);
-            const j = await caApplyProject(req.params.pID,applying);
+            applying.push(req.params.id);
+            const j = await caApplyProject(req.params.pid,applying);
             res.status(200).send(j);
         }
         else
@@ -104,7 +106,7 @@ async function caApplyProject(pID,applying){
     var error = true;
     const body = { applyingCA: applying};
     var j;
-    await fetch(`${server}/api/project/${pID}`, {
+    await fetch(`${server}/api/projects/${pID}`, {
             method: 'put',
             body:    JSON.stringify(body),
             headers: { 'Content-Type': 'application/json' },
