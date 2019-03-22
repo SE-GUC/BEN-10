@@ -90,7 +90,17 @@ router.delete('/:id', async (req,res) => {
     try {
         if(ObjectId.isValid(req.params.id))
         {
-            const j = await addProject(req.body)
+            const company_id=req.params.id
+            const Project={
+            description:req.params.description,
+            company:req.params.company,
+            companyID: company_id,
+            category:req.params.category,
+            want_consultancy:req.params.want_consultancy,
+            posted_date:req.params.posted_date,
+            experience_level_needed:req.params.experience_level_needed,
+            required_skills_set:req.params.required_skills_set
+            }
             res.status(200).send(j)
         }
         else {
