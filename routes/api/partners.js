@@ -63,6 +63,28 @@ router.post('/', async (req,res) => {
         return res.status(404).send({error: 'Partner does not exist'})
     }  
  })
+ router.post('/:id/eventrequests/',async (req,res) => {
+    if(ObjectId.isValid(req.params.id)){
+        const pid=await PartnerInfo.findById(req.params.id);
+        if(pid){
+            if(req.body.requestedBy!=null && req.body.description!=null&&req.body.eventType!=null &&
+               req.body.eventLocation!=null && req.body.eventDate!=null){    
+        
+                const j = await CARequestEvent(req.body.requestedBy, req.body.description, 
+                                               req.body.eventType, req.body.eventLocation, req.body.eventDate);
+                res.status(200).send(j)
+                
+            }else{
+                return res.status(400).send({ error: "body is missing attrubites" })
+            }
+        }
+        else
+            return res.status(404).send({error: 'Partner does not exist'})
+    }else
+        return res.status(404).send({error: 'Partner does not exist'})
+})
+
+
 
 
 router.delete('/:id', async (req,res) => {
