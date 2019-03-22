@@ -126,7 +126,7 @@ router.delete('/:id', async (req,res) => {
     const id = req.params.id
     if(ObjectId.isValid(id))
     {
-        const j = await getProjects(id);
+        const j = await getEvents(id);
         res.json({data:j});
     }
     else {
