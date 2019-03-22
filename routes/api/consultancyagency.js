@@ -101,25 +101,43 @@ router.delete("/:id", async (req, res) => {
 
 //2.2 --As a consultancy agency I want to assign one of the candidates who applied for the task/project.
 
-router.get('/:id/applyingMembers/:pid', async (req,res)=>{
+//2.2 part1 View candidates assigned to a project
+router.get("/:id/applyingMembers/:pid", async (req, res) => {
+  var j = await getApplyingMembers(req.params.pid);
+  var result = [];
+  var i;
+  for (i = 0; i < j.length; i++) {
+    console.log(j[i]);
+    await fetch(`${server}/api/member/${j[i]}`)
+      .then(res => res.json())
+      .then(json => {
+        const member = json.data;
+        result.push(member);
+      })
+      .catch(err => console.log("Error", err));
+  }
+  res.json({ data: result });
+});
 
-
-})
-getApplyingMembers('5c784feb3696f059c13f5764')
-async function getApplyingMembers(pid){
-    fetch(`${server}/api/applications`)
+async function getApplyingMembers(pid) {
+  var result = [];
+  await fetch(`${server}/api/applications`)
     .then(res => res.json())
     .then(json => {
-        const members = json.data;
-        const appliedmembers = members.filter(m => m.projectID === '5c784feb3696f059c13f5764')
-        const result = []
-        appliedmembers.forEach(m => {
-            result.push(m.applicantID)            
-        });
-        console.log(appliedmembers)
-        console.log(result)
+      const members = json.data;
+      const appliedmembers = members.filter(m => m.projectId === pid);
+      appliedmembers.forEach(m => {
+        result.push(m.applicantId);
+      });
+      return result;
     })
+    .catch(err => console.log("Error", err));
+  return result;
 }
+
+router.put("/:id/applyingMembers/:pid", async (req, res) =>{
+    const members = await getApplyingMembers(req.params.pid)
+})
 
 async function assignCandidate(projectID, candidatID) {
   const body = { memberID: candidatID };
