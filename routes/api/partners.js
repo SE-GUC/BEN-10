@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
+
 const fetch = require("node-fetch");
 const server = require("../../config/config");
 
@@ -110,7 +111,7 @@ router.delete('/:id', async (req,res) => {
       .then(res => res.json())
       .then(json => {
         const projects = json.data;
-        const hisProjects = projects.filter(m => m.companyID === partnerid && m.life_cycle==="Final review");
+        const hisProjects = projects.filter(m => m.companyID === partnerid && m.life_cycle==="Final Review");
         result =hisProjects;
         return hisProjects;
       })
