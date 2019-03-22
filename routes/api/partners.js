@@ -98,6 +98,7 @@ router.delete('/:id', async (req,res) => {
             category:req.params.category,
             want_consultancy:req.params.want_consultancy,
             posted_date:req.params.posted_date,
+            life_cycle : life_cycle ,
             experience_level_needed:req.params.experience_level_needed,
             required_skills_set:req.params.required_skills_set
             }
