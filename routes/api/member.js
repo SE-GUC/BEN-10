@@ -106,19 +106,19 @@ router.delete('/:id', async (req,res) => {
  
   
 
- async function getProjects(candidateid) {
+ async function getProjects() {
     var result = [];
     await fetch(`${server}/api/projects`)
       .then(res => res.json())
       .then(json => {
         const projects = json.data;
-        const hisProjects = projects.filter(m => m.memberID === candidateid );
+        const hisProjects = projects.filter(m => m.life_cycle === "Posted" );
         result =hisProjects;
         return hisProjects;
       })
       .catch(err => console.log("Error", err));
     return result;
-    
+
   }
 
  module.exports = router
