@@ -5,7 +5,7 @@ const member = require('../../models/member')
 const fetch = require('node-fetch');
 const validator = require('../../validations/memberValidations')
 const notificationValidator = require('../../validations/notificationsValidation')
-
+const server = require('../../config/config');
 
 
 // GET method to retrieve all members
@@ -40,7 +40,7 @@ router.get('/:id/projects', async (req,res) => {
         if(id.match(/^[0-9a-fA-F]{24}$/)){
             // res.redirect('/api/projects/?Member_id='+id);
             var error = true;
-            await fetch('http://localhost:5000/api/projects', {
+            await fetch(`${server}/api/projects`, {
                method: 'get',
                headers: { 'Content-Type': 'application/json' },
            })
@@ -72,7 +72,7 @@ router.get('/:id/notifications',async (req,res) => {
     const id = req.params.id;
     // res.redirect('/api/notifications/?Member_id='+id);
     var error = true;
-    await fetch('http://localhost:5000/api/notifications', {
+    await fetch(`${server}/api/notifications`, {
        method: 'get',
        headers: { 'Content-Type': 'application/json' },
    })
@@ -120,7 +120,7 @@ router.post('/:id1/projects/:id2',async (req,res) => {
         projectId:project_id
     };
  
-  fetch('http://localhost:5000/api/applications', {
+  fetch(`${server}/api/applications`, {
         method: 'post',
         body:    JSON.stringify(application),
         headers: { 'Content-Type': 'application/json' },
