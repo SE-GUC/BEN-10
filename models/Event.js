@@ -55,6 +55,9 @@ const EventSchema={
     eventDate:{
         type:Date,
         required:true
+    },
+    bookedMembers: {
+        type: [{ type: Schema.Types.ObjectId, ref: "member" }]
     }
     
 
