@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
+const fetch = require("node-fetch");
+const server = require("../../config/config");
 
 const Admin = require('../../models/Admin')
 const validator = require('../../validations/adminValidations')
@@ -72,7 +74,7 @@ router.put('/:id', async (req,res) => {
     }  
  })
  // 3.1 As an admin i want to identify a task/project  with a set of attributes so that it defines it
- router.put(":id/assignAttributes/:pid/",async(req,res)=>{
+ router.put("/:id/assignAttributes/:pid",async(req,res)=>{
      if(ObjectId.isValid(req.params.id)&& ObjectId.isValid(req.params.pid)){
          const admin = await Admin.findById(req.params.id);
          const project= await Project.findById(req.params.pid);
