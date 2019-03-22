@@ -7,6 +7,7 @@ const server = require('../../config/config');
 
 const Admin = require('../../models/Admin')
 const validator = require('../../validations/adminValidations')
+const pvalidator = require('../../validations/projectValidations')
 const notificationValidator = require('../../validations/memberValidations')
 
 const ObjectId = require('mongodb').ObjectID;
@@ -75,6 +76,27 @@ router.put('/:id', async (req,res) => {
     }  
  })
 
+ router.put('/:id/:pid/sendDraft', async (req,res)=>{
+    try {
+        if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
+            {
+            const admin = await Admin.findById(id)
+            if (!admin) return res.status(404).send({error: 'Admin does not exist'})
+            const isValidated = pvalidator.updateValidation(req.body)
+            if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+            const updatedProject = await Project.findByIdAndUpdate({_id: req.params.pid}, req.body)
+            if (!updatedProject) return res.status(404).send({error: 'Project does not exist'})
+            res.json({msg: 'Draft sent successfully'})
+        }
+        else {
+            return res.status(404).send({ error: "ID NOT FOUND" })
+        }
+    }
+    catch{
+        console.log(error)
+        return res.status(404).send({ error: "not a project id" })
+    }    
+ })
 
  //3.2 --As an admin I want to send a final draft of the task/project so that the partner can approve posting it.
  async function sendFinalDraft(projectID, draft){
@@ -139,7 +161,7 @@ router.put('/:id', async (req,res) => {
         
  }
  //Test 3.2
- sendFinalDraft('5c93e6b3c362c56245ec9da0','TESTING DRAFT')
+//  sendFinalDraft('5c93e6b3c362c56245ec9da0','TESTING DRAFT')
  //Test 3.3
- postProject('5c7a795e53f1ba0c1b351f75');
+//  postProject('5c7a795e53f1ba0c1b351f75');
  module.exports = router
