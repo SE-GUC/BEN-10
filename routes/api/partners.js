@@ -85,7 +85,7 @@ router.delete('/:id', async (req,res) => {
  
     if(ObjectId.isValid(id))
     {
-        const j = await getApplyingMembers(req.params.pid);
+        const j = await getProjects(id);
         res.status(200).send(j) ;
     }
     else {
