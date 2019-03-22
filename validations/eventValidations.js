@@ -17,7 +17,8 @@ module.exports = {
             feedback:Joi.array().items(Joi.string()),
             regist_start_date:  Joi.date().required(),
             regist_expiry_date:Joi.date().required(),
-            requestorId: Joi.objectId().required()
+            requestorId: Joi.objectId().required(),
+            request_id: Joi.objectId()
         
         }
 
