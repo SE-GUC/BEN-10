@@ -133,7 +133,16 @@ router.delete('/:id', async (req,res) => {
      console.log('fssss')
  }
 }
- async function editProject(id){
+ async function editProject(description,company,companyID,category,want_consultancy,posted_date,life_cycle){
+    const body = { 
+        description:description,
+        company: company,
+        companyID: companyID,
+        category: category,
+        want_consultancy: want_consultancy,
+        posted_date: posted_date,
+        life_cycle: life_cycle
+     };
     var error = true;
     var result;
     const pr = await Project.findById(id)
@@ -142,7 +151,7 @@ router.delete('/:id', async (req,res) => {
     await fetch(`${server}/api/projects/${id}`, {
             method: 'put',
             body:    JSON.stringify(body),
-            headers: { 'Content-Type': 'application/json' }     
+            headers: { 'Content-Type': 'application/json' }
         })
          
         .then(res => {
@@ -184,9 +193,40 @@ router.delete('/:id', async (req,res) => {
         
  
  }
+ async function PartnerRequestEvent(requestedBy, description, eventType, eventLocation, eventDate){
+    const body = { 
+        requestedBy:requestedBy,
+        description: description,
+        eventType: eventType,
+        eventLocation: eventLocation,
+        eventDate: eventDate,
+        isAccepted: "false"
+     };
+    var error = true;
+    var j;
+    await fetch(`${server}/api/eventrequests/`, {
+        method: 'post',
+        body:    JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res => {
+        if(res.status === 200){
+            error = false;
+        }
+        return res.json()
+    })
+    .then(json => {
+        if(!error){
+            json = { msg: 'Event is requested successfully'}
+        }
+        j = json;
+    })
+    .catch((err) => console.log("Error",err));
+    return j;
+}
 
  // test 1.3 delete
-deleteProject('5c94f8f67902ff137cbc9b03')
+//deleteProject('5c94f8f67902ff137cbc9b03')
  
 
  
