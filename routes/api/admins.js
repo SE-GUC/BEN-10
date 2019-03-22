@@ -109,4 +109,54 @@ router.put('/:id', async (req,res) => {
  }
  //Test 3.3
  postProject('5c7a795e53f1ba0c1b351f75');
+
+ router.post('/:id/addEvent/', async (req,res) => {
+    try {
+        if(ObjectId.isValid(req.params.id))
+        {
+            const j = await addEvent(req.body)
+            res.status(200).send(j)
+        }
+        else {
+            return res.status(404).send({ error: "Error" })
+        }
+    }
+    catch(error) {
+        console.log(error)
+        return res.status(400).send('Error')
+    }
+      
+ })
+ async function addEvent(body){
+    var error = true;
+    var result;
+ 
+    await fetch(`${server}/api/events/`, {
+            method: 'post',
+            body:    JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        // .then(checkStatus)
+        .then(res => {
+            if(res.status === 200){
+                error = false;
+            }
+            console.log(res.status)
+            if(!error){
+                result = res
+            }
+            return res.json()
+        })
+        .then(json => {
+            if(!error){
+                json = { msg: 'Event is posted successfully'}
+            }
+            result = json
+            console.log(json)
+            
+        })
+        .catch((err) => console.log("Error",err));
+        return result
+        
+ }
  module.exports = router
