@@ -232,27 +232,28 @@ router.get("/:id/assignCAtoProject/:pid", async (req, res) => {
   }
 
 //1.2 as a partner i want to approve 
-router.put('/:id/ApproveProject/:pid', async (req,res)=>{
+router.put('/:id/myprojects/:pid/finaldraft/approve', async (req,res)=>{
   try {
       if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
       {
-          const j = await ApproveProject(req.params.pid)
+          const decision="approved"
+          const j = await ApproveProject(req.params.pid,decision)
           res.status(200).send(j)
       }
       else {
           return res.status(404).send({ error: "ID NOT FOUND" })
       }
   }
-  catch{
+  catch(error){
       console.log(error)
       return res.status(404).send({ error: "not a project id" })
   }    
 })
-async function ApproveProject(id){
+async function ApproveProject(id,decision){
   const url  = `${server}/api/projects/${id}`;
   await fetch(url, {
                     method:'put',
-                    body : JSON.stringify({life_cycle : "Approved"}),
+                    body : JSON.stringify({life_cycle : decision}),
                     headers: { 'Content-Type': 'application/json' }
                     })
               .then(res =>{  console.log(res.status)  
@@ -262,27 +263,28 @@ async function ApproveProject(id){
               .catch(err =>{ console.log(err)})
 }
 //1.2 parte 2 as a partner i want to disapprove 
-router.put('/:id/DisapproveProject/:pid', async (req,res)=>{
+router.put('/:id/myprojects/:pid/finaldraft/disapprove', async (req,res)=>{
   try {
       if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
       {
-          const j = await DisapproveProject(req.params.pid)
+          const decision="disapproved"
+          const j = await disapproveProject(req.params.pid,decision)
           res.status(200).send(j)
       }
       else {
           return res.status(404).send({ error: "ID NOT FOUND" })
       }
   }
-  catch{
+  catch(error){
       console.log(error)
       return res.status(404).send({ error: "not a project id" })
   }    
 })
-async function DisapproveProject(id){
+async function disapproveProject(id,decision){
   const url  = `${server}/api/projects/${id}`;
   await fetch(url, {
                     method:'put',
-                    body : JSON.stringify({life_cycle : "Disapproved"}),
+                    body : JSON.stringify({life_cycle : decision}),
                     headers: { 'Content-Type': 'application/json' }
                     })
               .then(res =>{  console.log(res.status)  
