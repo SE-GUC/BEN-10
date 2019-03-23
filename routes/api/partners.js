@@ -95,11 +95,17 @@ router.delete('/:id', async (req,res) => {
 
     if(ObjectId.isValid(id))
     {   
+
         const partners= await PartnerInfo.findById(id);
         
         if(partners){
         const j = await getProjects(id);
         res.json({data:j});}
+
+        const projects= await Project.findById(id);
+        if(projects){
+            const j = await getProjects(id);
+            res.json({data:j});}
 
         else{
             return res.status(404).send({ error: "partner not found" })
