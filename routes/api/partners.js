@@ -136,7 +136,7 @@ router.post('/:id/submitRequest/',async (req,res) => {
     var error = true;
     var result;
     const p = await Project.findById(id)
-    if(p.life_cycle === 'Not Posted'){
+    if(pr.life_cycle !== 'Posted' && pr.life_cycle !== 'Final Review' && pr.life_cycle !=='Finished'){
  
     await fetch(`${server}/api/projects/${id}`, {
             method: 'delete',
