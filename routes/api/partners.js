@@ -136,6 +136,65 @@ router.post('/:id/submitRequest/',async (req,res) => {
     return res.json(j)
 })
 
+
+ //1.0 as a partner i want to submit a description on a task/project 
+ router.post('/:id/addProject', async (req,res) => {
+    try {
+        if(ObjectId.isValid(req.params.id))
+        {
+            const company_id=req.params.id
+            const Project={
+            description:req.body.description,
+            company:req.body.company,
+            companyID: company_id,
+            category:req.body.category,
+            want_consultancy:req.body.want_consultancy,
+            posted_date:req.body.posted_date,
+            life_cycle : "Submitted" ,
+            
+            }
+             
+             var error = true
+            await fetch(`${server}/api/projects/`, {
+                method: 'post',
+                body:    JSON.stringify(Project),
+                headers: { 'Content-Type': 'application/json' },
+            })
+            // .then(checkStatus)
+            .then(res => {
+                if(res.status === 200){
+                    error = false;
+                }
+                console.log(res.status)
+                if(!error){
+                    result = res
+                }
+                return res.json()
+            })
+            .then(json => {
+                if(!error){
+                    res.json(json)
+                }
+                result = json
+                console.log(json)
+                
+            })
+            .catch((err) => console.log("Error",err));
+            return res.json(result)
+                    
+             
+        }
+        else {
+            return res.status(404).send({ error: "Error" })
+        }
+    }
+    catch(error) {
+        console.log(error)
+        return res.status(400).send('Error')
+    }
+      
+ })
+
  async function deleteProject(id){
     var error = true;
     var result;
@@ -258,4 +317,136 @@ router.post('/:id/submitRequest/',async (req,res) => {
   }
 
 
+// 1.1 as a partner i want to assign a consultancy agency to a project 
+router.put('/:id1/AssignCAtoProject/:id2',async (req,res) => {
+           const  projID=req.params.id1;
+           const   caId =req.params.id2;
+    if(ObjectId.isValid(projID) && ObjectId.isValid(caId)){
+        const project = await Project.findById(projID);
+        const consultancy = await ConsultancyAgency.findById(caId);
+        
+        if (project && consultancy){
+           var consul= project.applyingConsultancies;
+           var found =false;
+           for(var i=0 ; consul.length>i ; i++){
+              
+               if(caId == consul[i]){
+                   found = true;
+                   break;
+               }
+           }
+           var need = project.want_consultancy;
+        if(need === true){ 
+            if(found===true){
+             const j=await assigning(caId,projID);
+             res.status(200).send(j);
+        }    
+        else {
+        res.send({msg: "consultancy agency is not included in the list "})
+    } 
+}
+       else {
+        res.send({msg: "Projecst doesn't need a consultancy"})
+    }
+}
+else
+    return res.status(404).send({error: 'invalid ID'})
+}else{
+return res.status(404).send({error: 'invalid ID'})
+}
+
+})
+
+
+async function assigning(caId,projID){
+    var error = true;
+    const body = { consultancyID : caId };
+     var j;
+     await fetch(`${server}/api/projects/${projID}`, {
+      method: 'put',
+      body:    JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' },
+      })
+         .then(res => {
+         if(res.status === 200){
+         error = false;
+         }
+          return res.json() 
+        })
+        .then(json => {
+         if(!error){
+         json = { msg: 'Consultancy Agency assigend successfully'}
+        }
+        j = json; 
+        })
+          .catch((err) => console.log("Error",err));
+        return j;
+     }
+
+
+//1.2 as a partner i want to approve 
+router.put('/:id/myprojects/:pid/finaldraft/approve', async (req,res)=>{
+  try {
+      if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
+      {
+          const decision="Approved"
+          const j = await ApproveProject(req.params.pid,decision)
+          res.status(200).send(j)
+      }
+      else {
+          return res.status(404).send({ error: "ID NOT FOUND" })
+      }
+  }
+  catch(error){
+      console.log(error)
+      return res.status(404).send({ error: "not a project id" })
+  }    
+})
+async function ApproveProject(id,decision){
+  const url  = `${server}/api/projects/${id}`;
+  await fetch(url, {
+                    method:'put',
+                    body : JSON.stringify({life_cycle : decision}),
+                    headers: { 'Content-Type': 'application/json' }
+                    })
+              .then(res =>{  console.log(res.status)  
+                             return res.json()}
+                   )
+              .then(json =>{ console.log(json)})
+              .catch(err =>{ console.log(err)})
+}
+//1.2 parte 2 as a partner i want to disapprove 
+router.put('/:id/myprojects/:pid/finaldraft/disapprove', async (req,res)=>{
+  try {
+      if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
+      {
+          const decision="Negotiation"
+          const j = await disapproveProject(req.params.pid,decision)
+          res.status(200).send(j)
+      }
+      else {
+          return res.status(404).send({ error: "ID NOT FOUND" })
+      }
+  }
+  catch(error){
+      console.log(error)
+      return res.status(404).send({ error: "not a project id" })
+  }    
+})
+async function disapproveProject(id,decision){
+  const url  = `${server}/api/projects/${id}`;
+  await fetch(url, {
+                    method:'put',
+                    body : JSON.stringify({life_cycle : decision}),
+                    headers: { 'Content-Type': 'application/json' }
+                    })
+              .then(res =>{  console.log(res.status)  
+                             return res.json()}
+                   )
+              .then(json =>{ console.log(json)})
+              .catch(err =>{ console.log(err)})
+}
+
+ 
 module.exports = router
+
