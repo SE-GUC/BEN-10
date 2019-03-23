@@ -310,7 +310,103 @@ router.put('/:id', async (req,res) => {
         return result
         
  }
- module.exports = router
+
+
+ //check if there exists an error in response
+//  function checkStatus(res){
+//     if(res.ok){
+//         return res 
+//     }
+//     console.log(res)
+//     let err = new Error(res);
+//     err.res = res;
+//     return Promise.reject(err)
+//  }
+
+
+// 3.7 As an admin i want to decide (Accept / reject) an event request
+router.use('/:id/EventRequest/:Eid/:decision',async (req,res)=>{
+   try{
+    if(ObjectId.isValid(req.params.id)&& ObjectId.isValid(req.params.Eid))
+    {
+        const url  = `${server}/api/eventrequests/${req.params.Eid}`;
+        await fetch(url, {
+                          method:'put',
+                          body : JSON.stringify({isAccepted : req.params.decision}),
+                          headers: { 'Content-Type': 'application/json' }
+                          })
+                    .then(res =>{  console.log(res.status)  
+                                   return res.json()}
+                         )
+                    .then(json =>res.json({data:json.data}))
+                    .catch(err =>{ console.log(err)})
+
+   }
+   }catch{
+     console.log(error)
+   }
+})
+
+
+
+
+
+
+
+
+
+async function decideEventRequest(id,decision){
+    const url  = `${server}/api/eventrequests/${id}`;
+    await fetch(url, {
+                      method:'put',
+                      body : JSON.stringify({isAccepted : decision}),
+                      headers: { 'Content-Type': 'application/json' }
+                      })
+                .then(res =>{  console.log(res.status)  
+                               return res.json()}
+                     )
+                .then(json =>{ console.log(json)})
+                .catch(err =>{ console.log(err)})
+}
+
+
+
+// 3.4 as an admin i want to assign one of the candidates who applied for the task/project
+router.use('/:aid/assign/:pid/to/:mid',async (req,res)=>{
+    try{
+        if(ObjectId.isValid(req.params.aid) &&
+           ObjectId.isValid(req.params.pid) &&
+           ObjectId.isValid(req.params.mid)){
+               const applications  = await Application.find();
+               
+               var found = false    
+                //loop through json and find the desired application
+                for (var i in applications) {
+                  let  application = applications[i];
+                    if (application['applicantId'] == req.params.mid &&
+                        application['projectId'] == req.params.pid) {
+                        found = true 
+                        break
+                    }
+                }
+                if(found){
+                    const url  = `${server}/api/projects/${req.params.pid}`;
+                    fetch(url,{
+                        method:'put',
+                        body : JSON.stringify( {memberID : req.params.mid} ),
+                        headers: { 'Content-Type': 'application/json' }
+                        })
+                        .then(res =>{  
+                            return res.json()})
+                        .then(json =>{ console.log(json)})
+                        .catch(err =>{ console.log(err)})  
+                }
+               return res.status(200).send("Member has been assigned") 
+    }
+   }catch{
+        console.log("error happened")
+    }
+})
 
  //3.5 --As an admin I want to notify accepted candidates that he was accepted for a task/project 
 async function AdminNotifyAcceptedCandidate(description, NotifiedPerson, date){
