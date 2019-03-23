@@ -98,9 +98,8 @@ router.delete('/:id', async (req,res) => {
             category:req.body.category,
             want_consultancy:req.body.want_consultancy,
             posted_date:req.body.posted_date,
-            life_cycle : "started" ,
-            experience_level_needed:req.body.experience_level_needed,
-            required_skills_set:req.body.required_skills_set
+            life_cycle : "Submitted" ,
+            
             }
              
              var error = true
@@ -129,7 +128,7 @@ router.delete('/:id', async (req,res) => {
                 
             })
             .catch((err) => console.log("Error",err));
-            return result
+            return res.json(result)
                     
              
         }
@@ -152,22 +151,24 @@ router.put('/:id1/AssignCAtoProject/:id2',async (req,res) => {
     if(ObjectId.isValid(projID) && ObjectId.isValid(caId)){
         const project = await Project.findById(projID);
         const consultancy = await ConsultancyAgency.findById(caId);
+        
         if (project && consultancy){
            var consul= project.applyingConsultancies;
            console.log(consul)
            var found =false;
            for(var i=0 ; consul.length>i ; i++){
-               if(ObjectId(caId).equals(ObjectId(consul[i]))){
+              
+               if(caId == consul[i]){
                    found = true;
                    break;
                }
            }
-           console.log(found)
+           console.log("yes"+found)
            var need = project.want_consultancy;
-           console.log(need)
-        if(need == true){ 
-            if(found==true){
-             const j=await assigning(consultancy.name,projID);
+           console.log("yes"+need)
+        if(need === true){ 
+            if(found===true){
+             const j=await assigning(caId,projID);
              res.status(200).send(j);
         }    
         else {
@@ -187,9 +188,9 @@ return res.status(404).send({error: 'invalid ID'})
 })
 
 
-async function assigning(name,projID){
+async function assigning(caId,projID){
     var error = true;
-    const body = { consultancy : name };
+    const body = { consultancyID : caId };
      var j;
      await fetch(`${server}/api/projects/${projID}`, {
       method: 'put',

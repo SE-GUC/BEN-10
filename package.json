@@ -23,7 +23,7 @@
     "joi": "^14.3.1",
     "joi-mongodb-objectid": "^0.1.0",
     "joi-objectid": "^2.0.0",
-    "mongoose": "^5.4.16",
+    "mongoose": "^5.4.19",
     "moongoose": "0.0.5",
     "node-fetch": "^2.3.0",
     "nodemon": "^1.18.10",
