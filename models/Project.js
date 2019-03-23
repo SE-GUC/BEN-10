@@ -60,12 +60,19 @@ const ProjectSchema = new Schema({
         required: false  
     },
     required_skills_set: {
-        type: String,
-        required: false  
+        type: [{ type: Schema.Types.String }],
+        required: true ,
+        default:[]
     },
     final_draft: {
         type: String,
         required: false
+    },
+    applyingCA :{
+        type: [{ type: Schema.Types.ObjectId, ref: "ConsultancyAgency" }],
+        required: false,
+        default:[]
+
     }
 })
 

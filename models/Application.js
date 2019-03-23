@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const ApplicationSchema = new Schema({
     applicantId: {
         type: Schema.Types.ObjectId,ref:"member",
-        required: true
+        required: false
     },
     applicantName: {
         type: String,
@@ -46,6 +46,10 @@ const ApplicationSchema = new Schema({
     activeTasks:{
         type: Number,
         required:false
+    },
+    projectId: {
+        type: Schema.Types.ObjectId,ref:"projects",
+        required: false
     }
 })
 

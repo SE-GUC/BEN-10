@@ -4,7 +4,7 @@ Joi.objectId = require('joi-objectid')(Joi);
 module.exports = {
     createValidation: request => {
         const createSchema = {
-            applicantId: Joi.objectId(),
+            applicantId: Joi.objectId().required(),
             applicantName: Joi.string().required(),
             gender: Joi.string().max(100).required(),
             age: Joi.number().max(200).required(),
@@ -14,7 +14,8 @@ module.exports = {
             skills: Joi.string().max(500).required(),
             yearsOfExp: Joi.number().max(100).required(),
             hasJob: Joi.boolean().required(),
-            activeTasks: Joi.number().max(100)
+            activeTasks: Joi.number().max(100),
+            projectId:Joi.objectId()
         }
 
         return Joi.validate(request, createSchema)

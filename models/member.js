@@ -43,7 +43,7 @@ const memberSchema = new Schema({
     Driving_license: {
         type: String, 
         required: true
-    }, 
+    },
     // location info
     Country: {
         type: String, 
@@ -84,6 +84,12 @@ const memberSchema = new Schema({
     },
     projects: {
         type: [{ type: Schema.Types.ObjectId, ref: "Project" }]
+    },
+    skill_set:{
+        type: [{ type: Schema.Types.String}],
+        required:false,
+        default:[]
+
     }
 })
 

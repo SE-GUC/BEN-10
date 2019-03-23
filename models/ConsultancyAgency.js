@@ -38,6 +38,9 @@ const ConsultancyAgencySchema = new Schema({
     partners: {
         type: [{ type: Schema.Types.ObjectId, ref: "PartnerInfo" }]
     },
+    projects: {
+        type: [{ type: Schema.Types.ObjectId, ref: "Project" }]
+    },
     events: {
         type: [{ type: Schema.Types.ObjectId, ref: "Event" }]
     }
