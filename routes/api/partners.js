@@ -95,11 +95,7 @@ router.delete('/:id', async (req,res) => {
 
     if(ObjectId.isValid(id))
     {   
-
         
-        if(ObjectId.isValid(id))
-    {   
-
         const partner= await PartnerInfo.findById(id);
         
         if(partner){
@@ -109,10 +105,8 @@ router.delete('/:id', async (req,res) => {
         else{
             return res.status(404).send({ error: "partner not found" })
         }
-    }
-    else {
+    }else {
         return res.status(404).send({ error: "ID not found" })
-    }
 }
   });
 
