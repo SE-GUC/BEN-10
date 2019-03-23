@@ -204,8 +204,8 @@ router.delete('/:id', async (req,res) => {
 }
 
  // test 1.3 delete
-editProject('5c955ea2ea7dd51a0c16c38e','bla','blabla','5c786899f8a8e026447d212f','se','false','1/1/2000','Not Posted')
- 
+
+ PartnerRequestEvent('aaa','bbb','ccc','cairo','10/10/2000')
 
  
 
