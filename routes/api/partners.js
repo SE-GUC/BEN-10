@@ -5,10 +5,10 @@ const mongoose = require('mongoose')
 const fetch = require("node-fetch");
 const server = require("../../config/config");
 
-const PartnerInfo = require('../../models/PartnerInfo')
+const partners = require('../../models/PartnerInfo')
 const validator = require('../../validations/partnerValidations')
 const ObjectId = require('mongodb').ObjectID;
-const Project = require('../../models/Project')
+
 
 mongoose.set('useFindAndModify', false);
 
@@ -95,12 +95,14 @@ router.delete('/:id', async (req,res) => {
 
     if(ObjectId.isValid(id))
     {   
-        const projects= await Project.findById(id);
-        if(projects){
-            const j = await gettProjects(id);
-            res.json({data:j});}
+        const partners= await PartnerInfo.findById(id);
+        
+        if(partners){
+        const j = await getProjects(id);
+        res.json({data:j});}
+
         else{
-            return res.status(404).send({ error: "Project not found" })
+            return res.status(404).send({ error: "partner not found" })
         }
     }
     else {
