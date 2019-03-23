@@ -35,6 +35,9 @@ router.get('/:id', async (req,res) => {
 })
 
 
+
+
+
 // view my notifications
 
 router.get('/:id/notifications',async (req,res) => {
