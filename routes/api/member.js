@@ -143,7 +143,3 @@ router.delete('/:id', async (req,res) => {
 
 
  module.exports = router
-
-
- //test 4.5
- console.log(getAvailableProjects("5c93d983f3fe6358b41ccd7a"))
