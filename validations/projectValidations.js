@@ -19,7 +19,8 @@ module.exports = {
             final_draft: Joi.string(),
             companyID: Joi.objectId().required(),
             consultancyID: Joi.objectId(),
-            memberID: Joi.objectId()
+            memberID: Joi.objectId(),
+            applyingCA : Joi.array().items(Joi.objectId())
 
         }
 
@@ -40,8 +41,10 @@ module.exports = {
             estimated_time: Joi.string().max(50),
             experience_level_needed: Joi.string().max(100),
             required_skills_set: Joi.string(),
+            final_draft: Joi.string(),
+            memberID: Joi.objectId(),
             consultancyID: Joi.objectId(),
-            final_draft: Joi.string()
+            applyingCA : Joi.array().items(Joi.objectId())
         }
 
         return Joi.validate(request, updateSchema)
