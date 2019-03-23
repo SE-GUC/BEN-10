@@ -20,7 +20,9 @@ module.exports = {
             sentto: Joi.string().max(500),
             description: Joi.string(),
             sentBy: Joi.string().max(500),
-            sentAt: Joi.date()
+            sentAt: Joi.date(),
+            senttoID: Joi.objectId(),
+            sentByID: Joi.objectId()
         }
 
         return Joi.validate(request, updateSchema)

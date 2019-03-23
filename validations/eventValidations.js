@@ -17,7 +17,9 @@ module.exports = {
             feedback:Joi.array().items(Joi.string()),
             regist_start_date:  Joi.date().required(),
             regist_expiry_date:Joi.date().required(),
-            requestorId: Joi.objectId().required()
+            requestorId: Joi.objectId().required(),
+            bookedMembers:Joi.array().items(Joi.string()),
+            request_id: Joi.objectId()
         
         }
 
@@ -37,7 +39,8 @@ module.exports = {
             speaker:Joi.string(),
             feedback:Joi.array().items(Joi.string()),
             regist_start_date:  Joi.date(),
-            regist_expiry_date:Joi.date() 
+            regist_expiry_date:Joi.date() ,
+            bookedMembers:Joi.array().items(Joi.string())
         }
 
         return Joi.validate(Eventrequest, updateSchema)

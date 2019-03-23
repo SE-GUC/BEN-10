@@ -14,7 +14,8 @@ module.exports = {
             skills: Joi.string().max(500).required(),
             yearsOfExp: Joi.number().max(100).required(),
             hasJob: Joi.boolean().required(),
-            activeTasks: Joi.number().max(100)
+            activeTasks: Joi.number().max(100),
+            projectId:Joi.objectId()
         }
 
         return Joi.validate(request, createSchema)

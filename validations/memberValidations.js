@@ -9,12 +9,12 @@ module.exports = {
             mname: Joi.string().required(),
             lname: Joi.string().required(),
             SSN: Joi.number().required(),
-            birthdate: Joi.date().max(100).required(),
+            birthdate: Joi.date().required(),
             Gender: Joi.boolean().required(),
             Nationality: Joi.string().min(3).max(100).required().regex(/^([^0-9]*)$/),
             Marital_status: Joi.string().required(),
             Military_status: Joi.string().required(),
-            Driving_license: Joi.boolean().required(),
+            Driving_license: Joi.string().required(),
             //location info
             Country: Joi.string().max(100).required().regex(/^([^0-9]*)$/),
             City: Joi.string().max(50).required().regex(/^([^0-9]*)$/),
@@ -26,7 +26,8 @@ module.exports = {
             Mobile_number:Joi.string().required(),
             Alternative_Mobile_number:Joi.string(),
             events: Joi.array().items(Joi.objectId()),
-            projects: Joi.array().items(Joi.objectId())
+            projects: Joi.array().items(Joi.objectId()),
+            skill_set:Joi.array().items(Joi.string())
         }
 
         return Joi.validate(request, createSchema)
@@ -57,7 +58,10 @@ module.exports = {
             Mobile_number:Joi.string(),
             Alternative_Mobile_number:Joi.string(),
             events: Joi.array().items(Joi.objectId()),
-            projects: Joi.array().items(Joi.objectId())
+            projects: Joi.array().items(Joi.objectId()),
+            skill_set:Joi.array().items(Joi.string())
+
+
 
         }
 
