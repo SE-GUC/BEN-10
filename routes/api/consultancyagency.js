@@ -82,7 +82,7 @@ router.delete('/:id', async (req,res) => {
 
     }  
  })
- router.put('/:id/myprojects/:pid/finaldraft/approve', async (req,res)=>{
+ router.put('/:id/myprojects/:pid/finaldraft/approve/', async (req,res)=>{
     try {
         if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
         {
