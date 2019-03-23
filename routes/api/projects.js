@@ -7,11 +7,29 @@ const validator = require('../../validations/projectValidations')
 const ObjectId = require('mongodb').ObjectID;
 mongoose.set('useFindAndModify', false);
 
+
+
+// View projects 
 router.get('/', async (req,res) => {
     const projects = await Project.find()
     res.json({data: projects})
 })
 
+router.get('/:id', async (req,res) => {
+    if(ObjectId.isValid(req.params.id)){
+    const id = req.params.id
+    const projects = await Project.findById(id)
+    if (!projects) return res.status(404).send({error: 'Project does not exist'})
+    res.json({data: projects})
+    }
+    else{
+        return res.status(404).send({error: 'Project does not exist'})
+    }
+
+})
+
+
+// get a project
 router.get('/:id', async (req,res) => {
     if(ObjectId.isValid(req.params.id)){
     const id = req.params.id

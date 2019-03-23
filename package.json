@@ -26,6 +26,7 @@
   "bugs": {
     "url": "https://github.com/SE-GUC/BEN-10/issues"
   },
+
   "homepage": "https://github.com/SE-GUC/BEN-10#readme",
   "dependencies": {
     "config": "^3.0.1",
