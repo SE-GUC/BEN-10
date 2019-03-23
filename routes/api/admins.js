@@ -105,14 +105,9 @@ router.put('/:id', async (req,res) => {
             
         })
         .catch((err) => console.log("Error",err));
-
-        // if(!error){
-        //     result.redirect(`${server}/api/projects/${id}`)
-        //     console.log("yees")
-        // }
-        
         
  }
+
 
  //check if there exists an error in response
 //  function checkStatus(res){
@@ -218,10 +213,6 @@ router.use('/:aid/assign/:pid/to/:mid',async (req,res)=>{
 
 
 
- //Test 3.3
- postProject('5c7a795e53f1ba0c1b351f75');
 
-
-//decideEventRequest('5c7a7d2ee528da3294abbdc0',false)
 
  module.exports = router
