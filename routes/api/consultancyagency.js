@@ -86,7 +86,7 @@ router.delete('/:id', async (req,res) => {
     try {
         if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
         {
-            const decision="approved"
+            const decision="Approved"
             const j = await ApproveProject(req.params.pid,decision)
             res.status(200).send(j)
         }
@@ -117,7 +117,7 @@ router.delete('/:id', async (req,res) => {
     try {
         if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
         {
-            const decision="disapproved"
+            const decision="Negotiation"
             const j = await disapproveProject(req.params.pid,decision)
             res.status(200).send(j)
         }
