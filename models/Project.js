@@ -60,8 +60,9 @@ const ProjectSchema = new Schema({
         required: false  
     },
     required_skills_set: {
-        type: String,
-        required: false  
+        type: [{ type: Schema.Types.String }],
+        required: true ,
+        default:[]
     },
     final_draft: {
         type: String,

@@ -1,33 +1,22 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-
+const fetch = require('node-fetch');
 const Project = require('../../models/Project')
 const validator = require('../../validations/projectValidations')
 const ObjectId = require('mongodb').ObjectID;
 mongoose.set('useFindAndModify', false);
 
 
-
-// View projects 
 router.get('/', async (req,res) => {
-    const projects = await Project.find()
+    const projects = await Project.find();
     res.json({data: projects})
-})
+    // if(req.query.Member_id!=null){
+    //   member_id=req.query.Member_id;
 
-router.get('/:id', async (req,res) => {
-    if(ObjectId.isValid(req.params.id)){
-    const id = req.params.id
-    const projects = await Project.findById(id)
-    if (!projects) return res.status(404).send({error: 'Project does not exist'})
-    res.json({data: projects})
-    }
-    else{
-        return res.status(404).send({error: 'Project does not exist'})
-    }
+    // }
 
 })
-
 
 // get a project
 router.get('/:id', async (req,res) => {
@@ -44,9 +33,11 @@ router.get('/:id', async (req,res) => {
 })
 
 
+
 // Create a projectt
 router.post('/', async (req,res) => {
    try {
+    console.log(req.body.description);
     const isValidated = validator.createValidation(req.body)
     if (isValidated.error) {
         return res.status(400).send({ error: isValidated.error.details[0].message })
