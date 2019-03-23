@@ -148,7 +148,7 @@ router.delete('/:id', async (req,res) => {
 // 1.1 as a partner i want to assign a consultancy agency to a project 
 router.put('/:id1/AssignCAtoProject/:id2',async (req,res) => {
            const  projID=req.params.id1;
-           const caId =req.params.id2;
+           const   caId =req.params.id2;
     if(ObjectId.isValid(projID) && ObjectId.isValid(caId)){
         const project = await Project.findById(projID);
         const consultancy = await ConsultancyAgency.findById(caId);
@@ -158,9 +158,7 @@ router.put('/:id1/AssignCAtoProject/:id2',async (req,res) => {
            var need = project.want_consultancy;
         if(need == true){  
             if(contains===true){
-             const members=event.bookedMembers;
-             members.push(canId);
-             const j=await assigning(eventId,members);
+             const j=await assigning(caId,projID);
              res.status(200).send(j);
         }    
         else {
@@ -168,7 +166,7 @@ router.put('/:id1/AssignCAtoProject/:id2',async (req,res) => {
     } 
 }
        else {
-        res.send({msg: "Projecst don't need a consultancy"})
+        res.send({msg: "Projecst doesn't need a consultancy"})
     }
 }
 else
@@ -180,11 +178,11 @@ return res.status(404).send({error: 'invalid ID'})
 })
 
 
-async function assigning(eid,members){
+async function assigning(caID,projID){
     var error = true;
-    const body = { bookedMembers: members };
+    const body = { consultancyID: caID };
      var j;
-     await fetch(`${server}/api/projects/${eid}`, {
+     await fetch(`${server}/api/projects/${projID}`, {
       method: 'put',
       body:    JSON.stringify(body),
       headers: { 'Content-Type': 'application/json' },
