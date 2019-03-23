@@ -126,7 +126,36 @@ router.put('/:id', async (req,res) => {
 //  }
 
 
-// 3.7 As an admin i want to Accept / reject an event request
+// 3.7 As an admin i want to decide (Accept / reject) an event request
+router.use('/:id/EventRequest/:Eid/:decision',async (req,res)=>{
+   try{
+    if(ObjectId.isValid(req.params.id))
+    {
+        const url  = `${server}/api/eventrequests/${req.params.Eid}`;
+        await fetch(url, {
+                          method:'put',
+                          body : JSON.stringify({isAccepted : req.params.decision}),
+                          headers: { 'Content-Type': 'application/json' }
+                          })
+                    .then(res =>{  console.log(res.status)  
+                                   return res.json()}
+                         )
+                    .then(json =>res.json({data:json.data}))
+                    .catch(err =>{ console.log(err)})
+
+   }
+   }catch{
+     console.log(error)
+   }
+})
+
+
+
+
+
+
+
+
 
 async function decideEventRequest(id,decision){
     const url  = `${server}/api/eventrequests/${id}`;
@@ -146,9 +175,8 @@ async function decideEventRequest(id,decision){
 
  //Test 3.3
  postProject('5c7a795e53f1ba0c1b351f75');
- //Test 3.7
- decideEventRequest('5c7a4b2df59c3f032eb6b2dc',true);
 
 
+//decideEventRequest('5c7a7d2ee528da3294abbdc0',false)
 
  module.exports = router
