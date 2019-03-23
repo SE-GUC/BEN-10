@@ -19,7 +19,9 @@ module.exports = {
             final_draft: Joi.string(),
             companyID: Joi.objectId(),
             consultancyID: Joi.objectId(),
-            memberID: Joi.objectId()
+            memberID: Joi.objectId(),
+            applyingCA : Joi.array().items(Joi.objectId())
+
 
         }
 
@@ -33,7 +35,7 @@ module.exports = {
             category: Joi.string().max(3000),
             want_consultancy: Joi.boolean(),
             consultancy: Joi.string().min(3).max(100),
-            posted_date: Joi.date().min(9).max(20),
+            posted_date: Joi.date(),
             assigned_member: Joi.string().max(500),
             life_cycle: Joi.string().max(100),
             estimated_effort: Joi.string().max(50),
@@ -41,7 +43,11 @@ module.exports = {
             experience_level_needed: Joi.string().max(100),
             required_skills_set: Joi.string(),
             final_draft: Joi.string(),
-            required_skills_set: Joi.array().items(Joi.string())
+            required_skills_set: Joi.array().items(Joi.string()),
+            memberID: Joi.objectId(),
+            consultancyID: Joi.objectId(),
+            applyingCA : Joi.array().items(Joi.objectId())
+
         }
 
         return Joi.validate(request, updateSchema)

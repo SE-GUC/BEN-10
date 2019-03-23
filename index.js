@@ -60,5 +60,6 @@ app.use('/api/notifications',notification)
 
 app.use((req,res) => res.status(404).send(`<h1>Can not find what you're looking for</h1>`))
 
+
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Server on ${port}`))
