@@ -18,7 +18,9 @@ module.exports = {
             regist_start_date:  Joi.date().required(),
             regist_expiry_date:Joi.date().required(),
             requestorId: Joi.objectId().required(),
-            bookedMembers:Joi.array().items(Joi.string())
+            bookedMembers:Joi.array().items(Joi.string()),
+            request_id: Joi.objectId()
+        
         }
 
         return Joi.validate(Eventrequest, createSchema)

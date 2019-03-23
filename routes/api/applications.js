@@ -26,8 +26,7 @@ router.post('/', async (req,res) => {
     const newApplication = await Application.create(req.body)
     res.json({msg:'Application was created successfully', data: newApplication})
    }
-   catch(error) {
-       
+   catch(error) {      
        console.log(error)
        return res.status(400).send('Error')
    }  

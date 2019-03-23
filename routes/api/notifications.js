@@ -10,8 +10,13 @@ const validator = require('../../validations/notificationsValidation')
 
 
 router.get('/', async (req,res) => {
-    const myNotifications = await notification.find()
+    const myNotifications = await notification.find();
+    if(req.query.Member_id!=null){
+        const mynotifications=await notification.find({"NotifiedPerson":ObjectId(req.query.Member_id)});
+        res.json({data: mynotifications})
+    } else{
     res.json({data: myNotifications})
+    }
 })
 
 router.get('/:id', async (req,res) => {
