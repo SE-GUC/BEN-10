@@ -196,6 +196,75 @@ router.delete('/:id', async (req,res) => {
         console.log(error)
     }
  })
+ //as a candidate i want to view tasks so that i can apply for them 
+
+ router.get('/:id/getProject', async (req,res)=> {
+    const id = req.params.id
+    if(ObjectId.isValid(id))
+    {
+        const j = await getProjects(id);
+        res.json({data:j});
+    }
+    else {
+        return res.status(404).send({ error: "ID NOT FOUND" })
+    }
+    
+  });
+
+
+ 
+  
+
+ async function getProjects() {
+    var result = [];
+    await fetch(`${server}/api/projects`)
+      .then(res => res.json())
+      .then(json => {
+        const projects = json.data;
+        const hisProjects = projects.filter(m => m.life_cycle === "Posted" );
+        result =hisProjects;
+        return hisProjects;
+      })
+      .catch(err => console.log("Error", err));
+    return result;
+
+  }
+  //as a candidate i want to view an events so that i can book a place in it 
+  router.get('/:id/getEvent', async (req,res)=> {
+    const id = req.params.id
+    if(ObjectId.isValid(id))
+    {
+        const j = await getEvents(id);
+        res.json({data:j});
+    }
+    else {
+        return res.status(404).send({ error: "ID NOT FOUND" })
+    }
+    
+  });
+
+ async function getEvents() {
+    var result = [];
+    await fetch(`${server}/api/events`)
+      .then(res => res.json())
+      .then(json => {
+        const events = json.data;
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        today = yyyy + '-' + mm + '-' + dd +'T00:00:00.000Z';
+        const hisEvents = events.filter(m => m.eventDate >= today );
+        result =hisEvents;
+        return hisEvents;
+    })
+    .catch(err => console.log("Error", err));
+    
+    return result;
+
+
+
+  }
 
  //4.9 --As a candidate I want that the events I attended be added on my profile.
  async function postevent(cid,events){
