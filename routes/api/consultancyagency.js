@@ -297,6 +297,82 @@ async function assignCandidate(projectID, candidatID) {
 
 
 
+ // 2.3 As consultancy agency i want to view the final work of the candidate who is working on my task
+   // initialize new route to view my tasks
+
+
+ //ConsultancyAgency.update(
+ //   {name: 'abdo Agency'}, 
+ // {projects : ['5c94436fd0c61339203ad8c7','5c94376f029c043e280b0fb0'] },
+ //   {multi:true}, 
+  //    function(err, numberAffected){  
+  //    });
+
+
+  router.get('/:caid/reviewprojects/:pid',async (req,res)=>{
+    try{
+       if(ObjectId.isValid(req.params.caid)){
+         const caid = req.params.caid
+         const pid = req.params.pid
+         const matchingProjects = await getProjectsInFinalReview(caid)
+         var r = null
+         for(var i in matchingProjects){
+             if(matchingProjects[i].id == pid){
+              r = matchingProjects[i]
+                 break
+            }
+         }
+         return res.json({data : r})
+    }
+   }
+    catch(error) {
+       console.log(error)
+       return res.status(400).send('Error')
+   
+   }  
+   })
+
+
+router.get('/:caid/reviewprojects',async (req,res)=>{
+ try{
+    if(ObjectId.isValid(req.params.caid)){
+      const caid = req.params.caid
+      const matchingProjects = await getProjectsInFinalReview(caid)
+    res.json({data: matchingProjects})
+ }
+}
+ catch(error) {
+    console.log(error)
+    return res.status(400).send('Error')
+
+}  
+})
+
+
+ async function getProjectsInFinalReview(caid){
+      const allprojects = await Project.find()
+      var matchingProjects =[]
+      for( var i in allprojects){
+          if(allprojects[i].consultancyID == caid && allprojects[i].life_cycle== 'Final Review'){
+              matchingProjects.push(allprojects[i])
+          }
+      }
+     return matchingProjects 
+  
+ }
+
+// a mthod to be deleted
+ async function  getFinished(caProjects){
+    var finished = []
+    for(var i=0;i<caProjects.length;i++){
+        const p  =await Project.findById(caProjects[i])
+        if(p.life_cycle==='Finished'){
+            finished.push(p)
+        }
+    }
+    return finished
+}
+
  //2.4 --As a consultancy agency I want to request to organize an event.
  async function CARequestEvent(requestedBy, description, eventType, eventLocation, eventDate){
     const body = { 
