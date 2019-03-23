@@ -20,12 +20,12 @@ const notification = require('./routes/api/notifications')
 const app = express();
 
 // DB Config
-const db = require('./config/keys').mongoURI
+const db = process.env.mongoURI
 
 // Connect to mongo
 mongoose
-    .connect(db)
-    .then(() => console.log('Connected to MongoDB'))
+.connect(db,{ useNewUrlParser: true })
+.then(() => console.log('Connected to MongoDB'))
     .catch(err => console.log(err))
 
 

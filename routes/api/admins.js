@@ -1,9 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-//FETCH REQUIERMENTS
-const fetch = require("node-fetch");
-const server = require("../../config/config");
 
 //FETCH REQUIERMENTS
 const fetch = require("node-fetch");
@@ -38,6 +35,11 @@ router.get("/pdescription/:id/", async (req, res) => {
       return res.status(404).send({ error: "Project does not exist" });
     }
   } else return res.status(404).send({ error: "Project does not exist" });
+});
+router.get("/:id", async (req, res) => {
+  const id = req.params.id;
+  const admins = await Admin.findById(id);
+  res.json({ data: admins });
 });
 
 // Create an admin
