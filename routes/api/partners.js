@@ -212,12 +212,6 @@ router.post('/:id/submitRequest/',async (req,res) => {
     .catch((err) => console.log("Error",err));
     return j;
     
-}
-
- // test 1.3 delete
-
- PartnerRequestEvent('5c7a5ae73c28ff08583304ee','bbb','ccc','cairo','10/10/2000')
-
- 
+} 
 
 module.exports = router
