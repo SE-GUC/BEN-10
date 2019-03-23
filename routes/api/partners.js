@@ -8,6 +8,8 @@ const server = require("../../config/config");
 const PartnerInfo = require('../../models/PartnerInfo')
 const validator = require('../../validations/partnerValidations')
 const ObjectId = require('mongodb').ObjectID;
+const Project = require('../../models/Project')
+
 mongoose.set('useFindAndModify', false);
 
 router.get('/', async (req,res) => {
@@ -92,9 +94,14 @@ router.delete('/:id', async (req,res) => {
     const id = req.params.id;
 
     if(ObjectId.isValid(id))
-    {
-        const j = await getProjects(id);
-        res.json({data:j});
+    {   
+        const projects= await Project.findById(id);
+        if(projects){
+            const j = await gettProjects(id);
+            res.json({data:j});}
+        else{
+            return res.status(404).send({ error: "Project not found" })
+        }
     }
     else {
         return res.status(404).send({ error: "ID not found" })
