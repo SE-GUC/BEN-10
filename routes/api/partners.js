@@ -155,7 +155,8 @@ router.put('/:id1/AssignCAtoProject/:id2',async (req,res) => {
         if (project && consultancy){
            var consul= project.applyingConsultancies;
            console.log(consul)
-           var found =consul.includes(ObjectId(caId));
+           console.log(caId===consul[0])
+           var found =consul.includes(caId);
            console.log(found)
            var need = project.want_consultancy;
            console.log(need)
