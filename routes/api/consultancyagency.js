@@ -10,6 +10,7 @@ const server = require("../../config/config");
 const ConsultancyAgency = require("../../models/ConsultancyAgency");
 const validator = require("../../validations/consultancyagencyValidations");
 
+
 router.get("/", async (req, res) => {
   const consultancyAgency = await ConsultancyAgency.find();
   res.json({ data: consultancyAgency });
@@ -99,6 +100,30 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+
+//2.4 --As a consultancy agency I want to request to organize an event.
+router.post('/:id/eventrequests/',async (req,res) => {
+    if(ObjectId.isValid(req.params.id)){
+        const cid=await ConsultancyAgency.findById(req.params.id);
+        if(cid){
+            if(req.body.requestedBy!=null && req.body.description!=null&&req.body.eventType!=null &&
+               req.body.eventLocation!=null && req.body.eventDate!=null){    
+        
+                const j = await CARequestEvent(req.body.requestedBy, req.body.description, 
+                                               req.body.eventType, req.body.eventLocation, req.body.eventDate);
+                res.status(200).send(j)
+                
+            }else{
+                return res.status(400).send({ error: "body is missing attrubites" })
+            }
+        }
+        else
+            return res.status(404).send({error: 'Consultancy Agency does not exist'})
+    }else
+        return res.status(404).send({error: 'Consultancy Agency does not exist'})
+})
+
+
 //2.2 --As a consultancy agency I want to assign one of the candidates who applied for the task/project.
 
 //2.2 part1 View candidates applying for a project
@@ -134,6 +159,7 @@ async function getApplyingMembers(pid) {
   return result;
 }
 
+
 //2.2 part2 assign a candidate to a project
 router.put("/:id/assignMembers/:pid", async (req, res) => {
   const members = await getApplyingMembers(req.params.pid);
@@ -151,6 +177,16 @@ router.put("/:id/assignMembers/:pid", async (req, res) => {
     res.status(400).send({ error: "Candidate did not apply on this project" });
   }
 });
+router.delete('/:id', async (req,res) => {
+    try {
+        if(ObjectId.isValid(req.params.id)){
+        const id = req.params.id
+        const deletedConsultancyAgency= await ConsultancyAgency.findByIdAndRemove(id)
+        if(!deletedConsultancyAgency) return res.status(400).send({ error: 'Consultancy Agency does not exist'})
+        res.json({msg:'Consultancy Agency was deleted successfully', data: deletedConsultancyAgency})
+        }else{
+            return res.status(404).send({error: 'Consultancy Agency does not exist'})
+
 
 async function assignCandidate(projectID, candidatID) {
   const body = { memberID: candidatID };
@@ -185,4 +221,39 @@ async function assignCandidate(projectID, candidatID) {
   return j;
 }
 
-module.exports = router;
+
+ //2.4 --As a consultancy agency I want to request to organize an event.
+ async function CARequestEvent(requestedBy, description, eventType, eventLocation, eventDate){
+    const body = { 
+        requestedBy:requestedBy,
+        description: description,
+        eventType: eventType,
+        eventLocation: eventLocation,
+        eventDate: eventDate,
+        isAccepted: "false"
+     };
+    var error = true;
+    var j;
+    await fetch(`${server}/api/eventrequests/`, {
+        method: 'post',
+        body:    JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res => {
+        if(res.status === 200){
+            error = false;
+        }
+        return res.json()
+    })
+    .then(json => {
+        if(!error){
+            json = { msg: 'Event is requested successfully'}
+        }
+        j = json;
+    })
+    .catch((err) => console.log("Error",err));
+    return j;
+}
+
+
+ module.exports = router
