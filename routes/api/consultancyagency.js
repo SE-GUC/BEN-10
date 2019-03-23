@@ -185,6 +185,4 @@ async function assignCandidate(projectID, candidatID) {
   return j;
 }
 
-// assignCandidate("5c7a795e53f1ba0c1b351f75", "5c92fffe676da108728b0def");
-
 module.exports = router;
