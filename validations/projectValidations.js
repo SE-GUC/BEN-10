@@ -42,6 +42,8 @@ module.exports = {
             experience_level_needed: Joi.string().max(100),
             required_skills_set: Joi.string(),
             final_draft: Joi.string(),
+            memberID: Joi.objectId(),
+            consultancyID: Joi.objectId(),
             applyingCA : Joi.array().items(Joi.objectId())
         }
 
