@@ -69,7 +69,8 @@ const ProjectSchema = new Schema({
     },
     applyingCA :{
         type: [{ type: Schema.Types.ObjectId, ref: "ConsultancyAgency" }],
-        required: false 
+        required: false,
+        default:[]
     }
 })
 
