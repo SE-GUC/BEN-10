@@ -1,12 +1,16 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-const fetch = require("node-fetch")
-const server = require('../../config/config');
+
 const Project = require('../../models/Project')
 const PartnerInfo = require('../../models/PartnerInfo')
+const fetch = require("node-fetch");
+const server = require("../../config/config");
+const partners = require('../../models/PartnerInfo')
 const validator = require('../../validations/partnerValidations')
 const ObjectId = require('mongodb').ObjectID;
+
+
 mongoose.set('useFindAndModify', false);
 
 router.get('/', async (req,res) => {
@@ -213,5 +217,45 @@ router.post('/:id/submitRequest/',async (req,res) => {
     return j;
     
 } 
+
+
+ 
+ //1.5 As a partner I want to review the final work of the candidate who is working on my task/project.
+ router.get("/:id/ShowFinalDraft", async (req, res) => {
+    const id = req.params.id;
+
+    if(ObjectId.isValid(id))
+    {       
+        const partners= await PartnerInfo.findById(id);
+    
+        if(partners){
+
+        const j = await getProjects(id);
+        res.json({data:j});}
+    
+         else{
+            return res.status(404).send({ error: "partner not found" })
+          }
+        }
+        else {
+         return res.status(404).send({ error: "ID not found" })
+         } 
+
+  });
+
+ async function getProjects(partnerid) {
+    var result = [];
+    await fetch(`${server}/api/projects`)
+      .then(res => res.json())
+      .then(json => {
+        const projects = json.data;
+        const hisProjects = projects.filter(m => m.companyID === partnerid && m.life_cycle==="Final Review");
+        result =hisProjects;
+        return hisProjects;
+      })
+      .catch(err => console.log("Error", err));
+    return result;
+  }
+
 
 module.exports = router
