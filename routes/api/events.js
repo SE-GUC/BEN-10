@@ -1,7 +1,7 @@
 const express=require('express');
 // const uuid=require('uuid');
 const router=express.Router();
-const events=require('../../models/Event');
+const Event=require('../../models/Event');
 const validator = require('../../validations/eventValidations')
 
 
