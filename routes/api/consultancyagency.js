@@ -80,5 +80,67 @@ router.delete('/:id', async (req,res) => {
 
     }  
  })
-
+ router.put('/:id/myprojects/:pid/finaldraft/approve', async (req,res)=>{
+    try {
+        if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
+        {
+            const decision="approved"
+            const j = await ApproveProject(req.params.pid,decision)
+            res.status(200).send(j)
+        }
+        else {
+            return res.status(404).send({ error: "ID NOT FOUND" })
+        }
+    }
+    catch(error){
+        console.log(error)
+        return res.status(404).send({ error: "not a project id" })
+    }    
+  })
+  async function ApproveProject(id,decision){
+    const url  = `${server}/api/projects/${id}`;
+    await fetch(url, {
+                      method:'put',
+                      body : JSON.stringify({life_cycle : decision}),
+                      headers: { 'Content-Type': 'application/json' }
+                      })
+                .then(res =>{  console.log(res.status)  
+                               return res.json()}
+                     )
+                .then(json =>{ console.log(json)})
+                .catch(err =>{ console.log(err)})
+  }
+  // part 2 as a CA i want to disapprove 
+  router.put('/:id/myprojects/:pid/finaldraft/disapprove', async (req,res)=>{
+    try {
+        if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
+        {
+            const decision="disapproved"
+            const j = await disapproveProject(req.params.pid,decision)
+            res.status(200).send(j)
+        }
+        else {
+            return res.status(404).send({ error: "ID NOT FOUND" })
+        }
+    }
+    catch(error){
+        console.log(error)
+        return res.status(404).send({ error: "not a project id" })
+    }    
+  })
+  async function disapproveProject(id,decision){
+    const url  = `${server}/api/projects/${id}`;
+    await fetch(url, {
+                      method:'put',
+                      body : JSON.stringify({life_cycle : decision}),
+                      headers: { 'Content-Type': 'application/json' }
+                      })
+                .then(res =>{  console.log(res.status)  
+                               return res.json()}
+                     )
+                .then(json =>{ console.log(json)})
+                .catch(err =>{ console.log(err)})
+  }
  module.exports = router
+
+ ApproveProject('5c955ea2ea7dd51a0c16c38e','Posted')
