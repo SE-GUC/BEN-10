@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 
+
+//FETCH REQUIERMENTS
 const fetch = require('node-fetch');
 const server = require('../../config/config');
 
@@ -109,6 +111,45 @@ router.put('/:id', async (req,res) => {
         return res.status(400).send('Error')
     }  
  })
+ // 3.1 As an admin i want to identify a task/project  with a set of attributes so that it defines it
+ router.put("/:id/assignAttributes/:pid",async(req,res)=>{
+     if(ObjectId.isValid(req.params.id)&& ObjectId.isValid(req.params.pid)){
+         const admin = await Admin.findById(req.params.id);
+         const project= await Project.findById(req.params.pid);
+         if (admin && project){
+            const j = await assignAttributes(req.params.pid,req.body);
+            res.status(200).send(j);
+        }
+        else
+            return res.status(404).send({error: 'invalid inputs'})
+    }else{
+        return res.status(404).send({error: 'invalid inputs'})
+     }
+ })
+ async function assignAttributes(pid,body){
+
+    var error = true;
+    var j;
+    await fetch(`${server}/api/projects/${pid}`, {
+            method: 'put',
+            body:    JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res => {
+        if(res.status === 200){
+            error = false;
+        }
+        return res.json()
+    })
+    .then(json => {
+        if(!error){
+            json = { msg: 'Attributes identified successfully'}
+        }
+        j = json;
+    })
+    .catch((err) => console.log("Error",err));
+    return j;
+}
 
  
  //3.3 --As an admin I want to post the task/project to the website so that candidates can apply for it.
