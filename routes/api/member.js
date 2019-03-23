@@ -8,9 +8,7 @@ const server = require("../../config/config");
 const Event = require("../../models/Event");
 const member = require("../../models/member");
 const validator = require("../../validations/memberValidations");
-const ObjectId = require("mongodb").ObjectID;
 const notificationValidator = require("../../validations/notificationsValidation");
-const Event = require("../../models/Event");
 const project = require("../../models/Project");
 
 // GET method to retrieve all members
