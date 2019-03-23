@@ -44,12 +44,8 @@ const memberSchema = new Schema({
         type: String, 
         required: true
     },
-    skill_set:{
-        type:[String],
-        required:true
-    } 
     // location info
-    ,Country: {
+    Country: {
         type: String, 
         required: true
     },

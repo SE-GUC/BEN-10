@@ -179,6 +179,7 @@ router.put("/:id/MyProjetcs/:pid/applyingMembers/:mid/assign", async (req, res) 
     res.status(400).send({ error: "Candidate did not apply on this project" });
   }
 });
+
 router.delete('/:id', async (req,res) => {
     try {
         if(ObjectId.isValid(req.params.id)){
@@ -188,7 +189,13 @@ router.delete('/:id', async (req,res) => {
         res.json({msg:'Consultancy Agency was deleted successfully', data: deletedConsultancyAgency})
         }else{
             return res.status(404).send({error: 'Consultancy Agency does not exist'})
-    }  
+          }
+        }
+        catch(error) {
+            console.log(error)
+            return res.status(400).send('Error')
+    
+        } 
  })
 
 async function assignCandidate(projectID, candidatID) {
