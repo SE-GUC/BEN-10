@@ -25,7 +25,7 @@ router.get('/:id', async (req,res) => {
 })
 
 //3 --As an admin I want to further check the description of a task/project so that it will be posted for candidates to apply.
-router.get('/:id/pdescription', async (req,res) => {
+router.get('/pdescription/:id/', async (req,res) => {
     if(ObjectId.isValid(req.params.id)){
         const projects = await Project.findById(req.params.id)
         if (projects){
@@ -54,7 +54,7 @@ router.post('/', async (req,res) => {
 })
 
 //3.5 --As an admin I want to notify accepted candidates that he was accepted for a task/project 
-router.post('/:id/notifications/',async (req,res) => {
+router.post('/notifications/:id/',async (req,res) => {
     if(ObjectId.isValid(req.params.id)){
         const cid=await member.findById(req.params.id);
         if(cid){
