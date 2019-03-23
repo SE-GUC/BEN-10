@@ -189,7 +189,7 @@ return res.status(404).send({error: 'invalid ID'})
 
 async function assigning(caID,projID){
     var error = true;
-    const body = { consultancyID: caID };
+    const body = { consultancyID: ObjectId(caId) };
      var j;
      await fetch(`${server}/api/projects/${projID}`, {
       method: 'put',
