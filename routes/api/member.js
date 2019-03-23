@@ -33,38 +33,6 @@ router.get('/:id', async (req,res) => {
      }
    
 })
-// Get all projects for a member
-router.get('/:id/projects', async (req,res) => {
-    const id = req.params.id;
-    try{
-        if(id.match(/^[0-9a-fA-F]{24}$/)){
-            // res.redirect('/api/projects/?Member_id='+id);
-            var error = true;
-            await fetch(`${server}/api/projects`, {
-               method: 'get',
-               headers: { 'Content-Type': 'application/json' },
-           })
-           .then(res => {
-               if(res.status === 200){
-                   error = false;
-               }
-               return res.json()
-           })
-           .then(json => {
-               console.log(json.data[0]);
-            res.json({data:json.data})
-               
-        
-           })
-           .catch((err) => console.log("Error",err));
-        }
-
-     }catch{
-        //console.log('Invalid Object id');
-        return res.status(400).send({error:"the provided id is not valid one "})
-     }
-})
-
 
 
 // view my notifications
@@ -72,6 +40,7 @@ router.get('/:id/projects', async (req,res) => {
 router.get('/:id/notifications',async (req,res) => {
     const id = req.params.id;
     // res.redirect('/api/notifications/?Member_id='+id);
+    if(ObjectId.isValid(id)){
     var error = true;
     await fetch(`${server}/api/notifications`, {
        method: 'get',
@@ -91,6 +60,10 @@ router.get('/:id/notifications',async (req,res) => {
 
    })
    .catch((err) => console.log("Error",err));
+}
+else{
+    return res.status(404).send({ error: "Not a member id"})
+}
 
 }
 
@@ -120,13 +93,17 @@ router.post('/:id1/projects/:id2',async (req,res) => {
         activeTasks:active_task,
         projectId:project_id
     };
-  fetch(`${server}/api/applications`, {
+    var error = true;
+    await fetch(`${server}/api/applications`, {
         method: 'post',
         body:    JSON.stringify(application),
         headers: { 'Content-Type': 'application/json' },
     })
     .then(res =>res.json())
-    .then(json =>res.json(json));
+    .then(json =>res.json(json))
+    .catch((err) => console.log("Error",err));
+}else{
+    return res.status(404).send({ error: "Not a valid id format"})
 }
 
 })
