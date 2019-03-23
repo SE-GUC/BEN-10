@@ -145,7 +145,7 @@ router.delete('/:id', async (req,res) => {
      };
     var error = true;
     const pr = await Project.findById(id)
-    //if(pr.lifecycle === 'Not Posted'){
+    if(pr.lifecycle === 'Not Posted'){
  
     await fetch(`${server}/api/projects/${id}`, {
             method: 'put',
@@ -166,9 +166,9 @@ router.delete('/:id', async (req,res) => {
 
         .catch((err) => console.log("Error",err));
         
- //}else{
-    // console.log('fssss')
-// }
+ }else{
+     console.log('bla')
+ }
 }
  
  async function PartnerRequestEvent(requestedBy, description, eventType, eventLocation, eventDate){
