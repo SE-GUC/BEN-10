@@ -1,7 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-
+const db = require('../../config/keys').mongoURI
+mongoose
+.connect(db,{ useNewUrlParser: true })
+.then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.log(err))
 const Project = require('../../models/Project')
 const validator = require('../../validations/projectValidations')
 const ObjectId = require('mongodb').ObjectID;
