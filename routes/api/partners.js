@@ -96,7 +96,6 @@ router.delete('/:id', async (req,res) => {
     if(ObjectId.isValid(id))
     {   
 
-        const partners= await PartnerInfo.findById(id);
         
         if(ObjectId.isValid(id))
     {   
