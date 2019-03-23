@@ -76,7 +76,7 @@ router.put('/:id', async (req,res) => {
  })
 
  //3.2 --As an admin I want to send a final draft of the task/project so that the partner can approve posting it.
- router.put('/:id/sendDraft/:pid', async (req,res)=>{
+ router.put('/:id/myProjects/:pid/sendDraft', async (req,res)=>{
     try {
         if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
         {
