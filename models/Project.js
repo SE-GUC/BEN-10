@@ -66,6 +66,9 @@ const ProjectSchema = new Schema({
     final_draft: {
         type: String,
         required: false
+    },
+    applyingConsultancies: {
+        type: [{ type: Schema.Types.ObjectId, ref: "ConsultancyAgency" }]
     }
 })
 
