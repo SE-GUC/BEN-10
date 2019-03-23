@@ -50,6 +50,7 @@ const ApplicationSchema = new Schema({
     projectId: {
         type: Schema.Types.ObjectId,ref:"projects",
         required: false
+
     }
 })
 
