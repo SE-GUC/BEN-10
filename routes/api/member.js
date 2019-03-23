@@ -13,26 +13,109 @@ const notificationValidator = require('../../validations/notificationsValidation
 const project = require("../../models/Project")
 
 
-
 // GET method to retrieve all members
 router.get('/', async (req,res) => {
-    const members = await member.find()
+    const members = await member.find() ;   
     res.json({data: members})
+
 })
+
+
+// as a member i want to view my projects 
+
 
 // GET method to retirve a member by his id
 router.get('/:id', async (req,res) => {
     const id = req.params.id
     try{
-        (id.match(/^[0-9a-fA-F]{24}$/))
+        if(id.match(/^[0-9a-fA-F]{24}$/)){
         const mem = await member.findById(id)
         res.json({data: mem})
+        }
      }catch{
         //console.log('Invalid Object id');
         return res.status(400).send({error:"the provided id is not valid one "})
      }
    
 })
+
+
+
+
+
+// view my notifications
+
+router.get('/:id/notifications',async (req,res) => {
+    const id = req.params.id;
+    // res.redirect('/api/notifications/?Member_id='+id);
+    if(ObjectId.isValid(id)){
+    var error = true;
+    await fetch(`${server}/api/notifications`, {
+       method: 'get',
+       headers: { 'Content-Type': 'application/json' },
+   })
+   .then(res => {
+       if(res.status === 200){
+           error = false;
+       }
+       return res.json()
+   })
+   .then(json => {
+      
+    const mynotification=json.data;
+    const notif=mynotification.filter(mynotification => mynotification.NotifiedPerson===id)
+    res.json({data:notif})
+
+   })
+   .catch((err) => console.log("Error",err));
+}
+else{
+    return res.status(404).send({ error: "Not a member id"})
+}
+
+}
+
+)
+
+
+// i want to be able to apply for a task or a project
+router.post('/:id1/projects/:id2',async (req,res) => {
+    const project_id=req.params.id2;
+    const member_id=req.params.id1;
+    if(project_id.match(/^[0-9a-fA-F]{24}$/)&&member_id.match(/^[0-9a-fA-F]{24}$/)){
+    var active_task=req.body.activeTasks;
+    if(typeof active_task === "undefined")
+          active_task=0;
+
+    const application = { 
+        applicantId:member_id,
+        applicantName:req.body.applicantName,
+        gender:req.body.gender,
+        age:req.body.age,
+        email:req.body.email,
+        mobile:req.body.mobile,
+        applyingDate:req.body.applyingDate,
+        skills:req.body.skills,
+        yearsOfExp:req.body.yearsOfExp,
+        hasJob:req.body.hasJob,
+        activeTasks:active_task,
+        projectId:project_id
+    };
+    var error = true;
+    await fetch(`${server}/api/applications`, {
+        method: 'post',
+        body:    JSON.stringify(application),
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res =>res.json())
+    .then(json =>res.json(json))
+    .catch((err) => console.log("Error",err));
+}else{
+    return res.status(404).send({ error: "Not a valid id format"})
+}
+
+})
+
 
 //POST method to create a new member
 router.post('/', async (req,res) => {
@@ -209,7 +292,6 @@ router.delete('/:id', async (req,res) => {
     .catch((err) => console.log("Error",err));
     return j;
 }
-
 
 
 
