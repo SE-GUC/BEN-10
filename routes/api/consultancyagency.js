@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const ObjectId = require('mongodb').ObjectID;
+const fetch = require("node-fetch")
+const server = require('../../config/config');
 mongoose.set('useFindAndModify', false);
 
 const ConsultancyAgency = require('../../models/ConsultancyAgency')
@@ -143,4 +145,8 @@ router.delete('/:id', async (req,res) => {
   }
  module.exports = router
 
- ApproveProject('5c955ea2ea7dd51a0c16c38e','Posted')
+// test approve
+ //ApproveProject('5c955ea2ea7dd51a0c16c38e','Posted')
+
+ //test diapprove
+ //disapproveProject('5c955ea2ea7dd51a0c16c38e','Not Posted')
