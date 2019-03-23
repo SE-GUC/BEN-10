@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const ObjectId = require('mongodb').ObjectID;
+const fetch = require("node-fetch")
+const server = require('../../config/config');
 mongoose.set('useFindAndModify', false);
 
 const fetch = require('node-fetch');
@@ -104,6 +106,77 @@ router.delete('/:id', async (req,res) => {
 
     }  
  })
+ router.put('/:id/myprojects/:pid/finaldraft/approve/', async (req,res)=>{
+    try {
+        if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
+        {
+            const decision="Approved"
+            const j = await ApproveProject(req.params.pid,decision)
+            res.status(200).send(j)
+        }
+        else {
+            return res.status(404).send({ error: "ID NOT FOUND" })
+        }
+    }
+    catch(error){
+        console.log(error)
+        return res.status(404).send({ error: "not a project id" })
+    }    
+  })
+  async function ApproveProject(id,decision){
+    const url  = `${server}/api/projects/${id}`;
+    var j
+    await fetch(url, {
+                      method:'put',
+                      body : JSON.stringify({life_cycle : decision}),
+                      headers: { 'Content-Type': 'application/json' }
+                      })
+                .then(res =>{  j = res.json()  
+                               return res.json()}
+                     )
+                .then(json =>{ console.log(json)})
+                .catch(err =>{ console.log(err)})
+                return j
+  }
+  // part 2 as a CA i want to disapprove 
+  router.put('/:id/myprojects/:pid/finaldraft/disapprove', async (req,res)=>{
+    try {
+        if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
+        {
+            const decision="Negotiation"
+            const j = await disapproveProject(req.params.pid,decision)
+            res.status(200).send(j)
+        }
+        else {
+            return res.status(404).send({ error: "ID NOT FOUND" })
+        }
+    }
+    catch(error){
+        console.log(error)
+        return res.status(404).send({ error: "not a project id" })
+    }    
+  })
+  async function disapproveProject(id,decision){
+      var j
+    const url  = `${server}/api/projects/${id}`;
+    await fetch(url, {
+                      method:'put',
+                      body : JSON.stringify({life_cycle : decision}),
+                      headers: { 'Content-Type': 'application/json' }
+                      })
+                .then(res =>{  j = res.json()  
+                               return res.json()}
+                     )
+                .then(json =>{ console.log(json)})
+                .catch(err =>{ console.log(err)})
+                return j
+  }
+ module.exports = router
+
+// test approve
+ //ApproveProject('5c955ea2ea7dd51a0c16c38e','Posted')
+
+
 
  //2.4 --As a consultancy agency I want to request to organize an event.
  async function CARequestEvent(requestedBy, description, eventType, eventLocation, eventDate){
@@ -138,7 +211,6 @@ router.delete('/:id', async (req,res) => {
     return j;
 }
 
-//test 2.4
-//CARequestEvent('5c79260b4328ab820437835c','shjhjk','sdccv','sx','sc','1/1/2020');
+
 
  module.exports = router
