@@ -15,6 +15,7 @@ router.get('/', async (req,res) => {
 })
 
 router.get('/:id', async (req,res) => {
+    console.log("hi")
     const id = req.params.id
     const admins = await Admin.findById(id)
     res.json({data: admins})
