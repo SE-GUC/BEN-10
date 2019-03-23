@@ -167,7 +167,7 @@ router.put('/:id1/AssignCAtoProject/:id2',async (req,res) => {
            console.log(need)
         if(need == true){ 
             if(found==true){
-             const j=await assigning(caId,consultancy.name,projID);
+             const j=await assigning(caId,projID);
              res.status(200).send(j);
         }    
         else {
@@ -187,9 +187,9 @@ return res.status(404).send({error: 'invalid ID'})
 })
 
 
-async function assigning(caID,name,projID){
+async function assigning(caID,projID){
     var error = true;
-    const body = { consultancyID: caID , consultancy:name };
+    const body = { consultancyID: caID };
      var j;
      await fetch(`${server}/api/projects/${projID}`, {
       method: 'put',
