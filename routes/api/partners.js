@@ -97,7 +97,7 @@ router.delete('/:id', async (req,res) => {
     {   
         const projects= await Project.findById(id);
         if(projects){
-            const j = await gettProjects(id);
+            const j = await getProjects(id);
             res.json({data:j});}
         else{
             return res.status(404).send({ error: "Project not found" })
