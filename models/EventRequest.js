@@ -29,7 +29,8 @@ const EventRequestSchema = new Schema({
     },
     isAccepted: {
         type: Boolean,
-        required: false
+        required: true,
+        default:false
     }
 })
 

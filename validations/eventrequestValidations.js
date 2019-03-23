@@ -9,7 +9,7 @@ module.exports = {
             eventType: Joi.string().max(300).required(),
             eventLocation: Joi.string().required(),
             eventDate: Joi.date().required(),
-            isAccepted: Joi.boolean(),
+            isAccepted: Joi.boolean().required(),
             requestorId: Joi.objectId().required()
         }
 
