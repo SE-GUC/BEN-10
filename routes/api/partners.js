@@ -154,7 +154,6 @@ router.put('/:id1/AssignCAtoProject/:id2',async (req,res) => {
         
         if (project && consultancy){
            var consul= project.applyingConsultancies;
-           console.log(consul)
            var found =false;
            for(var i=0 ; consul.length>i ; i++){
               
@@ -163,9 +162,7 @@ router.put('/:id1/AssignCAtoProject/:id2',async (req,res) => {
                    break;
                }
            }
-           console.log("yes"+found)
            var need = project.want_consultancy;
-           console.log("yes"+need)
         if(need === true){ 
             if(found===true){
              const j=await assigning(caId,projID);
