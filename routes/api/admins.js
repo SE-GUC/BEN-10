@@ -100,7 +100,7 @@ router.put('/:id', async (req,res) => {
 
  async function sendFinalDraft(projectID, draft){
      const body = {
-         life_cycle: "Waiting for draft approval",
+         life_cycle: "Final Draft",
          final_draft: draft
      }
      var error = true;
@@ -156,7 +156,7 @@ router.put('/:id', async (req,res) => {
     var error = true;
     var j;
  
-    await fetch(`${server}/api/proects/${id}`, {
+    await fetch(`${server}/api/projects/${id}`, {
             method: 'put',
             body:    JSON.stringify(body),
             headers: { 'Content-Type': 'application/json' },
