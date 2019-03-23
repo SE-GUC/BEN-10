@@ -114,7 +114,7 @@ router.delete('/:id', async (req,res) => {
     else {
         return res.status(404).send({ error: "ID not found" })
     }
-    
+}
   });
 
  async function getProjects(partnerid) {
