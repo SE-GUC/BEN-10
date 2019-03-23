@@ -1,9 +1,11 @@
-const express = require("express");
-const router = express.Router();
-const mongoose = require("mongoose");
-const ObjectId = require("mongodb").ObjectID;
-mongoose.set("useFindAndModify", false);
 //FETCH REQUIERMENTS
+const express = require('express')
+const router = express.Router()
+const mongoose = require('mongoose')
+const ObjectId = require('mongodb').ObjectID;
+const fetch = require("node-fetch")
+const server = require('../../config/config');
+mongoose.set('useFindAndModify', false);
 const fetch = require("node-fetch");
 const server = require("../../config/config");
 
@@ -161,10 +163,10 @@ async function getApplyingMembers(pid) {
 
 
 //2.2 part2 assign a candidate to a project
-router.put("/:id/assignMembers/:pid", async (req, res) => {
+router.put("/:id/MyProjetcs/:pid/applyingMembers/:mid/assign", async (req, res) => {
   const members = await getApplyingMembers(req.params.pid);
   if (req.body.memberID != null) {
-    candidatID = req.body.memberID;
+    candidatID = req.params.mid;
   } else {
     return res.status(400).send({ error: "Please enter Memeber ID" });
   }
@@ -186,7 +188,8 @@ router.delete('/:id', async (req,res) => {
         res.json({msg:'Consultancy Agency was deleted successfully', data: deletedConsultancyAgency})
         }else{
             return res.status(404).send({error: 'Consultancy Agency does not exist'})
-
+    }  
+ })
 
 async function assignCandidate(projectID, candidatID) {
   const body = { memberID: candidatID };
@@ -220,6 +223,78 @@ async function assignCandidate(projectID, candidatID) {
 
   return j;
 }
+
+
+ router.put('/:id/myprojects/:pid/finaldraft/approve/', async (req,res)=>{
+    try {
+        if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
+        {
+            const decision="Approved"
+            const j = await ApproveProject(req.params.pid,decision)
+            res.status(200).send(j)
+        }
+        else {
+            return res.status(404).send({ error: "ID NOT FOUND" })
+        }
+    }
+    catch(error){
+        console.log(error)
+        return res.status(404).send({ error: "not a project id" })
+    }    
+  })
+  async function ApproveProject(id,decision){
+    const url  = `${server}/api/projects/${id}`;
+    var j
+    await fetch(url, {
+                      method:'put',
+                      body : JSON.stringify({life_cycle : decision}),
+                      headers: { 'Content-Type': 'application/json' }
+                      })
+                .then(res =>{  j = res.json()  
+                               return res.json()}
+                     )
+                .then(json =>{ console.log(json)})
+                .catch(err =>{ console.log(err)})
+                return j
+  }
+  // part 2 as a CA i want to disapprove 
+  router.put('/:id/myprojects/:pid/finaldraft/disapprove', async (req,res)=>{
+    try {
+        if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid))
+        {
+            const decision="Negotiation"
+            const j = await disapproveProject(req.params.pid,decision)
+            res.status(200).send(j)
+        }
+        else {
+            return res.status(404).send({ error: "ID NOT FOUND" })
+        }
+    }
+    catch(error){
+        console.log(error)
+        return res.status(404).send({ error: "not a project id" })
+    }    
+  })
+  async function disapproveProject(id,decision){
+      var j
+    const url  = `${server}/api/projects/${id}`;
+    await fetch(url, {
+                      method:'put',
+                      body : JSON.stringify({life_cycle : decision}),
+                      headers: { 'Content-Type': 'application/json' }
+                      })
+                .then(res =>{  j = res.json()  
+                               return res.json()}
+                     )
+                .then(json =>{ console.log(json)})
+                .catch(err =>{ console.log(err)})
+                return j
+  }
+ module.exports = router
+
+// test approve
+ //ApproveProject('5c955ea2ea7dd51a0c16c38e','Posted')
+
 
 
  //2.4 --As a consultancy agency I want to request to organize an event.
@@ -256,4 +331,49 @@ async function assignCandidate(projectID, candidatID) {
 }
 
 
+
+ // 2.1 As a consultancy agency i want to apply for task/project 
+router.put("/:id/caApplyProject/:pid",async(req,res)=>{
+    if(ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)){
+        const ca= await ConsultancyAgency.findById(req.params.id);
+        const project= await Project.findById(req.params.pid);
+        if (ca&& project){
+            const applying= project.applyingCA;
+            applying.push(req.params.id);
+            const j = await caApplyProject(req.params.pid,applying);
+            res.status(200).send(j);
+        }
+        else
+            return res.status(404).send({error: 'invalid inputs'})
+    }else{
+        return res.status(404).send({error: 'invalid inputs'})
+    }
+
+})
+async function caApplyProject(pID,applying){
+
+    var error = true;
+    const body = { applyingCA: applying};
+    var j;
+    await fetch(`${server}/api/projects/${pID}`, {
+            method: 'put',
+            body:    JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res => {
+        if(res.status === 200){
+            error = false;
+        }
+        return res.json()
+    })
+    .then(json => {
+        if(!error){
+            json = { msg: 'Consultancy agent applied successfully'}
+        }
+        j = json;
+    })
+    .catch((err) => console.log("Error",err));
+    return j;
+}
  module.exports = router
+
