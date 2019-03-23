@@ -6,12 +6,11 @@ const fetch = require('node-fetch');
 const validator = require('../../validations/memberValidations')
 const notificationValidator = require('../../validations/notificationsValidation')
 const server = require('../../config/config');
-
+var ObjectId = require('mongodb').ObjectID;
 
 // GET method to retrieve all members
 router.get('/', async (req,res) => {
-    const members = await member.find()
-    
+    const members = await member.find() ;   
     res.json({data: members})
 
 })
