@@ -157,7 +157,7 @@ router.put('/:id1/AssignCAtoProject/:id2',async (req,res) => {
            var contains =consul.includes(consultancy);
            var need = project.want_consultancy;
         if(need == true){  
-            if(contains===true){
+            if(contains==true){
              const j=await assigning(caId,projID);
              res.status(200).send(j);
         }    
