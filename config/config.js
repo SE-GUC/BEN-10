@@ -1,4 +1,4 @@
 const dev = process.env.NODE_ENV !== 'production';
 
-const server = dev ? 'http://localhost:35000' : 'https://lirtenhub.herokuapp.com/';
+const server = dev ? 'http://localhost:36000' : 'https://lirtenhub.herokuapp.com/';
 module.exports = server
