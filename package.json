@@ -8,6 +8,8 @@
     "joi": "^14.3.1",
     "joi-objectid": "^2.0.0",
     "mongoose": "^5.4.19",
+    "node": "^11.12.0",
+
     "node-fetch": "^2.3.0"
   },
   "devDependencies": {},

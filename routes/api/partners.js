@@ -2,9 +2,10 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 
+const Project = require('../../models/Project')
+const PartnerInfo = require('../../models/PartnerInfo')
 const fetch = require("node-fetch");
 const server = require("../../config/config");
-
 const partners = require('../../models/PartnerInfo')
 const validator = require('../../validations/partnerValidations')
 const ObjectId = require('mongodb').ObjectID;
@@ -66,6 +67,28 @@ router.post('/', async (req,res) => {
         return res.status(404).send({error: 'Partner does not exist'})
     }  
  })
+ router.post('/:id/eventrequests/',async (req,res) => {
+    if(ObjectId.isValid(req.params.id)){
+        const pid=await PartnerInfo.findById(req.params.id);
+        if(pid){
+            if(req.body.requestedBy!=null && req.body.description!=null&&req.body.eventType!=null &&
+               req.body.eventLocation!=null && req.body.eventDate!=null){    
+        
+                const j = await PartnerRequestEvent(req.body.requestedBy, req.body.description, 
+                                               req.body.eventType, req.body.eventLocation, req.body.eventDate);
+                res.status(200).send(j)
+                
+            }else{
+                return res.status(400).send({ error: "body is missing attrubites" })
+            }
+        }
+        else
+            return res.status(404).send({error: 'Partner does not exist'})
+    }else
+        return res.status(404).send({error: 'Partner does not exist'})
+})
+
+
 
 
 router.delete('/:id', async (req,res) => {
@@ -86,6 +109,116 @@ router.delete('/:id', async (req,res) => {
 
     }  
  })
+ router.delete('/:id/deleteProject/:pid/',async (req,res) => {
+     const p = await Project.findById(pid)
+     if (p.companyID == req.params.id){
+         const j = await deleteProject(req.params.pid)
+        return res.json(j)
+     }
+     else {
+         res.json({msg: 'error'})
+
+     }
+ })
+ router.put('/:id/editProject/:pid/',async (req,res) => {
+    const p = await Project.findById(pid)
+    if (p.companyID == req.params.id){
+        const j = await editProject(req.params.pid, req.body)
+       return res.json(j)
+    }
+    else {
+        res.json({msg: 'error'})
+
+    }
+})
+router.post('/:id/submitRequest/',async (req,res) => {
+    const j = await PartnerRequestEvent(req.body)
+    return res.json(j)
+})
+
+ async function deleteProject(id){
+    var error = true;
+    var result;
+    const p = await Project.findById(id)
+    if(pr.life_cycle !== 'Posted' && pr.life_cycle !== 'Final Review' && pr.life_cycle !=='Finished'){
+ 
+    await fetch(`${server}/api/projects/${id}`, {
+            method: 'delete',
+            body:    JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(res => {
+            if(res.status === 200){
+                error = false;
+            }
+            console.log(res.status)
+            if(!error){
+                result = res
+            }
+            return res.json()
+        })
+
+        .catch((err) => console.log("Error",err));
+        
+ }else{
+     console.log('fssss')
+ }
+}
+ async function editProject(id,body){
+    var error = true;
+    var j
+    const pr = await Project.findById(id)
+    if(pr.life_cycle !== 'Posted' && pr.life_cycle !== 'Final Review' && pr.life_cycle !=='Finished'){
+ 
+    await fetch(`${server}/api/projects/${id}`, {
+            method: 'put',
+            body:    JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' }
+        })
+         
+        .then(res => {
+            if(res.status === 200){
+                error = false;
+            }
+            j = res.json
+            return res.json()
+        })
+
+        .catch((err) => console.log("Error",err));
+        return j
+        
+ }else{
+     console.log('error')
+ }
+}
+ 
+ async function PartnerRequestEvent(body){
+    var error = true;
+    var j;
+    await fetch(`${server}/api/eventrequests/`, {
+        method: 'post',
+        body:    JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res => {
+        if(res.status === 200){
+            error = false;
+        }
+        return res.json()
+    })
+    .then(json => {
+        if(!error){
+            json = { msg: 'Event is requested successfully'}
+        }
+        j = json;
+        console.log(j)
+    })
+    .catch((err) => console.log("Error",err));
+    return j;
+    
+} 
+
+
  
  //1.5 As a partner I want to review the final work of the candidate who is working on my task/project.
  router.get("/:id/ShowFinalDraft", async (req, res) => {
@@ -124,5 +257,5 @@ router.delete('/:id', async (req,res) => {
     return result;
   }
 
-//test 1.5
+
 module.exports = router
