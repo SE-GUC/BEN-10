@@ -20,7 +20,8 @@ module.exports = {
             companyID: Joi.objectId().required(),
             consultancyID: Joi.objectId(),
             memberID: Joi.objectId(),
-            applyingConsultancies: Joi.array().items(Joi.objectId())
+            applyingCA : Joi.array().items(Joi.objectId())
+
 
         }
 
@@ -43,8 +44,8 @@ module.exports = {
             required_skills_set: Joi.string(),
             final_draft: Joi.string(),
             memberID: Joi.objectId(),
-            applyingConsultancies: Joi.array().items(Joi.objectId()),
             consultancyID: Joi.objectId(),
+            applyingCA : Joi.array().items(Joi.objectId())
 
         }
 
