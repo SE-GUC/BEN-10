@@ -173,6 +173,51 @@ async function decideEventRequest(id,decision){
 
 
 
+// 3.4 as an admin i want to assign one of the candidates who applied for the task/project
+router.use('/:aid/assign/:pid/to/:mid',async (req,res)=>{
+    try{
+        if(ObjectId.isValid(req.params.aid) &&
+           ObjectId.isValid(req.params.pid) &&
+           ObjectId.isValid(req.params.mid)){
+               const applications  = await Application.find();
+               
+               var found = false    
+                //loop through json and find the desired application
+                for (var i in applications) {
+                  let  application = applications[i];
+                    if (application['applicantId'] == req.params.mid &&
+                        application['projectId'] == req.params.pid) {
+                        found = true 
+                        break
+                    }
+                }
+                if(found){
+                    const url  = `${server}/api/projects/${req.params.pid}`;
+                    fetch(url,{
+                        method:'put',
+                        body : JSON.stringify( {memberID : req.params.mid} ),
+                        headers: { 'Content-Type': 'application/json' }
+                        })
+                        .then(res =>{  
+                            return res.json()})
+                        .then(json =>{ console.log(json)})
+                        .catch(err =>{ console.log(err)})  
+                }
+               return res.status(200).send("Member has been assigned") 
+    }
+   }catch{
+        console.log("error happened")
+    }
+})
+
+
+
+
+
+
+
+
+
  //Test 3.3
  postProject('5c7a795e53f1ba0c1b351f75');
 

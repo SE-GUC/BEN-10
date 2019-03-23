@@ -46,6 +46,10 @@ const ApplicationSchema = new Schema({
     activeTasks:{
         type: Number,
         required:false
+    },
+    projectId:{
+        type : Schema.Types.ObjectId,ref:"projects",
+        required : false
     }
 })
 
