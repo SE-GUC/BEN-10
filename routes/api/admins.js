@@ -15,10 +15,10 @@ router.get('/', async (req,res) => {
 })
 
 router.get('/:id', async (req,res) => {
-    res.json("hello")
-    // const id = req.params.id
-    // const admins = await Admin.findById(id)
-    // res.json({data: admins})
+    
+    const id = req.params.id
+    const admins = await Admin.findById(id)
+    res.json({data: admins})
 })
 
 // Create an admin
