@@ -1,31 +1,27 @@
 {
   "name": "ben-10",
   "version": "1.0.0",
-  "description": "Lirten Project",
+  "description": "LirtenHub",
   "main": "index.js",
+  "dependencies": {
+    "express": "^4.16.4",
+    "joi": "^14.3.1",
+    "joi-objectid": "^2.0.0",
+    "mongoose": "^5.4.19"
+  },
+  "devDependencies": {},
   "scripts": {
-    "start": "node index",
-    "dev": "nodemon index"
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SE-GUC/BEN-10.git"
   },
-  "author": "",
+  "author": "BEN 10",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/SE-GUC/BEN-10/issues"
   },
-  "homepage": "https://github.com/SE-GUC/BEN-10#readme",
-  "dependencies": {
-    "config": "^3.0.1",
-    "express": "^4.16.4",
-    "joi": "^14.3.1",
-    "joi-mongodb-objectid": "^0.1.0",
-    "joi-objectid": "^2.0.0",
-    "mongoose": "^5.4.16",
-    "moongoose": "0.0.5",
-    "nodemon": "^1.18.10",
-    "uuid": "^3.3.2"
-  }
+  "homepage": "https://github.com/SE-GUC/BEN-10#readme"
 }

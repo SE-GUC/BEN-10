@@ -4,6 +4,9 @@ const mongoose = require('mongoose')
 const ObjectId = require('mongodb').ObjectID;
 mongoose.set('useFindAndModify', false);
 
+const fetch = require('node-fetch');
+const server = require('../../config/config');
+
 const ConsultancyAgency = require('../../models/ConsultancyAgency')
 const validator = require('../../validations/consultancyagencyValidations')
 
@@ -39,6 +42,28 @@ router.post('/', async (req,res) => {
       
  })
 
+//2.4 --As a consultancy agency I want to request to organize an event.
+router.post('/:id/eventrequests/',async (req,res) => {
+    if(ObjectId.isValid(req.params.id)){
+        const cid=await ConsultancyAgency.findById(req.params.id);
+        if(cid){
+            if(req.body.requestedBy!=null && req.body.description!=null&&req.body.eventType!=null &&
+               req.body.eventLocation!=null && req.body.eventDate!=null){    
+        
+                const j = await CARequestEvent(req.body.requestedBy, req.body.description, 
+                                               req.body.eventType, req.body.eventLocation, req.body.eventDate);
+                res.status(200).send(j)
+                
+            }else{
+                return res.status(400).send({ error: "body is missing attrubites" })
+            }
+        }
+        else
+            return res.status(404).send({error: 'Consultancy Agency does not exist'})
+    }else
+        return res.status(404).send({error: 'Consultancy Agency does not exist'})
+})
+
 
  router.put('/:id', async (req,res) => {
     try{
@@ -61,7 +86,6 @@ router.post('/', async (req,res) => {
 
 })
 
- 
 router.delete('/:id', async (req,res) => {
     try {
         if(ObjectId.isValid(req.params.id)){
@@ -80,5 +104,41 @@ router.delete('/:id', async (req,res) => {
 
     }  
  })
+
+ //2.4 --As a consultancy agency I want to request to organize an event.
+ async function CARequestEvent(requestedBy, description, eventType, eventLocation, eventDate){
+    const body = { 
+        requestedBy:requestedBy,
+        description: description,
+        eventType: eventType,
+        eventLocation: eventLocation,
+        eventDate: eventDate,
+        isAccepted: "false"
+     };
+    var error = true;
+    var j;
+    await fetch(`${server}/api/eventrequests/`, {
+        method: 'post',
+        body:    JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' },
+    })
+    .then(res => {
+        if(res.status === 200){
+            error = false;
+        }
+        return res.json()
+    })
+    .then(json => {
+        if(!error){
+            json = { msg: 'Event is requested successfully'}
+        }
+        j = json;
+    })
+    .catch((err) => console.log("Error",err));
+    return j;
+}
+
+//test 2.4
+//CARequestEvent('5c79260b4328ab820437835c','shjhjk','sdccv','sx','sc','1/1/2020');
 
  module.exports = router
