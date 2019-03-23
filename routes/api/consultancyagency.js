@@ -86,11 +86,11 @@ router.delete('/:id', async (req,res) => {
 
 
  //ConsultancyAgency.update(
-  //  {name: 'abdo Agency'}, 
-  //  {projects : ['5c94436fd0c61339203ad8c7','5c94376f029c043e280b0fb0'] },
-  //  {multi:true}, 
-   //   function(err, numberAffected){  
-   //   });
+ //   {name: 'abdo Agency'}, 
+ // {projects : ['5c94436fd0c61339203ad8c7','5c94376f029c043e280b0fb0'] },
+ //   {multi:true}, 
+  //    function(err, numberAffected){  
+  //    });
 
 
 async function  getFinished(caProjects){
