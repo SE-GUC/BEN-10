@@ -7,7 +7,7 @@ const server = require("../../config/config");
 const validator = require('../../validations/memberValidations')
 const ObjectId = require('mongodb').ObjectID;
 const notificationValidator = require('../../validations/notificationsValidation')
-
+const Event = require('../../models/Event')
 
 
 // GET method to retrieve all members
@@ -103,11 +103,19 @@ router.delete('/:id', async (req,res) => {
             const type=event.eventType;
             var skills= mem.skill_set;
             var allowed =skills.includes(type);
+            const members=event.bookedMembers;  
+           var index = members.find(function(ch) {
+              ch == canId ;
+            });
             if(allowed===true){
-                const members=event.bookedMembers;
-                members.push(canId);
-                const j=await bookEvent(eventId,members);
-                res.status(200).send(j);
+              if( index!=undefined) {  
+                  members.push(canId);
+                  const j=await bookEvent(eventId,members);
+                  res.status(200).send(j);}
+               else{
+                  res.send({msg: "You already booked this event"})
+                 } 
+                
             }
             else{
                 res.send({msg: "You can't book this event"})
