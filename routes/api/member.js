@@ -90,6 +90,24 @@ router.delete('/:id', async (req,res) => {
  })
 
 
+
+
+
+ router.get('/:id/recommendations', async (req,res) => {
+    const id = req.params.id
+    try{
+        (id.match(/^[0-9a-fA-F]{24}$/))
+        const mem = await member.findById(id)
+        if(!mem)return res.status(404).send({error: 'member is not found'})
+
+        res.json({data: getAvailableProjects(id)})
+     }catch{
+        return res.status(400).send({error:"the provided id is not valid one "})
+     }
+   
+})
+
+
  async function getAvailableProjects(id){
         //---
             const myMember = await member.findById(id);
@@ -120,6 +138,7 @@ router.delete('/:id', async (req,res) => {
                  
              }
              console.log(returnResult);
+             return returnResult;
  }
 
 
