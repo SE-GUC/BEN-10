@@ -81,4 +81,46 @@ router.delete('/:id', async (req,res) => {
     }  
  })
 
+ // 2.3 As consultancy agency i want to view the final work of the candidate who is working on my task
+   // initialize new route to view my tasks
+
+
+ //ConsultancyAgency.update(
+  //  {name: 'abdo Agency'}, 
+  //  {projects : ['5c94436fd0c61339203ad8c7','5c94376f029c043e280b0fb0'] },
+  //  {multi:true}, 
+   //   function(err, numberAffected){  
+   //   });
+
+
+async function  getFinished(caProjects){
+    var finished = []
+    for(var i=0;i<caProjects.length;i++){
+        const p  =await Project.findById(caProjects[i])
+        if(p.life_cycle==='Finished'){
+            finished.push(p)
+        }
+    }
+    return finished
+}
+
+
+router.get('/:id/myProjects',async (req,res)=>{
+ try{
+    if(ObjectId.isValid(req.params.id)){
+      const id = req.params.id
+      const ca= await ConsultancyAgency.findById(id)
+      const caProjects = ca.projects
+      const caFinishedProjects = await getFinished(caProjects)
+    res.json({data: caFinishedProjects})
+ }
+}
+ catch(error) {
+    console.log(error)
+    return res.status(400).send('Error')
+
+}  
+
+}) 
+
  module.exports = router
