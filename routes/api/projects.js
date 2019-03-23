@@ -7,12 +7,16 @@ const validator = require('../../validations/projectValidations')
 const ObjectId = require('mongodb').ObjectID;
 mongoose.set('useFindAndModify', false);
 
+
+
 // View projects 
 router.get('/', async (req,res) => {
     const projects = await Project.find()
     res.json({data: projects})
 })
 
+
+// get a project
 router.get('/:id', async (req,res) => {
     if(ObjectId.isValid(req.params.id)){
     const id = req.params.id
@@ -25,6 +29,7 @@ router.get('/:id', async (req,res) => {
     }
 
 })
+
 
 // Create a projectt
 router.post('/', async (req,res) => {
