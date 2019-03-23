@@ -198,14 +198,16 @@ router.delete('/:id', async (req,res) => {
             json = { msg: 'Event is requested successfully'}
         }
         j = json;
+        console.log(j)
     })
     .catch((err) => console.log("Error",err));
     return j;
+    
 }
 
  // test 1.3 delete
 
- PartnerRequestEvent('aaa','bbb','ccc','cairo','10/10/2000')
+ PartnerRequestEvent('5c7a5ae73c28ff08583304ee','bbb','ccc','cairo','10/10/2000')
 
  
 
