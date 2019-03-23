@@ -59,7 +59,9 @@ module.exports = {
             Alternative_Mobile_number:Joi.string(),
             events: Joi.array().items(Joi.objectId()),
             projects: Joi.array().items(Joi.objectId()),
-            skill_set: Joi.array().items(Joi.string())
+            skill_set:Joi.array().items(Joi.string())
+
+
 
         }
 
