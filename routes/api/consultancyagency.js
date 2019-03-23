@@ -101,16 +101,18 @@ router.delete('/:id', async (req,res) => {
   })
   async function ApproveProject(id,decision){
     const url  = `${server}/api/projects/${id}`;
+    var j
     await fetch(url, {
                       method:'put',
                       body : JSON.stringify({life_cycle : decision}),
                       headers: { 'Content-Type': 'application/json' }
                       })
-                .then(res =>{  console.log(res.status)  
+                .then(res =>{  j = res.json()  
                                return res.json()}
                      )
                 .then(json =>{ console.log(json)})
                 .catch(err =>{ console.log(err)})
+                return j
   }
   // part 2 as a CA i want to disapprove 
   router.put('/:id/myprojects/:pid/finaldraft/disapprove', async (req,res)=>{
@@ -131,17 +133,19 @@ router.delete('/:id', async (req,res) => {
     }    
   })
   async function disapproveProject(id,decision){
+      var j
     const url  = `${server}/api/projects/${id}`;
     await fetch(url, {
                       method:'put',
                       body : JSON.stringify({life_cycle : decision}),
                       headers: { 'Content-Type': 'application/json' }
                       })
-                .then(res =>{  console.log(res.status)  
+                .then(res =>{  j = res.json()  
                                return res.json()}
                      )
                 .then(json =>{ console.log(json)})
                 .catch(err =>{ console.log(err)})
+                return j
   }
  module.exports = router
 
