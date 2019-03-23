@@ -80,12 +80,12 @@ router.put('/:id1/events/:id2',async (req,res) => {
             var index = events.find(function(ch) {
                 ch == req.params.id2 ;
             });
-            if( index!=undefined) {
+            if( index != "undefined") {
                 events.push(req.params.id2);
                 const j = await postevent(req.params.id1,events);
                 res.status(200).send(j);
             }else{
-                res.send({msg: "Event already exist"})
+                res.send({msg: "You already booked this event"})
             } 
         }
         else
