@@ -153,8 +153,8 @@ router.put('/:id1/AssignCAtoProject/:id2',async (req,res) => {
         const project = await Project.findById(projID);
         const consultancy = await ConsultancyAgency.findById(caId);
         if (project && consultancy){
-           var consul= project.applyingConsultancies;
-           var contains =consul.includes(consultancy);
+           var consul= Project.applyingConsultancies;
+           var contains =consul.includes(caId);
            var need = project.want_consultancy;
         if(need == true){  
             if(contains===true){
