@@ -105,11 +105,38 @@ router.delete('/:id', async (req,res) => {
 
     }  
  })
+ router.delete('/:id/deleteProject/:pid/',async (req,res) => {
+     const p = await Project.findById(pid)
+     if (p.companyID == req.params.id){
+         const j = await deleteProject(req.params.pid)
+        return res.json(j)
+     }
+     else {
+         res.json({msg: 'error'})
+
+     }
+ })
+ router.put('/:id/editProject/:pid/',async (req,res) => {
+    const p = await Project.findById(pid)
+    if (p.companyID == req.params.id){
+        const j = await editProject(req.params.pid, req.body)
+       return res.json(j)
+    }
+    else {
+        res.json({msg: 'error'})
+
+    }
+})
+router.post('/:id/submitRequest/',async (req,res) => {
+    const j = await PartnerRequestEvent(req.body)
+    return res.json(j)
+})
+
  async function deleteProject(id){
     var error = true;
     var result;
     const p = await Project.findById(id)
-    if(p.lifecycle === 'Not Posted'){
+    if(p.life_cycle === 'Not Posted'){
  
     await fetch(`${server}/api/projects/${id}`, {
             method: 'delete',
@@ -133,19 +160,11 @@ router.delete('/:id', async (req,res) => {
      console.log('fssss')
  }
 }
- async function editProject(id,description,company,companyID,category,want_consultancy,posted_date,life_cycle){
-    const body = { 
-        description:description,
-        company: company,
-        companyID: companyID,
-        category: category,
-        want_consultancy: want_consultancy,
-        posted_date: posted_date,
-        life_cycle: life_cycle
-     };
+ async function editProject(id,body){
     var error = true;
+    var j
     const pr = await Project.findById(id)
-    if(pr.lifecycle === 'Not Posted'){
+    if(pr.life_cycle !== 'Posted' && pr.life_cycle !== 'Final Review' && pr.life_cycle !=='Finished'){
  
     await fetch(`${server}/api/projects/${id}`, {
             method: 'put',
@@ -157,29 +176,19 @@ router.delete('/:id', async (req,res) => {
             if(res.status === 200){
                 error = false;
             }
-            console.log(res.status)
-            if(!error){
-                result = res
-            }
+            j = res.json
             return res.json()
         })
 
         .catch((err) => console.log("Error",err));
+        return j
         
  }else{
-     console.log('bla')
+     console.log('error')
  }
 }
  
- async function PartnerRequestEvent(requestedBy, description, eventType, eventLocation, eventDate){
-    const body = { 
-        requestedBy:requestedBy,
-        description: description,
-        eventType: eventType,
-        eventLocation: eventLocation,
-        eventDate: eventDate,
-        isAccepted: "false"
-     };
+ async function PartnerRequestEvent(body){
     var error = true;
     var j;
     await fetch(`${server}/api/eventrequests/`, {
