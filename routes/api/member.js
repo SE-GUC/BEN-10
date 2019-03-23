@@ -103,16 +103,16 @@ router.delete('/:id', async (req,res) => {
             const type=event.eventType;
             var skills= mem.skill_set;
             var allowed =skills.includes(type);
+            
            
             if(allowed===true){
-                  var members=event.bookedMembers;
+              const members=event.bookedMembers;  
                   members.push(canId);
                   const j=await bookEvent(eventId,members);
-                  res.status(200).send(j);}
-               
-                
-        
-            else{
+                  res.status(200).send(j);
+              
+            }
+             else{
                 res.send({msg: "You can't book this event"})
             }
         }
