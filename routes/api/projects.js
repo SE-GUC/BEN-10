@@ -15,6 +15,19 @@ router.get('/', async (req,res) => {
     res.json({data: projects})
 })
 
+router.get('/:id', async (req,res) => {
+    if(ObjectId.isValid(req.params.id)){
+    const id = req.params.id
+    const projects = await Project.findById(id)
+    if (!projects) return res.status(404).send({error: 'Project does not exist'})
+    res.json({data: projects})
+    }
+    else{
+        return res.status(404).send({error: 'Project does not exist'})
+    }
+
+})
+
 
 // get a project
 router.get('/:id', async (req,res) => {
