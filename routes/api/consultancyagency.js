@@ -93,7 +93,84 @@ router.delete('/:id', async (req,res) => {
   //    });
 
 
-async function  getFinished(caProjects){
+  router.get('/:caid/reviewprojects/:pid',async (req,res)=>{
+    try{
+       if(ObjectId.isValid(req.params.caid)){
+         const caid = req.params.caid
+         console.log(caid)
+         const pid = req.params.pid
+         const matchingProjects = await getProjectsInFinalReview(caid)
+         console.log(matchingProjects)
+         var r = null
+         for(var i in matchingProjects){
+             if(matchingProjects[i].id == pid){
+                 console.log(matchingProjects[i].id)
+              r = matchingProjects[i]
+                 break
+            }
+         }
+         return res.json({data : r})
+    }
+   }
+    catch(error) {
+       console.log(error)
+       return res.status(400).send('Error')
+   
+   }  
+   })
+
+
+router.get('/:caid/reviewprojects',async (req,res)=>{
+    console.log("hnaaaa")
+ try{
+    if(ObjectId.isValid(req.params.caid)){
+      const caid = req.params.caid
+      const matchingProjects = await getProjectsInFinalReview(caid)
+      console.log(matchingProjects)
+    res.json({data: matchingProjects})
+ }
+}
+ catch(error) {
+    console.log(error)
+    return res.status(400).send('Error')
+
+}  
+})
+
+
+ async function getProjectsInFinalReview(caid){
+    console.log("jjjjjjjjjjjj")
+    console.log(caid)
+
+      const allprojects = await Project.find()
+      var matchingProjects =[]
+      for( var i in allprojects){
+          console.log(allprojects[i].consultancyID)
+          console.log(caid)
+          console.log(allprojects[i].consultancyID == caid)
+          console.log(allprojects[i].life_cycle== 'Final Review')
+          console.log(allprojects[i].life_cycle)
+          if(allprojects[i].consultancyID == caid && allprojects[i].life_cycle== 'Final Review'){
+              console.log("yepiieee")
+              matchingProjects.push(allprojects[i])
+          }
+      }
+      console.log("lllllllllllllll")
+      console.log(matchingProjects)
+
+     return matchingProjects 
+
+  //  const  url  = `${server}/api/projects/${caid}`
+  //  const projects ;
+  //  fetch(url,{
+   //    method : 'GET'
+   //     })
+    //    .then(res=>{ projects=res ; return res.json()})
+    //    .catch(err =>{ return err.status('404')})   
+  
+ }
+// a mthod to be deleted
+ async function  getFinished(caProjects){
     var finished = []
     for(var i=0;i<caProjects.length;i++){
         const p  =await Project.findById(caProjects[i])
@@ -103,24 +180,5 @@ async function  getFinished(caProjects){
     }
     return finished
 }
-
-
-router.get('/:id/myProjects',async (req,res)=>{
- try{
-    if(ObjectId.isValid(req.params.id)){
-      const id = req.params.id
-      const ca= await ConsultancyAgency.findById(id)
-      const caProjects = ca.projects
-      const caFinishedProjects = await getFinished(caProjects)
-    res.json({data: caFinishedProjects})
- }
-}
- catch(error) {
-    console.log(error)
-    return res.status(400).send('Error')
-
-}  
-
-}) 
 
  module.exports = router
