@@ -129,7 +129,7 @@ router.put('/:id', async (req,res) => {
 // 3.7 As an admin i want to decide (Accept / reject) an event request
 router.use('/:id/EventRequest/:Eid/:decision',async (req,res)=>{
    try{
-    if(ObjectId.isValid(req.params.id))
+    if(ObjectId.isValid(req.params.id)&& ObjectId.isValid(req.params.Eid))
     {
         const url  = `${server}/api/eventrequests/${req.params.Eid}`;
         await fetch(url, {
