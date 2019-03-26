@@ -6,7 +6,7 @@ const ObjectId = require("mongodb").ObjectID;
 const fetch = require("node-fetch");
 const server = require("../../config/config");
 mongoose.set("useFindAndModify", false);
-
+const Project = require("../../models/Project");
 const ConsultancyAgency = require("../../models/ConsultancyAgency");
 const validator = require("../../validations/consultancyagencyValidations");
 
@@ -469,4 +469,93 @@ async function caApplyProject(pID, applying) {
     .catch(err => console.log("Error", err));
   return j;
 }
+
+// 8 As a CA I wanto to approve the final review of a project
+router.put("/:id1/finalreview/:id2/approve", async (req, res) => {
+    if (ObjectId.isValid(req.params.id1) && ObjectId.isValid(req.params.id2)) {
+      const ca = await ConsultancyAgency.findById(req.params.id1);
+      const project = await Project.findById(req.params.id2);
+      if (ca && project) {
+          if (project.consultancyID == req.params.id1){
+            if (project.life_cycle == "Final Review"){
+                    const j = await approvefinal(req.params.id2);
+                    res.status(200).send(j);
+                }else return res.status(404).send({ error: "project isn't in the Final Review stage" });
+            }else return res.status(404).send({ error: "you can't approve this project" }); 
+        } else return res.status(404).send({ error: "invalid inputs" });
+    } else {
+      return res.status(404).send({ error: "invalid inputs" });
+    }
+});
+
+// 8 As a CA I wanto to disapprove the final review of a project
+router.put("/:id1/finalreview/:id2/disapprove", async (req, res) => {
+    if (ObjectId.isValid(req.params.id1) && ObjectId.isValid(req.params.id2)) {
+      const ca = await ConsultancyAgency.findById(req.params.id1);
+      const project = await Project.findById(req.params.id2);
+      if (ca && project) {
+        if (project.consultancyID == req.params.id1){
+            if (project.life_cycle == "Final Review"){    
+                const j = await disapprovefinal(req.params.id2);
+                res.status(200).send(j);
+            }else return res.status(404).send({ error: "project isn't in the Final Review stage" });
+        }else return res.status(404).send({ error: "you can't disapprove this project" }); 
+      } else return res.status(404).send({ error: "invalid inputs" });
+    } else {
+      return res.status(404).send({ error: "invalid inputs" });
+    }
+});
+
+// 8 As a CA I wanto to approve the final review of a project
+async function approvefinal(pid) {
+    var error = true;
+    const body = { life_cycle: "Finished" };
+    var j;
+    await fetch(`${server}/api/projects/${pid}`, {
+      method: "put",
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" }
+    })
+      .then(res => {
+        if (res.status === 200) {
+          error = false;
+        }
+        return res.json();
+      })
+      .then(json => {
+        if (!error) {
+          json = { msg: "project's final review is approved successfully" };
+        }
+        j = json;
+      })
+      .catch(err => console.log("Error", err));
+    return j;
+}
+
+// 8 As a CA I wanto to disapprove the final review of a project
+async function disapprovefinal(pid) {
+    var error = true;
+    const body = { life_cycle: "In Progress" };
+    var j;
+    await fetch(`${server}/api/projects/${pid}`, {
+      method: "put",
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" }
+    })
+      .then(res => {
+        if (res.status === 200) {
+          error = false;
+        }
+        return res.json();
+      })
+      .then(json => {
+        if (!error) {
+          json = { msg: "project's final review is disapproved successfully" };
+        }
+        j = json;
+      })
+      .catch(err => console.log("Error", err));
+    return j;
+}
+
 module.exports = router;
