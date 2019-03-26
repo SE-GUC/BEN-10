@@ -7,6 +7,7 @@ const PartnerInfo = require("../../models/PartnerInfo");
 const fetch = require("node-fetch");
 const server = require("../../config/config");
 const partners = require("../../models/PartnerInfo");
+const Event = require("../../models/Event");
 const validator = require("../../validations/partnerValidations");
 const ObjectId = require("mongodb").ObjectID;
 
@@ -514,6 +515,65 @@ async function disapproveProject(id, decision) {
     .catch(err => {
       console.log(err);
     });
+}
+
+// 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+router.post("/:pid/notifications/:eid/", async (req, res) => {
+  if (ObjectId.isValid(req.params.pid) && ObjectId.isValid(req.params.eid)) {
+    const partner = await partners.findById(req.params.pid);
+    const event = await Event.findById(req.params.eid);
+    if (partner && event) {
+      if (event.requestorId) {
+        var today = new Date();
+        var date =
+          today.getFullYear() +
+          "-" +
+          (today.getMonth() + 1) +
+          "-" +
+          today.getDate();
+        const j = await AdminNotifyAcceptedCandidate(
+          req.body.description,
+          req.params.eid,
+          date
+        );
+        res.status(200).send(j);
+      } else {
+        return res.status(400).send({ error: '"description" is required' });
+      }
+    } else return res.status(404).send({ error: "Member does not exist" });
+  } else return res.status(404).send({ error: "Member does not exist" });
+});
+
+// 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+async function AdminNotifyAcceptedCandidate(description, NotifiedPerson, date) {
+  const body = {
+    description: description,
+    NotifiedPerson: NotifiedPerson,
+    date: date,
+    seen: "false"
+  };
+  var error = true;
+  var j;
+  await fetch(`${server}/api/notifications/`, {
+    method: "post",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" }
+  })
+    .then(res => {
+      if (res.status === 200) {
+        error = false;
+      }
+      return res.json();
+    })
+    .then(json => {
+      if (!error) {
+        json = { msg: "Notifications is sent successfully" };
+      }
+      j = json;
+    })
+    .catch(err => console.log("Error", err));
+
+  return j;
 }
 
 module.exports = router;
