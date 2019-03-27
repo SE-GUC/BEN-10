@@ -6,7 +6,7 @@ const Project = require("../../models/Project");
 const PartnerInfo = require("../../models/PartnerInfo");
 const fetch = require("node-fetch");
 const server = require("../../config/config");
-const partners = require("../../models/PartnerInfo");
+const Member = require("../../models/member");
 const Event = require("../../models/Event");
 const validator = require("../../validations/partnerValidations");
 const ObjectId = require("mongodb").ObjectID;
@@ -518,12 +518,12 @@ async function disapproveProject(id, decision) {
 }
 
 // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
-router.post("/:pid/notifications/:eid/", async (req, res) => {
+router.post("/:pid/rating/:eid/", async (req, res) => {
   if (ObjectId.isValid(req.params.pid) && ObjectId.isValid(req.params.eid)) {
-    const partner = await partners.findById(req.params.pid);
+    const partner = await PartnerInfo.findById(req.params.pid);
     const event = await Event.findById(req.params.eid);
     if (partner && event) {
-      if (event.requestorId) {
+      if (event.requestorId == req.params.pid) {
         var today = new Date();
         var date =
           today.getFullYear() +
@@ -531,21 +531,29 @@ router.post("/:pid/notifications/:eid/", async (req, res) => {
           (today.getMonth() + 1) +
           "-" +
           today.getDate();
-        const j = await AdminNotifyAcceptedCandidate(
-          req.body.description,
-          req.params.eid,
-          date
-        );
-        res.status(200).send(j);
+        const attendees = event.bookedMembers
+        for (var i = 0; attendees.length > i; i++) {
+          const member = await Member.findById(attendees[i]);
+          if (member.events.includes(req.params.eid)) {
+            const body = {
+            description: `please rate thie event through this form ${event.formLink}`,
+            NotifiedPerson: attendees[i],
+            date: date,
+            seen: "false"
+            };
+            const j = await Partnerrequestrating(body);
+            res.status(200).send(j);
+          } else return res.status(404).send({ error: "Member did not attend" });
+        }
       } else {
-        return res.status(400).send({ error: '"description" is required' });
+        return res.status(400).send({ error: 'this event does not belong to you' });
       }
-    } else return res.status(404).send({ error: "Member does not exist" });
-  } else return res.status(404).send({ error: "Member does not exist" });
+    } else return res.status(404).send({ error: "inavalid inputs" });
+  } else return res.status(404).send({ error: "inavalid inputs" });
 });
 
 // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
-async function AdminNotifyAcceptedCandidate(description, NotifiedPerson, date) {
+async function Partnerrequestrating(description, NotifiedPerson, date) {
   const body = {
     description: description,
     NotifiedPerson: NotifiedPerson,
@@ -567,7 +575,7 @@ async function AdminNotifyAcceptedCandidate(description, NotifiedPerson, date) {
     })
     .then(json => {
       if (!error) {
-        json = { msg: "Notifications is sent successfully" };
+        json = { msg: "Notifications are sent successfully" };
       }
       j = json;
     })

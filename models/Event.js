@@ -58,6 +58,10 @@ const EventSchema={
     },
     bookedMembers: {
         type: [{ type: Schema.Types.ObjectId, ref: "member" }]
+    },
+    formLink:{
+        type:String,
+        required:false
     }
     
 

@@ -421,7 +421,7 @@ async function AdminNotifyAcceptedCandidate(description, NotifiedPerson, date) {
     })
     .then(json => {
       if (!error) {
-        json = { msg: "Notifications is sent successfully" };
+        json = { msg: "Notification is sent successfully" };
       }
       j = json;
     })
@@ -461,7 +461,7 @@ async function postProject(id) {
     .catch(err => console.log("Error", err));
 }
 //Test 3.3
-postProject("5c7a795e53f1ba0c1b351f75");
+//postProject("5c7a795e53f1ba0c1b351f75");
 
 //as an admin i want to create event
 
