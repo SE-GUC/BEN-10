@@ -26,7 +26,7 @@ module.exports = {
     updateValidationconsultancyagency: request => {
         const updateSchema = {
             name: Joi.string().max(50),
-            telephoneNumber: Joi.number().max(12),
+            telephoneNumber: Joi.string().max(12),
             location: Joi.string().min(10).max(50),
             reports: Joi.array().items(Joi.string()),
             yearsOfExperience: Joi.number(),
