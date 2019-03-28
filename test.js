@@ -2,6 +2,7 @@
 const mongoose = require('mongoose')
 
 // Import testfiles
+const EventTest=require('./routes/test/eventsTEST');
 
 const ERTest = require('./routes/test/eventrequestsTEST')
 
@@ -22,11 +23,19 @@ beforeAll(async () => {
 
 // Calling the test files
 const erTests = new ERTest(3000, '/eventrequests')
+const eTests = new EventTest(3000,'/events')
 
 // Calling tests
 describe('Event Requests Tests', () => {
   Promise.all([
     erTests.run(),
+  ]).then(result => {})
+})
+
+
+describe('Event Tests', () => {
+  Promise.all([
+    eTests.run(),
   ]).then(result => {})
 })
 
