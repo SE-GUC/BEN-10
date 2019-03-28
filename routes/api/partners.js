@@ -525,6 +525,7 @@ router.post("/:pid/rating/:eid/", async (req, res) => {
     if (partner && event) {
       if (event.requestorId == req.params.pid) {
         var i;
+        var success = true;
         var today = new Date();
         var date =
           today.getFullYear() +
@@ -533,12 +534,19 @@ router.post("/:pid/rating/:eid/", async (req, res) => {
           "-" +
           today.getDate();
         const attendees = event.bookedMembers
-        console.log(attendees.length)
+        var arr = new Array(attendees.length);
         for (i = 0; i < attendees.length; i++) {
-          console.log(i);
           const j = await Partnerrequestrating(event.formLink, attendees[i], date);
-          res.status(200).send(j);
+          arr[i] = j;
         }
+        for (i = 0; i < attendees.length; i++){
+          if (arr[i].msg != "Notifications are sent successfully")
+            success = false;
+        }
+        if (success)
+          res.json({ msg: "Notifications are sent successfully" })
+        else
+          res.json({ msg: "Error occured" })
       } else {
         return res.status(400).send({ error: 'this event does not belong to you' });
       }
