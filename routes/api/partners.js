@@ -404,17 +404,20 @@ async function getProjects(partnerid) {
   return result;
 }
 
-// 1.1 as a partner i want to assign a consultancy agency to a project
-router.put("/:id1/AssignCAtoProject/:id2", async (req, res) => {
+router.put("/:id3/project/:id1/AssignCAtoProject/:id2", async (req, res) => {
   const projID = req.params.id1;
   const caId = req.params.id2;
-  if (ObjectId.isValid(projID) && ObjectId.isValid(caId)) {
+  const part = req.params.id3;
+  if (ObjectId.isValid(projID) && ObjectId.isValid(caId) && ObjectId.isValid(part) ) {
     const project = await Project.findById(projID);
     const consultancy = await ConsultancyAgency.findById(caId);
-
-    if (project && consultancy) {
+    const partner = await PartnerInfo.findById(part)
+    if (project && consultancy && partner) {
       var consul = project.applyingCA;
       var found = false;
+      var same1 = project.companyID
+      var same2 = req.params.id3
+      if( same1 == same2 ) {
       for (var i = 0; consul.length > i; i++) {
         if (caId == consul[i]) {
           found = true;
@@ -432,8 +435,11 @@ router.put("/:id1/AssignCAtoProject/:id2", async (req, res) => {
       } else {
         res.send({ msg: "Projecst doesn't need a consultancy" });
       }
-    } else return res.status(404).send({ error: "invalid ID" });
-  } else {
+    }else { res.send({ msg: "Partner is not the owner of the Project to edit" }); }
+ } 
+ else return res.status(404).send({ error: "invalid ID" });
+  } 
+  else {
     return res.status(404).send({ error: "invalid ID" });
   }
 });

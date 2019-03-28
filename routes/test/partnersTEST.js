@@ -35,7 +35,7 @@ class PARTests extends AbstractTests {
          // this.getMyProjects()
           //this.putApproveONFinalReview()
           //this.putDisapproveONFinalReview()
-          this.AssignCAtoProj()
+         // this.AssignCAtoProj()
         })
         resolve()
       })
@@ -324,7 +324,7 @@ class PARTests extends AbstractTests {
     const requestBody = {
     }
     test(`put ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/:id1/AssignCAtoProject/:id2`, {
+      const response = await fetch(`${this.base_url}/5c786899f8a8e026447d212f/project/5c94436fd0c61339203ad8c7/AssignCAtoProject/5c7a67970a4938ccd1e08e7c`, {
         method: 'PUT',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
