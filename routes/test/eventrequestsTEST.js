@@ -67,11 +67,12 @@ class ERTest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
+      console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
 
       // check if the json response has data not error
       expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
-    //   expect(Object.keys(jsonResponse)).not.toEqual(['error'])
+      expect(response.status).toEqual(200)
 
       // go check in the mongo database
       const eRequest = await eventRequest.findOne(requestBody).exec()
