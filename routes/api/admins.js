@@ -505,4 +505,28 @@ async function addEvent(body) {
     .catch(err => console.log("Error", err));
   return result;
 }
+
+router.get("/:id/ShowAllCA", async (req, res) => {
+  const id = req.params.id;
+
+  if (ObjectId.isValid(id)) {
+    const admins = await Admin.findById(id);
+    if(admins){
+      await fetch(`${server}/api/ConsultancyAgency`)
+      .then(res => res.json())
+      .then(json => {
+        const ca = json.data;
+        res.json({data: ca});
+        
+    }).catch(err => console.log("Error", err));
+  }
+    else{
+      return res.status(404).send({ error: "Admin not found" });
+    }
+  } else {
+    return res.status(404).send({ error: "ID not found" });
+  }
+  
+});
+
 module.exports = router;

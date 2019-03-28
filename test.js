@@ -6,6 +6,7 @@ jest.setTimeout(30000);
 
 const ERTest = require('./routes/test/eventrequestsTEST')
 const PARTests = require('./routes/test/partnersTEST')
+const AdmTests = require('./routes/test/adminsTEST')
 
 // Connect to mongo atlas
 const db = require('./config/keys').mongoURI
@@ -25,6 +26,7 @@ beforeAll(async () => {
 // Calling the test files
 const erTests = new ERTest(3000, '/eventrequests')
 const parTests = new PARTests(3000, '/partners')
+const adminTests = new AdmTests(3000, '/admins')
 
 
 // Calling tests
@@ -34,9 +36,15 @@ const parTests = new PARTests(3000, '/partners')
 //   ]).then(result => {})
 // })
 
-describe('Partner Requests Tests', () => {
+// describe('Partner Requests Tests', () => {
+//   Promise.all([
+//     parTests.run(),
+//   ]).then(result => {})
+// })
+
+describe('Admin Requests Tests', () => {
   Promise.all([
-    parTests.run(),
+    adminTests.run(),
   ]).then(result => {})
 })
 
