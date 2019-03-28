@@ -27,8 +27,10 @@ class CATest extends AbstractTests {
         // this.putRequest()
          //this.putRequestFailed()
          // this.deleteRequest()
-         this.getById();
-          // add all methods
+        // this.getById();
+         //22 AS a consultancy Agency i want to view my events
+         this.viewMyEvents()
+         // add all methods
 
         })
         resolve()
@@ -121,7 +123,6 @@ class CATest extends AbstractTests {
       
     })
   }
-
   putRequest () {
     const CAbody = {
       telephoneNumber: "0101000",
@@ -148,33 +149,6 @@ class CATest extends AbstractTests {
       
     })
   }
-  putRequestFailed () {
-    const CAbody = {
-      telephoneNumber: "010100000",
-      yearsOfExperience:"df"
-    }
- 
-
-    test(`put ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}`, {
-        method: 'PUT',
-        body: JSON.stringify(CAbody),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      console.log("response stastus: "+ response.status)
-      const jsonResponse = await response.json()
-      console.log(jsonResponse)
-      expect(Object.keys(jsonResponse)).toEqual(['error'])
-      expect(response.status).toEqual(400)
-      const eRequest = await ConsultancyAgencys.findOne(CAbody).exec()
-      expect(eRequest.telephoneNumber).toEqual(CAbody.telephoneNumber)
-      expect(eRequest.yearsOfExperience).toEqual(CAbody.yearsOfExperience)
-      this.sharedState.telephoneNumber =  eRequest.telephoneNumber
-      this.sharedState.yearsOfExperience =  eRequest.yearsOfExperience
-      
-    })
-  }
-
   deleteRequest  () {
     test(`delete ${this.base_url}`, async () => {
       const response = await fetch(`${this.base_url}/${this.sharedState.id}`, {
@@ -208,5 +182,20 @@ class CATest extends AbstractTests {
       
     })
   }
+  viewMyEvents(){
+    test(`get ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c7a67970a4938ccd1e08e7c/ShowMyEvents`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(['data'])
+      expect(response.status).toEqual(200)
+
+  })}
+
 }
 module.exports = CATest
