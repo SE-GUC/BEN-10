@@ -5,7 +5,8 @@ const mongoose = require('mongoose')
 
 const ERTest = require('./routes/test/eventrequestsTEST')
 const OITest = require('./routes/test/orientationinvitationsTEST')
-
+const adminTest = require('./routes/test/adminsTEST')
+const memberTest = require('./routes/test/membersTEST')
 // Connect to mongo atlas
 const db = require('./config/keys').mongoURI
 
@@ -24,6 +25,8 @@ beforeAll(async () => {
 // Calling the test files
 const erTests = new ERTest(3000, '/eventrequests')
 const oiTests = new OITest(3000, '/orientationinvitations')
+const adminTests = new adminTest(3000, '/admins')
+const memberTests = new memberTest(3000, '/member')
 
 // Calling tests
 //describe('Event Requests Tests', () => {
@@ -31,9 +34,19 @@ const oiTests = new OITest(3000, '/orientationinvitations')
     //erTests.run(),
   //]).then(result => {})
 //})
-describe('orientation invitation Tests', () => {
+//describe('orientation invitation Tests', () => {
+  //Promise.all([
+    //oiTests.run(),
+  //]).then(result => {})
+//})
+//describe('admin Tests', () => {
+  //Promise.all([
+    //adminTests.run(),
+  //]).then(result => {})
+//})
+describe('member Tests', () => {
   Promise.all([
-    oiTests.run(),
+    memberTests.run(),
   ]).then(result => {})
 })
 

@@ -216,7 +216,9 @@ router.get("/:id/getEvent", async (req, res) => {
   const id = req.params.id;
   if (ObjectId.isValid(id)) {
     const j = await getEvents(id);
-    res.json({ data: j });
+    const mye = j.filter(m=> m.requestorId == id)
+    console.log(mye)
+    res.json({ data: mye });
   } else {
     return res.status(404).send({ error: "ID NOT FOUND" });
   }
