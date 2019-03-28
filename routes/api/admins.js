@@ -9,6 +9,8 @@ const server = require("../../config/config");
 const Admin = require("../../models/Admin");
 const member = require("../../models/member");
 const Event = require("../../models/Event");
+const Application = require("../../models/Application");
+const Project = require("../../models/Project");
 
 const validator = require("../../validations/adminValidations");
 const notificationValidator = require("../../validations/memberValidations");
@@ -572,7 +574,7 @@ router.post("/:id/events/:id2/sendFeedBackForm", async (req, res) => {
       if (!event) {
         result = "not an event id";
       } else {
-        return res.json({
+        return res.send({
           data: await sendFeedBack(req.body.feedBack, req.params.id2)
         });
       }
@@ -581,5 +583,86 @@ router.post("/:id/events/:id2/sendFeedBackForm", async (req, res) => {
     return res.status(400).send("Error");
   }
 });
+
+// sprint3 #14 As a rejected candidate I want to be notified that I was rejected for a task/project so that I start looking for other tasks/projects.
+async function sendRejectionNotification(projectId) {
+  const project = await Project.findById(projectId);
+  if (!project) {
+    return { msg: "there is no Such project" };
+  }
+  const allApplications = await Application.find();
+  let myProjectApplications = [];
+  var i;
+  var result;
+  var today = new Date();
+  var date =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  for (i = 0; i < allApplications.length; i++) {
+    if (allApplications[i].projectId == projectId) {
+      myProjectApplications.push(allApplications[i].applicantId);
+    }
+  }
+  for (i = 0; i < myProjectApplications.length; i++) {
+    const body = {
+      description:
+        "Sorry u were not accepted for project {" + project.description + "}",
+      NotifiedPerson: myProjectApplications[i],
+      date: date,
+      seen: "false"
+    };
+
+    await fetch(`${server}/api/notifications/`, {
+      method: "post",
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" }
+    })
+      // .then(checkStatus)
+      .then(res => {
+        if (res.status === 200) {
+          error = false;
+        }
+        console.log("The error is " + res.status);
+        if (!error) {
+          result = res;
+        }
+        return res.json();
+      })
+      .then(json => {
+        if (!error) {
+          json = {
+            msg:
+              "notification for members " +
+              myProjectApplications.toString() +
+              " is posted successfully"
+          };
+        }
+        result = json;
+      })
+      .catch(err => console.log("Error", err));
+  }
+  return { data: result };
+}
+
+router.post("/:id/projects/:id2/sendRejection", async (req, res) => {
+  try {
+    const admin = await Admin.findById(req.params.id);
+    let result = "";
+    if (!admin) {
+      result = "not an admin id";
+    } else {
+      const project = await Project.findById(req.params.id2);
+      if (!project) {
+        result = "not a project id";
+      } else {
+        return res.send({
+          data: await sendRejectionNotification(req.params.id2)
+        });
+      }
+    }
+  } catch (error) {
+    return res.status(400).send("Error");
+  }
+});
+
 
 module.exports = router;
