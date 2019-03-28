@@ -9,7 +9,7 @@ mongoose.set("useFindAndModify", false);
 
 router.get("/", async (req, res) => {
   const projects = await Project.find();
-  res.json({ data: projects });
+  res.status(200).json({ data: projects });
 });
 
 // get a project
