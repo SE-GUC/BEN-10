@@ -514,13 +514,14 @@ async function disapproveProject(id, decision) {
     .catch(err => {
       console.log(err);
     });
+  }
 
     router.put("/:id/myprojects/:pid/finalreview/approve", async (req, res) => {
       try{
         const par = await PartnerInfo.findById(req.params.id);
         const proj = await Project.findById(req.params.pid)
         if(par && proj){
-          if(proj.companyID === req.params.id){
+          if(proj.companyID == req.params.id){
             if(proj.life_cycle === "Final Review"){
               
               const j = await acceptFinalReview(req.params.pid)
@@ -576,7 +577,7 @@ async function disapproveProject(id, decision) {
         const par = await PartnerInfo.findById(req.params.id);
         const proj = await Project.findById(req.params.pid)
         if(par && proj){
-          if(proj.companyID === req.params.id){
+          if(proj.companyID == req.params.id){
             if(proj.life_cycle === "Final Review"){
               
               const j = await declineFinalReview(req.params.pid)
@@ -627,6 +628,6 @@ async function disapproveProject(id, decision) {
   
     return j;
     }
-}
+  
 
 module.exports = router;
