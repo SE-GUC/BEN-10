@@ -524,6 +524,7 @@ router.post("/:pid/rating/:eid/", async (req, res) => {
     const event = await Event.findById(req.params.eid);
     if (partner && event) {
       if (event.requestorId == req.params.pid) {
+        var i;
         var today = new Date();
         var date =
           today.getFullYear() +
@@ -533,14 +534,9 @@ router.post("/:pid/rating/:eid/", async (req, res) => {
           today.getDate();
         const attendees = event.bookedMembers
         console.log(attendees.length)
-        for (var i = 0; attendees.length > i; i++) {
-          const body = {
-            description: `please rate thie event through this form ${event.formLink}`,
-            NotifiedPerson: attendees[i],
-            date: date,
-            seen: "false"
-          };
-          const j = await Partnerrequestrating(body);
+        for (i = 0; i < attendees.length; i++) {
+          console.log(i);
+          const j = await Partnerrequestrating(event.formLink, attendees[i], date);
           res.status(200).send(j);
         }
       } else {
@@ -551,8 +547,14 @@ router.post("/:pid/rating/:eid/", async (req, res) => {
 });
 
 // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
-async function Partnerrequestrating(body) {
+async function Partnerrequestrating(formLink,id,date) {
   var error = true;
+  const body = {
+    description: `please rate thie event through this form ${formLink}`,
+    NotifiedPerson: id,
+    date: date,
+    seen: "false"
+  };
   var j;
   await fetch(`${server}/api/notifications/`, {
     method: "post",
