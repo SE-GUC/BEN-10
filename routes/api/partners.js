@@ -463,71 +463,89 @@ async function assigning(caId, projID) {
   return j;
 }
 
-//1.2 as a partner i want to approve
-router.put("/:id/myprojects/:pid/finaldraft/approve", async (req, res) => {
-  try {
-    if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
-      const decision = "Approved";
-      const j = await ApproveProject(req.params.pid, decision);
-      res.status(200).send(j);
-    } else {
-      return res.status(404).send({ error: "ID NOT FOUND" });
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(404).send({ error: "not a project id" });
+//1.2 as a partner i want to approve 
+router.put('/:id1/myprojects/:id2/finaldraft/approve', async (req,res)=>{
+  const  part=req.params.id1;
+  const   proj =req.params.id2;
+if(ObjectId.isValid(part) && ObjectId.isValid(proj)){
+  const partner = await PartnerInfo.findById(part);
+  const project = await Project.findById(proj);
+  console.log(partner)
+  console.log(project)
+  if (partner && project){
+      var app = project.life_cycle
+      var consl = project.want_consultancy
+      if(consl == false){
+      if(app == "Final Draft" ){
+       const decision="Approved"
+      const j = await ApproveProject(proj,decision)
+      res.send(j)
   }
-});
-async function ApproveProject(id, decision) {
-  const url = `${server}/api/projects/${id}`;
-  await fetch(url, {
-    method: "put",
-    body: JSON.stringify({ life_cycle: decision }),
-    headers: { "Content-Type": "application/json" }
-  })
-    .then(res => {
-      console.log(res.status);
-      return res.json();
-    })
-    .then(json => {
-      console.log(json);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  else{return res.status(404).send({ error: "Not in the Final Draft to approve" })}
+}else { return res.status(404).send({ error: "Consultancy Agency is the one to Approve" })}
+}else
+return res.status(404).send({error: 'invalid ID'})
+}else{
+return res.status(404).send({error: 'invalid ID'})
 }
-//1.2 parte 2 as a partner i want to disapprove
-router.put("/:id/myprojects/:pid/finaldraft/disapprove", async (req, res) => {
-  try {
-    if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
-      const decision = "Negotiation";
-      const j = await disapproveProject(req.params.pid, decision);
-      res.status(200).send(j);
-    } else {
-      return res.status(404).send({ error: "ID NOT FOUND" });
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(404).send({ error: "not a project id" });
-  }
-});
-async function disapproveProject(id, decision) {
-  const url = `${server}/api/projects/${id}`;
-  await fetch(url, {
-    method: "put",
-    body: JSON.stringify({ life_cycle: decision }),
-    headers: { "Content-Type": "application/json" }
-  })
-    .then(res => {
-      console.log(res.status);
-      return res.json();
-    })
-    .then(json => {
-      console.log(json);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+
+})
+
+async function ApproveProject(id,decision){
+const url  = `${server}/api/projects/${id}`;
+var j
+await fetch(url, {
+          method:'put',
+          body : JSON.stringify({life_cycle : decision}),
+          headers: { 'Content-Type': 'application/json' }
+          })
+    .then(res =>{  console.log(res.status)  
+                   return res.json()}
+         )
+    .then(json =>{ console.log(json)
+  j= json})
+    .catch(err =>{ console.log(err)})
+    return j
+}
+//1.2 parte 2 as a partner i want to disapprove 
+router.put('/:id/myprojects/:pid/finaldraft/disapprove', async (req,res)=>{
+const  part=req.params.id;
+const   proj =req.params.pid;
+if(ObjectId.isValid(part) && ObjectId.isValid(proj)){
+const partner = await PartnerInfo.findById(part);
+const project = await Project.findById(proj);
+if (partner && project){
+var dis = project.life_cycle
+var consl = project.want_consultancy
+if(consl == false){
+if(dis == "Final Draft"){
+const decision="Negotiation"
+const j = await disapproveProject(proj,decision)
+res.send(j)
+}else{return res.status(404).send({ error: "No Final Draft to Disapprove it " })}
+}else { return res.status(404).send({ error: "Consultancy Agency is the one to Cancel" })}
+}else
+return res.status(404).send({error: 'invalid ID'})
+}else{
+return res.status(404).send({error: 'invalid ID'})
+}
+
+})
+async function disapproveProject(id,decision){
+  var j
+const url  = `${server}/api/projects/${id}`;
+await fetch(url, {
+          method:'put',
+          body : JSON.stringify({life_cycle : decision}),
+          headers: { 'Content-Type': 'application/json' }
+          })
+    .then(res =>{  console.log(res.status)  
+                   return res.json()}
+         )
+    .then(json =>{ console.log(json)
+    j = json})
+    .catch(err =>{ console.log(err)})
+    return j
 }
 
 // -- 7 As a partner I wanto to approve/disapprove the final review of a project

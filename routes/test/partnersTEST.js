@@ -33,8 +33,9 @@ class PARTests extends AbstractTests {
           // add all methods
           //this.postProjectFail()
          // this.getMyProjects()
-          this.putONFinalReview()
-          //this.putDisapproveONFinalReview
+          //this.putApproveONFinalReview()
+          //this.putDisapproveONFinalReview()
+          this.AssignCAtoProj()
         })
         resolve()
       })
@@ -287,7 +288,25 @@ class PARTests extends AbstractTests {
     const requestBody = {
     }
     test(`put ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/5c9cd0503c242d1d38b8731a`, {
+      const response = await fetch(`${this.base_url}/5c786899f8a8e026447d212f/myprojects/5c94436fd0c61339203ad8c7/finaldraft/approve`, {
+        method: 'PUT',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+      expect(Object.keys(jsonResponse)).toEqual(['msg'])
+      expect(response.status).toEqual(200)
+
+    })    
+  }
+
+  putDisapproveONFinalReview  () {
+    const requestBody = {
+    }
+    test(`put ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c786899f8a8e026447d212f/myprojects/5c94436fd0c61339203ad8c7/finaldraft/disapprove`, {
         method: 'PUT',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
@@ -301,11 +320,11 @@ class PARTests extends AbstractTests {
     })    
   }
 
-  putDisapproveONFinalReview  () {
+  AssignCAtoProj() {
     const requestBody = {
     }
     test(`put ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/5c9cd0503c242d1d38b8731a`, {
+      const response = await fetch(`${this.base_url}/:id1/AssignCAtoProject/:id2`, {
         method: 'PUT',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
