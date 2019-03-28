@@ -3,7 +3,7 @@ const AbstractTests = require('./AbstractTests')
 const Admin = require('../../models/admins') //require your model
 const ObjectId = require('mongoose');
 
-class ATest extends AbstractTests {
+class MTest extends AbstractTests {
   constructor (PORT, ROUTE) {
     super(PORT, ROUTE)
     this.sharedState = {
@@ -56,4 +56,4 @@ class ATest extends AbstractTests {
   deleteRequest  () {}
 
 }
-module.exports = //Atest
+module.exports = Mtest
