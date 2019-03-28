@@ -9,8 +9,8 @@ const ERTest = require('./routes/test/eventrequestsTEST')
 const db = require('./config/keys').mongoURI
 
 // Connect to mongo
-// mongoose
-// .connect(db,{ useNewUrlParser: true })
+mongoose
+.connect(db,{ useNewUrlParser: true })
 
 beforeAll(async () => {
   mongoose.Promise = Promise;
