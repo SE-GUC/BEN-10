@@ -505,4 +505,27 @@ async function addEvent(body) {
     .catch(err => console.log("Error", err));
   return result;
 }
+//as an admin i want to view all eventrequests
+router.get("/:id/eventRequests", async (req, res) => {
+  const id = req.params.id;
+
+  if (ObjectId.isValid(id)) {
+    const admins = await Admin.findById(id);
+    if(admins){
+      await fetch(`${server}/api/eventrequests`)
+      .then(res => res.json())
+      .then(json => {
+        const eventrequests = json.data;
+        res.json({data: eventrequests});
+        
+    }).catch(err => console.log("Error", err));
+  }
+    else{
+      return res.status(404).send({ error: "Admin not found" });
+    }
+  } else {
+    return res.status(404).send({ error: "ID not found" });
+  }
+  
+});
 module.exports = router;

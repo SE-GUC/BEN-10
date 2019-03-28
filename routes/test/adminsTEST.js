@@ -2,9 +2,10 @@ const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
 const admin = require('../../models/Admin') //require your model
 const event = require('../../models/Event')
+const eventrequest = require('../../models/EventRequest')
 const ObjectId = require('mongoose');
 
-class ATest extends AbstractTests {
+class adminTest extends AbstractTests {
   constructor (PORT, ROUTE) {
     super(PORT, ROUTE)
     this.sharedState = {
@@ -21,7 +22,8 @@ class ATest extends AbstractTests {
           //this.getRequest()
           //this.putRequest()
           //this.deleteRequest()
-          this.postEvent()
+         // this.postEvent()
+          this.getAllEventRequests()
           // add all methods
 
         })
@@ -119,8 +121,22 @@ class ATest extends AbstractTests {
       
     })
   } 
-  
+  getAllEventRequests(){
+    test(`get ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c784be40bc82a5f186ac770/eventRequests`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+       console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse).toString()).toEqual(['data'].toString())
+      expect(response.status).toEqual(200)
+  }
+    )
+  }
 
 
 }
-module.exports = ATest
+module.exports = adminTest
