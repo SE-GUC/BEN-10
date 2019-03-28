@@ -21,9 +21,11 @@ class AdminTest extends AbstractTests {
           //this.putRequest()
           //this.deleteRequest()
 
-          // As and admin i want to identify a task/project with a set of attributes so that it defines it
-          this.identifyProject()
+          // 3.1- As an admin i want to identify a task/project with a set of attributes so that it defines it
+          //this.identifyProject()
 
+          // 21- As an admin i want to view all event 
+          this.viewAllEvents()
           // add all methods
 
         })
@@ -81,6 +83,24 @@ class AdminTest extends AbstractTests {
 
       this.sharedState.company =  identifiedBody.company
       this.sharedState.category =  identifiedBody.category
+      
+    })
+  }
+
+  viewAllEvents(){
+    test(`get ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c784be40bc82a5f186ac770/ShowAllEvents`, {
+        method: 'GET',
+        //body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+
+      expect(Object.keys(jsonResponse)).toEqual(['data'])
+      expect(response.status).toEqual(200)
+
+     
       
     })
   }

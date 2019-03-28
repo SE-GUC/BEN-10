@@ -21,9 +21,11 @@ class CATest extends AbstractTests {
           //this.putRequest()
           //this.deleteRequest()
           
-          // 2.1 As a consultancy agency i want to apply for task/project
+          // 2.1- As a consultancy agency i want to apply for task/project
           //this.applyForProject()
-
+          
+          // 3- As a CA i want to view my projects
+          //this.viewMyProjects()
 
           // add all methods
 
@@ -78,5 +80,22 @@ class CATest extends AbstractTests {
     })
   }
 
+  viewMyProjects(){
+    test(`get ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c79260b4328ab820437835c/projects`, {
+        method: 'GET',
+        //body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+
+      expect(Object.keys(jsonResponse)).toEqual(['data'])
+      expect(response.status).toEqual(200)
+
+     
+      
+    })
+  }
 }
 module.exports = CATest

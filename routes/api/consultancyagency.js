@@ -540,4 +540,33 @@ async function carequestrating(formLink,id,date) {
   return j;
 }
 
+
+// 3- As a CA i want to view my projects 
+router.get("/:id/projects",async(req,res)=>{
+  const id = req.params.id ; 
+  if(ObjectId.isValid(id)){
+    var error = true; 
+    await fetch(`${server}/api/projects`,{
+      method:"get",
+      headers:{"Content-Type":"application/json"}
+    })
+      .then(res =>{
+        if(res.status === 200){
+          error = false ; 
+        }
+        return res.json();
+      })
+      .then(json =>{
+        const myprojects = json.data ; 
+        const consulted = myprojects.filter(
+          myprojects => myprojects.consultancyID === id
+        );
+        res.json({data: consulted}); 
+      })
+      .catch(err => console.log("Error",err));
+  }
+  else {
+    return res.status(404).send({error:"Not a consultancy agency id"});
+  }
+})
 module.exports = router;

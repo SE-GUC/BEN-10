@@ -505,4 +505,29 @@ async function addEvent(body) {
     .catch(err => console.log("Error", err));
   return result;
 }
+
+// 21- As an admin i want to view all Events 
+
+router.get("/:id/ShowAllEvents", async (req, res) => {
+  const id = req.params.id;
+
+  if (ObjectId.isValid(id)) {
+    const admins = await Admin.findById(id);
+    if(admins){
+      await fetch(`${server}/api/events`)
+      .then(res => res.json())
+      .then(json => {
+        const events = json.data;
+        res.json({data: events});
+        
+    }).catch(err => console.log("Error", err));
+  }
+    else{
+      return res.status(404).send({ error: "Admin not found" });
+    }
+  } else {
+    return res.status(404).send({ error: "ID not found" });
+  }
+  
+});
 module.exports = router;
