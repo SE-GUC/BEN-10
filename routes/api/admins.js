@@ -8,6 +8,8 @@ const server = require("../../config/config");
 
 const Admin = require("../../models/Admin");
 const member = require("../../models/member");
+const Event = require("../../models/Event");
+
 const validator = require("../../validations/adminValidations");
 const notificationValidator = require("../../validations/memberValidations");
 
@@ -446,6 +448,7 @@ async function postProject(id) {
       if (res.status === 200) {
         error = false;
       }
+      console.log(res.status);
       if (!error) {
         result = res;
       }
@@ -459,6 +462,8 @@ async function postProject(id) {
     })
     .catch(err => console.log("Error", err));
 }
+//Test 3.3
+// postProject("5c7a795e53f1ba0c1b351f75");
 
 //as an admin i want to create event
 
@@ -505,4 +510,76 @@ async function addEvent(body) {
     .catch(err => console.log("Error", err));
   return result;
 }
+
+// sprint3 #13  As an admin I want to give the attendees a form to rate the event and give a feedback.
+async function sendFeedBack(formLink, eventId) {
+  var error = true;
+  var result;
+  let myEvent = await Event.findById(eventId);
+  let attendingMembers = myEvent.bookedMembers;
+  var i;
+  var today = new Date();
+  var date =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  for (i = 0; i < attendingMembers.length; i++) {
+    const body = {
+      description: formLink,
+      NotifiedPerson: attendingMembers[i],
+      date: date,
+      seen: "false"
+    };
+
+    await fetch(`${server}/api/notifications/`, {
+      method: "post",
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" }
+    })
+      // .then(checkStatus)
+      .then(res => {
+        if (res.status === 200) {
+          error = false;
+        }
+        console.log("The error is " + res.status);
+        if (!error) {
+          result = res;
+        }
+        return res.json();
+      })
+      .then(json => {
+        if (!error) {
+          json = {
+            msg:
+              "notification for members " +
+              attendingMembers.toString() +
+              " is posted successfully"
+          };
+        }
+        result = json;
+      })
+      .catch(err => console.log("Error", err));
+  }
+  return result;
+}
+
+router.post("/:id/events/:id2/sendFeedBackForm", async (req, res) => {
+  try {
+    const admin = await Admin.findById(req.params.id);
+    let result = "";
+    if (!admin) {
+      result = "not an admin id";
+    } else {
+      const event = await Event.findById(req.params.id2);
+      if (!event) {
+        result = "not an event id";
+      } else {
+        return res.json({
+          data: await sendFeedBack(req.body.feedBack, req.params.id2)
+        });
+      }
+    }
+  } catch (error) {
+    return res.status(400).send("Error");
+  }
+});
+
 module.exports = router;

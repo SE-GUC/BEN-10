@@ -275,7 +275,7 @@ router.get("/:id/recommendations", async (req, res) => {
     const mem = await member.findById(id);
     if (!mem) return res.status(404).send({ error: "member is not found" });
 
-    res.json({ data: await getAvailableProjects(id) });
+    return res.json({ data: await getAvailableProjects(id) });
   } catch {
     return res.status(400).send({ error: "the provided id is not valid one " });
   }
