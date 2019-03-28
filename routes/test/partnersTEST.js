@@ -29,10 +29,12 @@ class PARTests extends AbstractTests {
            //this.postProject()
          // this.putRequest()
           //this.putRequestFail()
-          this.deleteRequest()
+         // this.deleteRequest()
           // add all methods
           //this.postProjectFail()
-          this.getMyProjects()
+         // this.getMyProjects()
+          this.putONFinalReview()
+          //this.putDisapproveONFinalReview
         })
         resolve()
       })
@@ -269,7 +271,7 @@ class PARTests extends AbstractTests {
 
    getMyProjects  () {
     test(`get ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/`, {
+      const response = await fetch(`${this.base_url}/5c786899f8a8e026447d212f/myProjects`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
@@ -279,6 +281,42 @@ class PARTests extends AbstractTests {
       expect(Object.keys(jsonResponse)).toEqual(['data'])
       expect(response.status).toEqual(200)
     })
+  }
+
+  putApproveONFinalReview  () {
+    const requestBody = {
+    }
+    test(`put ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c9cd0503c242d1d38b8731a`, {
+        method: 'PUT',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse )
+      expect(Object.keys(jsonResponse)).toEqual(['msg'])
+      expect(response.status).toEqual(200)
+
+    })    
+  }
+
+  putDisapproveONFinalReview  () {
+    const requestBody = {
+    }
+    test(`put ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c9cd0503c242d1d38b8731a`, {
+        method: 'PUT',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse )
+      expect(Object.keys(jsonResponse)).toEqual(['msg'])
+      expect(response.status).toEqual(200)
+
+    })    
   }
 
 }

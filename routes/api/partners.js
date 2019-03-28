@@ -649,4 +649,32 @@ async function declineFinalReview(pid) {
   return j;
 }
 
+// as i partner i want to get my projects 
+router.get("/:id/myProjects", async (req, res) => {
+  const id = req.params.id;
+  if (ObjectId.isValid(id)) {
+    var error = true;
+    await fetch(`${server}/api/projects`, {
+      method: "get",
+      headers: { "Content-Type": "application/json" }
+    })
+      .then(res => {
+        if (res.status === 200) {
+          error = false;
+        }
+        return res.json();
+      })
+      .then(json => {
+        const myprojects= json.data;
+        const proj = myprojects.filter(
+          myprojects => myprojects.companyID === id
+        );
+        res.json({ data: proj });
+      })
+      .catch(err => console.log("Error", err));
+  } else {
+    return res.status(404).send({ error: "Not a Partner ID" });
+  }
+});
+
 module.exports = router;
