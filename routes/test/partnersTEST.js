@@ -20,6 +20,8 @@ class PaTest extends AbstractTests {
           this.getRequest()
           this.putRequest()
           this.deleteRequest()
+           //1.5 AS a partner i want to review the final work of the candidate who is working on my task/project.
+           this.getMyProjects()
           // add all methods
 
         })
@@ -54,6 +56,22 @@ class PaTest extends AbstractTests {
   getRequest  () {}
   putRequest  () {}
   deleteRequest  () {}
+
+  getMyProjects(){
+    test(`get ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c786899f8a8e026447d212f/ShowFinalDraft`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(['data'])
+      expect(response.status).toEqual(200)
+  
+    })
+  }
 
 }
 module.exports = Patest
