@@ -20,6 +20,8 @@ class MTest extends AbstractTests {
           this.getRequest()
           this.putRequest()
           this.deleteRequest()
+          //4.8//As a candidate I want to book a place in an event (based on the event’s type).
+          this.bookEvent();
           // add all methods
 
         })
@@ -54,6 +56,19 @@ class MTest extends AbstractTests {
   getRequest  () {}
   putRequest  () {}
   deleteRequest  () {}
-
+ 
+  bookEvent(){
+    test(`put ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c93d983f3fe6358b41ccd7a/bookEvent/5c9524e85a0c492210f6e21f`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+      expect(Object.keys(jsonResponse)).toEqual(['msg'])
+      expect(response.status).toEqual(200)
+    })
+  }
 }
 module.exports = Mtest
