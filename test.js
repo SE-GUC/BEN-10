@@ -1,23 +1,10 @@
 
 const mongoose = require('mongoose')
 
-// const UsersTest = require('./api/v1/tests/users')
+// import testfiles
+
 const ERTest = require('./routes/test/eventrequestsTEST')
 
-//= =---------------------------------------------------= =//
-//= =--- CAPTURE ENVIRONMENT VARIABLES
-//= =---------------------------------------------------= =//
-// const {
-//   PORT = 7000,
-//   MONGO_DNS_SRV,
-//   MONGO_AUTH,
-//   MONGO_CLUSTER,
-//   MONGO_DB_NAME,
-//   MONGO_OPTIONS
-// } = process.env
-//= =---------------------------------------------------= =//
-
-//= =---------------------------------------------------= =//
 // ---== CONNECT TO MONGO ATLAS
 //= =---------------------------------------------------= =//
 const db = require('./config/keys').mongoURI
@@ -25,11 +12,7 @@ const db = require('./config/keys').mongoURI
 // Connect to mongo
 mongoose
 .connect(db,{ useNewUrlParser: true })
-//= =---------------------------------------------------= =//
 
-//= =---------------------------------------------------= =//
-// ---== Setup before & after all tests run
-//= =---------------------------------------------------= =//
 // beforeAll(async () => {
 //   await mongoose.connection.dropDatabase()
 // })
