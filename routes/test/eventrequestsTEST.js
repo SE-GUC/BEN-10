@@ -35,20 +35,20 @@ class ERTest extends AbstractTests {
     } catch (err) {}
   }
 
-  runDependently () {
-    super.runDependently()
-    try {
-      return new Promise((resolve, reject) => {
-        describe('Making sure dependent ER routes work', () => {
-          this.postRequestDependently()
-          this.getRequestDependently()
-          this.putRequestDependently()
-          this.deleteRequestDependently()
-        })
-        resolve()
-      })
-    } catch (err) {}
-  }
+  // runDependently () {
+  //   super.runDependently()
+  //   try {
+  //     return new Promise((resolve, reject) => {
+  //       describe('Making sure dependent ER routes work', () => {
+  //         this.postRequestDependently()
+  //         this.getRequestDependently()
+  //         this.putRequestDependently()
+  //         this.deleteRequestDependently()
+  //       })
+  //       resolve()
+  //     })
+  //   } catch (err) {}
+  // }
 
   postRequestIndependently () {
     const requestBody = {
@@ -93,10 +93,10 @@ class ERTest extends AbstractTests {
   getRequestIndependently () {}
   putRequestIndependently () {}
   deleteRequestIndependently () {}
-  getRequestDependently () {}
-  putRequestDependently () {}
-  deleteRequestDependently () {}
-  postRequestDependently () {}
+  // getRequestDependently () {}
+  // putRequestDependently () {}
+  // deleteRequestDependently () {}
+  // postRequestDependently () {}
 
 
 }

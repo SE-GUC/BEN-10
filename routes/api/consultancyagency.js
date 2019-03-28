@@ -469,12 +469,15 @@ async function caApplyProject(pID, applying) {
     .catch(err => console.log("Error", err));
   return j;
 }
-router.post("/:pid/rating/:eid/", async (req, res) => {
-  if (ObjectId.isValid(req.params.pid) && ObjectId.isValid(req.params.eid)) {
-    const partner = await PartnerInfo.findById(req.params.pid);
+
+// --11 As a consultancy agency I want to give the attendees a form to rate the event and give a feedback.
+
+router.post("/:cid/rating/:eid/", async (req, res) => {
+  if (ObjectId.isValid(req.params.cid) && ObjectId.isValid(req.params.eid)) {
+    const ca = await ConsultancyAgency.findById(req.params.cid);
     const event = await Event.findById(req.params.eid);
-    if (partner && event) {
-      if (event.requestorId == req.params.pid) {
+    if (ca && event) {
+        if (event.requestorId == req.params.cid) {
         var i;
         var success = true;
         var today = new Date();
@@ -487,7 +490,7 @@ router.post("/:pid/rating/:eid/", async (req, res) => {
         const attendees = event.bookedMembers
         var arr = new Array(attendees.length);
         for (i = 0; i < attendees.length; i++) {
-          const j = await Partnerrequestrating(event.formLink, attendees[i], date);
+          const j = await carequestrating(event.formLink, attendees[i], date);
           arr[i] = j;
         }
         for (i = 0; i < attendees.length; i++){
@@ -499,17 +502,17 @@ router.post("/:pid/rating/:eid/", async (req, res) => {
         else
           res.json({ msg: "Error occured" })
       } else {
-        return res.status(400).send({ error: 'this event does not belong to you' });
+        return res.status(400).send({ error: 'You can not access this event' });
       }
-    } else return res.status(404).send({ error: "inavalid inputs" });
-  } else return res.status(404).send({ error: "inavalid inputs" });
+    } else return res.status(404).send({ error: "Error" });
+  } else return res.status(404).send({ error: "Error" });
 });
 
 // 11 As a CA I want to give the attendees a form to rate the event and give a feedback
-async function Partnerrequestrating(formLink,id,date) {
+async function carequestrating(formLink,id,date) {
   var error = true;
   const body = {
-    description: `please rate thie event through this form ${formLink}`,
+    description: `Please rate thie event through this form ${formLink}`,
     NotifiedPerson: id,
     date: date,
     seen: "false"
