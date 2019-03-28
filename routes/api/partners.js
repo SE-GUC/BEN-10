@@ -532,6 +532,7 @@ router.post("/:pid/rating/:eid/", async (req, res) => {
           "-" +
           today.getDate();
         const attendees = event.bookedMembers
+        console.log(attendees.length)
         for (var i = 0; attendees.length > i; i++) {
           const body = {
             description: `please rate thie event through this form ${event.formLink}`,
