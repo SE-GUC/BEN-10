@@ -3,9 +3,6 @@ const AbstractTests = require('./AbstractTests')
 const eventRequest = require('../../models/EventRequest')
 const ObjectId = require('mongoose');
 
-//= =---------------------------------------------------= =//
-//= =--- UsersTest class
-//= =---------------------------------------------------= =//
 class ERTest extends AbstractTests {
   constructor (PORT, ROUTE) {
     super(PORT, ROUTE)
@@ -20,37 +17,24 @@ class ERTest extends AbstractTests {
     }
   }
 
-  runIndependently () {
-    super.runIndependently()
+  run() {
+    super.run()
     try {
       return new Promise((resolve, reject) => {
-        describe('Making sure independent ER routes work', () => {
-          this.postRequestIndependently()
-          this.getRequestIndependently()
-          this.putRequestIndependently()
-          this.deleteRequestIndependently()
+        describe('Making sure ER routes work', () => {
+          this.postRequest()
+          this.getRequest()
+          this.putRequest()
+          this.deleteRequest()
+
         })
         resolve()
       })
     } catch (err) {}
   }
 
-  // runDependently () {
-  //   super.runDependently()
-  //   try {
-  //     return new Promise((resolve, reject) => {
-  //       describe('Making sure dependent ER routes work', () => {
-  //         this.postRequestDependently()
-  //         this.getRequestDependently()
-  //         this.putRequestDependently()
-  //         this.deleteRequestDependently()
-  //       })
-  //       resolve()
-  //     })
-  //   } catch (err) {}
-  // }
 
-  postRequestIndependently () {
+  postRequest () {
     const requestBody = {
         requestedBy: "testreq",
         description: "testdesc",
@@ -61,7 +45,7 @@ class ERTest extends AbstractTests {
         requestorId: "5c784be40bc82a5f186ac770"
     }
 
-    test(`Randomly creating a new eventrequest,\t\t[=> POST\t${this.base_url}\t`, async () => {
+    test(`post ${this.base_url}`, async () => {
       const response = await fetch(`${this.base_url}`, {
         method: 'POST',
         body: JSON.stringify(requestBody),
@@ -70,13 +54,10 @@ class ERTest extends AbstractTests {
       console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
 
-      // check if the json response has data not error
       expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
       expect(response.status).toEqual(200)
 
-      // go check in the mongo database
       const eRequest = await eventRequest.findOne(requestBody).exec()
-    //   expect(eRequest).toMatchObject(requestBody)
       expect(eRequest.description).toEqual(requestBody.description)
     //   expect(eRequest.eventDate).toBeCloseTo(eventDate)
       expect(eRequest.eventLocation).toEqual(requestBody.eventLocation)
@@ -84,21 +65,20 @@ class ERTest extends AbstractTests {
       expect(eRequest.isAccepted).toEqual(requestBody.isAccepted)
       expect(eRequest.requestedBy).toEqual(requestBody.requestedBy)
       expect(new String(eRequest.requestorId)).toEqual(requestBody.requestorId)
-    //   this.sharedState.id = user.id
-    //   this.sharedState.name = user.name
-    //   this.sharedState.birthdate = user.birthdate
-    //   this.sharedState.gender = user.gender
+      this.sharedState.requestedBy =  eRequest.requestedBy
+      this.sharedState.description =  eRequest.description
+      this.sharedState.eventType =  eRequest.eventType
+      this.sharedState.eventLocation =  eRequest.eventLocation
+      this.sharedState.eventDate =  eRequest.eventDate
+      this.sharedState.description =  eRequest.description
+      this.sharedState.isAccepted =  eRequest.isAccepted
+      this.sharedState.requestorId =  eRequest.requestorId
     })
   }
 
-  getRequestIndependently () {}
-  putRequestIndependently () {}
-  deleteRequestIndependently () {}
-  // getRequestDependently () {}
-  // putRequestDependently () {}
-  // deleteRequestDependently () {}
-  // postRequestDependently () {}
-
+  getRequest  () {}
+  putRequest  () {}
+  deleteRequest  () {}
 
 }
 module.exports = ERTest

@@ -4,112 +4,62 @@ class AbstractTests {
       // Error Type 1. AbstractTests class can not be constructed.
       throw new TypeError('Can not construct AbstractTests class.')
     }
-    // else (called from child)
     // Check if all instance methods are implemented.
-    if (this.runIndependently === AbstractTests.prototype.runIndependently) {
+    if (this.run === AbstractTests.prototype.run ) {
       // Error Type 4. Child has not implemented this abstract method.
-      throw new TypeError('Please implement AbstractTests method runIndependently.')
+      throw new TypeError('Please implement AbstractTests method run .')
     }
-    // if (this.runDependently === AbstractTests.prototype.runDependently) {
-    //   // Error Type 4. Child has not implemented this abstract method.
-    //   throw new TypeError('Please implement AbstractTests method runDependently.')
-    // }
-    if (this.postRequestIndependently === AbstractTests.prototype.postRequestIndependently) {
+    
+    if (this.postRequest === AbstractTests.prototype.postRequest ) {
       // Error Type 4. Child has not implemented this abstract method.
-      throw new TypeError('Please implement AbstractTests method postRequestIndependently.')
+      throw new TypeError('Please implement AbstractTests method postRequest .')
     }
-    if (this.getRequestIndependently === AbstractTests.prototype.getRequestIndependently) {
+    if (this.getRequest === AbstractTests.prototype.getRequest ) {
       // Error Type 4. Child has not implemented this abstract method.
-      throw new TypeError('Please implement AbstractTests method getRequestIndependently.')
+      throw new TypeError('Please implement AbstractTests method getRequest .')
     }
-    if (this.putRequestIndependently === AbstractTests.prototype.putRequestIndependently) {
+    if (this.putRequest === AbstractTests.prototype.putRequest ) {
       // Error Type 4. Child has not implemented this abstract method.
-      throw new TypeError('Please implement AbstractTests method putRequestIndependently.')
+      throw new TypeError('Please implement AbstractTests method putRequest .')
     }
-    if (this.deleteRequestIndependently === AbstractTests.prototype.deleteRequestIndependently) {
+    if (this.deleteRequest === AbstractTests.prototype.deleteRequest ) {
       // Error Type 4. Child has not implemented this abstract method.
-      throw new TypeError('Please implement AbstractTests method deleteRequestIndependently.')
+      throw new TypeError('Please implement AbstractTests method deleteRequest .')
     }
-    // if (this.postRequestDependently === AbstractTests.prototype.postRequestDependently) {
-    //   // Error Type 4. Child has not implemented this abstract method.
-    //   throw new TypeError('Please implement AbstractTests method postRequestDependently.')
-    // }
-    // if (this.getRequestDependently === AbstractTests.prototype.getRequestDependently) {
-    //   // Error Type 4. Child has not implemented this abstract method.
-    //   throw new TypeError('Please implement AbstractTests method getRequestDependently.')
-    // }
-    // if (this.putRequestDependently === AbstractTests.prototype.putRequestDependently) {
-    //   // Error Type 4. Child has not implemented this abstract method.
-    //   throw new TypeError('Please implement AbstractTests method putRequestDependently.')
-    // }
-    // if (this.deleteRequestDependently === AbstractTests.prototype.deleteRequestDependently) {
-    //   // Error Type 4. Child has not implemented this abstract method.
-    //   throw new TypeError('Please implement AbstractTests method deleteRequestDependently.')
-    // }
 
     this.base_url = `http://localhost:${PORT}/api${ROUTE}`
     this.sharedState = {}
-    this.runIndependently = this.runIndependently.bind(this)
-    // this.runDependently = this.runDependently.bind(this)
-    this.postRequestIndependently = this.postRequestIndependently.bind(this)
-    this.getRequestIndependently = this.getRequestIndependently.bind(this)
-    this.putRequestIndependently = this.putRequestIndependently.bind(this)
-    this.deleteRequestIndependently = this.deleteRequestIndependently.bind(this)
-    // this.postRequestDependently = this.postRequestDependently.bind(this)
-    // this.getRequestDependently = this.getRequestDependently.bind(this)
-    // this.putRequestDependently = this.putRequestDependently.bind(this)
-    // this.deleteRequestDependently = this.deleteRequestDependently.bind(this)
+    this.run = this.run .bind(this)
+    this.postRequest = this.postRequest.bind(this)
+    this.getRequest = this.getRequest.bind(this)
+    this.putRequest = this.putRequest.bind(this)
+    this.deleteRequest = this.deleteRequest.bind(this)
   }
 
   // An abstract methods.
-  runIndependently () {
+  run () {
     expect(1).toBe(1)
   }
 
-  // runDependently () {
-  //   expect(1).toBe(1)
-  // }
-
-  postRequestIndependently () {
-    // Error Type 6. The child has implemented this method but also called `super.postRequestIndependently()`.
-    throw new TypeError('Do not call abstract method postRequestIndependently from child.')
+  postRequest () {
+    // Error Type 6. The child has implemented this method but also called `super.postRequest ()`.
+    throw new TypeError('Do not call abstract method postRequest from child.')
   }
 
-  getRequestIndependently () {
-    // Error Type 6. The child has implemented this method but also called `super.getRequestIndependently()`.
-    throw new TypeError('Do not call abstract method getRequestIndependently from child.')
+  getRequest () {
+    // Error Type 6. The child has implemented this method but also called `super.getRequest ()`.
+    throw new TypeError('Do not call abstract method getRequest from child.')
   }
 
-  putRequestIndependently () {
-    // Error Type 6. The child has implemented this method but also called `super.putRequestIndependently()`.
-    throw new TypeError('Do not call abstract method putRequestIndependently from child.')
+  putRequest () {
+    // Error Type 6. The child has implemented this method but also called `super.putRequest ()`.
+    throw new TypeError('Do not call abstract method putRequest from child.')
   }
 
-  deleteRequestIndependently () {
-    // Error Type 6. The child has implemented this method but also called `super.deleteRequestIndependently()`.
-    throw new TypeError('Do not call abstract method deleteRequestIndependently from child.')
+  deleteRequest () {
+    // Error Type 6. The child has implemented this method but also called `super.deleteRequest ()`.
+    throw new TypeError('Do not call abstract method deleteRequest from child.')
   }
-
-  // postRequestDependently () {
-  //   // Error Type 6. The child has implemented this method but also called `super.postRequestDependently()`.
-  //   throw new TypeError('Do not call abstract method postRequestDependently from child.')
-  // }
-
-  // getRequestDependently () {
-  //   // Error Type 6. The child has implemented this method but also called `super.getRequestDependently()`.
-  //   throw new TypeError('Do not call abstract method getRequestDependently from child.')
-  // }
-
-  // putRequestDependently () {
-  //   // Error Type 6. The child has implemented this method but also called `super.putRequestDependently()`.
-  //   throw new TypeError('Do not call abstract method putRequestDependently from child.')
-  // }
-
-  // deleteRequestDependently () {
-  //   // Error Type 6. The child has implemented this method but also called `super.deleteRequestDependently()`.
-  //   throw new TypeError('Do not call abstract method deleteRequestDependently from child.')
-  // }
 }
-//= =---------------------------------------------------= =//
 
 module.exports = AbstractTests
