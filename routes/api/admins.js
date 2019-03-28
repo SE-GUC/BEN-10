@@ -507,7 +507,7 @@ async function addEvent(body) {
 }
 
 //sprint 3 = >as partner i want to cancel a project
-router.put("/:id/cancelproject/:pid", async (req, res) => {
+router.delete("/:id/cancelproject/:pid", async (req, res) => {
   var error = true;
   if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
     const partner = await PartnerInfo.findById(req.params.id);
