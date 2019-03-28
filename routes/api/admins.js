@@ -505,4 +505,36 @@ async function addEvent(body) {
     .catch(err => console.log("Error", err));
   return result;
 }
+
+//sprint 3 = >as partner i want to cancel a project
+router.put("/:id/cancelproject/:pid", async (req, res) => {
+  var error = true;
+  if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
+    const partner = await PartnerInfo.findById(req.params.id);
+    const project = await Project.findById(req.params.pid);
+    if (partner && project) {
+      if (project.companyID == req.params.id){
+        if(project.life_cycle == "Negotiation" || project.life_cycle == "Final Draft" || project.life_cycle == "Waiting For Consultancy Agency"){
+          var error = true;
+          await fetch(`${server}/api/projects/${req.params.pid}`, {
+            method: "delete",
+            headers: { "Content-Type": "application/json" }
+          })
+          .then(res => {
+            if (res.status === 200) {
+              error = false;
+            }
+            return res.json();
+          })
+          .then(json => {
+            if (!error) {
+              res.json({ msg: "Project is canceled" });
+            }
+          })
+          .catch(err => console.log("Error", err));
+        } else return res.status(404).send({ error: "you cannot cancel this project" });
+      } else return res.status(404).send({ error: "this project doesnot belong to you" });
+    } else return res.status(404).send({ error: "invalid inputs" });
+  } else return res.status(404).send({ error: "invalid inputs" });
+});
 module.exports = router;
