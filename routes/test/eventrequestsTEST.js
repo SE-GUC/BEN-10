@@ -59,7 +59,6 @@ class ERTest extends AbstractTests {
         headers: { 'Content-Type': 'application/json' }
       })
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
       expect(response.status).toEqual(200)
 
@@ -163,7 +162,6 @@ class ERTest extends AbstractTests {
         headers: { 'Content-Type': 'application/json' }
       })
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['error'])
       expect(response.status).toEqual(400)
 

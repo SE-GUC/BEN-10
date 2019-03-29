@@ -66,9 +66,7 @@ class CATest extends AbstractTests {
           headers: { "Content-Type": "application/json" }
         }
       );
-      console.log("response stastus: " + response.status);
       const jsonResponse = await response.json();
-      console.log(jsonResponse)
 
       expect(Object.keys(jsonResponse)).toEqual(["msg"]);
       expect(response.status).toEqual(200);
@@ -112,9 +110,7 @@ class CATest extends AbstractTests {
           headers: { "Content-Type": "application/json" }
         }
       );
-      console.log("response stastus: " + response.status);
       const jsonResponse = await response.json();
-      console.log(jsonResponse)
 
       expect(Object.keys(jsonResponse)).toEqual(["msg"]);
       expect(response.status).toEqual(200);
@@ -140,9 +136,7 @@ class CATest extends AbstractTests {
           headers: { "Content-Type": "application/json" }
         }
       );
-      console.log("response stastus: " + response.status);
       const jsonResponse = await response.json();
-      console.log(jsonResponse)
 
       expect(Object.keys(jsonResponse)).toEqual(["data"]);
       expect(response.status).toEqual(200);
@@ -168,9 +162,7 @@ class CATest extends AbstractTests {
           headers: { "Content-Type": "application/json" }
         }
       );
-      console.log("response stastus: " + response.status);
       const jsonResponse = await response.json();
-      console.log(jsonResponse)
 
       expect(Object.keys(jsonResponse)).toEqual(["error"]);
       expect(response.status).toEqual(404);
@@ -203,9 +195,7 @@ class CATest extends AbstractTests {
           headers: { "Content-Type": "application/json" }
         }
       );
-      console.log("response stastus: " + response.status);
       const jsonResponse = await response.json();
-      console.log(jsonResponse)
 
       expect(Object.keys(jsonResponse)).toEqual(["error"]);
       expect(response.status).toEqual(400);
@@ -249,9 +239,7 @@ class CATest extends AbstractTests {
           headers: { "Content-Type": "application/json" }
         }
       );
-      console.log("response stastus: " + response.status);
       const jsonResponse = await response.json();
-      console.log(jsonResponse)
 
       expect(Object.keys(jsonResponse)).toEqual(["error"]);
       expect(response.status).toEqual(404);

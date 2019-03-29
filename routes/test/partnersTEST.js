@@ -69,7 +69,6 @@ class PaTest extends AbstractTests {
           headers: { "Content-Type": "application/json" }
         }
       );
-      console.log("response stastus: " + response.status);
       const jsonResponse = await response.json();
 
       expect(Object.keys(jsonResponse)).toEqual(["msg"]);
@@ -110,7 +109,6 @@ class PaTest extends AbstractTests {
           headers: { "Content-Type": "application/json" }
         }
       );
-      console.log("response stastus: " + response.status);
       const jsonResponse = await response.json();
 
       expect(Object.keys(jsonResponse)).toEqual(["msg"]);
@@ -151,7 +149,6 @@ class PaTest extends AbstractTests {
           headers: { "Content-Type": "application/json" }
         }
       );
-      console.log("response stastus: " + response.status);
       const jsonResponse = await response.json();
 
       expect(Object.keys(jsonResponse)).toEqual(["error"]);
@@ -192,7 +189,6 @@ class PaTest extends AbstractTests {
           headers: { "Content-Type": "application/json" }
         }
       );
-      console.log("response stastus: " + response.status);
       const jsonResponse = await response.json();
 
       expect(Object.keys(jsonResponse)).toEqual(["error"]);
