@@ -6,6 +6,9 @@ const mongoose = require('mongoose')
 const ERTest = require('./routes/test/eventrequestsTEST')
 
 const CATest = require('./routes/test/consultancyagencysTEST')
+const PARTNERTest = require('./routes/test/partnersTEST')
+const ADMINTest = require('./routes/test/adminsTEST')
+const MEMTest = require('./routes/test/membersTEST')
 
 // Connect to mongo atlas
 const db = require('./config/keys').mongoURI
@@ -25,6 +28,9 @@ beforeAll(async () => {
 // Calling the test files
 const erTests = new ERTest(3000, '/eventrequests')
 const caTests = new CATest(3000, '/consultancyagency')
+const partnerTests = new PARTNERTest(3000, '/partners')
+const adminTests = new ADMINTest(3000, '/admins')
+const memTests = new MEMTest(3000, '/member')
 
 
 // Calling tests
@@ -33,9 +39,24 @@ const caTests = new CATest(3000, '/consultancyagency')
 //     erTests.run(),
 //   ]).then(result => {})
 // })
-describe('Consultancy Agency Tests', () => {
+// describe('Consultancy Agency Tests', () => {
+//   Promise.all([
+//     caTests.run(),
+//   ]).then(result => {})
+// })
+// describe('Partner Tests', () => {
+//   Promise.all([
+//     partnerTests.run(),
+//   ]).then(result => {})
+// })
+// describe('Admin Tests', () => {
+//   Promise.all([
+//     adminTests.run(),
+//   ]).then(result => {})
+// })
+describe('member Tests', () => {
   Promise.all([
-    caTests.run(),
+    memTests.run(),
   ]).then(result => {})
 })
 
