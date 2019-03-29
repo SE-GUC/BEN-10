@@ -212,7 +212,7 @@ async function getProjects() {
   return result;
 }
 //as a candidate i want to view an events so that i can book a place in it
-router.get("/getEvent", async (req, res) => {
+router.get("/:id/getEvent", async (req, res) => {
   const id = req.params.id;
   if (ObjectId.isValid(id)) {
     const j = await getEvents(id);
