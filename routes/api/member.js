@@ -82,7 +82,7 @@ router.put('/:id1/Myprojects/:id2/submit/:link',async(req,res)=>{
        if(member_applying==null)
        return res.status(404).send({ error: "there is no such member with this id" });
     }
-  }
+  } else return res.status(404).send({ error: "Not a valid id format" })
   }
   catch(error){
     return res.status(404).send({ error: "Not a valid id format" });
