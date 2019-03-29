@@ -1,6 +1,8 @@
 const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
-const Partner = require("../../models/PartnerInfo");
+const Partners = require("../../models/PartnerInfo");
+const Events = require('../../models/Event')
+const Projects = require("../../models/Project")
 const ObjectId = require('mongoose');
 
 class PaTest extends AbstractTests {
@@ -43,8 +45,24 @@ class PaTest extends AbstractTests {
   Partnerrequestrating(){
     const requestBody = {}
   
-  test(`post ${this.base_url}/${this.sharedState.id}/rating/:eid/`, async () => {
-    const response = await fetch(`${this.base_url}/5c786899f8a8e026447d212f/rating/5c9cda328acdd615d268e514/`, {
+  test(`post ${this.base_url}/:id/rating/:eid/`, async () => {
+    const events = await Events.find()
+    const pas = await Partners.find()
+    var ids =[]
+    var i=0
+    for(i;i<pas.length;i++){
+      ids.push(pas[i].id.toString())        
+    }
+    var i=0
+    var result =[]
+    for(i;i<events.length;i++){
+      if(ids.includes(events[i].requestorId.toString())){
+        result.push(events[i])
+      }
+    }
+    const pid = result[0].requestorId
+    const eid = result[0].id
+    const response = await fetch(`${this.base_url}/${pid}/rating/${eid}/`, {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
@@ -91,7 +109,7 @@ class PaTest extends AbstractTests {
   PartnerrequestratingbywrongEventID(){
     const requestBody = {}
   
-  test(`post ${this.base_url}/${this.sharedState.id}/rating/:eid/`, async () => {
+  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
     const response = await fetch(`${this.base_url}/5c786899f8a8e026447d212f/rating/5c9cda328acdd615d868e514/`, {
         method: 'POST',
         body: JSON.stringify(requestBody),
@@ -107,7 +125,7 @@ class PaTest extends AbstractTests {
   PartnerrequestratingbynotavalidatedEventID(){
     const requestBody = {}
   
-  test(`post ${this.base_url}/${this.sharedState.id}/rating/:eid/`, async () => {
+  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
     const response = await fetch(`${this.base_url}/5c786899f8a8e026447d212f/rating/5c9cda328add615d268e514/`, {
         method: 'POST',
         body: JSON.stringify(requestBody),
@@ -123,7 +141,7 @@ class PaTest extends AbstractTests {
   PartnerrequestratingbynotanEventsOwner(){
     const requestBody = {}
   
-  test(`post ${this.base_url}/${this.sharedState.id}/rating/:eid/`, async () => {
+  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
     const response = await fetch(`${this.base_url}/5c7a5ae73c28ff08583304ee/rating/5c9cda328add615d268e514/`, {
         method: 'POST',
         body: JSON.stringify(requestBody),

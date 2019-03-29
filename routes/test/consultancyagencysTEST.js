@@ -1,6 +1,7 @@
 const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
-const ConsultancyAgency = require("../../models/ConsultancyAgency");
+const CAs = require("../../models/ConsultancyAgency");
+const Projects = require("../../models/Project");
 const ObjectId = require('mongoose');
 
 class CATest extends AbstractTests {
@@ -21,23 +22,23 @@ class CATest extends AbstractTests {
           // this.putRequest()
           // this.deleteRequest()
           // add all methods
-          // this.CARequestEvent()
-          // this.CARequestEventmissingattribute()
-          // this.CARequestEventwrongattribute()
-          // this.putRequestApprove()
-          // this.putRequestApprovenotaFinalReviewProject()
-          // this.putRequestApprovebywrongCAID()
-          // this.putRequestApprovebynotavalidatedCAID()
-          // this.putRequestApprovebywrongProjectID()
-          // this.putRequestApprovebynotavalidatedProjectID()
-          // this.putRequestApprovebynotaProjectsOwner()
-          // this.putRequestDisapprove()
-          // this.putRequestDisapprovenotaFinalReviewProject()
-          // this.putRequestDisapprovebywrongCAID()
-          // this.putRequestDisapprovebynotavalidatedCAID()
-          // this.putRequestDisapprovebywrongProjectID()
-          // this.putRequestDisapprovebynotavalidatedProjectID()
-          // this.putRequestDisapprovebynotaProjectsOwner()
+          this.CARequestEvent()
+          this.CARequestEventmissingattribute()
+          this.CARequestEventwrongattribute()
+          this.putRequestApprove()
+          this.putRequestApprovenotaFinalReviewProject()
+          this.putRequestApprovebywrongCAID()
+          this.putRequestApprovebynotavalidatedCAID()
+          this.putRequestApprovebywrongProjectID()
+          this.putRequestApprovebynotavalidatedProjectID()
+          this.putRequestApprovebynotaProjectsOwner()
+          this.putRequestDisapprove()
+          this.putRequestDisapprovenotaFinalReviewProject()
+          this.putRequestDisapprovebywrongCAID()
+          this.putRequestDisapprovebynotavalidatedCAID()
+          this.putRequestDisapprovebywrongProjectID()
+          this.putRequestDisapprovebynotavalidatedProjectID()
+          this.putRequestDisapprovebynotaProjectsOwner()
         })
         resolve()
       })
@@ -55,23 +56,23 @@ class CATest extends AbstractTests {
   CARequestEvent() {
     
     test(`post ${this.base_url}/${this.sharedState.id}/eventrequests/`, async () => {
-    const requestBody = {
-    
-      "eventDate":"5/1/2019",
-      "requestedBy": "no requested by",
-      "description": "no description",
-      "eventType": "no type",
-      "eventLocation": "no event location"
-    }
-    const response = await fetch(`${this.base_url}/5c79260b4328ab820437835c/eventrequests/`, {
+      const ca = await CAs.find();
+      const ca1 = ca[0];
+      const caid = ca1.id;
+      const requestBody = {
+        "eventDate":"5/1/2019",
+        "requestedBy": "no requested by",
+        "description": "no description",
+        "eventType": "no type",
+        "eventLocation": "no event location"
+      }
+    const response = await fetch(`${this.base_url}/${caid}/eventrequests/`, {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(["msg"])
-      console.log(response.status)
       expect(response.status).toEqual(200)
     })
   }
@@ -79,21 +80,22 @@ class CATest extends AbstractTests {
 //2.4 --As a consultancy agency I want to request to organize an event.
   CARequestEventmissingattribute() {
     const requestBody = {
-    "requestedBy": "no requested by",
-    "description": "no description",
-    "eventType": "no type",
-    "eventLocation": "no event location"
+      "requestedBy": "no requested by",
+      "description": "no description",
+      "eventType": "no type",
+      "eventLocation": "no event location"
     }
     test(`post ${this.base_url}/${this.sharedState.id}/eventrequests/`, async () => {
-      const response = await fetch(`${this.base_url}/5c79260b4328ab820437835c/eventrequests/`, {
+      const ca = await CAs.find();
+      const ca1 = ca[0];
+      const caid = ca1.id;
+      const response = await fetch(`${this.base_url}/${caid}/eventrequests/`, {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['error'])
-      console.log(response.status)
       expect(response.status).toEqual(400)
     });
   }
@@ -101,22 +103,23 @@ class CATest extends AbstractTests {
 //2.4 --As a consultancy agency I want to request to organize an event.
   CARequestEventwrongattribute() {
     const requestBody = {
-      "eventDate":"5/1/2019",
+      "eventDate":"cd",
       "requestedBy": "no requested by",
       "description": "no description",
       "eventType": "no type",
       "eventLocation": "no event location"
     }
     test(`post ${this.base_url}/${this.sharedState.id}/eventrequests/`, async () => {
-      const response = await fetch(`${this.base_url}/5c79260b4328ab820437835c/eventrequests/`, {
+      const ca = await CAs.find();
+      const ca1 = ca[0];
+      const caid = ca1.id;
+      const response = await fetch(`${this.base_url}/${caid}/eventrequests/`, {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['error'])
-      console.log(response.status)
       expect(response.status).toEqual(400)
     });
   }
@@ -125,7 +128,33 @@ class CATest extends AbstractTests {
   putRequestApprove() {
     const requestBody = {}
     test(`put ${this.base_url}/${this.sharedState.id}/finalreview/:id2/approve/`, async () => {
-      const response = await fetch(`${this.base_url}/5c79283c92334b03f4b6244f/finalreview/5c9cadf62ebb340f1324e458/approve/`, {
+      const prs = await Projects.find()
+      const cas = await CAs.find()
+      var ids =[]
+      var i=0
+      for(i;i<cas.length;i++){
+
+        ids.push(cas[i].id.toString())        
+      }
+      var i=0
+      var result =[]
+      for(i;i<prs.length;i++){
+        if(prs[i].consultancyID != null)
+          if(ids.includes(prs[i].consultancyID.toString())){
+            result.push(prs[i])
+          }
+      }
+      const cid = result[0].consultancyID
+      const pr = result[0].id
+      await fetch(
+        `${this.projects_url}/${pr}/`,
+        {
+          method: "put",
+          body: JSON.stringify({life_cycle : "Final Review"}),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+      const response = await fetch(`${this.base_url}/${cid}/finalreview/${pr}/approve/`, {
         method: 'PUT',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
@@ -230,7 +259,33 @@ class CATest extends AbstractTests {
   putRequestDisapprove() {
     const requestBody = {}
     test(`put ${this.base_url}/${this.sharedState.id}/finalreview/:id2/disapprove/`, async () => {
-      const response = await fetch(`${this.base_url}/5c79283c92334b03f4b6244f/finalreview/5c9cadf62ebb340f1324e458/disapprove/`, {
+      const prs = await Projects.find()
+      const cas = await CAs.find()
+      var ids =[]
+      var i=0
+      for(i;i<cas.length;i++){
+
+        ids.push(cas[i].id.toString())        
+      }
+      var i=0
+      var result =[]
+      for(i;i<prs.length;i++){
+        if(prs[i].consultancyID != null)
+          if(ids.includes(prs[i].consultancyID.toString())){
+            result.push(prs[i])
+          }
+      }
+      const cid = result[0].consultancyID
+      const pr = result[0].id
+      await fetch(
+        `${this.projects_url}/${pr}/`,
+        {
+          method: "put",
+          body: JSON.stringify({life_cycle : "Final Review"}),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+      const response = await fetch(`${this.base_url}/${cid}/finalreview/${pr}/disapprove/`, {
         method: 'PUT',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }

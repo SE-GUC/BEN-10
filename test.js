@@ -36,7 +36,11 @@ const paTests = new PATest(3000, '/partners')
 // Calling tests
 describe('Projects Tests', () => {
   Promise.all([
-    paTests.run(),
+    prTests.run(),
+    caTests.run(),
+    aTests.run(),
+    mTests.run(),
+    paTests.run()
   ]).then(result => {})
 })
 

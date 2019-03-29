@@ -1,6 +1,8 @@
 const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
 const Admin = require('../../models/Admin')
+const Project = require("../../models/Project");
+const Member = require('../../models/member')
 const ObjectId = require('mongoose');
 
 class ATest extends AbstractTests {
@@ -21,17 +23,17 @@ class ATest extends AbstractTests {
           // this.putRequest()
           // this.deleteRequest()
           // add all methods
-          // this.getdescription()
-          // this.getdescriptionbywrongAdminID()
-          // this.getdescriptionbynotavalidatedAdminID()
-          // this.getdescriptionbywrongProjectID()
-          // this.getdescriptionbynotavalidatedProjectID()
-          // this.AdminNotifyAcceptedCandidate()
-          // this.AdminNotifyAcceptedCandidatemissingattribute()
-          // this.AdminNotifyAcceptedCandidatebywrongAdminID()
-          // this.AdminNotifyAcceptedCandidatebynotavalidatedAdminID()
-          // this.AdminNotifyAcceptedCandidatebywrongCandidateID()
-          // this.AdminNotifyAcceptedCandidatebynotavalidatedCandidateID()
+          this.getdescription()
+          this.getdescriptionbywrongAdminID()
+          this.getdescriptionbynotavalidatedAdminID()
+          this.getdescriptionbywrongProjectID()
+          this.getdescriptionbynotavalidatedProjectID()
+          this.AdminNotifyAcceptedCandidate()
+          this.AdminNotifyAcceptedCandidatemissingattribute()
+          this.AdminNotifyAcceptedCandidatebywrongAdminID()
+          this.AdminNotifyAcceptedCandidatebynotavalidatedAdminID()
+          this.AdminNotifyAcceptedCandidatebywrongCandidateID()
+          this.AdminNotifyAcceptedCandidatebynotavalidatedCandidateID()
         })
         resolve()
       })
@@ -48,12 +50,19 @@ class ATest extends AbstractTests {
   //3 --As an admin I want to further check the description of a task/project so that it will be posted for candidates to apply
   getdescription() {
     test(`get ${this.base_url}/${this.sharedState.id}/pdescription/:id/`, async () => {
-      const response = await fetch(`${this.base_url}/5c784be40bc82a5f186ac770/pdescription/5c94436fd0c61339203ad8c7/`, {
+      const ad = await Admin.find();
+      const ad1 = ad[0];
+      const adid = ad1.id;
+      const pr = await Project.find();
+      const pr1 = pr[0];
+      const prid = pr1.id;
+      const response = await fetch(`${this.base_url}/${adid}/pdescription/${prid}/`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
       const jsonResponse = await response.json()
       expect(response.status).toEqual(200)
+      
     })
   }
 
@@ -112,15 +121,19 @@ class ATest extends AbstractTests {
     const requestBody = {
     "description": "no description"
   }
-  
   test(`post ${this.base_url}/${this.sharedState.id}/notifications/:id/`, async () => {
-    const response = await fetch(`${this.base_url}/5c7a603a0a4938ccd1e08e76/notifications/5c93d983f3fe6358b41ccd7a`, {
+    const ad = await Admin.find();
+        const ad1 = ad[0];
+        const adid = ad1.id;
+        const m = await Member.find();
+        const m1 = m[0];
+        const mid = m1.id;
+    const response = await fetch(`${this.base_url}/${adid}/notifications/${mid}`, {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(["msg"])
       expect(response.status).toEqual(200)
     })
@@ -128,10 +141,15 @@ class ATest extends AbstractTests {
 
 //3.5 --As an admin I want to notify accepted candidates that he was accepted for a task/project
   AdminNotifyAcceptedCandidatemissingattribute() {
-    const requestBody = {}
-  
-  test(`post ${this.base_url}/${this.sharedState.id}/notifications/:id/`, async () => {
-    const response = await fetch(`${this.base_url}/5c7a603a0a4938ccd1e08e76/notifications/5c93d983f3fe6358b41ccd7a`, {
+    test(`post ${this.base_url}/${this.sharedState.id}/notifications/:id/`, async () => {
+      const requestBody = {}
+      const ad = await Admin.find();
+      const ad1 = ad[0];
+      const adid = ad1.id;
+      const m = await Member.find();
+      const m1 = m[0];
+      const mid = m1.id;
+    const response = await fetch(`${this.base_url}/${adid}/notifications/${mid}`, {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
@@ -155,7 +173,6 @@ class ATest extends AbstractTests {
         headers: { 'Content-Type': 'application/json' }
       })
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(["error"])
       expect(response.status).toEqual(404)
     })
@@ -174,7 +191,6 @@ class ATest extends AbstractTests {
         headers: { 'Content-Type': 'application/json' }
       })
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(["error"])
       expect(response.status).toEqual(404)
     })
@@ -193,7 +209,6 @@ class ATest extends AbstractTests {
         headers: { 'Content-Type': 'application/json' }
       })
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(["error"])
       expect(response.status).toEqual(404)
     })
@@ -212,7 +227,6 @@ class ATest extends AbstractTests {
         headers: { 'Content-Type': 'application/json' }
       })
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(["error"])
       expect(response.status).toEqual(404)
     })

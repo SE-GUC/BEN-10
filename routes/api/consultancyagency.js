@@ -118,7 +118,7 @@ router.post("/:id/eventrequests/", async (req, res) => {
           req.body.eventLocation,
           req.body.eventDate
         );
-        res.status(200).send(j);
+        res.send(j);
       } else {
         return res.status(400).send({ error: "body is missing attrubites" });
       }

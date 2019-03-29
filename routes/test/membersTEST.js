@@ -1,6 +1,7 @@
 const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
-const Admin = require('../../models/member')
+const Member = require('../../models/member')
+const Events = require('../../models/Event')
 const ObjectId = require('mongoose');
 
 class MTest extends AbstractTests {
@@ -21,11 +22,11 @@ class MTest extends AbstractTests {
           // this.putRequest()
           // this.deleteRequest()
           // add all methods
-          // this.postevent()
-          // this.posteventbywrongMemberID()
-          // this.posteventbynotavalidatedMemberID()
-          // this.posteventbywrongEventID()
-          // this.posteventbynotavalidatedEventID()
+          this.postevent()
+          this.posteventbywrongMemberID()
+          this.posteventbynotavalidatedMemberID()
+          this.posteventbywrongEventID()
+          this.posteventbynotavalidatedEventID()
         })
         resolve()
       })
@@ -43,7 +44,13 @@ class MTest extends AbstractTests {
   postevent() {
     const requestBody = {}
     test(`put ${this.base_url}/${this.sharedState.id}/events/:id2/`, async () => {
-      const response = await fetch(`${this.base_url}/5c93d983f3fe6358b41ccd7a/events/5c9ce0e20ddd11042a301e26/`, {
+      const m = await Member.find();
+      const m1 = m[0];
+      const mid = m1.id;
+      const ed = await Event.find();
+      const ed1 = ed[0];
+      const edid = ed1.id;
+      const response = await fetch(`${this.base_url}/${mid}/events/${edid}/`, {
         method: 'PUT',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
