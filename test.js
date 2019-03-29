@@ -34,7 +34,7 @@ const mTests = new MTest(3000, '/member')
 // Calling tests
 describe('Projects Tests', () => {
   Promise.all([
-    mTests.run(),
+    caTests.run(),
   ]).then(result => {})
 })
 

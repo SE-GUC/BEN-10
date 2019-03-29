@@ -25,6 +25,7 @@ class PrTEST extends AbstractTests {
         describe('Making sure Project routes work', () => {
           this.postRequest()
           this.postRequestmissingattribute()
+          this.postRequestwrongattribute()
           this.getRequest()
           this.getRequestbyID()
           this.getRequestbywrongkID()
@@ -87,6 +88,28 @@ class PrTEST extends AbstractTests {
 
   postRequestmissingattribute() {
     const requestBody = {
+      "company": "no company",
+      "category": "no category",
+      "want_consultancy": false,
+      "posted_date":"1/1/2019",
+      "life_cycle": "posted",
+      "required_skills_set": "[]"
+    }
+    test(`post ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(400)
+    });
+  }
+
+  postRequestwrongattribute() {
+    const requestBody = {
+      "description": 20,
       "company": "no company",
       "category": "no category",
       "want_consultancy": false,

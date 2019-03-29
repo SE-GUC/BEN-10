@@ -21,8 +21,9 @@ class CATest extends AbstractTests {
           // this.putRequest()
           // this.deleteRequest()
           // add all methods
-          // this.CARequestEvent()
-          // this.CARequestEventmissingattribute()
+          this.CARequestEvent()
+          this.CARequestEventmissingattribute()
+          this.CARequestEventwrongattribute()
 
         })
         resolve()
@@ -66,7 +67,7 @@ class CATest extends AbstractTests {
     "eventLocation": "no event location"
   }
   
-  test(`post ${this.base_url}/5c79260b4328ab820437835c/eventrequests/`, async () => {
+  test(`post ${this.base_url}/${this.sharedState.id}/eventrequests/`, async () => {
     const response = await fetch(`${this.base_url}/5c79260b4328ab820437835c/eventrequests/`, {
         method: 'POST',
         body: JSON.stringify(requestBody),
@@ -86,6 +87,27 @@ class CATest extends AbstractTests {
     "description": "no description",
     "eventType": "no type",
     "eventLocation": "no event location"
+    }
+    test(`post ${this.base_url}/${this.sharedState.id}/eventrequests/`, async () => {
+      const response = await fetch(`${this.base_url}/5c79260b4328ab820437835c/eventrequests/`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(400)
+    });
+  }
+
+//2.4 --As a consultancy agency I want to request to organize an event.
+  CARequestEventwrongattribute() {
+    const requestBody = {
+      "eventDate":"5/1/2019",
+      "requestedBy": "no requested by",
+      "description": 4,
+      "eventType": "no type",
+      "eventLocation": "no event location"
     }
     test(`post ${this.base_url}/${this.sharedState.id}/eventrequests/`, async () => {
       const response = await fetch(`${this.base_url}/5c79260b4328ab820437835c/eventrequests/`, {
