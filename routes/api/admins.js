@@ -225,37 +225,37 @@ router.put("/:id/postProject/:pid", async (req, res) => {
   }
 });
 
-async function postProject(id) {
-  const body = { life_cycle: "Posted" };
-  var error = true;
-  var j;
+// async function postProject(id) {
+//   const body = { life_cycle: "Posted" };
+//   var error = true;
+//   var j;
 
-  await fetch(`${server}/api/projects/${id}`, {
-    method: "put",
-    body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" }
-  })
-    // .then(checkStatus)
-    .then(res => {
-      if (res.status === 200) {
-        error = false;
-      }
+//   await fetch(`${server}/api/projects/${id}`, {
+//     method: "put",
+//     body: JSON.stringify(body),
+//     headers: { "Content-Type": "application/json" }
+//   })
+//     // .then(checkStatus)
+//     .then(res => {
+//       if (res.status === 200) {
+//         error = false;
+//       }
 
-      return res.json();
-    })
-    .then(json => {
-      if (!error) {
-        json = { msg: "Project is posted successfully" };
-      }
-      j = json;
-    })
-    .catch(err => {
-      console.log("Error", err);
-      j = { msg: "Error" };
-    });
+//       return res.json();
+//     })
+//     .then(json => {
+//       if (!error) {
+//         json = { msg: "Project is posted successfully" };
+//       }
+//       j = json;
+//     })
+//     .catch(err => {
+//       console.log("Error", err);
+//       j = { msg: "Error" };
+//     });
 
-  return j;
-}
+//   return j;
+// }
 
 router.post("/:id/addEvent/", async (req, res) => {
   try {
@@ -270,36 +270,36 @@ router.post("/:id/addEvent/", async (req, res) => {
     return res.status(400).send("Error");
   }
 });
-async function addEvent(body) {
-  var error = true;
-  var result;
+// async function addEvent(body) {
+//   var error = true;
+//   var result;
 
-  await fetch(`${server}/api/events/`, {
-    method: "post",
-    body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" }
-  })
-    // .then(checkStatus)
-    .then(res => {
-      if (res.status === 200) {
-        error = false;
-      }
-      console.log(res.status);
-      if (!error) {
-        result = res;
-      }
-      return res.json();
-    })
-    .then(json => {
-      if (!error) {
-        json = { msg: "Event is posted successfully" };
-      }
-      result = json;
-      console.log(json);
-    })
-    .catch(err => console.log("Error", err));
-  return result;
-}
+//   await fetch(`${server}/api/events/`, {
+//     method: "post",
+//     body: JSON.stringify(body),
+//     headers: { "Content-Type": "application/json" }
+//   })
+//     // .then(checkStatus)
+//     .then(res => {
+//       if (res.status === 200) {
+//         error = false;
+//       }
+//       console.log(res.status);
+//       if (!error) {
+//         result = res;
+//       }
+//       return res.json();
+//     })
+//     .then(json => {
+//       if (!error) {
+//         json = { msg: "Event is posted successfully" };
+//       }
+//       result = json;
+//       console.log(json);
+//     })
+//     .catch(err => console.log("Error", err));
+//   return result;
+// }
 
 //check if there exists an error in response
 //  function checkStatus(res){

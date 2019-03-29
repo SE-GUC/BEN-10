@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
-const express = require("express");
-const app = express();
 const db = require("./config/keys").mongoURI;
-const port = process.env.PORT || 3000;
+
 
 // Import testfiles
 
@@ -11,24 +9,14 @@ const AdminTest = require("./routes/test/adminsTEST");
 const CATest = require("./routes/test/consultancyagencysTEST");
 const PaTest = require("./routes/test/partnersTEST");
 
-// DB Config
-// const db = require("./config/keys").mongoURI;
-// Connect to mongo
-mongoose
+
+beforeAll(async()=>{
+  mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log("Connected to MongoDB"))
   .catch(err => console.log(err));
-// beforeAll(async()=>{
-// await test.listen(port)
-// .then(() => console.log('server 3000'))
-// })
+})
 
-// beforeEach(async () => {
-//   await mongoose
-//   .connect(db, { useNewUrlParser: true })
-//   .then(() => console.log("Connected to MongoDB"))  
-//   .catch(err => console.log(err));
-// })
 
 
 // Calling the test files
@@ -55,5 +43,5 @@ describe("Partner Tests", () => {
 });
 
 afterAll(async () => {
-  await mongoose.disconnect();
+  mongoose.disconnect();
 });
