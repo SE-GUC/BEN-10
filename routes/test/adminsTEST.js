@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
-const Admin = require('../../models/admins') //require your model
+const Admin = require('../../models/Admin') //require your model
 const ObjectId = require('mongoose');
 
 class ATest extends AbstractTests {
@@ -16,12 +16,13 @@ class ATest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
-          this.postRequest()
-          this.getRequest()
-          this.putRequest()
-          this.deleteRequest()
+          // this.postRequest()
+          // this.getRequest()
+          // this.putRequest()
+          // this.deleteRequest()
           //As an admin i want to view all members
           this.viewMembers()
+         // this.viewMembersFail()
           // add all methods
 
         })
@@ -58,8 +59,12 @@ class ATest extends AbstractTests {
   deleteRequest  () {}
 
   viewMembers(){
+    // const ad = await Admin.find();
+    // const ad1 = ad[0];
+    // const adid = ad1.id;
+
     test(`get ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/5c784be40bc82a5f186ac770/ShowAllMembers`, {
+      const response = await fetch(`${this.base_url}/5c7a603a0a4938ccd1e08e76/ShowAllMembers`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
@@ -71,5 +76,20 @@ class ATest extends AbstractTests {
       expect(response.status).toEqual(200)
     })
   }
+  viewMembersFail(){
+    
+    test(`get ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c784be40bc82vdsa186ac770ds/ShowAllMembers`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+    })
+  }
 }
-module.exports = Atest
+module.exports = ATest
