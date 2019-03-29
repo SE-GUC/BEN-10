@@ -94,6 +94,7 @@ router.get('/:id/task_orientation',async(req,res)=>{
   try{
     const member_id=req.params.id;
     if(member_id.match(/^[0-9a-fA-F]{24}$/)){
+      const Member = await member.findById(member_id);
       if(Member){
       var error = true;
     await fetch(`${server}/api/orientationinvitations`, {
