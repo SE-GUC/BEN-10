@@ -24,8 +24,8 @@ class MTest extends AbstractTests {
          // this.putRequest()
          // this.deleteRequest()
          // this.getProjects()
-          //this.getEvents()
-          this.getMyProjects()
+          this.getEvents()
+         // this.getMyProjects()
           // add all methods
 
         })
