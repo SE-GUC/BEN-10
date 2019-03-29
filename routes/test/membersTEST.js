@@ -25,10 +25,10 @@ class MTest extends AbstractTests {
          // this.deleteRequest()
         //  this.getProjects()
          // this.getProjectsFail()
-         // this.getEvents()
+          this.getEvents()
         // this.getEventsFail()
          // this.getMyProjects()
-         this.getMyProjectsFail()
+         //this.getMyProjectsFail()
           // add all methods
 
         })
@@ -109,6 +109,7 @@ class MTest extends AbstractTests {
       })
       console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
+      console.log(jsonResponse)
 
       expect(Object.keys(jsonResponse)).toEqual(['data'])
       expect(response.status).toEqual(200)

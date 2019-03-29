@@ -39,16 +39,16 @@ const memberTests = new memberTest(3000, '/member')
 //     oiTests.run(),
 //   ]).then(result => {})
 // })
-describe('admin Tests', () => {
-  Promise.all([
-    adminTests.run(),
-  ]).then(result => {})
-})
-// describe('member Tests', () => {
+// describe('admin Tests', () => {
 //   Promise.all([
-//     memberTests.run(),
-//    ]).then(result => {})
-//  })
+//     adminTests.run(),
+//   ]).then(result => {})
+// })
+describe('member Tests', () => {
+  Promise.all([
+    memberTests.run(),
+   ]).then(result => {})
+ })
 
 afterAll(async () => {
   await mongoose.disconnect();
