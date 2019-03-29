@@ -1,3 +1,4 @@
+const server = require("../../config/config");
 class AbstractTests {
   constructor (PORT, ROUTE) {
     if (this.constructor === AbstractTests) {
@@ -26,9 +27,9 @@ class AbstractTests {
       // Error Type 4. Child has not implemented this abstract method.
       throw new TypeError('Please implement AbstractTests method deleteRequest .')
     }
-
-    this.base_url = `http://localhost:${PORT}/api${ROUTE}`
-    this.projects_url = `http://localhost:${PORT}/api/projects`
+    
+    this.base_url = `${server}/api${ROUTE}`
+    this.projects_url = `${server}/api/projects`
     this.sharedState = {}
     this.run = this.run .bind(this)
     this.postRequest = this.postRequest.bind(this)

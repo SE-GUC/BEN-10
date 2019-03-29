@@ -146,7 +146,11 @@ router.get("/:id/myProjects/:pid/applyingMembers", async (req, res) => {
       })
       .catch(err => console.log("Error", err));
   }
-  res.json({ data: result });
+  if (result.length === 0) {
+    res.status(404).send({error: "No members applied for this project"})
+  } else {
+    res.json({ data: result });
+  }
 });
 
 async function getApplyingMembers(pid) {
@@ -170,7 +174,7 @@ router.put(
   "/:id/myProjects/:pid/applyingMembers/:mid/assign",
   async (req, res) => {
     const members = await getApplyingMembers(req.params.pid);
-    console.log(members)
+    console.log(members);
     if (req.params.mid != null) {
       candidatID = req.params.mid;
     } else {
@@ -478,7 +482,7 @@ router.post("/:cid/rating/:eid/", async (req, res) => {
     const ca = await ConsultancyAgency.findById(req.params.cid);
     const event = await Event.findById(req.params.eid);
     if (ca && event) {
-        if (event.requestorId == req.params.cid) {
+      if (event.requestorId == req.params.cid) {
         var i;
         var success = true;
         var today = new Date();
@@ -488,29 +492,26 @@ router.post("/:cid/rating/:eid/", async (req, res) => {
           (today.getMonth() + 1) +
           "-" +
           today.getDate();
-        const attendees = event.bookedMembers
+        const attendees = event.bookedMembers;
         var arr = new Array(attendees.length);
         for (i = 0; i < attendees.length; i++) {
           const j = await carequestrating(event.formLink, attendees[i], date);
           arr[i] = j;
         }
-        for (i = 0; i < attendees.length; i++){
-          if (arr[i].msg != "Form is sent successfully")
-            success = false;
+        for (i = 0; i < attendees.length; i++) {
+          if (arr[i].msg != "Form is sent successfully") success = false;
         }
-        if (success)
-          res.json({ msg: "Form is sent successfully" })
-        else
-          res.json({ msg: "Error occured" })
+        if (success) res.json({ msg: "Form is sent successfully" });
+        else res.json({ msg: "Error occured" });
       } else {
-        return res.status(400).send({ error: 'You can not access this event' });
+        return res.status(400).send({ error: "You can not access this event" });
       }
     } else return res.status(404).send({ error: "Error" });
   } else return res.status(404).send({ error: "Error" });
 });
 
 // 11 As a CA I want to give the attendees a form to rate the event and give a feedback
-async function carequestrating(formLink,id,date) {
+async function carequestrating(formLink, id, date) {
   var error = true;
   const body = {
     description: `Please rate thie event through this form ${formLink}`,

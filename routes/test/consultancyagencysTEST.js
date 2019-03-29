@@ -27,6 +27,8 @@ class CATest extends AbstractTests {
           this.caRequestRating();
           this.assignCandidateFail();
           this.caRequestRatingFail();
+          this.applyingMembers();
+          this.applyingMembersFail()
           // add all methods
         });
         resolve();
@@ -118,6 +120,64 @@ class CATest extends AbstractTests {
       expect(response.status).toEqual(200);
     });
   }
+
+  applyingMembers() {
+    
+    test(`applyingMembers ${
+      this.base_url
+    }/:id/myProjects/:pid/applyingMembers`, async () => {
+      
+      var projs = await Projects.find()
+      projs = projs.filter(p => p.consultancyID!=null)
+      const project = projs[0]
+      
+      const response = await fetch(
+        `${
+          this.base_url
+        }/${project.consultancyID}/myProjects/${project.id}/applyingMembers`,
+        {
+          method: "get",
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+      console.log("response stastus: " + response.status);
+      const jsonResponse = await response.json();
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(["data"]);
+      expect(response.status).toEqual(200);
+    });
+  }
+
+  applyingMembersFail() {
+    
+    test(`applyingMembersFail ${
+      this.base_url
+    }/:id/myProjects/:pid/applyingMembers`, async () => {
+      
+      var projs = await Projects.find()
+      projs = projs.filter(p => p.consultancyID==null)
+      const project = projs[0]
+      
+      const response = await fetch(
+        `${
+          this.base_url
+        }/${project.consultancyID}/myProjects/5c9446ec609f7c5080979fd/applyingMembers`,
+        {
+          method: "get",
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+      console.log("response stastus: " + response.status);
+      const jsonResponse = await response.json();
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(["error"]);
+      expect(response.status).toEqual(404);
+    });
+  }
+
+  
 
   assignCandidateFail() {
     const requestBody = {
