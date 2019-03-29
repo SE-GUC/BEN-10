@@ -22,8 +22,8 @@ class adminTest extends AbstractTests {
           //this.getRequest()
           //this.putRequest()
           //this.deleteRequest()
-          this.postEvent()
-         // this.getAllEventRequests()
+         // this.postEvent()
+         this.getAllEventRequests()
           // add all methods
 
         })
@@ -127,7 +127,10 @@ class adminTest extends AbstractTests {
   //as an admin i want to view all eventrequests
   getAllEventRequests(){
     test(`get ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/5c784be40bc82a5f186ac770/eventRequests`, {
+      const ad=await admin.find();
+      const ad1=ad[0];
+      const adid=ad1.id;
+      const response = await fetch(`${this.base_url}/${adid}/eventRequests`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
