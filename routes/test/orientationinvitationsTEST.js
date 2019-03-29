@@ -27,7 +27,7 @@ class OITest extends AbstractTests {
          // this.postRequestFail()
           //this.getRequest()
          // this.putRequest()
-         //this.putRequestFail  ()
+        // this.putRequestFail  ()
           //this.deleteRequest()
           this.deleteRequestFail  ()
         // this.getRequestByid()
@@ -277,7 +277,7 @@ class OITest extends AbstractTests {
       const jsonResponse = await response.json()
       console.log(jsonResponse)
 
-      expect(Object.keys(jsonResponse)).toEqual(["error"])
+      expect(Object.keys(jsonResponse)).toEqual("error")
       expect(response.status).toEqual(404)
   }
     )
