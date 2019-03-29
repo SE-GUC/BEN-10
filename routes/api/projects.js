@@ -28,7 +28,6 @@ router.get("/:id", async (req, res) => {
 // Create a project
 router.post("/", async (req, res) => {
   try {
-    console.log(req.body.description);
     const isValidated = validator.createValidation(req.body);
     if (isValidated.error) {
       return res
@@ -47,7 +46,6 @@ router.put("/:id", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id)) {
       const isValidated = validator.updateValidation(req.body);
-      console.log("1"+isValidated.data);
       if (isValidated.error){
         return res
           .status(400)
