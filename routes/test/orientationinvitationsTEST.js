@@ -23,13 +23,13 @@ class OITest extends AbstractTests {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
           //this.postRequest()
-         // this.postRequestFail()
+          this.postRequestFail()
          // this.postRequestFail()
           //this.getRequest()
          // this.putRequest()
         // this.putRequestFail  ()
           //this.deleteRequest()
-          this.deleteRequestFail  ()
+          //this.deleteRequestFail  ()
         // this.getRequestByid()
        // this.getRequestByidFail ()
 
@@ -227,24 +227,24 @@ class OITest extends AbstractTests {
       expect(Object.keys(jsonResponse)).toEqual(["error"])
 
       expect(response.status).toEqual(400)
-      const eRequest = await OrientationInvitation.findOne(requestBody).exec()
-      expect(eRequest.description).toEqual(requestBody.description)
+     // const eRequest = await OrientationInvitation.findOne(requestBody).exec()
+      //expect(eRequest.description).toEqual(requestBody.description)
     //   expect(eRequest.eventDate).toBeCloseTo(eventDate)
-      expect(eRequest.sentto).toEqual(requestBody.sentto)
-      expect(eRequest.description).toEqual(requestBody.description)
-      expect(eRequest.sentBy).toEqual(requestBody.sentBy)
+      //expect(eRequest.sentto).toEqual(requestBody.sentto)
+      //expect(eRequest.description).toEqual(requestBody.description)
+      //expect(eRequest.sentBy).toEqual(requestBody.sentBy)
       //expect(eRequest.sentAt).toEqual(requestBody.sentAt)
      // expect(eRequest.senttoID).toEqual(requestBody.senttoID)
     //  expect(eRequest.sentByID).toEqual(requestBody.sentByID)
-      expect(new String(eRequest.senttoID)).toEqual(requestBody.senttoID)
-      expect(new String(eRequest.sentByID)).toEqual(requestBody.sentByID)
-      this.sharedState.sentto =  eRequest.sentto
-      this.sharedState.description =  eRequest.description
-      this.sharedState.sentBy =  eRequest.sentBy
-      this.sharedState.sentAt =  eRequest.sentAt
-      this.sharedState.senttoID =  eRequest.senttoID
-      this.sharedState.sentByID =  eRequest.sentByID
-     this.sharedState.id=eRequest.id      
+      //expect(new String(eRequest.senttoID)).toEqual(requestBody.senttoID)
+      //expect(new String(eRequest.sentByID)).toEqual(requestBody.sentByID)
+      //this.sharedState.sentto =  eRequest.sentto
+      //this.sharedState.description =  eRequest.description
+      //this.sharedState.sentBy =  eRequest.sentBy
+      //this.sharedState.sentAt =  eRequest.sentAt
+      //this.sharedState.senttoID =  eRequest.senttoID
+      //this.sharedState.sentByID =  eRequest.sentByID
+     //this.sharedState.id=eRequest.id      
   }
     )
   }
@@ -277,7 +277,7 @@ class OITest extends AbstractTests {
       const jsonResponse = await response.json()
       console.log(jsonResponse)
 
-      expect(Object.keys(jsonResponse)).toEqual("error")
+      expect(Object.keys(jsonResponse)).toEqual(["error"])
       expect(response.status).toEqual(404)
   }
     )

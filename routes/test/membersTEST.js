@@ -23,9 +23,12 @@ class MTest extends AbstractTests {
          // this.getRequest()
          // this.putRequest()
          // this.deleteRequest()
-          this.getProjects()
+        //  this.getProjects()
+         // this.getProjectsFail()
          // this.getEvents()
+        // this.getEventsFail()
          // this.getMyProjects()
+         this.getMyProjectsFail()
           // add all methods
 
         })
@@ -79,6 +82,21 @@ class MTest extends AbstractTests {
   }
     )
   }
+  getProjectsFail(){
+    test(`get ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c9e5750086c7f40c08183/getProject`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(["error"])
+      expect(response.status).toEqual(404)
+  }
+    )
+  }
   //as a candidate i want to view an events so that i can book a place in it
   getEvents(){
     test(`get ${this.base_url}`, async () => {
@@ -94,6 +112,20 @@ class MTest extends AbstractTests {
 
       expect(Object.keys(jsonResponse)).toEqual(['data'])
       expect(response.status).toEqual(200)
+  }
+    )
+  }
+  getEventsFail(){
+    test(`get ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c9e5750086c7f40c08183/getEvent`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+
+      expect(Object.keys(jsonResponse)).toEqual(["error"])
+      expect(response.status).toEqual(404)
   }
     )
   }
@@ -113,6 +145,22 @@ class MTest extends AbstractTests {
 
       expect(Object.keys(jsonResponse)).toEqual(['data'])
       expect(response.status).toEqual(200)
+  }
+    )
+  }
+  getMyProjectsFail(){
+    test(`get ${this.base_url}`, async () => {
+      
+      const response = await fetch(`${this.base_url}/5c9e5750086c7f40c08183/ShowMyProjects`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(["error"])
+      expect(response.status).toEqual(404)
   }
     )
   }
