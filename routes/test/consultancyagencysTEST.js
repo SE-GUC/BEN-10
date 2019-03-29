@@ -21,15 +21,17 @@ class CATest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
-        this.postRequest()
-        //this.postRequestFailed()
+        //this.postRequest()
+       // this.postRequestFail()
         //this.getRequest()
-        // this.putRequest()
-         //this.putRequestFailed()
-         // this.deleteRequest()
-        // this.getById();
-         //22 AS a consultancy Agency i want to view my events
-         this.viewMyEvents()
+        //this.putRequest()
+        //this.putRequestFail()
+        //this.deleteRequest()
+        // this.deleteRequestFail()
+         //this.getById()
+        //this.getByIdFail()
+           //22 AS a consultancy Agency i want to view my events
+            this.viewMyEvents()
          // add all methods
 
         })
@@ -57,7 +59,7 @@ class CATest extends AbstractTests {
       })
       console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-
+      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
       expect(response.status).toEqual(200)
       
@@ -76,7 +78,7 @@ class CATest extends AbstractTests {
       this.sharedState.id =  eRequest.id
     })
   }
-  postRequestFailed () {
+  postRequestFail () {
     const requestBody = {
       name: "Travel_Agency",
       telephoneNumber: "0104142156",
@@ -125,11 +127,10 @@ class CATest extends AbstractTests {
   }
   putRequest () {
     const CAbody = {
-      telephoneNumber: "0101000",
+      telephoneNumber: "01010000",
       yearsOfExperience:5 
     }
  
-
     test(`put ${this.base_url}`, async () => {
       const response = await fetch(`${this.base_url}/${this.sharedState.id}`, {
         method: 'PUT',
@@ -141,6 +142,31 @@ class CATest extends AbstractTests {
       console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['msg'])
       expect(response.status).toEqual(200)
+      const eRequest = await ConsultancyAgencys.findOne(CAbody).exec()
+      expect(eRequest.telephoneNumber).toEqual(CAbody.telephoneNumber)
+      expect(eRequest.yearsOfExperience).toEqual(CAbody.yearsOfExperience)
+      this.sharedState.telephoneNumber =  eRequest.telephoneNumber
+      this.sharedState.yearsOfExperience =  eRequest.yearsOfExperience
+      
+    })
+  }
+  putRequestFail () {
+    const CAbody = {
+      telephoneNumber: "01010121234000",
+      yearsOfExperience:5 
+    }
+ 
+    test(`put ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/${this.sharedState.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(CAbody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(400)
       const eRequest = await ConsultancyAgencys.findOne(CAbody).exec()
       expect(eRequest.telephoneNumber).toEqual(CAbody.telephoneNumber)
       expect(eRequest.yearsOfExperience).toEqual(CAbody.yearsOfExperience)
@@ -164,6 +190,23 @@ class CATest extends AbstractTests {
       
     })
   }
+  deleteRequestFail  () {
+    test(`delete ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c79260b4328ab820437d835c23`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+      
+      
+    })
+  }
+
+  
   getById(){
     
     test(`get ${this.base_url}`, async () => {
@@ -182,9 +225,30 @@ class CATest extends AbstractTests {
       
     })
   }
-  viewMyEvents(){
+  getByIdFail(){
+    
     test(`get ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/5c7a67970a4938ccd1e08e7c/ShowMyEvents`, {
+      const response = await fetch(`${this.base_url}//5c79260b4328ab820437d835c23`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+
+     
+      
+    })
+  }
+  viewMyEvents(){
+    test(`CA view events ${this.base_url}`, async () => {
+      const ca =await ConsultancyAgencys.find();
+      const ca1 =ca[0];
+      const caid=ca1.id
+      const response = await fetch(`${this.base_url}/${caid}/ShowMyEvents`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
