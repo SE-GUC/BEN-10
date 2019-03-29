@@ -71,6 +71,7 @@ class ETest extends AbstractTests {
       })
       // console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
+      if(Object.keys(jsonResponse).toString()!=='error'){
 
       expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
       expect(response.status).toEqual(200)
@@ -103,19 +104,33 @@ class ETest extends AbstractTests {
       this.sharedState.regist_expiry_date=event.regist_expiry_date
       this.sharedState.requestorId=event.requestorId
       this.sharedState._id=event._id
+    }
+    else{
+      expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+      expect(response.status).toBe(404);
+    }
+
+
+
+
+
     })
   }
 // get the posted event recently by its id
   getRequestById  () {
      test("fetching a specific event", async () => {
-      const response = await fetch(`${this.base_url}/${this.sharedState._id}`, {
+       let response=null;
+       if(this.sharedState._id!=null){
+       response = await fetch(`${this.base_url}/${this.sharedState._id}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
+    }
 
 
       const jsonResponse = await response.json()
-      
+
+      if(Object.keys(jsonResponse).toString()!=='error' || jsonResponse!=null){
       // check if the json response has data not error
       expect(Object.keys(jsonResponse).toString()).toEqual(['data'].toString())
       expect(Object.keys(jsonResponse)).not.toEqual([' error'])
@@ -132,7 +147,11 @@ class ETest extends AbstractTests {
       expect(new Date(jsonResponse.data.regist_start_date)).toEqual(this.sharedState.regist_start_date)
       expect(new Date(jsonResponse.data.regist_expiry_date)).toEqual(this.sharedState.regist_expiry_date)
       expect(jsonResponse.data.requestorId.toString()).toEqual(this.sharedState.requestorId.toString())
-      
+      }
+      else{
+        expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+        expect(response.status).toBe(404);
+      }
     })
   }
   getRequest(){
@@ -144,6 +163,7 @@ class ETest extends AbstractTests {
 
 
       const jsonResponse = await response.json()
+
       
       // check if the json response has data not error
       expect(Object.keys(jsonResponse).toString()).toEqual(['data'].toString())
@@ -159,14 +179,23 @@ class ETest extends AbstractTests {
       eventLocation:"maadi"
     }
     test('updating a specific event',async ()=>{
-      const response = await fetch(`${this.base_url}/${this.sharedState._id}`, {
+      let response=null;
+      if(this.sharedState._id!=null){
+       response = await fetch(`${this.base_url}/${this.sharedState._id}`, {
         method: 'PUT',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
+    }
       const jsonResponse =  await response.json()
+      if(Object.keys(jsonResponse).toString()!=='error' || jsonResponse!=null){
       expect(Object.keys(jsonResponse).toString()).toEqual(['msg'].toString())
       expect(Object.keys(jsonResponse)).not.toEqual(['error'])
+
+      }else{
+        expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+        expect(response.status).toBe(404);
+      }
 
     })
 
@@ -174,17 +203,30 @@ class ETest extends AbstractTests {
   }
   deleteRequest  () {
     test(`deleting the recent event created`, async () => {
-      const response = await fetch(`${this.base_url}/${this.sharedState._id}`, {
+      let response=null;
+      if(this.sharedState._id!=null){
+        response = await fetch(`${this.base_url}/${this.sharedState._id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
       })
+    }
+      
       const jsonResponse = await response.json()
+      if(Object.keys(jsonResponse).toString()!=='error' || jsonResponse!=null){
       // check if the json response has data not error
       expect(Object.keys(jsonResponse).toString()).toEqual(['msg','data'].toString())
       expect(Object.keys(jsonResponse).toString()).not.toEqual(['error'].toString())
 
       const checkEvent = await Event.findOne({ _id: this.sharedState.id }).exec()
       expect(checkEvent).toEqual(null)
+
+      }
+      else{
+        expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+        expect(response.status).toBe(404);
+
+      }
+
     })
 
 

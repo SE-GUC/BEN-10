@@ -25,7 +25,7 @@ beforeAll(async () => {
 
 // Calling the test files
 // const erTests = new ERTest(3000, '/eventrequests')
-// const eTests = new EventTest(3000,'/events')
+const eTests = new EventTest(3000,'/events')
 const memberTests=new MemberTest(3000,'/member')
 
 // Calling tests
@@ -36,11 +36,11 @@ const memberTests=new MemberTest(3000,'/member')
 // })
 
 
-// describe('Event Tests', () => {
-//   Promise.all([
-//     eTests.run(),
-//   ]).then(result => {})
-// })
+describe('Event Tests', () => {
+  Promise.all([
+    eTests.run(),
+  ]).then(result => {})
+})
 
 
 describe('member Tests', () => {

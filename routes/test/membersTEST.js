@@ -23,9 +23,9 @@ class MTest extends AbstractTests {
           // this.getRequest()
           // this.putRequest()
           // this.deleteRequest()
-          // this.getmyNotifications();
-          // this.appylyForproject();
-          // this.viewTaskInvitation();
+          this.getmyNotifications();
+          this.appylyForproject();
+          this.viewTaskInvitation();
           this.submitTask();
           
 
@@ -43,11 +43,11 @@ submitTask(){
     var member_id=null;
     const projects=await project.find();
     for(var i=0;projects.length>i;i++){
+      console.log(projects[i]["life_cycle"]);
       if(projects[i]["life_cycle"]==='In Progress'){
         project_id=projects[i]["_id"];
         member_id=projects[i]["memberID"];
         if(project_id!=null&&member_id!=null){
-         console.log(project_id);      
           break;
         }
       }
@@ -55,21 +55,20 @@ submitTask(){
     const requestBody={
 
     }
-    const response = await fetch(`${this.base_url}/${member_id}/Myprojects/${project_id}/submit/www.projectlink.com`, {
+    const response = await fetch(`${this.base_url}/${member_id}/Myprojects/${project_id}/submit/www.projectlzink.com`, {
       method: 'PUT',
       body: JSON.stringify(requestBody),
       headers: { 'Content-Type': 'application/json' }
     })
     const jsonResponse =  await response.json();
-    // if(Object.keys(jsonResponse).toString()!=='error'){
-    console.log(jsonResponse);
-    expect(Object.keys(jsonResponse).toString()).toEqual(['data'].toString())
-    expect(Object.keys(jsonResponse)).not.toEqual(['error'])
-  // }
-  // else{
-  //   expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
-  //   expect(response.status).toBe(404);
-  // }
+    if(Object.keys(jsonResponse).toString()!=='error'){
+     expect(Object.keys(jsonResponse).toString()).toEqual(['data'].toString())
+     expect(Object.keys(jsonResponse)).not.toEqual(['error'])
+  }
+  else{
+    expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+    expect(response.status).toBe(404);
+  }
 
 
   })
@@ -94,13 +93,19 @@ viewTaskInvitation(){
       headers: { 'Content-Type': 'application/json' }
     })
     const jsonResponse = await response.json();
-    // console.log(jsonResponse);
+
+    if(Object.keys(jsonResponse).toString()!=='error'){
     expect(Object.keys(jsonResponse).toString()).toEqual(['data'].toString())
     expect(Object.keys(jsonResponse)).not.toEqual([' error'])
     for(var i=0;jsonResponse.data.length>i;i++){
       expect(jsonResponse.data[i]["senttoID"].toString()).toEqual(notified_member.toString())
 
     }
+  }else{
+    expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+    expect(response.status).toBe(404);
+
+  }
   })
 }
 
@@ -159,10 +164,15 @@ appylyForproject(){
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      const jsonResponse = await response.json()
-      // console.log(jsonResponse);
+      const jsonResponse = await response.json();
+      if(Object.keys(jsonResponse).toString()!=='error'){
       expect(Object.keys(jsonResponse).toString()).toEqual(['msg','data'].toString())
       expect(response.status).toEqual(200)
+      }
+      else{
+        expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+        expect(response.status).toBe(404);
+      }
   })
 }
 
@@ -185,12 +195,20 @@ appylyForproject(){
         headers: { 'Content-Type': 'application/json' }
       })
       const jsonResponse = await response.json();
+      if(Object.keys(jsonResponse).toString()!=='error'){
       expect(Object.keys(jsonResponse).toString()).toEqual(['data'].toString())
       expect(Object.keys(jsonResponse)).not.toEqual([' error'])
       for(var i=0;jsonResponse.data.length>i;i++){
         expect(jsonResponse.data[i]["NotifiedPerson"].toString()).toEqual(notified_member.toString())
 
       }
+    }else{
+        expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+        expect(response.status).toBe(404);
+    }
+
+
+
     })
   }
 

@@ -73,6 +73,10 @@ const ProjectSchema = new Schema({
         required: false,
         default:[]
 
+    },
+    submitted_project_link:{
+        type:String,
+        required:false
     }
 })
 

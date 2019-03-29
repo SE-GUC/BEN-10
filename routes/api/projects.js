@@ -45,22 +45,17 @@ router.post("/", async (req, res) => {
 // Update a project
 router.put("/:id", async (req, res) => {
   try {
-    console.log("here")
     if (ObjectId.isValid(req.params.id)) {
       const isValidated = validator.updateValidation(req.body);
-      if (isValidated.error)
+      console.log("1"+isValidated.data);
+      if (isValidated.error){
         return res
           .status(400)
           .send({ error: isValidated.error.details[0].message });
-      const updatedProject = await Project.findByIdAndUpdate(
-        { _id: req.params.id },
-        req.body
-      );
-      if (!updatedProject)
-        return res.status(404).send({ error: "Project does not exist" });
+      }
+       await Project.findOneAndUpdate({ _id: req.params.id },req.body);
       res.json({ msg: "Project updated successfully" });
-      console.log(updatedProject);
-    } else {
+     }else {
       return res.status(404).send({ error: "not a project id" });
     }
   } catch {
