@@ -51,7 +51,7 @@ router.put("/:id", async (req, res) => {
         return res
           .status(400)
           .send({ error: isValidated.error.details[0].message });
-      const updatedProject = await Project.findByIdAndUpdate(
+      const updatedProject = await Project.findOneAndUpdate(
         { _id: req.params.id },
         req.body
       );
