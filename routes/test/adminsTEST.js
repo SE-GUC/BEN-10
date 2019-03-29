@@ -58,6 +58,7 @@ class adminTest extends AbstractTests {
   getRequest  () {}
   putRequest  () {}
   deleteRequest  () {}
+  //as an admin i want to create event
   postEvent  () {
     const requestBody = {
       requestedBy: "no requested by",
@@ -121,6 +122,7 @@ class adminTest extends AbstractTests {
       
     })
   } 
+  //as an admin i want to view all eventrequests
   getAllEventRequests(){
     test(`get ${this.base_url}`, async () => {
       const response = await fetch(`${this.base_url}/5c784be40bc82a5f186ac770/eventRequests`, {
