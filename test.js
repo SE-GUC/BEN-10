@@ -5,6 +5,9 @@ const mongoose = require('mongoose')
 
 const ERTest = require('./routes/test/eventrequestsTEST')
 const PTest = require('./routes/test/projectsTEST')
+const CATest = require('./routes/test/consultancyagencysTEST')
+const ATest = require('./routes/test/adminsTEST')
+const MTest = require('./routes/test/membersTEST')
 
 // Connect to mongo atlas
 const db = require('./config/keys').mongoURI
@@ -24,11 +27,14 @@ beforeAll(async () => {
 // Calling the test files
 const erTests = new ERTest(3000, '/eventrequests')
 const pTests = new PTest(3000, '/Projects')
+const caTests = new CATest(3000, '/ConsultancyAgency')
+const aTests = new ATest(3000, '/admins')
+const mTests = new MTest(3000, '/member')
 
 // Calling tests
 describe('Projects Tests', () => {
   Promise.all([
-    pTests.run(),
+    mTests.run(),
   ]).then(result => {})
 })
 

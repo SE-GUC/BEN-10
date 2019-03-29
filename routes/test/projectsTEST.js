@@ -22,7 +22,7 @@ class PrTEST extends AbstractTests {
     super.run()
     try {
       return new Promise((resolve, reject) => {
-        describe('Making sure A routes work', () => {
+        describe('Making sure Project routes work', () => {
           this.postRequest()
           this.postRequestmissingattribute()
           this.getRequest()

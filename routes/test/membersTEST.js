@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
-const Admin = require('../../models/admins') //require your model
+const Admin = require('../../models/member')
 const ObjectId = require('mongoose');
 
 class MTest extends AbstractTests {
@@ -16,10 +16,10 @@ class MTest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
-          this.postRequest()
-          this.getRequest()
-          this.putRequest()
-          this.deleteRequest()
+          // this.postRequest()
+          // this.getRequest()
+          // this.putRequest()
+          // this.deleteRequest()
           // add all methods
 
         })
@@ -55,5 +55,21 @@ class MTest extends AbstractTests {
   putRequest  () {}
   deleteRequest  () {}
 
+  postevent() {
+    const requestBody = {}
+    test(`put ${this.base_url}/:id1/events/:id2/`, async () => {
+      const response = await fetch(`${this.base_url}/${this.sharedState.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      expect(response.status).toEqual(200)
+      const pRequest = await Project.findOne(requestBody).exec()
+      expect(pRequest.description).toEqual(requestBody.description)
+
+      this.sharedState.description =  pRequest.description
+    })
+  }
 }
-module.exports = Mtest
+
+module.exports = MTest

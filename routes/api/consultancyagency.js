@@ -112,6 +112,7 @@ router.post("/:id/eventrequests/", async (req, res) => {
         req.body.eventDate != null
       ) {
         const j = await CARequestEvent(
+          req.params.id,
           req.body.requestedBy,
           req.body.description,
           req.body.eventType,
@@ -393,6 +394,7 @@ async function getFinished(caProjects) {
 
 //2.4 --As a consultancy agency I want to request to organize an event.
 async function CARequestEvent(
+  requestorId,
   requestedBy,
   description,
   eventType,
@@ -400,6 +402,7 @@ async function CARequestEvent(
   eventDate
 ) {
   const body = {
+    requestorId: requestorId,
     requestedBy: requestedBy,
     description: description,
     eventType: eventType,
