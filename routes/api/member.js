@@ -28,10 +28,132 @@ router.get("/:id", async (req, res) => {
       res.json({ data: mem });
     }
   } catch {
-    //console.log('Invalid Object id');
     return res.status(400).send({ error: "the provided id is not valid one " });
   }
 });
+// ------------------------ sprint 3 for doodie's review --------------------------------
+
+// as a candidate i want to submit the project to be finally reviewed
+// router.put('/:id1/Myprojects/:id2/submit/:link',async(req,res)=>{
+//   try{
+//     const project_id = req.params.id2;
+//    const member_id = req.params.id1;
+//    const link=req.params.link;
+//    console.log("--------------------1------------------")
+//    console.log(project_id);
+//    console.log(member_id);
+//    console.log(link);
+//   if (
+//     project_id.match(/^[0-9a-fA-F]{24}$/) &&
+//     member_id.match(/^[0-9a-fA-F]{24}$/)
+//   ){
+//     const project_appliedfor = await project.findById(project_id);
+//     const member_applying= await member.findById(member_id);
+//     if(project_appliedfor!=null && member_applying!=null){
+//       var life_cycle_project=project_appliedfor["life_cycle"];
+//       console.log("--------------------2-----------------")
+//       console.log(life_cycle_project);
+//       console.log(ObjectId(project_appliedfor["memberID"]).equals(ObjectId(member_id)));
+//       if(life_cycle_project==="In Progress"){
+//         if(!ObjectId(project_appliedfor["memberID"]).equals(ObjectId(member_id))){
+//           return res.status(404).send({ error: "this projects is not assigned to you" });
+//         }
+//       var error=true;
+//       const body={
+//         life_cycle:"Final Review",
+//         submitted_project_link:link
+//       }
+//       await fetch(`${server}/api/projects/${project_id}`, {
+//         method: "PUT",
+//         body: JSON.stringify(body),
+//         headers: { "Content-Type": "application/json" }
+//       })
+//         .then(res => {
+          
+//           if (res.status === 200) {
+//             error = false;
+//           }
+//           console.log("heeree3");
+//           return res.json();
+//         })
+//         .then(json => {
+//           return res.json({data:"project was submitted successfully"})
+//         })
+//         .catch(err => console.log("Error", err));
+//       }
+//       else{
+//         return res.status(404).send({ error: `there project is in phase"${life_cycle_project}` });
+//       }
+//     }
+//     else{
+//       if(project_appliedfor ==null)
+//        return res.status(404).send({ error: "there is no such project" });
+//        if(member_applying==null)
+//        return res.status(404).send({ error: "there is no such member with this id" });
+//     }
+
+//   }
+
+
+//   }
+//   catch(error){
+//     return res.status(404).send({ error: "Not a valid id format" });
+//   }
+
+
+// })
+
+// // as a member i want to receive a task orientation invitation
+// router.get('/:id/task_orientation',async(req,res)=>{
+//   try{
+//     const member_id=req.params.id;
+//     if(member_id.match(/^[0-9a-fA-F]{24}$/)){
+//       var error = true;
+//     await fetch(`${server}/api/orientationinvitations`, {
+//       method: "get",
+//       headers: { "Content-Type": "application/json" }
+//     })
+//       .then(res => {
+//         if (res.status === 200) {
+//           error = false;
+//         }
+//         return res.json();
+//       })
+//       .then(json => {
+//         const mytasks_orientation = json.data;
+//         const task = mytasks_orientation.filter(
+//           task1 => task1.senttoID === member_id
+//         );
+//         res.json({ data: task });
+//       })
+//       .catch(err => console.log("Error", err));
+
+
+//     }
+//     else{
+//       console.log("hello1")
+//       return res.status(404).send({ error: "Not a valid id format" });
+//     }
+
+//   }
+//   catch(error){
+//     console.log("haii bbe doll");
+//     return res.status(404).send({ error: "Not a valid id format" });
+//   }
+// })
+
+
+
+// ------------------------------ END OF REVIEW -----------------------------------------
+// ------------------------------ thanks for visiting ;) ---------------------------------
+
+
+
+
+
+
+
+
 
 // view my notifications
 

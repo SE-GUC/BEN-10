@@ -25,7 +25,7 @@ class MTest extends AbstractTests {
           // this.deleteRequest()
           // this.getmyNotifications();
           // this.appylyForproject();
-          this.viewTaskInvitation();
+          // this.viewTaskInvitation();
           this.submitTask();
           
 
@@ -38,6 +38,41 @@ class MTest extends AbstractTests {
   }
 // as a member i want to submit a project to be finally reviewed
 submitTask(){
+  test('submitting a task to be finally reviewed',async()=>{
+    var project_id=null;
+    var member_id=null;
+    const projects=await project.find();
+    for(var i=0;projects.length>i;i++){
+      if(projects[i]["life_cycle"]==='In Progress'){
+        project_id=projects[i]["_id"];
+        member_id=projects[i]["memberID"];
+        if(project_id!=null&&member_id!=null){
+         console.log(project_id);      
+          break;
+        }
+      }
+    }
+    const requestBody={
+
+    }
+    const response = await fetch(`${this.base_url}/${member_id}/Myprojects/${project_id}/submit/www.projectlink.com`, {
+      method: 'PUT',
+      body: JSON.stringify(requestBody),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const jsonResponse =  await response.json();
+    // if(Object.keys(jsonResponse).toString()!=='error'){
+    console.log(jsonResponse);
+    expect(Object.keys(jsonResponse).toString()).toEqual(['data'].toString())
+    expect(Object.keys(jsonResponse)).not.toEqual(['error'])
+  // }
+  // else{
+  //   expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+  //   expect(response.status).toBe(404);
+  // }
+
+
+  })
   
 
 }
@@ -46,12 +81,20 @@ submitTask(){
 viewTaskInvitation(){
   test('view task orientation invitations',async()=>{
     const task=await Task_invitation.find();
-    const notified_member=task[0]["senttoID"]
+    var notified_member=null;
+    for(var i=0;task.length>i;i++){
+      if(task[i]["senttoID"]!=null){
+        notified_member=task[i]["senttoID"];
+        break;
+      }
+
+    }    
     const response = await fetch(`${this.base_url}/${notified_member}/task_orientation`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
     const jsonResponse = await response.json();
+    // console.log(jsonResponse);
     expect(Object.keys(jsonResponse).toString()).toEqual(['data'].toString())
     expect(Object.keys(jsonResponse)).not.toEqual([' error'])
     for(var i=0;jsonResponse.data.length>i;i++){
@@ -130,7 +173,13 @@ appylyForproject(){
   getmyNotifications(){
     test('view notifications',async()=>{
       const notifications=await Notification.find();
-      const notified_member=notifications[0]["NotifiedPerson"]
+      var notified_member=null;
+      for(var i=0;notifications.length>i;i++){
+        if(notifications[i]["NotifiedPerson"]!=null){
+          notified_member=notifications[i]["NotifiedPerson"];
+          break;
+        }
+      } 
       const response = await fetch(`${this.base_url}/${notified_member}/notifications`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
