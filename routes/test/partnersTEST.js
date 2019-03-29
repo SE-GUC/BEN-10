@@ -37,13 +37,13 @@ class PARTests extends AbstractTests {
          //this.postProjectFail()
          // this.getMyProjects()
          // this.getMyProjectsFail()
-         // this.putApproveONFinalDraft()
+          //this.putApproveONFinalDraft()
           //this.putApproveONFinalDraftFail()
           //this.putApproveONFinalDraftFail()
-          //this.putDisapproveONFinalDraft()
-         //this.putDisapproveONFinalDraftFail()
-          //this.AssignCAtoProj()
-        // this.AssignCAtoProjFail()
+         // this.putDisapproveONFinalDraft()
+        // this.putDisapproveONFinalDraftFail()
+         // this.AssignCAtoProj()
+         //this.AssignCAtoProjFail()
         })
         resolve()
       })
@@ -360,8 +360,16 @@ class PARTests extends AbstractTests {
       const par1 = par[0];
       const parid = par1.id;
       var projs = await project.find()
-      projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==false && p.life_cycle == "Final Draft")
+      projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==false)
       const proj = projs[0];
+      await fetch(
+        `${this.projects_url}/${proj.id}/`,
+        {
+          method: "put",
+          body: JSON.stringify({life_cycle : "Final Draft"}),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
       const projid = proj.id;
       console.log(parid)
       console.log(projid)
@@ -407,8 +415,16 @@ class PARTests extends AbstractTests {
       const par1 = par[0];
       const parid = par1.id;
       var projs = await project.find()
-      projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==false && p.life_cycle =="Final Draft")
+      projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==false)
       const proj = projs[0]
+      await fetch(
+        `${this.projects_url}/${proj.id}/`,
+        {
+          method: "put",
+          body: JSON.stringify({life_cycle : "Final Draft"}),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
       const projid = proj.id;
       console.log(projid)
       console.log(parid)
@@ -455,7 +471,18 @@ class PARTests extends AbstractTests {
       const par1 = par[0];
       const parid = par1.id;
       var projs = await project.find()
-      projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==true && p.consultancyID == null )
+      projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==true)
+      var k=0
+      for(i;i<projs.length;i++){
+      await fetch(
+        `${this.projects_url}/${projs[i].id}/`,
+        {
+          method: "put",
+          body: JSON.stringify({consultancyID : null }),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+    }
       const cas = await consultancyagency.find()
       var ids =[]
       var i=0
@@ -489,10 +516,8 @@ class PARTests extends AbstractTests {
       console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(['msg'])
       expect(response.status).toEqual(200)
-
     })    
   }
-
   AssignCAtoProjFail() {//enter wrong id for consultancy agency 
     const requestBody = {
     }

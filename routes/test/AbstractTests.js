@@ -28,6 +28,7 @@ class AbstractTests {
     }
 
     this.base_url = `http://localhost:${PORT}/api${ROUTE}`
+    this.projects_url = "http://localhost:3000/api/projects"
     this.sharedState = {}
     this.run = this.run .bind(this)
     this.postRequest = this.postRequest.bind(this)
