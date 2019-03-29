@@ -17,12 +17,14 @@ class AdminTest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe("Making sure Admin routes work", () => {
-          // this.postRequest()
-          // this.getRequest()
-          // this.putRequest()
-          // this.deleteRequest()
+          this.postRequest()
+          this.getRequest()
+          this.putRequest()
+          this.deleteRequest()
           this.postAProject();
           this.sendFinalDraft();
+          this.sendFinalDraftFail();
+          this.postAProjectFail();
           // add all methods
         });
         resolve();
@@ -92,6 +94,64 @@ class AdminTest extends AbstractTests {
 
       expect(Object.keys(jsonResponse)).toEqual(["msg"]);
       expect(response.status).toEqual(200);
+    });
+  }
+
+  postAProjectFail() {
+    const requestBody = {};
+
+    test(`Admin Post A Project Fail${
+      this.base_url
+    }/:aid/postProject/:pid`, async () => {
+      const ad = await Admin.find();
+      const ad1 = ad[0];
+      const adid = ad1.id;
+      const pr = await Project.find();
+      const pr1 = pr[0];
+      const prid = pr1.id;
+      const response = await fetch(
+        `${this.base_url}/${adid}/postProject/5c79283c92334b03f4b624f`,
+        {
+          method: "put",
+          body: JSON.stringify(requestBody),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+      console.log("response stastus: " + response.status);
+      const jsonResponse = await response.json();
+
+      expect(Object.keys(jsonResponse)).toEqual(["error"]);
+      expect(response.status).toEqual(404);
+    });
+  }
+
+  sendFinalDraftFail() {
+    const requestBody = {
+    };
+
+    test(`Admin Send Final Draft Fail ${
+      this.base_url
+    }/:aid/myProjects/:pid/sendDraft`, async () => {
+      const ad = await Admin.find();
+      const ad1 = ad[0];
+      const pr = await Project.find();
+      const pr1 = pr[0];
+      const response = await fetch(
+        `${
+          this.base_url
+        }/${ad1.id}/myProjects/${pr1.id}/sendDraft`,
+        {
+          method: "put",
+          body: JSON.stringify(requestBody),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+      console.log("response stastus: " + response.status);
+      const jsonResponse = await response.json();
+      console.log(jsonResponse);
+
+      expect(Object.keys(jsonResponse)).toEqual(["error"]);
+      expect(response.status).toEqual(400);
     });
   }
 }

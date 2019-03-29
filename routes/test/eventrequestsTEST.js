@@ -28,6 +28,11 @@ class ERTest extends AbstractTests {
           this.getIdRequest()
           this.putRequest()
           this.deleteRequest()
+          this.postRequestFail()
+          this.getRequestFail()
+          this.getIdRequestFail()
+          this.putRequestFail()
+          this.deleteRequestFail()
 
         })
         resolve()
@@ -137,6 +142,89 @@ class ERTest extends AbstractTests {
 
       expect(Object.keys(jsonResponse)).toEqual(['data'])
       expect(response.status).toEqual(200)
+  })
+  }
+
+  postRequestFail () {
+    const requestBody = {
+        requestedBy: "testreq",
+        description: "testdesc",
+        eventType: "testtype",
+        eventLocation: "testloc",
+        eventDate: "fail",
+        isAccepted: false,
+        requestorId: "5c784be40bc82a5f186ac770"
+    }
+
+    test(`postFail ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(400)
+
+      
+    })
+  }
+
+  getRequestFail  () {
+    test(`getFail ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c93d983f3fe6358b41ccd7`, {
+        method: 'get',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+
+      expect(response.status).toEqual(404)
+  })
+}
+  putRequestFail  () {
+    const requestBody = {
+      
+      eventDate: "testdescupdated"
+      
+  }
+
+  test(`putFail ${this.base_url}`, async () => {
+    const response = await fetch(`${this.base_url}/${this.sharedState.id}`, {
+      method: 'put',
+      body: JSON.stringify(requestBody),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const jsonResponse = await response.json()
+    expect(Object.keys(jsonResponse)).toEqual(['error'])
+    expect(response.status).toEqual(400)
+
+  })
+}
+
+  deleteRequestFail  () {
+    test(`deleteFail ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c79283c92334b03f4b6244`, {
+        method: 'delete',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+        
+    })
+  }
+
+  getIdRequestFail(){
+    test(`getIdFail ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c79283c92334b03f4b6244`, {
+        method: 'get',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
   })
   }
 

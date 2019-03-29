@@ -39,15 +39,15 @@ const paTests = new PaTest(3000, "/partners");
 
 
 // Calling tests
-// describe("Event Requests Tests", () => {
-//   Promise.all([erTests.run()]).then(result => {});
-// });
+describe("Event Requests Tests", () => {
+  Promise.all([erTests.run()]).then(result => {});
+});
 
-// describe('Admins Tests', () => {
-//   Promise.all([
-//     adTests.run(),
-//   ]).then(result => {})
-// })
+describe('Admins Tests', () => {
+  Promise.all([
+    adTests.run(),
+  ]).then(result => {})
+})
 
 describe('CA Tests', () => {
   Promise.all([
@@ -55,11 +55,11 @@ describe('CA Tests', () => {
   ]).then(result => {})
 })
 
-// describe('Partner Tests', () => {
-//   Promise.all([
-//     paTests.run(),
-//   ]).then(result => {})
-// })
+describe('Partner Tests', () => {
+  Promise.all([
+    paTests.run(),
+  ]).then(result => {})
+})
 
 afterAll(async () => {
   await mongoose.disconnect();
