@@ -32,6 +32,7 @@ class MTest extends AbstractTests {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
           this.postRequest()
+          this.postRequestBadRequest()
           this.getRequest()
           this.getRequestbyId()
           this.putRequest()
@@ -70,7 +71,7 @@ class MTest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      console.log("response stastus method 1 post: "+ response.status)
       const PostedMember = await Member.findOne(requestBody).exec()
       this.sharedState.id=PostedMember.id
       expect(response.status).toEqual(200)
@@ -78,6 +79,36 @@ class MTest extends AbstractTests {
     }
     )
   }
+  postRequestBadRequest () {
+    const requestBody = {
+      fname: "ahmed",
+      mname : "mohamed",
+     lname: "abdel-aal",
+     SSN :12455698 ,
+     Gender:true,
+     Marital_status:"single",
+     Military_status: "not yet",
+     Driving_license: "yes",
+     Country:"Egypt",
+     City: "cairo",
+     email:"a7med_201196@yahoo.com",
+     password:"12345678AaAa",
+     Mobile_number:"01119461010"
+    }
+
+    test(`post ${this.base_url}`, async (done) => {
+      const response = await fetch(`${this.base_url}`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus method 2 post bad: "+ response.status)
+      expect(response.status).not.toMatch(200)
+      done();
+    }
+    )
+  }
+
 
   getRequest  () {
     test(`get ${this.base_url}`, async (done) => {
@@ -86,7 +117,7 @@ class MTest extends AbstractTests {
        // body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
        })
-      console.log("response stastus: "+ response.status)
+      console.log("response stastus method 3 get: "+ response.status)
       expect(response.status).toEqual(200)
       done();
      }
@@ -101,7 +132,7 @@ class MTest extends AbstractTests {
        // body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
        })
-      console.log("response stastus: "+ response.status)
+      console.log("response stastus method 4 get by id: "+ response.status)
       expect(response.status).toEqual(200)
       done();
      }
@@ -120,7 +151,7 @@ class MTest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
        })
-      console.log("response stastus: "+ response.status)
+      console.log("response stastus method 5 put: "+ response.status)
       expect(response.status).toEqual(200)
       done();
      }
@@ -133,7 +164,7 @@ class MTest extends AbstractTests {
        // body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
        })
-      console.log("response stastus: "+ response.status)
+      console.log("response stastus method 6 delete : "+ response.status)
       expect(response.status).toEqual(200)
       done();
      }
