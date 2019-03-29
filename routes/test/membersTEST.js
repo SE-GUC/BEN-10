@@ -20,6 +20,7 @@ class MTest extends AbstractTests {
           // this.getRequest()
           // this.putRequest()
           // this.deleteRequest()
+          this.postevent()
           // add all methods
 
         })
@@ -57,17 +58,17 @@ class MTest extends AbstractTests {
 
   postevent() {
     const requestBody = {}
-    test(`put ${this.base_url}/:id1/events/:id2/`, async () => {
-      const response = await fetch(`${this.base_url}/${this.sharedState.id}`, {
+    test(`put ${this.base_url}/${this.sharedState.id}/events/:id2/`, async () => {
+      const response = await fetch(`${this.base_url}/5c93d983f3fe6358b41ccd7a/events/5c9ce0e20ddd11042a301e26/`, {
         method: 'PUT',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
       expect(response.status).toEqual(200)
-      const pRequest = await Project.findOne(requestBody).exec()
-      expect(pRequest.description).toEqual(requestBody.description)
+      // const pRequest = await Project.findbyid(requestBody).exec()
+      // expect(pRequest.description).toEqual(requestBody.description)
 
-      this.sharedState.description =  pRequest.description
+      // this.sharedState.description =  pRequest.description
     })
   }
 }

@@ -59,7 +59,7 @@ class ATest extends AbstractTests {
 
   //3 --As an admin I want to further check the description of a task/project so that it will be posted for candidates to apply
   getdescription() {
-    test(`get ${this.base_url}/:aid/pdescription/:id/`, async () => {
+    test(`get ${this.base_url}/${this.sharedState.id}/pdescription/:id/`, async () => {
       const response = await fetch(`${this.base_url}/5c784be40bc82a5f186ac770/pdescription/5c94436fd0c61339203ad8c7/`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
@@ -77,7 +77,7 @@ class ATest extends AbstractTests {
     "description": "no description"
   }
   
-  test(`post ${this.base_url}/:aid/notifications/:id/`, async () => {
+  test(`post ${this.base_url}/${this.sharedState.id}/notifications/:id/`, async () => {
     const response = await fetch(`${this.base_url}/5c7a603a0a4938ccd1e08e76/notifications/5c93d983f3fe6358b41ccd7a`, {
         method: 'POST',
         body: JSON.stringify(requestBody),

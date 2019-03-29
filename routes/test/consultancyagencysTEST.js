@@ -87,7 +87,7 @@ class CATest extends AbstractTests {
     "eventType": "no type",
     "eventLocation": "no event location"
     }
-    test(`post ${this.base_url}/:id/eventrequests/`, async () => {
+    test(`post ${this.base_url}/${this.sharedState.id}/eventrequests/`, async () => {
       const response = await fetch(`${this.base_url}/5c79260b4328ab820437835c/eventrequests/`, {
         method: 'POST',
         body: JSON.stringify(requestBody),

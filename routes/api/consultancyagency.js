@@ -105,7 +105,6 @@ router.post("/:id/eventrequests/", async (req, res) => {
     const cid = await ConsultancyAgency.findById(req.params.id);
     if (cid) {
       if (
-        req.body.requestedBy != null &&
         req.body.description != null &&
         req.body.eventType != null &&
         req.body.eventLocation != null &&
@@ -113,7 +112,7 @@ router.post("/:id/eventrequests/", async (req, res) => {
       ) {
         const j = await CARequestEvent(
           req.params.id,
-          req.body.requestedBy,
+          cid.name,
           req.body.description,
           req.body.eventType,
           req.body.eventLocation,
