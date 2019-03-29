@@ -526,7 +526,8 @@ router.put("/:id/myprojects/:pid/finalreview/approve", async (req, res) => {
       if (proj.companyID == req.params.id) {
         if (proj.life_cycle === "Final Review") {
           const j = await acceptFinalReview(req.params.pid);
-          res.json(j);
+          console.log(j)
+          res.send(j);
         } else {
           //not final review
           res

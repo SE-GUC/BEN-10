@@ -7,6 +7,7 @@ class ERTest extends AbstractTests {
   constructor (PORT, ROUTE) {
     super(PORT, ROUTE)
     this.sharedState = {
+        id: null,
         requestedBy: null,
         description: null,
         eventType: null,
@@ -24,6 +25,7 @@ class ERTest extends AbstractTests {
         describe('Making sure ER routes work', () => {
           this.postRequest()
           this.getRequest()
+          this.getIdRequest()
           this.putRequest()
           this.deleteRequest()
 
@@ -51,9 +53,8 @@ class ERTest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-
+      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
       expect(response.status).toEqual(200)
 
@@ -65,6 +66,7 @@ class ERTest extends AbstractTests {
       expect(eRequest.isAccepted).toEqual(requestBody.isAccepted)
       expect(eRequest.requestedBy).toEqual(requestBody.requestedBy)
       expect(new String(eRequest.requestorId)).toEqual(requestBody.requestorId)
+      this.sharedState.id = eRequest.id
       this.sharedState.requestedBy =  eRequest.requestedBy
       this.sharedState.description =  eRequest.description
       this.sharedState.eventType =  eRequest.eventType
@@ -76,9 +78,67 @@ class ERTest extends AbstractTests {
     })
   }
 
-  getRequest  () {}
-  putRequest  () {}
-  deleteRequest  () {}
+  getRequest  () {
+    test(`get ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}`, {
+        method: 'get',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+
+      expect(Object.keys(jsonResponse)).toEqual(['data'])
+      expect(response.status).toEqual(200)
+  })
+}
+  putRequest  () {
+    const requestBody = {
+      
+      description: "testdescupdated"
+      
+  }
+
+  test(`put ${this.base_url}`, async () => {
+    const response = await fetch(`${this.base_url}/${this.sharedState.id}`, {
+      method: 'put',
+      body: JSON.stringify(requestBody),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const jsonResponse = await response.json()
+    expect(Object.keys(jsonResponse)).toEqual(['msg'])
+    expect(response.status).toEqual(200)
+
+    const eRequest = await eventRequest.findOne(requestBody).exec()
+    expect(eRequest.description).toEqual(requestBody.description)
+      
+    this.sharedState.description =  eRequest.description
+  })
+}
+
+  deleteRequest  () {
+    test(`delete ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/${this.sharedState.id}`, {
+        method: 'delete',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
+      expect(response.status).toEqual(200)
+        
+    })
+  }
+
+  getIdRequest(){
+    test(`getId ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/${this.sharedState.id}`, {
+        method: 'get',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+
+      expect(Object.keys(jsonResponse)).toEqual(['data'])
+      expect(response.status).toEqual(200)
+  })
+  }
 
 }
 module.exports = ERTest

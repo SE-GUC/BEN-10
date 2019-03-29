@@ -133,7 +133,7 @@ router.post("/:id/eventrequests/", async (req, res) => {
 //2.2 --As a consultancy agency I want to assign one of the candidates who applied for the task/project.
 
 //2.2 part1 View candidates applying for a project
-router.get("/:id/assignMembers/:pid", async (req, res) => {
+router.get("/:id/myProjects/:pid/applyingMembers", async (req, res) => {
   var j = await getApplyingMembers(req.params.pid);
   var result = [];
   var i;
@@ -155,7 +155,7 @@ async function getApplyingMembers(pid) {
     .then(res => res.json())
     .then(json => {
       const members = json.data;
-      const appliedmembers = members.filter(m => m.projectId === pid);
+      const appliedmembers = members.filter(m => m.projectId == pid);
       appliedmembers.forEach(m => {
         result.push(m.applicantId);
       });
@@ -167,10 +167,11 @@ async function getApplyingMembers(pid) {
 
 //2.2 part2 assign a candidate to a project
 router.put(
-  "/:id/MyProjetcs/:pid/applyingMembers/:mid/assign",
+  "/:id/myProjects/:pid/applyingMembers/:mid/assign",
   async (req, res) => {
     const members = await getApplyingMembers(req.params.pid);
-    if (req.body.memberID != null) {
+    console.log(members)
+    if (req.params.mid != null) {
       candidatID = req.params.mid;
     } else {
       return res.status(400).send({ error: "Please enter Memeber ID" });
@@ -179,7 +180,7 @@ router.put(
     var j;
     if (canBeAssigned) {
       j = await assignCandidate(req.params.pid, candidatID);
-      res.status(200).send(j);
+      res.send(j);
     } else {
       res
         .status(400)
