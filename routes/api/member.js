@@ -216,7 +216,7 @@ router.get("/:id/getEvent", async (req, res) => {
   const id = req.params.id;
   if (ObjectId.isValid(id)) {
     const j = await getEvents(id);
-    const mye = j.filter(m=> m.requestorId == id)
+    const mye = j.filter(m=> m.bookedMembers.includes(id))
     console.log(mye)
     res.json({ data: mye });
   } else {
