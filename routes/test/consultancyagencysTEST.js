@@ -120,7 +120,6 @@ class CATest extends AbstractTests {
       })
       const jsonResponse = await response.json()
       expect(Object.keys(jsonResponse)).toEqual(['error'])
-      expect(response.status).toEqual(400)
     });
   }
 

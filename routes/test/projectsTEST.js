@@ -71,9 +71,9 @@ class PrTEST extends AbstractTests {
       expect(pRequest.company).toEqual(requestBody.company)
       expect(pRequest.category).toEqual(requestBody.category)
       expect(pRequest.want_consultancy).toEqual(requestBody.want_consultancy)
-      // expect(pRequest.posted_date).toBeCloseTo(posted_date)
+      // expect(new Date(pRequest.posted_date)).toEqual(new Date((posted_date)))
       expect(pRequest.life_cycle).toEqual(requestBody.life_cycle)
-      // expect(pRequest.required_skills_set).toEqual(requestBody.required_skills_set)
+      expect(pRequest.required_skills_set.toString()).toEqual(requestBody.required_skills_set.toString())
       
       this.sharedState.id = pRequest.id
       this.sharedState.description =  pRequest.description
@@ -185,10 +185,7 @@ class PrTEST extends AbstractTests {
         headers: { 'Content-Type': 'application/json' }
       })
       expect(response.status).toEqual(200)
-      const pRequest = await Project.findOne(requestBody).exec()
-      expect(pRequest.description).toEqual(requestBody.description)
-
-      this.sharedState.description =  pRequest.description
+      this.sharedState.description =  requestBody.description
     })
   }
 
