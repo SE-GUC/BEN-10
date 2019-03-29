@@ -426,7 +426,7 @@ async function AdminNotifyAcceptedCandidate(description, NotifiedPerson, date) {
     })
     .then(json => {
       if (!error) {
-        json = { msg: "Notifications is sent successfully" };
+        json = { msg: "Notification is sent successfully" };
       }
       j = json;
     })

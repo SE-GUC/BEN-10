@@ -28,14 +28,14 @@ class PrTEST extends AbstractTests {
           this.postRequestwrongattribute()
           this.getRequest()
           this.getRequestbyID()
-          this.getRequestbywrongkID()
+          this.getRequestbywrongID()
           this.getRequestbynotavalidatedID()
           this.putRequest()
-          this.putRequestbywrongkID()
+          this.putRequestbywrongID()
           this.putRequestbynotavalidatedID()
           this.putRequestmissingattribute()
           this.deleteRequest()
-          this.deleteRequestbywrongkID()
+          this.deleteRequestbywrongID()
           this.deleteRequestbynotavalidatedID()
           // add all methods
 
@@ -140,7 +140,7 @@ class PrTEST extends AbstractTests {
   }
   
   getRequestbyID() {
-    test(`get ${this.base_url}/:id`, async () => {
+    test(`get ${this.base_url}/${this.sharedState.id}`, async () => {
       const response = await fetch(`${this.base_url}/${this.sharedState.id}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
@@ -149,7 +149,7 @@ class PrTEST extends AbstractTests {
     })
   }
 
-  getRequestbywrongkID() {
+  getRequestbywrongID() {
     test(`get ${this.base_url}/:id`, async () => {
       const response = await fetch(`${this.base_url}/5c94376f029c042e280b0fb0`, {
         method: 'GET',
@@ -178,7 +178,7 @@ class PrTEST extends AbstractTests {
       "description": "description"
     }
 
-    test(`put ${this.base_url}/:id`, async () => {
+    test(`put ${this.base_url}/${this.sharedState.id}`, async () => {
       const response = await fetch(`${this.base_url}/${this.sharedState.id}`, {
         method: 'PUT',
         body: JSON.stringify(requestBody),
@@ -192,7 +192,7 @@ class PrTEST extends AbstractTests {
     })
   }
 
-  putRequestbywrongkID() {
+  putRequestbywrongID() {
     const requestBody = {
         "description": "description"
       }
@@ -244,7 +244,7 @@ class PrTEST extends AbstractTests {
         }
       
   deleteRequest() {
-    test(`delete ${this.base_url}/:id`, async () => {
+    test(`delete ${this.base_url}/${this.sharedState.id}`, async () => {
       const response = await fetch(`${this.base_url}/${this.sharedState.id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
@@ -253,7 +253,7 @@ class PrTEST extends AbstractTests {
     })
   }
 
-  deleteRequestbywrongkID() {
+  deleteRequestbywrongID() {
     test(`delete ${this.base_url}/:id`, async () => {
       const response = await fetch(`${this.base_url}/5c94376f029c042e280b0fb0`, {
         method: 'DELETE',
