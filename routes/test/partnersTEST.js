@@ -473,9 +473,9 @@ class PARTests extends AbstractTests {
       var projs = await project.find()
       projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==true)
       var k=0
-      for(i;i<projs.length;i++){
+      for(k;k<projs.length;k++){
       await fetch(
-        `${this.projects_url}/${projs[i].id}/`,
+        `${this.projects_url}/${projs[k].id}/`,
         {
           method: "put",
           body: JSON.stringify({consultancyID : null }),
