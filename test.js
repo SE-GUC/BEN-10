@@ -6,6 +6,8 @@ const EventTest=require('./routes/test/eventsTEST');
 
 const ERTest = require('./routes/test/eventrequestsTEST')
 
+const MemberTest=require('./routes/test/membersTEST');
+
 // Connect to mongo atlas
 const db = require('./config/keys').mongoURI
 
@@ -23,7 +25,8 @@ beforeAll(async () => {
 
 // Calling the test files
 // const erTests = new ERTest(3000, '/eventrequests')
-const eTests = new EventTest(3000,'/events')
+// const eTests = new EventTest(3000,'/events')
+const memberTests=new MemberTest(3000,'/member')
 
 // Calling tests
 // describe('Event Requests Tests', () => {
@@ -33,9 +36,16 @@ const eTests = new EventTest(3000,'/events')
 // })
 
 
-describe('Event Tests', () => {
+// describe('Event Tests', () => {
+//   Promise.all([
+//     eTests.run(),
+//   ]).then(result => {})
+// })
+
+
+describe('member Tests', () => {
   Promise.all([
-    eTests.run(),
+    memberTests.run(),
   ]).then(result => {})
 })
 

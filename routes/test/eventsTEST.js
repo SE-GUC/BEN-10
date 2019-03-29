@@ -69,7 +69,7 @@ class ETest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      // console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
 
       expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
