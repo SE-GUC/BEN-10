@@ -42,7 +42,7 @@ module.exports = {
             regist_start_date:  Joi.date(),
             regist_expiry_date:Joi.date() ,
             bookedMembers:Joi.array().items(Joi.string()),
-            formLink: Joi.string(),
+            formLink: Joi.string()
         }
 
         return Joi.validate(Eventrequest, updateSchema)
