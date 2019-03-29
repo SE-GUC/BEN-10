@@ -50,8 +50,7 @@ class adminTest extends AbstractTests {
       expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
       expect(response.status).toEqual(200)
 
-     
-      
+
     })
   }
 
