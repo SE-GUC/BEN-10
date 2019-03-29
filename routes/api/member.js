@@ -73,7 +73,7 @@ router.put('/:id1/Myprojects/:id2/submit/:link',async(req,res)=>{
         .catch(err => console.log("Error", err));
       }
       else{
-        return res.status(404).send({ error: `there project is in phase"${life_cycle_project}` });
+        return res.status(404).send({ error: `this project is in phase"${life_cycle_project}` });
       }
     }
     else{
