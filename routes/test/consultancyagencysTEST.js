@@ -2,6 +2,7 @@ const fetch = require("node-fetch");
 const AbstractTests = require("./AbstractTests");
 const Events = require('../../models/Event') //require your model
 const CAs = require('../../models/ConsultancyAgency')
+const Projects = require("../../models/Project")
 
 const ObjectId = require("mongoose");
 
@@ -45,10 +46,16 @@ class CATest extends AbstractTests {
     test(`assignCandidate ${
       this.base_url
     }/5c9cd9165cf32c4e4c74ba85/myProjects/5c9541519e2e790b2bcbbf8e/applyingMembers/5c93d9b2f3fe6358b41ccd7b/assign`, async () => {
+      var projs = await Projects.find()
+      projs = projs.filter(p => p.applyingCA.length != null && p.consultancyID!=null && p && p.applyingCA.length > 0)
+      const project = projs[0]
+
+
+
       const response = await fetch(
         `${
           this.base_url
-        }/5c9cd9165cf32c4e4c74ba85/myProjects/5c9541519e2e790b2bcbbf8e/applyingMembers/5c93d9b2f3fe6358b41ccd7b/assign`,
+        }/${project.consultancyID}/myProjects/${project.id}/applyingMembers/${project.applyingCA[0]}/assign`,
         {
           method: "put",
           body: JSON.stringify(requestBody),
