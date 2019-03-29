@@ -22,8 +22,8 @@ class adminTest extends AbstractTests {
           //this.getRequest()
           //this.putRequest()
           //this.deleteRequest()
-         // this.postEvent()
-          this.getAllEventRequests()
+          this.postEvent()
+         // this.getAllEventRequests()
           // add all methods
 
         })
@@ -74,15 +74,18 @@ class adminTest extends AbstractTests {
     requestorId: "5c79260b4328ab820437835c"
     }
 
-    test(`post ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/5c784be40bc82a5f186ac770/addEvent/`, {
+    test(`post ${this.base_url}/`, async () => {
+      const ad=await admin.find();
+      const ad1=ad[0];
+      const adid=ad1.id;
+      const response = await fetch(`${this.base_url}/${adid}/addEvent/`, {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
       console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
+     // console.log(jsonResponse)
 
       expect(Object.keys(jsonResponse)).toEqual(['msg'])
       expect(response.status).toEqual(200)

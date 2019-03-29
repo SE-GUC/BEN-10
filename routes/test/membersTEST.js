@@ -63,7 +63,10 @@ class MTest extends AbstractTests {
   //as a candidate i want to view tasks so that i can apply for them
   getProjects(){
     test(`get ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/5c9d681d09ed244734b5dd2f/getProject`, {
+      const mem=await Member.find();
+      const mem1=mem[0];
+      const memid=mem1.id;
+      const response = await fetch(`${this.base_url}/${memid}/getProject`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
@@ -79,7 +82,10 @@ class MTest extends AbstractTests {
   //as a candidate i want to view an events so that i can book a place in it
   getEvents(){
     test(`get ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/5c9d67e751950841dc3dedad/getEvent`, {
+      const mem=await Member.find();
+      const mem1=mem[0];
+      const memid=mem1.id;
+      const response = await fetch(`${this.base_url}/${memid}/getEvent`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
@@ -94,7 +100,10 @@ class MTest extends AbstractTests {
   //as a candidate i want to view my projects
   getMyProjects(){
     test(`get ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/5c9d6acb1c2b023004dfbf46/ShowMyProjects`, {
+      const mem=await Member.find();
+      const mem1=mem[0];
+      const memid=mem1.id;
+      const response = await fetch(`${this.base_url}/${memid}/ShowMyProjects`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
