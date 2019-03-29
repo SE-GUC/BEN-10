@@ -25,9 +25,9 @@ class OITest extends AbstractTests {
           //this.postRequest()
          // this.postRequestFail()
           //this.getRequest()
-          //this.putRequest()
+          this.putRequest()
          // this.deleteRequest()
-          //this.getRequestByid()
+        // this.getRequestByid()
 
           // add all methods
 
@@ -119,7 +119,10 @@ class OITest extends AbstractTests {
   })}
   getRequestByid () {
     test(`get ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/5c78704be62b6f286cdd5418`, {
+      const oi=await OrientationInvitation.find();
+      const oi1=oi[0];
+      const oiid=oi1.id;
+      const response = await fetch(`${this.base_url}/${oiid}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
@@ -142,7 +145,10 @@ class OITest extends AbstractTests {
     }
 
     test(`put ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/5c78704be62b6f286cdd5418`, {
+      const oi=await OrientationInvitation.find();
+      const oi1=oi[0];
+      const oiid=oi1.id;
+      const response = await fetch(`${this.base_url}/${oiid}`, {
         method: 'PUT',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }

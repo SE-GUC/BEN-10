@@ -34,16 +34,16 @@ const memberTests = new memberTest(3000, '/member')
     //erTests.run(),
   //]).then(result => {})
 //})
-//describe('orientation invitation Tests', () => {
-  //Promise.all([
-    //oiTests.run(),
-  //]).then(result => {})
-//})
-describe('admin Tests', () => {
+describe('orientation invitation Tests', () => {
   Promise.all([
-    adminTests.run(),
+    oiTests.run(),
   ]).then(result => {})
 })
+//describe('admin Tests', () => {
+  //Promise.all([
+    //adminTests.run(),
+  //]).then(result => {})
+//})
 // describe('member Tests', () => {
   // Promise.all([
     // memberTests.run(),
