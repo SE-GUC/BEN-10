@@ -31,7 +31,8 @@ class CATest extends AbstractTests {
          //this.getById()
         //this.getByIdFail()
            //22 AS a consultancy Agency i want to view my events
-            this.viewMyEvents()
+            //this.viewMyEvents()
+          //  this.viewMyEventsFail()
          // add all methods
 
         })
@@ -261,5 +262,22 @@ class CATest extends AbstractTests {
 
   })}
 
+  viewMyEventsFail(){
+    test(`CA view events fail ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c79260b4328a0437835cds/ShowMyEvents`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+  
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+  
+  })}
+  
+
 }
+
 module.exports = CATest
