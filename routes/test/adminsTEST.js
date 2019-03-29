@@ -21,8 +21,8 @@ class ATest extends AbstractTests {
           //this.putRequest()
           //this.deleteRequest()
           // add all methods
-          this.getAllCA();
-
+          //this.getAllCA();
+          this. getAllCAFail ()
         })
         resolve()
       })
@@ -58,7 +58,10 @@ class ATest extends AbstractTests {
 
   getAllCA(){
     test(`get ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/5c7a603f0a4938ccd1e08e77/ShowAllCA`, {
+      const ad = await Admin.find();
+      const ad1 = ad[0];
+      const adid = ad1.id;
+      const response = await fetch(`${this.base_url}/${adid}/ShowAllCA`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
@@ -67,6 +70,20 @@ class ATest extends AbstractTests {
       console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(['data'])
       expect(response.status).toEqual(200)
+    })
+  }
+
+  getAllCAFail (){//enter invalid admin id
+    test(`get ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c7a6797938ccd1e08e7c/ShowAllCA`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse )
+      expect(Object.keys(jsonResponse)).toEqual(["error"])
+      expect(response.status).toEqual(404)
     })
   }
 

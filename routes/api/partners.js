@@ -82,37 +82,6 @@ router.post('/:id/addProject', async (req,res) => {
   }
     
 })
-router.put("/:id/Myprojects/:pid/finaldraft/accept", async (req, res) => {
-  try {
-    if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
-      const j = await DecideOnProject(req.params.pid);
-      res.status(200).send(j);
-    } else {
-      return res.status(404).send({ error: "ID NOT FOUND" });
-    }
-  } catch {
-    console.log(error);
-    return res.status(404).send({ error: "not a project id" });
-  }
-});
-async function DecideOnProject(id, decision) {
-  const url = `${server}/api/projects/${id}`;
-  await fetch(url, {
-    method: "put",
-    body: JSON.stringify({ life_cycle: decision }),
-    headers: { "Content-Type": "application/json" }
-  })
-    .then(res => {
-      console.log(res.status);
-      return res.json();
-    })
-    .then(json => {
-      console.log(json);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}
 
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
@@ -236,55 +205,6 @@ router.post("/:id/submitRequest/", async (req, res) => {
   return res.json(j);
 });
 
-//1.0 as a partner i want to submit a description on a task/project
-router.post("/:id/addProject", async (req, res) => {
-  try {
-    if (ObjectId.isValid(req.params.id)) {
-      const company_id = req.params.id;
-      const Project = {
-        description: req.body.description,
-        company: req.body.company,
-        companyID: company_id,
-        category: req.body.category,
-        want_consultancy: req.body.want_consultancy,
-        posted_date: req.body.posted_date,
-        life_cycle: "Submitted"
-      };
-
-      var error = true;
-      await fetch(`${server}/api/projects/`, {
-        method: "post",
-        body: JSON.stringify(Project),
-        headers: { "Content-Type": "application/json" }
-      })
-        // .then(checkStatus)
-        .then(res => {
-          if (res.status === 200) {
-            error = false;
-          }
-          console.log(res.status);
-          if (!error) {
-            result = res;
-          }
-          return res.json();
-        })
-        .then(json => {
-          if (!error) {
-            res.json(json);
-          }
-          result = json;
-          console.log(json);
-        })
-        .catch(err => console.log("Error", err));
-      return res.json(result);
-    } else {
-      return res.status(404).send({ error: "Error" });
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(400).send("Error");
-  }
-});
 
 async function deleteProject(id) {
   var error = true;
@@ -403,7 +323,7 @@ async function getProjects(partnerid) {
     .catch(err => console.log("Error", err));
   return result;
 }
-
+// assign ca to project
 router.put("/:id3/project/:id1/AssignCAtoProject/:id2", async (req, res) => {
   const projID = req.params.id1;
   const caId = req.params.id2;
