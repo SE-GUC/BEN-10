@@ -13,19 +13,22 @@ const PaTest = require("./routes/test/partnersTEST");
 
 // DB Config
 // const db = require("./config/keys").mongoURI;
-// // Connect to mongo
-// mongoose
-//   .connect(db, { useNewUrlParser: true })
-//   .then(() => console.log("Connected to MongoDB"))
-//   .catch(err => console.log(err));
-
-beforeAll(async () => {
+// Connect to mongo
 mongoose
   .connect(db, { useNewUrlParser: true })
-  .then(() => console.log("Connected to MongoDB"))  
+  .then(() => console.log("Connected to MongoDB"))
   .catch(err => console.log(err));
-  // await app.listen(port, () => console.log(`Server on ${port}`));
-})
+// beforeAll(async()=>{
+// await test.listen(port)
+// .then(() => console.log('server 3000'))
+// })
+
+// beforeEach(async () => {
+//   await mongoose
+//   .connect(db, { useNewUrlParser: true })
+//   .then(() => console.log("Connected to MongoDB"))  
+//   .catch(err => console.log(err));
+// })
 
 
 // Calling the test files
