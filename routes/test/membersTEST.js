@@ -103,7 +103,7 @@ class MTest extends AbstractTests {
         headers: { 'Content-Type': 'application/json' }
       })
       console.log("response stastus method 2 post bad: "+ response.status)
-      expect(response.status).not.toMatch(200)
+      expect(response.status).toEqual(400)
       done();
     }
     )
