@@ -37,12 +37,9 @@ class PARTests extends AbstractTests {
          //this.postProjectFail()
          // this.getMyProjects()
          // this.getMyProjectsFail()
-          this.putApproveONFinalDraft()
-<<<<<<< HEAD
-         // this.putApproveONFinalDraftFail()
-=======
+         // this.putApproveONFinalDraft()
           //this.putApproveONFinalDraftFail()
->>>>>>> 5b1922ca2d6893ebb532683e4d4dda635fa274eb
+          //this.putApproveONFinalDraftFail()
           //this.putDisapproveONFinalDraft()
          //this.putDisapproveONFinalDraftFail()
           //this.AssignCAtoProj()
@@ -363,16 +360,8 @@ class PARTests extends AbstractTests {
       const par1 = par[0];
       const parid = par1.id;
       var projs = await project.find()
-      projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==false)
-      const proj = projs[0]
-      await fetch(
-        `${this.project_url}/${proj.id}/`,
-        {
-          method: "put",
-          body: JSON.stringify({life_cycle : "Final Draft"}),
-          headers: { "Content-Type": "application/json" }
-        }
-      );
+      projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==false && p.life_cycle == "Final Draft")
+      const proj = projs[0];
       const projid = proj.id;
       console.log(parid)
       console.log(projid)
@@ -383,10 +372,9 @@ class PARTests extends AbstractTests {
       })
       console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
+      console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(['msg'])
       expect(response.status).toEqual(200)
-
     })    
   }
 
