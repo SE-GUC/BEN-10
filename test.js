@@ -45,6 +45,7 @@ const adminTests = new AdmTests(3000, '/admins')
 describe('Admin Requests Tests', () => {
   Promise.all([
     adminTests.run(),
+    // parTests.run()
   ]).then(result => {})
 })
 

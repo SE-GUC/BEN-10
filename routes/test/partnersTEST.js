@@ -37,7 +37,7 @@ class PARTests extends AbstractTests {
          //this.postProjectFail()
          // this.getMyProjects()
          // this.getMyProjectsFail()
-          //this.putApproveONFinalDraft()
+          this.putApproveONFinalDraft()
          // this.putApproveONFinalDraftFail()
           //this.putDisapproveONFinalDraft()
          //this.putDisapproveONFinalDraftFail()
