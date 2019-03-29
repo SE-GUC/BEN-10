@@ -94,6 +94,7 @@ router.get('/:id/task_orientation',async(req,res)=>{
   try{
     const member_id=req.params.id;
     if(member_id.match(/^[0-9a-fA-F]{24}$/)){
+      if(Member){
       var error = true;
     await fetch(`${server}/api/orientationinvitations`, {
       method: "get",
@@ -115,8 +116,9 @@ router.get('/:id/task_orientation',async(req,res)=>{
       .catch(err => console.log("Error", err));
 
 
-    }
-    else{
+    
+      } else return res.status(404).send({ error: "Not a valid id format" });
+    }else{
       return res.status(404).send({ error: "Not a valid id format" });
     }
 
