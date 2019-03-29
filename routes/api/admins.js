@@ -446,7 +446,6 @@ async function postProject(id) {
       if (res.status === 200) {
         error = false;
       }
-      console.log(res.status);
       if (!error) {
         result = res;
       }
@@ -462,6 +461,7 @@ async function postProject(id) {
 }
 //Test 3.3
 //postProject("5c7a795e53f1ba0c1b351f75");
+
 
 //as an admin i want to create event
 
