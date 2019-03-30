@@ -22,7 +22,7 @@ class ATest extends AbstractTests {
           // this.deleteRequest()
           //As an admin i want to view all members
           this.viewMembers()
-         // this.viewMembersFail()
+         this.viewMembersFail()
           // add all methods
 
         })
