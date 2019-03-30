@@ -68,13 +68,7 @@ router.post("/:aid/notifications/:id/", async (req, res) => {
     if(admin){
       if (cid) {
         if (req.body.description != null) {
-          var today = new Date();
-          var date =
-            today.getFullYear() +
-            "-" +
-            (today.getMonth() + 1) +
-            "-" +
-            today.getDate();
+          var date = Date.now()
           const j = await AdminNotifyAcceptedCandidate(
             req.body.description,
             req.params.id,
