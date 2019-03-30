@@ -21,7 +21,7 @@ class ATest extends AbstractTests {
           //this.putRequest()
           //this.deleteRequest()
           // add all methods
-          //this.getAllCA();
+          this.getAllCA();
           this. getAllCAFail ()
         })
         resolve()
