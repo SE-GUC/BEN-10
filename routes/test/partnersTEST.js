@@ -21,8 +21,8 @@ class PaTest extends AbstractTests {
           // this.putRequest()
           // this.deleteRequest()
            //1.5 AS a partner i want to review the final work of the candidate who is working on my task/project.
-         //  this.getMyProjects()
-         // this.getMyProjectsFail()
+          this.getMyProjects()
+         this.getMyProjectsFail()
            // add all methods
 
         })
