@@ -22,7 +22,8 @@ class MTest extends AbstractTests {
           // this.putRequest()
           // this.deleteRequest()
           //4.8//As a candidate I want to book a place in an event (based on the event’s type).
-         this.bookEvent()
+        this.bookEvent()
+         this.bookEventFail();
          // this.bookEventFail()
           // add all methods
 
@@ -59,14 +60,15 @@ class MTest extends AbstractTests {
   putRequest  () {}
   deleteRequest  () {}
  
-  async bookEvent(){
-    const mem =  Member.find();
+ bookEvent(){
+    
+    test(`put ${this.base_url}`, async () => {
+      const mem = await Member.find();
       const mem1 = mem[0];
       const memid = mem1.id;
       const ev = await event.find();
       const ev1 = ev[0];
       const evid = ev1.id;
-    test(`put ${this.base_url}`, async () => {
       const response = await fetch(`${this.base_url}/${memid}/bookEvent/${evid}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' }
@@ -88,8 +90,8 @@ class MTest extends AbstractTests {
       console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
       console.log(jsonResponse)
-      expect(Object.keys(jsonResponse)).toEqual(['msg'])
-      expect(response.status).toEqual(200)
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
     })
   }
 
