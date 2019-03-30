@@ -39,21 +39,21 @@ const memTests = new MEMTest(3000, '/member')
 //     erTests.run(),
 //   ]).then(result => {})
 // })
-// describe('Consultancy Agency Tests', () => {
-//   Promise.all([
-//     caTests.run(),
-//   ]).then(result => {})
-// })
-// describe('Partner Tests', () => {
-//   Promise.all([
-//     partnerTests.run(),
-//   ]).then(result => {})
-// })
-// describe('Admin Tests', () => {
-//   Promise.all([
-//     adminTests.run(),
-//   ]).then(result => {})
-// })
+describe('Consultancy Agency Tests', () => {
+  Promise.all([
+    caTests.run(),
+  ]).then(result => {})
+})
+describe('Partner Tests', () => {
+  Promise.all([
+    partnerTests.run(),
+  ]).then(result => {})
+})
+describe('Admin Tests', () => {
+  Promise.all([
+    adminTests.run(),
+  ]).then(result => {})
+})
 describe('member Tests', () => {
   Promise.all([
     memTests.run(),
