@@ -21,15 +21,16 @@ class CATest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
-       this.postRequest()
-       this.postRequestFail()
+        this.postRequest()
+        this.postRequestFail()
         this.getRequest()
-       this.putRequest()
-        //this.putRequestFail()
+        this.getById()
+        this.getByIdFail()
+        this.putRequest()
+        this.putRequestFail()
         this.deleteRequest()
         this.deleteRequestFail()
-       // this.getById()
-        this.getByIdFail()
+       
            //22 AS a consultancy Agency i want to view my events
             this.viewMyEvents()
            this.viewMyEventsFail()
