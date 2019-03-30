@@ -52,6 +52,7 @@ submitTask(){
         }
       }
     }
+    if(project_id!=null && member_id!=null){
     const requestBody={
 
     }
@@ -62,13 +63,18 @@ submitTask(){
     })
     const jsonResponse =  await response.json();
     if(Object.keys(jsonResponse).toString()!=='error'){
+      console.log(jsonResponse);
      expect(Object.keys(jsonResponse).toString()).toEqual(['data'].toString())
      expect(Object.keys(jsonResponse)).not.toEqual(['error'])
   }
   else{
+    console.log(jsonResponse);
     expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
     expect(response.status).toBe(404);
   }
+}else{
+  console.log("there is no matching in the db:(")
+}
 
 
   })
@@ -87,7 +93,8 @@ viewTaskInvitation(){
         break;
       }
 
-    }    
+    }  
+    if(notified_member!=null){  
     const response = await fetch(`${this.base_url}/${notified_member}/task_orientation`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
@@ -106,6 +113,9 @@ viewTaskInvitation(){
     expect(response.status).toBe(404);
 
   }
+}else{
+  console.log("there is no matching in the db:(")
+}
   })
 }
 
@@ -189,7 +199,8 @@ appylyForproject(){
           notified_member=notifications[i]["NotifiedPerson"];
           break;
         }
-      } 
+      }
+      if(notified_member!=null){ 
       const response = await fetch(`${this.base_url}/${notified_member}/notifications`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
@@ -206,6 +217,10 @@ appylyForproject(){
         expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
         expect(response.status).toBe(404);
     }
+  }
+  else{
+    console.log("there is no matching in the db")
+  }
 
 
 

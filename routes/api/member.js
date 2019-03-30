@@ -31,6 +31,7 @@ router.get("/:id", async (req, res) => {
     return res.status(400).send({ error: "the provided id is not valid one " });
   }
 });
+// --------------------------------------doooodie's evaluation world --------------------------------
 
 // as a candidate i want to submit the project to be finally reviewed
 router.put('/:id1/Myprojects/:id2/submit/:link',async(req,res)=>{
@@ -118,7 +119,7 @@ router.get('/:id/task_orientation',async(req,res)=>{
 
 
     
-      } else return res.status(404).send({ error: "Not a valid id format" });
+      } else return res.status(404).send({ error: "there is no such member" });
     }else{
       return res.status(404).send({ error: "Not a valid id format" });
     }
@@ -135,6 +136,9 @@ router.get("/:id/notifications", async (req, res) => {
   const id = req.params.id;
   // res.redirect('/api/notifications/?Member_id='+id);
   if (ObjectId.isValid(id)) {
+    const member_id=req.params.id;
+    const Member = await member.findById(member_id);
+    if(Member!=null){
     var error = true;
     await fetch(`${server}/api/notifications`, {
       method: "get",
@@ -154,19 +158,42 @@ router.get("/:id/notifications", async (req, res) => {
         res.json({ data: notif });
       })
       .catch(err => console.log("Error", err));
+    }else{
+      return res.status(404).send({ error: "there is no such member " });
+    }
   } else {
     return res.status(404).send({ error: "Not a member id" });
   }
 });
 
 // i want to be able to apply for a task or a project
-router.post("/:id1/projects/:id2", async (req, res) => {
+router.post("/:id1/projects/:id2/apply", async (req, res) => {
+  console.log("keraaaa");
   const project_id = req.params.id2;
   const member_id = req.params.id1;
   if (
     project_id.match(/^[0-9a-fA-F]{24}$/) &&
     member_id.match(/^[0-9a-fA-F]{24}$/)
   ) {
+    console.log("hello1");
+    const project_appliedfor = await project.findById(project_id);
+    const member_applying= await member.findById(member_id);
+    console.log(project_appliedfor);
+    if(member_applying!=null){
+      console.log("hello2");
+    var found=true;
+    for(var i=0;project_appliedfor["required_skills_set"].length>i;i++){
+      if(!member_applying["skill_set"].includes(project_appliedfor["required_skills_set"][i])){
+        found=false;
+        console.log("hello3");
+        break;
+      }
+    }
+    if(!found){
+      console.log("hello4");
+
+      return res.status(404).send({ error: "this member doesnot have the required skills for this project" });
+    }
     var active_task = req.body.activeTasks;
     if (typeof active_task === "undefined") active_task = 0;
 
@@ -193,27 +220,21 @@ router.post("/:id1/projects/:id2", async (req, res) => {
       .then(res => res.json())
       .then(json => res.json(json))
       .catch(err => console.log("Error", err));
+
+
+  }
+  else{
+    return res.status(404).send({ error: "this member doesnt exists" });
+  }
   } else {
     return res.status(404).send({ error: "Not a valid id format" });
   }
+
 });
 
-//POST method to create a new member
-router.post("/", async (req, res) => {
-  try {
-    const isValidated = validator.createValidation(req.body);
-    if (isValidated.error)
-      return res
-        .status(400)
-        .send({ error: isValidated.error.details[0].message });
-    const newMember = await member.create(req.body);
-    res.json({ msg: "member was created successfully", data: newMember });
-  } catch (error) {
-    // error is to be handled  later
-    console.log(error);
-  }
-});
-
+// ------------------------- end of doodie's world ------------------------------------
+// ------------------------- hope u had fun:) -----------------------------------------
+// ------------------------- thank u for visiting -------------------------------------
 // PUT method to update a member
 router.put("/:id", async (req, res) => {
   try {
