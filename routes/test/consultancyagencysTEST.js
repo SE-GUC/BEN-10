@@ -276,22 +276,24 @@ class CATest extends AbstractTests {
       }
       const cid = result[0].consultancyID
       const pr = result[0].id
-      await fetch(
-        `${this.projects_url}/${pr}/`,
-        {
-          method: "put",
-          body: JSON.stringify({life_cycle : "Final Review"}),
-          headers: { "Content-Type": "application/json" }
-        }
-      );
+      if (cid!=null && pr!=null){
+        await fetch(
+          `${this.projects_url}/${pr}/`,
+          {
+            method: "put",
+            body: JSON.stringify({life_cycle : "Final Review"}),
+            headers: { "Content-Type": "application/json" }
+          }
+        );
       const response = await fetch(`${this.base_url}/${cid}/finalreview/${pr}/disapprove/`, {
-        method: 'PUT',
-        body: JSON.stringify(requestBody),
-        headers: { 'Content-Type': 'application/json' }
-      })
+          method: 'PUT',
+          body: JSON.stringify(requestBody),
+          headers: { 'Content-Type': 'application/json' }
+        })
       const jsonResponse = await response.json()
       expect(Object.keys(jsonResponse)).toEqual(["msg"])
       expect(response.status).toEqual(200)
+      }
     })
   }
 
