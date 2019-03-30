@@ -22,27 +22,27 @@ class PARTests extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
-         // this.postRequest()
-         //this.postRequestFail()
-         // this.getRequest()
-          //this.getRequestBYID()
-         // this.getRequestBYIDFail()
-           //this.putRequest()
-         // this.putRequestFail()
-           //this.deleteRequest()
-          // this.deleteRequestFail()
+          this.postRequest()
+         this.postRequestFail()
+          this.getRequest()
+          this.getRequestBYID()
+          this.getRequestBYIDFail()
+           this.putRequest()
+          this.putRequestFail()
+           this.deleteRequest()
+           this.deleteRequestFail()
            // add all methods 
-           //this.postProject()
-         //this.postProjectFail()
-         // this.getMyProjects()
-         // this.getMyProjectsFail()
-          // this.putApproveONFinalDraft()
-         // this.putApproveONFinalDraftFail()
-          //this.putApproveONFinalDraftFail()
-          //this.putDisapproveONFinalDraft()
-         //this.putDisapproveONFinalDraftFail()
-          //this.AssignCAtoProj()
-        // this.AssignCAtoProjFail()
+           this.postProject()
+         this.postProjectFail()
+          this.getMyProjects()
+          this.getMyProjectsFail()
+          this.putApproveONFinalDraft()
+          this.putApproveONFinalDraftFail()
+          this.putApproveONFinalDraftFail()
+          this.putDisapproveONFinalDraft()
+         this.putDisapproveONFinalDraftFail()
+          this.AssignCAtoProj()
+         this.AssignCAtoProjFail()
         })
         resolve()
       })
@@ -150,8 +150,8 @@ class PARTests extends AbstractTests {
       console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
       console.log(jsonResponse )
-      expect(Object.keys(jsonResponse)).toEqual(["error"])
-      expect(response.status).toEqual(404)
+      expect(Object.keys(jsonResponse)).toEqual(['msg'])
+      expect(response.status).toEqual(400)
     })
   }
 
@@ -361,7 +361,9 @@ class PARTests extends AbstractTests {
       var projs = await project.find()
       projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==false)
       const proj = projs[0];
-      await fetch(`${project_url}/${proj.id}/`,{
+      await fetch(
+        `${this.projects_url}/${proj.id}/`,
+        {
           method: "put",
           body: JSON.stringify({life_cycle : "Final Draft"}),
           headers: { "Content-Type": "application/json" }
@@ -377,10 +379,9 @@ class PARTests extends AbstractTests {
       })
       console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
+      console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(['msg'])
       expect(response.status).toEqual(200)
-
     })    
   }
 
@@ -413,8 +414,16 @@ class PARTests extends AbstractTests {
       const par1 = par[0];
       const parid = par1.id;
       var projs = await project.find()
-      projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==false && p.life_cycle =="Final Draft")
+      projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==false)
       const proj = projs[0]
+      await fetch(
+        `${this.projects_url}/${proj.id}/`,
+        {
+          method: "put",
+          body: JSON.stringify({life_cycle : "Final Draft"}),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
       const projid = proj.id;
       console.log(projid)
       console.log(parid)
@@ -461,7 +470,18 @@ class PARTests extends AbstractTests {
       const par1 = par[0];
       const parid = par1.id;
       var projs = await project.find()
-      projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==true && p.consultancyID == null )
+      projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==true)
+      var k=0
+      for(k;k<projs.length;k++){
+      await fetch(
+        `${this.projects_url}/${projs[k].id}/`,
+        {
+          method: "put",
+          body: JSON.stringify({consultancyID : null }),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+    }
       const cas = await consultancyagency.find()
       var ids =[]
       var i=0
@@ -495,10 +515,8 @@ class PARTests extends AbstractTests {
       console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(['msg'])
       expect(response.status).toEqual(200)
-
     })    
   }
-
   AssignCAtoProjFail() {//enter wrong id for consultancy agency 
     const requestBody = {
     }

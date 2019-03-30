@@ -505,7 +505,7 @@ async function addEvent(body) {
     .catch(err => console.log("Error", err));
   return result;
 }
-
+//as an admin i want to see all ca
 router.get("/:id/ShowAllCA", async (req, res) => {
   const id = req.params.id;
 

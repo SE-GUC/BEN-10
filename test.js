@@ -36,17 +36,17 @@ const adminTests = new AdmTests(3000, '/admins')
 // })
 
 
- describe('Partner Requests Tests', () => {
-   Promise.all([
-     parTests.run(),
-   ]).then(result => {})
- })
+//  describe('Partner Requests Tests', () => {
+//    Promise.all([
+//      parTests.run(),
+//    ]).then(result => {})
+//  })
 
-// describe('Admin Requests Tests', () => {
-//   Promise.all([
-//     adminTests.run(),
-//   ]).then(result => {})
-// })
+describe('Admin Requests Tests', () => {
+  Promise.all([
+    adminTests.run(),
+  ]).then(result => {})
+})
 
 afterAll(async () => {
   await mongoose.disconnect();
