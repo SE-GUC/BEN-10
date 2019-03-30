@@ -597,6 +597,8 @@ async function declineFinalReview(pid) {
 router.get("/:id/myProjects", async (req, res) => {
   const id = req.params.id;
   if (ObjectId.isValid(id)) {
+    const partner = await PartnerInfo.findById(id);
+    if(partner){
     var error = true;
     await fetch(`${server}/api/projects`, {
       method: "get",
@@ -616,9 +618,12 @@ router.get("/:id/myProjects", async (req, res) => {
         res.json({ data: proj });
       })
       .catch(err => console.log("Error", err));
-  } else {
-    return res.status(404).send({ error: "Not a Partner ID" });
+  }else{
+    return res.status(404).send({ error: "Partner not found" });
   }
+} else {
+  return res.status(404).send({ error: "ID not found" });
+}
 });
 
 module.exports = router;

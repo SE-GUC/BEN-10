@@ -27,15 +27,6 @@ const erTests = new ERTest(3000, '/eventrequests')
 const parTests = new PARTests(3000, '/partners')
 const adminTests = new AdmTests(3000, '/admins')
 
-
-// Calling tests
-describe('Event Requests Tests', () => {
-  Promise.all([
-    erTests.run(),
-  ]).then(result => {})
-})
-
-
  describe('Partner Requests Tests', () => {
    Promise.all([
      parTests.run(),
