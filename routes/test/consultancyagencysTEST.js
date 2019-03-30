@@ -55,5 +55,21 @@ class CATest extends AbstractTests {
   putRequest  () {}
   deleteRequest  () {}
 
+
+// monda sprint 2 = > 2.3 as ca i want to view all of my projects in final review state 
+// i.e : do review of final work  
+DoFinalReview(){
+  const caid = '5c79260b4328ab820437835c'
+  test('showing projects in final review for that ca',async (done) => {
+      const response = await fetch(`get ${this.base_url}/${caid}/reviewprojects`,{
+        method : 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response to story 2.3 "+response.status)
+      expect(response.status).toEqual(200)
+      done(); 
+  
+  })
+}
 }
 module.exports = CAtest
