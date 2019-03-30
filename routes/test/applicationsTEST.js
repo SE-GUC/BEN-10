@@ -27,12 +27,15 @@ class ApTest extends AbstractTests {
       return new Promise((resolve, reject) => {
         describe('Making sure Application routes work', () => {
 
-           //this.postRequest()
-          //this.postRequestFailed()
-          //this.getRequest()
-          //this.putRequest()
-          //this.deleteRequest()
-          //this.getById()
+          this.postRequest()
+          this.postRequestFailed()
+          this.getRequest()
+          this.putRequest()
+          this.putRequestFailed()
+          this.deleteRequest()
+          this.deleteRequestFailed()
+          this.getById()
+          this.getByIdFailed()
           // add all methods
 
         })
@@ -46,10 +49,10 @@ class ApTest extends AbstractTests {
     const applicationBody = {
        // enter model attributes
        applicantId: "5c79283c92334b03f4b6244f",
-       applicantName: "Alolo",
+       applicantName: "Couti",
        gender: "Male",
        age: 20,
-       email: "Alolol@email.com",
+       email: "Couti@email.com",
        mobile: 1118888555 ,
        applyingDate: "5/5/2005",
        skills: "mogrem",
@@ -100,7 +103,7 @@ class ApTest extends AbstractTests {
   postRequestFailed () {
     const applicationBody = {
        // enter model attributes
-       applicantId: "5c79283c92334b03f4b6244f",
+       applicantId: "5c79283c92334b03f4b624",
        applicantName: "Alolo",
        gender: "Male",
        age: "20",
@@ -148,15 +151,16 @@ class ApTest extends AbstractTests {
 
   putRequest () {
     const applicationBody = {
-       // enter model attributes
-       
-       applicantName: "Ali",
-       age: 25
-      
+       // enter model attributes  
+       //applicantName: "Ali",
+       age: 25  
     }
 
     test(`put ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/${this.sharedState.id}`, {
+      const aps = await Application.find();
+      const ap = aps[0];
+      const apid = ap.id;
+      const response = await fetch(`${this.base_url}/${apid}`, {
         method: 'PUT',
         body: JSON.stringify(applicationBody),
         headers: { 'Content-Type': 'application/json' }
@@ -168,17 +172,54 @@ class ApTest extends AbstractTests {
       expect(response.status).toEqual(200)
  
       const app = await Application.findOne(applicationBody).exec()
-      expect(app.applicantName).toEqual(applicationBody.applicantName)
+      //expect(app.applicantName).toEqual(applicationBody.applicantName)
       expect(app.age).toEqual(applicationBody.age)
 
-      this.sharedState.applicantName =  app.applicantName
-      this.sharedState.age =  app.age
+      //this.sharedState.applicantName =  app.applicantName
+      //this.sharedState.age =  app.age
       
     })
   }
-  deleteRequest  () {
+
+  putRequestFailed () {
+    const applicationBody = {
+       // enter model attributes  
+       //applicantName: "Ali",
+       age: "7amada"  
+    }
+
+    test(`put ${this.base_url}`, async () => {
+      // const aps = await Application.find();
+      // const ap = aps[0];
+      // const apid = ap.id;
+      const response = await fetch(`${this.base_url}/5c935c92331df1144b16ca4`, {
+        method: 'PUT',
+        body: JSON.stringify(applicationBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+ 
+     // const app = await Application.findOne(applicationBody).exec()
+      //expect(app.applicantName).toEqual(applicationBody.applicantName)
+      //expect(app.age).toEqual(applicationBody.age)
+
+      //this.sharedState.applicantName =  app.applicantName
+      //this.sharedState.age =  app.age
+      
+    })
+  }
+
+  deleteRequest () {
     test(`delete ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/${this.sharedState.id}`, {
+      const aps = await Application.find();
+      const lastpos = aps.length - 1 ; 
+      const ap = aps[lastpos];
+      const apid = ap.id;
+      const response = await fetch(`${this.base_url}/${apid}`, {
         method: 'DELETE',
        // body: JSON.stringify(applicationBody),
         headers: { 'Content-Type': 'application/json' }
@@ -193,18 +234,62 @@ class ApTest extends AbstractTests {
     })
   }
 
-  getById  () {
-    test(`get ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/${this.sharedState.id}`, {
-        method: 'GET',
+  deleteRequestFailed () {
+    test(`delete ${this.base_url}`, async () => {
+      //const aps = await Application.find();
+      //const lastpos = aps.length - 1 ; 
+      //const ap = aps[lastpos];
+      //const apid = ap.id;
+      const response = await fetch(`${this.base_url}/5c9e6128a697d0d30ae2cc`, {
+        method: 'DELETE',
        // body: JSON.stringify(applicationBody),
         headers: { 'Content-Type': 'application/json' }
       })
       console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
       console.log(jsonResponse)
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+
+      
+    })
+  }
+
+  getById  () {
+    test(`get ${this.base_url}`, async () => {
+      const aps = await Application.find();
+      const ap = aps[1];
+      const apid = ap.id;
+      const response = await fetch(`${this.base_url}/${apid}`, {
+        method: 'GET',
+       // body: JSON.stringify(applicationBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      //console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['data'])
       expect(response.status).toEqual(200)
+
+      
+    })
+  }
+
+  getByIdFailed  () {
+    test(`get ${this.base_url}`, async () => {
+      //const aps = await Application.find();
+      //const ap = aps[0];
+      //const apid = ap.id;
+      const response = await fetch(`${this.base_url}/5c9e6128a697d0d30ae2cc`, {
+        method: 'GET',
+       // body: JSON.stringify(applicationBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+     // console.log(jsonResponse)
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
 
       
     })
