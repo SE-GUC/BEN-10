@@ -59,9 +59,7 @@ class CATest extends AbstractTests {
         body: JSON.stringify(CAbody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
       expect(response.status).toEqual(200)
       
@@ -96,9 +94,7 @@ class CATest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
 
       expect(Object.keys(jsonResponse)).toEqual(['error'])
       expect(response.status).toEqual(400)
@@ -116,9 +112,7 @@ class CATest extends AbstractTests {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
 
       expect(Object.keys(jsonResponse)).toEqual(['data'])
       expect(response.status).toEqual(200)
@@ -139,9 +133,7 @@ class CATest extends AbstractTests {
         body: JSON.stringify(CAbody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['msg'])
       expect(response.status).toEqual(200)
       const eRequest = await ConsultancyAgencys.findOne(CAbody).exec()
@@ -164,9 +156,7 @@ class CATest extends AbstractTests {
         body: JSON.stringify(CAbody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['error'])
       expect(response.status).toEqual(400)
     })
@@ -177,9 +167,7 @@ class CATest extends AbstractTests {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
       expect(response.status).toEqual(200)
       
@@ -192,9 +180,7 @@ class CATest extends AbstractTests {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['error'])
       expect(response.status).toEqual(404)
       
@@ -210,9 +196,7 @@ class CATest extends AbstractTests {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
 
       expect(Object.keys(jsonResponse)).toEqual(['data'])
       expect(response.status).toEqual(200)
@@ -228,10 +212,7 @@ class CATest extends AbstractTests {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
-
       expect(Object.keys(jsonResponse)).toEqual(['error'])
       expect(response.status).toEqual(404)
 
@@ -248,9 +229,7 @@ class CATest extends AbstractTests {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
 
       expect(Object.keys(jsonResponse)).toEqual(['data'])
       expect(response.status).toEqual(200)
@@ -263,9 +242,7 @@ class CATest extends AbstractTests {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
   
       expect(Object.keys(jsonResponse)).toEqual(['error'])
       expect(response.status).toEqual(404)
