@@ -64,7 +64,10 @@ class ATest extends AbstractTests {
     // const adid = ad1.id;
 
     test(`get ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}/5c7a603a0a4938ccd1e08e76/ShowAllMembers`, {
+      const ad = await Admin.find();
+      const ad1 = ad[0];
+      const adid = ad1.id;
+      const response = await fetch(`${this.base_url}/${adid}/ShowAllMembers`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
