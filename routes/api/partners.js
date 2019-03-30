@@ -533,7 +533,7 @@ router.put("/:id/cancelproject/:pid", async (req, res) => {
           })
           .then(res => {
             if (res.status === 200) {
-              error = false;
+              error = false; 
             }
             return res.json();
           })
