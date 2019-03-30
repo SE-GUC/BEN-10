@@ -45,7 +45,6 @@ class MTest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
 
       expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
@@ -73,9 +72,7 @@ class MTest extends AbstractTests {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['msg'])
       expect(response.status).toEqual(200)
     })
@@ -87,9 +84,7 @@ class MTest extends AbstractTests {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['error'])
       expect(response.status).toEqual(404)
     })
