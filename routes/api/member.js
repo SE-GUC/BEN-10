@@ -307,7 +307,7 @@ async function getProjects() {
     .catch(err => console.log("Error", err));
   return result;
 }
-//as a candidate i want to view an events so that i can book a place in it
+// as a candidate i want to view an events so that i can book a place in it
 router.get("/:id/getEvent", async (req, res) => {
   const id = req.params.id;
   if (ObjectId.isValid(id)) {
@@ -330,6 +330,7 @@ async function getEvents() {
       var yyyy = today.getFullYear();
       today = yyyy + "-" + mm + "-" + dd + "T00:00:00.000Z";
       const hisEvents = events.filter(m => m.eventDate >= today);
+      console.log(hisEvents)
       result = hisEvents;
       return hisEvents;
     })
