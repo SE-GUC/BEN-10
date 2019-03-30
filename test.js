@@ -29,24 +29,24 @@ const adminTests = new AdmTests(3000, '/admins')
 
 
 // Calling tests
-// describe('Event Requests Tests', () => {
-//   Promise.all([
-//     erTests.run(),
-//   ]).then(result => {})
-// })
-
-
-//  describe('Partner Requests Tests', () => {
-//    Promise.all([
-//      parTests.run(),
-//    ]).then(result => {})
-//  })
-
-describe('Admin Requests Tests', () => {
+describe('Event Requests Tests', () => {
   Promise.all([
-    adminTests.run(),
+    erTests.run(),
   ]).then(result => {})
 })
+
+
+ describe('Partner Requests Tests', () => {
+   Promise.all([
+     parTests.run(),
+   ]).then(result => {})
+ })
+
+// describe('Admin Requests Tests', () => {
+//   Promise.all([
+//     adminTests.run(),
+//   ]).then(result => {})
+// })
 
 afterAll(async () => {
   await mongoose.disconnect();
