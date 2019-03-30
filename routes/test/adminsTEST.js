@@ -59,10 +59,7 @@ class ATest extends AbstractTests {
   deleteRequest  () {}
 
   viewMembers(){
-    // const ad = await Admin.find();
-    // const ad1 = ad[0];
-    // const adid = ad1.id;
-
+    
     test(`get ${this.base_url}`, async () => {
       const ad = await Admin.find();
       const ad1 = ad[0];
