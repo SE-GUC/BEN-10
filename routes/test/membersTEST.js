@@ -169,7 +169,7 @@ appylyForproject(){
     
     }
     console.log(requestBody)
-     const response = await fetch(`${this.base_url}/${member_id}/projects/${project_id}`, {
+     const response = await fetch(`${this.base_url}/${member_id}/projects/${project_id}/apply`, {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
