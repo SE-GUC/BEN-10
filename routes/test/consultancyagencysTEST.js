@@ -21,18 +21,18 @@ class CATest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
-        //this.postRequest()
-       // this.postRequestFail()
-        //this.getRequest()
-        //this.putRequest()
+       this.postRequest()
+       this.postRequestFail()
+        this.getRequest()
+       this.putRequest()
         //this.putRequestFail()
-        //this.deleteRequest()
-        // this.deleteRequestFail()
-         //this.getById()
-        //this.getByIdFail()
+        this.deleteRequest()
+        this.deleteRequestFail()
+       // this.getById()
+        this.getByIdFail()
            //22 AS a consultancy Agency i want to view my events
-            //this.viewMyEvents()
-          //  this.viewMyEventsFail()
+            this.viewMyEvents()
+           this.viewMyEventsFail()
          // add all methods
 
         })
@@ -153,8 +153,8 @@ class CATest extends AbstractTests {
   }
   putRequestFail () {
     const CAbody = {
-      telephoneNumber: "01010121234000",
-      yearsOfExperience:5 
+      telephoneNumber: "010104000",
+      yearsOfExperience:"o"
     }
  
     test(`put ${this.base_url}`, async () => {
@@ -168,12 +168,6 @@ class CATest extends AbstractTests {
       console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['error'])
       expect(response.status).toEqual(400)
-      const eRequest = await ConsultancyAgencys.findOne(CAbody).exec()
-      expect(eRequest.telephoneNumber).toEqual(CAbody.telephoneNumber)
-      expect(eRequest.yearsOfExperience).toEqual(CAbody.yearsOfExperience)
-      this.sharedState.telephoneNumber =  eRequest.telephoneNumber
-      this.sharedState.yearsOfExperience =  eRequest.yearsOfExperience
-      
     })
   }
   deleteRequest  () {
