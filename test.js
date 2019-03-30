@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 // Import testfiles
 
 const ERTest = require('./routes/test/eventrequestsTEST')
+const ADTest = require('./routes/test/adminsTEST')
 
 // Connect to mongo atlas
 const db = require('./config/keys').mongoURI
@@ -22,14 +23,21 @@ beforeAll(async () => {
 
 // Calling the test files
 const erTests = new ERTest(3000, '/eventrequests')
+const aTests = new ADTest(3000, '/admins')
 
 // Calling tests
-describe('Event Requests Tests', () => {
+// describe('Event Requests Tests', () => {
+//   Promise.all([
+//     erTests.run(),
+//   ]).then(result => {})
+// })
+
+
+describe('admin Tests', () => {
   Promise.all([
-    erTests.run(),
+    aTests.run(),
   ]).then(result => {})
 })
-
 afterAll(async () => {
   await mongoose.disconnect();
 })
