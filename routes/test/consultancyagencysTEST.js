@@ -17,10 +17,11 @@ class CATest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure CA routes work', () => {
-          // this.postRequest()
-          // this.getRequest()
-          // this.putRequest()
-          // this.deleteRequest()
+          this.postRequest()
+          this.getRequest()
+          this.putRequest()
+          this.deleteRequest()
+          
           // add all methods
           this.CARequestEvent()
           this.CARequestEventmissingattribute()
@@ -39,6 +40,13 @@ class CATest extends AbstractTests {
           this.putRequestDisapprovebywrongProjectID()
           this.putRequestDisapprovebynotavalidatedProjectID()
           this.putRequestDisapprovebynotaProjectsOwner()
+           // 2.1- As a consultancy agency i want to apply for task/project
+          this.applyForProject()
+          this.applyForProjectFailed()
+          
+          // 3- As a CA i want to view my projects
+          this.viewMyProjects()
+          this.viewMyProjectsFailed()
         })
         resolve()
       })
@@ -388,5 +396,89 @@ class CATest extends AbstractTests {
   }
 
 
+  applyForProject(){
+    test(`put ${this.base_url}`, async () => {
+      const consultancies = await CAs.find();
+      const con = consultancies[0];
+      const projects = await Projects.find();
+      const proj = projects[0];
+      const response = await fetch(`${this.base_url}/${con.id}/caApplyProject/${proj.id}`, {
+        method: 'PUT',
+        //body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+
+      expect(Object.keys(jsonResponse)).toEqual(['msg'])
+      expect(response.status).toEqual(200)
+
+     
+
+    })
+  }
+
+  applyForProjectFailed(){
+    test(`put ${this.base_url}`, async () => {
+      //const consultancies = await CAs.find();
+      //const con = consultancies[0];
+      //const projects = await Projects.find();
+      //const proj = projects[0];
+      const response = await fetch(`${this.base_url}/5c79260b4328ab820437835/caApplyProject/5c94436fd0c61339203ad8`, {
+        method: 'PUT',
+        //body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+
+     
+
+    })
+  }
+
+  viewMyProjects(){
+    test(`get ${this.base_url}`, async () => {
+      const consultancies = await CAs.find()
+      const con = consultancies[0]
+      const response = await fetch(`${this.base_url}/${con.id}/projects`, {
+        method: 'GET',
+        //body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(['data'])
+      expect(response.status).toEqual(200)
+
+     
+      
+    })
+  }
+
+  viewMyProjectsFailed(){
+    test(`get ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c79260b4328ab82043783c/projects`, {
+        method: 'GET',
+        //body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+
+     
+      
+    })
+  }
 }
 module.exports = CATest

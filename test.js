@@ -5,11 +5,13 @@ jest.setTimeout(30000);
 // Import testfiles
 
 const ERTest = require('./routes/test/eventrequestsTEST')
+const ApTest = require('./routes/test/applicationsTEST')
 const PRTest = require('./routes/test/projectsTEST')
 const CATest = require('./routes/test/consultancyagencysTEST')
 const ATest = require('./routes/test/adminsTEST')
 const MTest = require('./routes/test/membersTEST')
 const PaTest = require('./routes/test/partnersTEST')
+ Dev
 
 // Connect to mongo atlas
 const db = require('./config/keys').mongoURI
@@ -27,11 +29,26 @@ beforeAll(async () => {
 
 
 // Calling the test files
+const erTests = new ERTest(3000, '/eventrequests')
+const apTests = new ApTest(3000, '/applications')
+const caTests = new CATest(3000, '/consultancyagency')
 const prTests = new PRTest(3000, '/projects')
 const caTests = new CATest(3000, '/consultancyagency')
 const aTests = new ATest(3000, '/admins')
 const mTests = new MTest(3000, '/member')
 const paTests = new PaTest(3000, '/partners')
+
+describe('Applications Tests', () => {
+  Promise.all([
+    apTests.run(),
+  ]).then(result => {})
+})
+
+describe('Consultancy Agencys Tests', () => {
+  Promise.all([
+    caTests.run(),
+  ]).then(result => {})
+})
 
  describe('Partner Requests Tests', () => {
    Promise.all([
@@ -47,11 +64,8 @@ describe('Admin Requests Tests', () => {
 
 describe('Projects Tests', () => {
   Promise.all([
-    caTests.run(),
     mTests.run(),
     paTests.run()
-  ]).then(result => {})
-})
 
 afterAll(async () => {
   await mongoose.disconnect();
