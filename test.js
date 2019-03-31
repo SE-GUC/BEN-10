@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 // Import testfiles
 
-const ERTest = require('./routes/test/eventrequestsTEST')
+const ERTest = require('./routes/test/notificationsTEST')
 
 // Connect to mongo atlas
 const db = require('./config/keys').mongoURI
@@ -21,10 +21,10 @@ beforeAll(async () => {
 
 
 // Calling the test files
-const erTests = new ERTest(3000, '/eventrequests')
+const erTests = new ERTest(3000, '/notifications')
 
 // Calling tests
-describe('Event Requests Tests', () => {
+describe('Notifications Tests', () => {
   Promise.all([
     erTests.run(),
   ]).then(result => {})
