@@ -70,7 +70,7 @@ class NTest extends AbstractTests {
         method: "GET",
         headers: { "Content-Type": "application/json" }
       });
-      console.log("response status: " + response.status);
+      //console.lo("response status: " + response.status);
       const jsonResponse = await response.json();
 
       expect(Object.keys(jsonResponse).toString()).toEqual(["data"].toString());
@@ -85,7 +85,7 @@ class NTest extends AbstractTests {
         method: "GET",
         headers: { "Content-Type": "application/json" }
       });
-      console.log("response status: " + response.status);
+      //console.lo("response status: " + response.status);
       const jsonResponse = await response.json();
 
       expect(Object.keys(jsonResponse).toString()).toEqual(["data"].toString());
@@ -109,7 +109,7 @@ class NTest extends AbstractTests {
         seen: !n1.seen
       };
 
-      console.log(this.base_url + "/" + n1._id);
+      //console.lo(this.base_url + "/" + n1._id);
       const response = await fetch(`${this.base_url}/${n1._id}`, {
         method: "PUT",
         body: JSON.stringify(requestBody),
@@ -139,7 +139,7 @@ class NTest extends AbstractTests {
     test(`delete ${this.base_url}`, async () => {
       const notification = await Notification.find();
       const n1 = notification[0];
-      console.log(this.base_url + "/" + n1._id);
+      //console.lo(this.base_url + "/" + n1._id);
       var response = await fetch(`${this.base_url}/${n1._id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" }
