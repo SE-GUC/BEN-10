@@ -9,7 +9,7 @@ mongoose.set("useFindAndModify", false);
 
 router.get("/", async (req, res) => {
   const projects = await Project.find();
-  res.json({ data: projects });
+  res.status(200).json({ data: projects });
 });
 
 // get a project
@@ -51,7 +51,7 @@ router.put("/:id", async (req, res) => {
         return res
           .status(400)
           .send({ error: isValidated.error.details[0].message });
-      const updatedProject = await Project.findByIdAndUpdate(
+      const updatedProject = await Project.findOneAndUpdate(
         { _id: req.params.id },
         req.body
       );
