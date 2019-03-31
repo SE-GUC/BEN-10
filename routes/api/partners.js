@@ -6,7 +6,8 @@ const Project = require("../../models/Project");
 const PartnerInfo = require("../../models/PartnerInfo");
 const fetch = require("node-fetch");
 const server = require("../../config/config");
-const partners = require("../../models/PartnerInfo");
+const Member = require("../../models/member");
+const Event = require("../../models/Event");
 const validator = require("../../validations/partnerValidations");
 const ObjectId = require("mongodb").ObjectID;
 
@@ -17,88 +18,71 @@ router.get("/", async (req, res) => {
   res.json({ data: partners });
 });
 
-router.post("/:id/addProject", async (req, res) => {
+//1.0 as a partner i want to submit a description on a task/project 
+router.post('/:id/addProject', async (req,res) => {
   try {
-    if (ObjectId.isValid(req.params.id)) {
-      const company_id = req.params.id;
-      const Project = {
-        description: req.body.description,
-        company: req.body.company,
-        companyID: company_id,
-        category: req.body.category,
-        want_consultancy: req.body.want_consultancy,
-        posted_date: req.body.posted_date,
-        life_cycle: "started",
-        experience_level_needed: req.body.experience_level_needed,
-        required_skills_set: req.body.required_skills_set
-      };
-
-      var error = true;
-      await fetch(`${server}/api/projects/`, {
-        method: "post",
-        body: JSON.stringify(Project),
-        headers: { "Content-Type": "application/json" }
-      })
-        // .then(checkStatus)
-        .then(res => {
-          if (res.status === 200) {
-            error = false;
+      if(ObjectId.isValid(req.params.id))
+      {
+          console.log(req.body.want_consultancy)
+          console.log(req.body.want_consultancy == true)
+          const company_id=req.params.id
+          var life;
+          if(req.body.want_consultancy == true){
+              life = "Waiting for consultancy"
           }
-          console.log(res.status);
-          if (!error) {
-            result = res;
+          else{
+              life = "Negotiation"
           }
-          return res.json();
-        })
-        .then(json => {
-          if (!error) {
-            res.json(json);
+          var result;
+          var error = true
+          const Project={
+          description:req.body.description,
+          company:req.body.company,
+          companyID: company_id,
+          category:req.body.category,
+          want_consultancy:req.body.want_consultancy,
+          posted_date:req.body.posted_date,
+          life_cycle : life
           }
-          result = json;
-          console.log(json);
-        })
-        .catch(err => console.log("Error", err));
-      return result;
-    } else {
-      return res.status(404).send({ error: "Error" });
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(400).send("Error");
+          await fetch(`${server}/api/projects/`, {
+              method: 'post',
+              body:    JSON.stringify(Project),
+              headers: { 'Content-Type': 'application/json' },
+          })
+          // .then(checkStatus)
+          .then(res => {
+              if(res.status === 200){
+                  error = false;
+              }
+              console.log(res.status)
+              if(!error){
+                  result = res
+              }
+              return res.json()
+          })
+          .then(json => {
+              if(!error){
+                  json = ({msg:`created successfully`});
+              }
+              result = json
+              console.log(json)
+              
+          })
+          .catch((err) => console.log("Error",err));
+       res.json(result)
+                  
+           
+      }
+      else {
+          return res.status(404).send({ error: "Error" })
+      }
   }
-});
-
-router.put("/:id/Myprojects/:pid/finaldraft/accept", async (req, res) => {
-  try {
-    if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
-      const j = await DecideOnProject(req.params.pid);
-      res.status(200).send(j);
-    } else {
-      return res.status(404).send({ error: "ID NOT FOUND" });
-    }
-  } catch {
-    console.log(error);
-    return res.status(404).send({ error: "not a project id" });
+  catch(error) {
+      console.log(error)
+      return res.status(400).send('Error')
   }
-});
-async function DecideOnProject(id, decision) {
-  const url = `${server}/api/projects/${id}`;
-  await fetch(url, {
-    method: "put",
-    body: JSON.stringify({ life_cycle: decision }),
-    headers: { "Content-Type": "application/json" }
-  })
-    .then(res => {
-      console.log(res.status);
-      return res.json();
-    })
-    .then(json => {
-      console.log(json);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}
+    
+})
 
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
@@ -222,55 +206,6 @@ router.post("/:id/submitRequest/", async (req, res) => {
   return res.json(j);
 });
 
-//1.0 as a partner i want to submit a description on a task/project
-router.post("/:id/addProject", async (req, res) => {
-  try {
-    if (ObjectId.isValid(req.params.id)) {
-      const company_id = req.params.id;
-      const Project = {
-        description: req.body.description,
-        company: req.body.company,
-        companyID: company_id,
-        category: req.body.category,
-        want_consultancy: req.body.want_consultancy,
-        posted_date: req.body.posted_date,
-        life_cycle: "Submitted"
-      };
-
-      var error = true;
-      await fetch(`${server}/api/projects/`, {
-        method: "post",
-        body: JSON.stringify(Project),
-        headers: { "Content-Type": "application/json" }
-      })
-        // .then(checkStatus)
-        .then(res => {
-          if (res.status === 200) {
-            error = false;
-          }
-          console.log(res.status);
-          if (!error) {
-            result = res;
-          }
-          return res.json();
-        })
-        .then(json => {
-          if (!error) {
-            res.json(json);
-          }
-          result = json;
-          console.log(json);
-        })
-        .catch(err => console.log("Error", err));
-      return res.json(result);
-    } else {
-      return res.status(404).send({ error: "Error" });
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(400).send("Error");
-  }
-});
 
 async function deleteProject(id) {
   var error = true;
@@ -389,18 +324,21 @@ async function getProjects(partnerid) {
     .catch(err => console.log("Error", err));
   return result;
 }
-
-// 1.1 as a partner i want to assign a consultancy agency to a project
-router.put("/:id1/AssignCAtoProject/:id2", async (req, res) => {
+// assign ca to project
+router.put("/:id3/project/:id1/AssignCAtoProject/:id2", async (req, res) => {
   const projID = req.params.id1;
   const caId = req.params.id2;
-  if (ObjectId.isValid(projID) && ObjectId.isValid(caId)) {
+  const part = req.params.id3;
+  if (ObjectId.isValid(projID) && ObjectId.isValid(caId) && ObjectId.isValid(part) ) {
     const project = await Project.findById(projID);
     const consultancy = await ConsultancyAgency.findById(caId);
-
-    if (project && consultancy) {
+    const partner = await PartnerInfo.findById(part)
+    if (project && consultancy && partner) {
       var consul = project.applyingCA;
       var found = false;
+      var same1 = project.companyID
+      var same2 = req.params.id3
+      if( same1 == same2 ) {
       for (var i = 0; consul.length > i; i++) {
         if (caId == consul[i]) {
           found = true;
@@ -418,8 +356,11 @@ router.put("/:id1/AssignCAtoProject/:id2", async (req, res) => {
       } else {
         res.send({ msg: "Projecst doesn't need a consultancy" });
       }
-    } else return res.status(404).send({ error: "invalid ID" });
-  } else {
+    }else { res.send({ msg: "Partner is not the owner of the Project to edit" }); }
+ } 
+ else return res.status(404).send({ error: "invalid ID" });
+  } 
+  else {
     return res.status(404).send({ error: "invalid ID" });
   }
 });
@@ -449,72 +390,187 @@ async function assigning(caId, projID) {
   return j;
 }
 
-//1.2 as a partner i want to approve
-router.put("/:id/myprojects/:pid/finaldraft/approve", async (req, res) => {
-  try {
-    if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
-      const decision = "Approved";
-      const j = await ApproveProject(req.params.pid, decision);
-      res.status(200).send(j);
-    } else {
-      return res.status(404).send({ error: "ID NOT FOUND" });
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(404).send({ error: "not a project id" });
+//1.2 as a partner i want to approve 
+router.put('/:id1/myprojects/:id2/finaldraft/approve', async (req,res)=>{
+  const  part=req.params.id1;
+  const   proj =req.params.id2;
+if(ObjectId.isValid(part) && ObjectId.isValid(proj)){
+  const partner = await PartnerInfo.findById(part);
+  const project = await Project.findById(proj);
+  console.log(partner)
+  console.log(project)
+  if (partner && project){
+      var app = project.life_cycle
+      var consl = project.want_consultancy
+      if(consl == false){
+      if(app == "Final Draft" ){
+       const decision="Approved"
+      const j = await ApproveProject(proj,decision)
+      res.send(j)
   }
+  else{return res.status(404).send({ error: "Not in the Final Draft to approve" })}
+}else { return res.status(404).send({ error: "Consultancy Agency is the one to Approve" })}
+}else
+return res.status(404).send({error: 'invalid ID'})
+}else{
+return res.status(404).send({error: 'invalid ID'})
+}
+
+})
+
+async function ApproveProject(id,decision){
+const url  = `${server}/api/projects/${id}`;
+var j
+await fetch(url, {
+          method:'put',
+          body : JSON.stringify({life_cycle : decision}),
+          headers: { 'Content-Type': 'application/json' }
+          })
+    .then(res =>{  console.log(res.status)  
+                   return res.json()}
+         )
+    .then(json =>{ console.log(json)
+  j= json})
+    .catch(err =>{ console.log(err)})
+    return j
+}
+//1.2 parte 2 as a partner i want to disapprove 
+router.put('/:id/myprojects/:pid/finaldraft/disapprove', async (req,res)=>{
+const  part=req.params.id;
+const   proj =req.params.pid;
+if(ObjectId.isValid(part) && ObjectId.isValid(proj)){
+const partner = await PartnerInfo.findById(part);
+const project = await Project.findById(proj);
+if (partner && project){
+var dis = project.life_cycle
+var consl = project.want_consultancy
+if(consl == false){
+if(dis == "Final Draft"){
+const decision="Negotiation"
+const j = await disapproveProject(proj,decision)
+res.send(j)
+}else{return res.status(404).send({ error: "No Final Draft to Disapprove it " })}
+}else { return res.status(404).send({ error: "Consultancy Agency is the one to Cancel" })}
+}else
+return res.status(404).send({error: 'invalid ID'})
+}else{
+return res.status(404).send({error: 'invalid ID'})
+}
+
+})
+async function disapproveProject(id,decision){
+  var j
+const url  = `${server}/api/projects/${id}`;
+await fetch(url, {
+          method:'put',
+          body : JSON.stringify({life_cycle : decision}),
+          headers: { 'Content-Type': 'application/json' }
+          })
+    .then(res =>{  console.log(res.status)  
+                   return res.json()}
+         )
+    .then(json =>{ console.log(json)
+    j = json})
+    .catch(err =>{ console.log(err)})
+    return j
+}
+
+          
+// 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+router.post("/:pid/rating/:eid/", async (req, res) => {
+  if (ObjectId.isValid(req.params.pid) && ObjectId.isValid(req.params.eid)) {
+    const partner = await PartnerInfo.findById(req.params.pid);
+    const event = await Event.findById(req.params.eid);
+    if (partner && event) {
+      if (event.requestorId == req.params.pid) {
+        var i;
+        var success = true;
+        var date = Date.now()
+        const attendees = event.bookedMembers
+        var arr = new Array(attendees.length);
+        for (i = 0; i < attendees.length; i++) {
+          const j = await Partnerrequestrating(event.formLink, attendees[i], date);
+          arr[i] = j;
+        }
+        for (i = 0; i < attendees.length; i++){
+          if (arr[i].msg != "Notifications are sent successfully")
+            success = false;
+        }
+        if (success)
+          res.json({ msg: "Notifications are sent successfully" })
+        else
+          res.json({ msg: "Error occured" })
+      } else {
+        return res.status(400).send({ error: 'this event does not belong to you' });
+      }
+    } else return res.status(404).send({ error: "inavalid inputs" });
+  } else return res.status(404).send({ error: "inavalid inputs" });
 });
-async function ApproveProject(id, decision) {
-  const url = `${server}/api/projects/${id}`;
-  await fetch(url, {
-    method: "put",
-    body: JSON.stringify({ life_cycle: decision }),
+
+// 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+async function Partnerrequestrating(formLink,id,date) {
+  var error = true;
+  const body = {
+    description: `please rate thie event through this form ${formLink}`,
+    NotifiedPerson: id,
+    date: date,
+    seen: "false"
+  };
+  var j;
+  await fetch(`${server}/api/notifications/`, {
+    method: "post",
+    body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" }
   })
     .then(res => {
-      console.log(res.status);
+      if (res.status === 200) {
+        error = false;
+      }
       return res.json();
     })
     .then(json => {
-      console.log(json);
+      if (!error) {
+        json = { msg: "Notifications are sent successfully" };
+      }
+      j = json;
     })
-    .catch(err => {
-      console.log(err);
-    });
+    .catch(err => console.log("Error", err));
+
+  return j;
 }
-//1.2 parte 2 as a partner i want to disapprove
-router.put("/:id/myprojects/:pid/finaldraft/disapprove", async (req, res) => {
-  try {
-    if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
-      const decision = "Negotiation";
-      const j = await disapproveProject(req.params.pid, decision);
-      res.status(200).send(j);
-    } else {
-      return res.status(404).send({ error: "ID NOT FOUND" });
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(404).send({ error: "not a project id" });
+
+// as i partner i want to get my projects 
+router.get("/:id/myProjects", async (req, res) => {
+  const id = req.params.id;
+  if (ObjectId.isValid(id)) {
+    const partner = await PartnerInfo.findById(id);
+    if(partner){
+    var error = true;
+    await fetch(`${server}/api/projects`, {
+      method: "get",
+      headers: { "Content-Type": "application/json" }
+    })
+      .then(res => {
+        if (res.status === 200) {
+          error = false;
+        }
+        return res.json();
+      })
+      .then(json => {
+        const myprojects= json.data;
+        const proj = myprojects.filter(
+          myprojects => myprojects.companyID === id
+        );
+        res.json({ data: proj });
+      })
+      .catch(err => console.log("Error", err));
+  }else{
+    return res.status(404).send({ error: "Partner not found" });
   }
-});
-async function disapproveProject(id, decision) {
-  const url = `${server}/api/projects/${id}`;
-  await fetch(url, {
-    method: "put",
-    body: JSON.stringify({ life_cycle: decision }),
-    headers: { "Content-Type": "application/json" }
-  })
-    .then(res => {
-      console.log(res.status);
-      return res.json();
-    })
-    .then(json => {
-      console.log(json);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+} else {
+  return res.status(404).send({ error: "ID not found" });
 }
+});
 
 //sprint3 => 5- as partner i want to cancel my project
 router.use("/:id/cancelproject/:pid", async (req, res) => {
@@ -588,7 +644,8 @@ router.put("/:id/myprojects/:pid/finalreview/approve", async (req, res) => {
       if (proj.companyID == req.params.id) {
         if (proj.life_cycle === "Final Review") {
           const j = await acceptFinalReview(req.params.pid);
-          res.json(j);
+          console.log(j)
+          res.send(j);
         } else {
           //not final review
           res
