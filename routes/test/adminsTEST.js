@@ -1,3 +1,4 @@
+
 const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
 const Admin = require('../../models/Admin')
@@ -9,19 +10,24 @@ class ATest extends AbstractTests {
   constructor (PORT, ROUTE) {
     super(PORT, ROUTE)
     this.sharedState = {
-        // enter model attributes an set them to null
-    }
+      // enter model attributes an set them to null
+    };
   }
 
   run() {
-    super.run()
+    super.run();
     try {
       return new Promise((resolve, reject) => {
-        describe('Making sure Admins routes work', () => {
+        describe("Making sure Admin routes work", () => {
+
           this.postRequest()
           this.getRequest()
           this.putRequest()
           this.deleteRequest()
+          this.postAProject();
+          this.sendFinalDraft();
+          this.sendFinalDraftFail();
+          this.postAProjectFail();
           // add all methods
           this.getdescription()
           this.getdescriptionbywrongAdminID()
@@ -46,15 +52,13 @@ class ATest extends AbstractTests {
     } catch (err) {}
   }
 
+  postRequest() {}
 
-  postRequest () {}
+  getRequest() {}
+  putRequest() {}
+  deleteRequest() {}
 
-  getRequest  () {}
-  putRequest  () {}
-  deleteRequest  () {}
-
-  //3 --As an admin I want to further check the description of a task/project so that it will be posted for candidates to apply
-  getdescription() {
+ getdescription() {
     test(`get ${this.base_url}/${this.sharedState.id}/pdescription/:id/`, async () => {
       const ad = await Admin.find();
       const ad1 = ad[0];
@@ -367,6 +371,118 @@ class ATest extends AbstractTests {
       
     })
   }
+  
+  postAProject() {
+    const requestBody = {};
+
+    test(`Admin Post A Project ${
+      this.base_url
+    }/:aid/postProject/:pid`, async () => {
+      const ad = await Admin.find();
+      const ad1 = ad[0];
+      const adid = ad1.id;
+      const pr = await Project.find();
+      const pr1 = pr[0];
+      const prid = pr1.id;
+      const response = await fetch(
+        `${this.base_url}/${adid}/postProject/${prid}`,
+        {
+          method: "put",
+          body: JSON.stringify(requestBody),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+      const jsonResponse = await response.json();
+
+      expect(Object.keys(jsonResponse)).toEqual(["msg"]);
+      expect(response.status).toEqual(200);
+    });
+  }
+
+  sendFinalDraft() {
+    const requestBody = {
+      final_draft: "TESTDARFT"
+    };
+
+    test(`Admin Send Final Draft ${
+      this.base_url
+    }/:aid/myProjects/:pid/sendDraft`, async () => {
+      const ad = await Admin.find();
+      const ad1 = ad[0];
+      const pr = await Project.find();
+      const pr1 = pr[0];
+      const response = await fetch(
+        `${
+          this.base_url
+        }/${ad1.id}/myProjects/${pr1.id}/sendDraft`,
+        {
+          method: "put",
+          body: JSON.stringify(requestBody),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+      const jsonResponse = await response.json();
+
+      expect(Object.keys(jsonResponse)).toEqual(["msg"]);
+      expect(response.status).toEqual(200);
+    });
+  }
+
+  postAProjectFail() {
+    const requestBody = {};
+
+    test(`Admin Post A Project Fail${
+      this.base_url
+    }/:aid/postProject/:pid`, async () => {
+      const ad = await Admin.find();
+      const ad1 = ad[0];
+      const adid = ad1.id;
+      const pr = await Project.find();
+      const pr1 = pr[0];
+      const prid = pr1.id;
+      const response = await fetch(
+        `${this.base_url}/${adid}/postProject/5c79283c92334b03f4b624f`,
+        {
+          method: "put",
+          body: JSON.stringify(requestBody),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+      const jsonResponse = await response.json();
+
+      expect(Object.keys(jsonResponse)).toEqual(["error"]);
+      expect(response.status).toEqual(404);
+    });
+  }
+
+  sendFinalDraftFail() {
+    const requestBody = {
+    };
+
+    test(`Admin Send Final Draft Fail ${
+      this.base_url
+    }/:aid/myProjects/:pid/sendDraft`, async () => {
+      const ad = await Admin.find();
+      const ad1 = ad[0];
+      const pr = await Project.find();
+      const pr1 = pr[0];
+      const response = await fetch(
+        `${
+          this.base_url
+        }/${ad1.id}/myProjects/${pr1.id}/sendDraft`,
+        {
+          method: "put",
+          body: JSON.stringify(requestBody),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+      const jsonResponse = await response.json();
+
+      expect(Object.keys(jsonResponse)).toEqual(["error"]);
+      expect(response.status).toEqual(400);
+    });
+  }
+  
 }
 
 module.exports = ATest

@@ -475,6 +475,7 @@ await fetch(url, {
     return j
 }
 
+          
 // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
 router.post("/:pid/rating/:eid/", async (req, res) => {
   if (ObjectId.isValid(req.params.pid) && ObjectId.isValid(req.params.eid)) {
@@ -570,5 +571,125 @@ router.get("/:id/myProjects", async (req, res) => {
   return res.status(404).send({ error: "ID not found" });
 }
 });
+
+// -- 7 As a partner I wanto to approve/disapprove the final review of a project
+
+router.put("/:id/myprojects/:pid/finalreview/approve", async (req, res) => {
+  try {
+    const par = await PartnerInfo.findById(req.params.id);
+    const proj = await Project.findById(req.params.pid);
+    if (par && proj) {
+      if (proj.companyID == req.params.id) {
+        if (proj.life_cycle === "Final Review") {
+          const j = await acceptFinalReview(req.params.pid);
+          console.log(j)
+          res.send(j);
+        } else {
+          //not final review
+          res
+            .status(400)
+            .send({
+              error: "The project is not submitted to be finally reviewed"
+            });
+        }
+      } else {
+        //not your project
+        res.status(400).send({ error: "You can not access this project" });
+      }
+    } else {
+      //id error
+      res.status(400).send({ error: "ERROR: Project not found" });
+    }
+  } catch (error) {
+    res.status(404).send({ error: "Error" });
+  }
+});
+
+async function acceptFinalReview(pid) {
+  var j;
+  var error = true;
+  await fetch(`${server}/api/projects/${pid}`, {
+    method: "put",
+    body: JSON.stringify({ life_cycle: "Finished" }),
+    headers: { "Content-Type": "application/json" }
+  })
+    .then(res => {
+      if (res.status === 200) {
+        error = false;
+      }
+      return res.json();
+    })
+    .then(json => {
+      if (!error) {
+        json = { msg: "Final Review accepted successfully" };
+      }
+      j = json;
+    })
+    .catch(err => {
+      console.log("Error", err);
+      j = { msg: "Error" };
+    });
+
+  return j;
+}
+router.put("/:id/myprojects/:pid/finalreview/decline", async (req, res) => {
+  try {
+    const par = await PartnerInfo.findById(req.params.id);
+    const proj = await Project.findById(req.params.pid);
+    if (par && proj) {
+      if (proj.companyID == req.params.id) {
+        if (proj.life_cycle === "Final Review") {
+          const j = await declineFinalReview(req.params.pid);
+          res.json(j);
+        } else {
+          //not final review
+          res
+            .status(400)
+            .send({
+              error: "The project is not submitted to be finally reviewed"
+            });
+        }
+      } else {
+        //not your project
+        res.status(400).send({ error: "You can not access this project" });
+      }
+    } else {
+      //id error
+      res.status(400).send({ error: "ERROR: Project not found" });
+    }
+  } catch (error) {
+    res.status(404).send({ error: "Error" });
+  }
+});
+
+async function declineFinalReview(pid) {
+  var j;
+  var error = true;
+  await fetch(`${server}/api/projects/${pid}`, {
+    method: "put",
+    body: JSON.stringify({ life_cycle: "In Progress" }),
+    headers: { "Content-Type": "application/json" }
+  })
+    .then(res => {
+      if (res.status === 200) {
+        error = false;
+      }
+      return res.json();
+    })
+    .then(json => {
+      if (!error) {
+        json = {
+          msg: "Final Review declined successfully -> The project In Progress"
+        };
+      }
+      j = json;
+    })
+    .catch(err => {
+      console.log("Error", err);
+      j = { msg: "Error" };
+    });
+
+  return j;
+}
 
 module.exports = router;

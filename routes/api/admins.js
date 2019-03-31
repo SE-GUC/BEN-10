@@ -17,6 +17,9 @@ mongoose.set("useFindAndModify", false);
 router.get("/", async (req, res) => {
   const admins = await Admin.find();
   res.json({ data: admins });
+  const adm = await Admin.find()
+    const aid = adm[0].id
+    console.log(aid)
 });
 
 router.get("/:id", async (req, res) => {
@@ -163,7 +166,7 @@ router.put("/:id/myProjects/:pid/sendDraft", async (req, res) => {
         const j = await sendFinalDraft(req.params.pid, req.body.final_draft);
         res.status(200).send(j);
       } else {
-        return res.status(400).send({ error: "Please insert thr final" });
+        return res.status(400).send({ error: "Please insert the final draft" });
       }
     } else {
       return res.status(404).send({ error: "ID NOT FOUND" });
@@ -211,7 +214,7 @@ router.put("/:id/postProject/:pid", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
       const j = await postProject(req.params.pid);
-      res.status(200).send(j);
+      res.send(j);
     } else {
       return res.status(404).send({ error: "ID NOT FOUND" });
     }
@@ -221,37 +224,37 @@ router.put("/:id/postProject/:pid", async (req, res) => {
   }
 });
 
-async function postProject(id) {
-  const body = { life_cycle: "Posted" };
-  var error = true;
-  var j;
+// async function postProject(id) {
+//   const body = { life_cycle: "Posted" };
+//   var error = true;
+//   var j;
 
-  await fetch(`${server}/api/projects/${id}`, {
-    method: "put",
-    body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" }
-  })
-    // .then(checkStatus)
-    .then(res => {
-      if (res.status === 200) {
-        error = false;
-      }
+//   await fetch(`${server}/api/projects/${id}`, {
+//     method: "put",
+//     body: JSON.stringify(body),
+//     headers: { "Content-Type": "application/json" }
+//   })
+//     // .then(checkStatus)
+//     .then(res => {
+//       if (res.status === 200) {
+//         error = false;
+//       }
 
-      return res.json();
-    })
-    .then(json => {
-      if (!error) {
-        json = { msg: "Project is posted successfully" };
-      }
-      j = json;
-    })
-    .catch(err => {
-      console.log("Error", err);
-      j = { msg: "Error" };
-    });
+//       return res.json();
+//     })
+//     .then(json => {
+//       if (!error) {
+//         json = { msg: "Project is posted successfully" };
+//       }
+//       j = json;
+//     })
+//     .catch(err => {
+//       console.log("Error", err);
+//       j = { msg: "Error" };
+//     });
 
-  return j;
-}
+//   return j;
+// }
 
 router.post("/:id/addEvent/", async (req, res) => {
   try {
@@ -266,36 +269,36 @@ router.post("/:id/addEvent/", async (req, res) => {
     return res.status(400).send("Error");
   }
 });
-async function addEvent(body) {
-  var error = true;
-  var result;
+// async function addEvent(body) {
+//   var error = true;
+//   var result;
 
-  await fetch(`${server}/api/events/`, {
-    method: "post",
-    body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" }
-  })
-    // .then(checkStatus)
-    .then(res => {
-      if (res.status === 200) {
-        error = false;
-      }
-      console.log(res.status);
-      if (!error) {
-        result = res;
-      }
-      return res.json();
-    })
-    .then(json => {
-      if (!error) {
-        json = { msg: "Event is posted successfully" };
-      }
-      result = json;
-      console.log(json);
-    })
-    .catch(err => console.log("Error", err));
-  return result;
-}
+//   await fetch(`${server}/api/events/`, {
+//     method: "post",
+//     body: JSON.stringify(body),
+//     headers: { "Content-Type": "application/json" }
+//   })
+//     // .then(checkStatus)
+//     .then(res => {
+//       if (res.status === 200) {
+//         error = false;
+//       }
+//       console.log(res.status);
+//       if (!error) {
+//         result = res;
+//       }
+//       return res.json();
+//     })
+//     .then(json => {
+//       if (!error) {
+//         json = { msg: "Event is posted successfully" };
+//       }
+//       result = json;
+//       console.log(json);
+//     })
+//     .catch(err => console.log("Error", err));
+//   return result;
+// }
 
 //check if there exists an error in response
 //  function checkStatus(res){
@@ -440,7 +443,6 @@ async function postProject(id) {
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" }
   })
-    // .then(checkStatus)
     .then(res => {
       if (res.status === 200) {
         error = false;
@@ -454,9 +456,11 @@ async function postProject(id) {
       if (!error) {
         json = { msg: "Project is posted successfully" };
       }
+      result =json
       console.log(json);
     })
     .catch(err => console.log("Error", err));
+    return result
 }
 
 //as an admin i want to create event
