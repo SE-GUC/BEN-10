@@ -19,16 +19,16 @@ class MTest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
-         // this.postRequest()
-         // this.getRequest()
-         // this.putRequest()
-         // this.deleteRequest()
-        //  this.getProjects()
-         // this.getProjectsFail()
+         this.postRequest()
+         this.getRequest()
+         this.putRequest()
+         this.deleteRequest()
+         this.getProjects()
+         this.getProjectsFail()
           this.getEvents()
-        // this.getEventsFail()
-         // this.getMyProjects()
-         //this.getMyProjectsFail()
+        this.getEventsFail()
+         this.getMyProjects()
+         this.getMyProjectsFail()
           // add all methods
 
         })
