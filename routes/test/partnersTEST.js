@@ -5,8 +5,6 @@ const ObjectId = require("mongoose");
 // const consultancyagency = require('../../models/consultancyagency')//require your model
 const Partners = require("../../models/PartnerInfo");
 const Events = require('../../models/Event')
-const Projects = require("../../models/Project")
-const ObjectId = require('mongoose');
 class PaTest extends AbstractTests {
   constructor(PORT, ROUTE) {
     super(PORT, ROUTE);
