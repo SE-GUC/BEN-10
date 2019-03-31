@@ -21,25 +21,33 @@ mongoose.set("useFindAndModify", false);
 router.get("/", async (req, res) => {
   const admins = await Admin.find();
   res.json({ data: admins });
+  const adm = await Admin.find()
+    const aid = adm[0].id
+    console.log(aid)
 });
 
 router.get("/:id", async (req, res) => {
+  if (ObjectId.isValid(req.params.id)){
   const id = req.params.id;
   const admins = await Admin.findById(id);
   res.json({ data: admins });
+}
+else return res.status(404).send({error:"ID ERROR"})
 });
 
 //3 --As an admin I want to further check the description of a task/project so that it will be posted for candidates to apply.
-router.get("/pdescription/:id/", async (req, res) => {
-  if (ObjectId.isValid(req.params.id)) {
+router.get("/:aid/pdescription/:id/", async (req, res) => {
+  if (ObjectId.isValid(req.params.aid) && ObjectId.isValid(req.params.id)) {
     const projects = await Project.findById(req.params.id);
-    if (projects) {
-      res.json(projects.description);
-    } else {
-      return res.status(404).send({ error: "Project does not exist" });
-    }
-  } else return res.status(404).send({ error: "Project does not exist" });
+    const admin = await Admin.findById(req.params.aid);
+    if(admin){
+      if (projects) {
+        res.json(projects.description);
+      } else return res.status(404).send({ error: "Project does not exist" });
+    } else return res.status(404).send({ error: "Not an Admin" });
+  } else return res.status(404).send({ error: "Invalid Inputs" });
 });
+
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
   const admins = await Admin.findById(id);
@@ -63,28 +71,25 @@ router.post("/", async (req, res) => {
 });
 
 //3.5 --As an admin I want to notify accepted candidates that he was accepted for a task/project
-router.post("/notifications/:id/", async (req, res) => {
-  if (ObjectId.isValid(req.params.id)) {
+router.post("/:aid/notifications/:id/", async (req, res) => {
+  if (ObjectId.isValid(req.params.aid) && ObjectId.isValid(req.params.id)) {
     const cid = await member.findById(req.params.id);
-    if (cid) {
-      if (req.body.description != null) {
-        var today = new Date();
-        var date =
-          today.getFullYear() +
-          "-" +
-          (today.getMonth() + 1) +
-          "-" +
-          today.getDate();
-        const j = await AdminNotifyAcceptedCandidate(
-          req.body.description,
-          req.params.id,
-          date
-        );
-        res.status(200).send(j);
-      } else {
-        return res.status(400).send({ error: '"description" is required' });
-      }
-    } else return res.status(404).send({ error: "Member does not exist" });
+    const admin = await Admin.findById(req.params.aid);
+    if(admin){
+      if (cid) {
+        if (req.body.description != null) {
+          var date = Date.now()
+          const j = await AdminNotifyAcceptedCandidate(
+            req.body.description,
+            req.params.id,
+            date
+          );
+          res.status(200).send(j);
+        } else {
+          return res.status(400).send({ error: '"description" is required' });
+        }
+      } else return res.status(404).send({ error: "Member does not exist" });
+    } else return res.status(404).send({ error: "Not an Admin" });
   } else return res.status(404).send({ error: "Member does not exist" });
 });
 
@@ -168,7 +173,7 @@ router.put("/:id/myProjects/:pid/sendDraft", async (req, res) => {
         const j = await sendFinalDraft(req.params.pid, req.body.final_draft);
         res.status(200).send(j);
       } else {
-        return res.status(400).send({ error: "Please insert thr final" });
+        return res.status(400).send({ error: "Please insert the final draft" });
       }
     } else {
       return res.status(404).send({ error: "ID NOT FOUND" });
@@ -216,7 +221,7 @@ router.put("/:id/postProject/:pid", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
       const j = await postProject(req.params.pid);
-      res.status(200).send(j);
+      res.send(j);
     } else {
       return res.status(404).send({ error: "ID NOT FOUND" });
     }
@@ -226,37 +231,37 @@ router.put("/:id/postProject/:pid", async (req, res) => {
   }
 });
 
-async function postProject(id) {
-  const body = { life_cycle: "Posted" };
-  var error = true;
-  var j;
+// async function postProject(id) {
+//   const body = { life_cycle: "Posted" };
+//   var error = true;
+//   var j;
 
-  await fetch(`${server}/api/projects/${id}`, {
-    method: "put",
-    body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" }
-  })
-    // .then(checkStatus)
-    .then(res => {
-      if (res.status === 200) {
-        error = false;
-      }
+//   await fetch(`${server}/api/projects/${id}`, {
+//     method: "put",
+//     body: JSON.stringify(body),
+//     headers: { "Content-Type": "application/json" }
+//   })
+//     // .then(checkStatus)
+//     .then(res => {
+//       if (res.status === 200) {
+//         error = false;
+//       }
 
-      return res.json();
-    })
-    .then(json => {
-      if (!error) {
-        json = { msg: "Project is posted successfully" };
-      }
-      j = json;
-    })
-    .catch(err => {
-      console.log("Error", err);
-      j = { msg: "Error" };
-    });
+//       return res.json();
+//     })
+//     .then(json => {
+//       if (!error) {
+//         json = { msg: "Project is posted successfully" };
+//       }
+//       j = json;
+//     })
+//     .catch(err => {
+//       console.log("Error", err);
+//       j = { msg: "Error" };
+//     });
 
-  return j;
-}
+//   return j;
+// }
 
 router.post("/:id/addEvent/", async (req, res) => {
   try {
@@ -271,36 +276,36 @@ router.post("/:id/addEvent/", async (req, res) => {
     return res.status(400).send("Error");
   }
 });
-async function addEvent(body) {
-  var error = true;
-  var result;
+// async function addEvent(body) {
+//   var error = true;
+//   var result;
 
-  await fetch(`${server}/api/events/`, {
-    method: "post",
-    body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" }
-  })
-    // .then(checkStatus)
-    .then(res => {
-      if (res.status === 200) {
-        error = false;
-      }
-      console.log(res.status);
-      if (!error) {
-        result = res;
-      }
-      return res.json();
-    })
-    .then(json => {
-      if (!error) {
-        json = { msg: "Event is posted successfully" };
-      }
-      result = json;
-      console.log(json);
-    })
-    .catch(err => console.log("Error", err));
-  return result;
-}
+//   await fetch(`${server}/api/events/`, {
+//     method: "post",
+//     body: JSON.stringify(body),
+//     headers: { "Content-Type": "application/json" }
+//   })
+//     // .then(checkStatus)
+//     .then(res => {
+//       if (res.status === 200) {
+//         error = false;
+//       }
+//       console.log(res.status);
+//       if (!error) {
+//         result = res;
+//       }
+//       return res.json();
+//     })
+//     .then(json => {
+//       if (!error) {
+//         json = { msg: "Event is posted successfully" };
+//       }
+//       result = json;
+//       console.log(json);
+//     })
+//     .catch(err => console.log("Error", err));
+//   return result;
+// }
 
 //check if there exists an error in response
 //  function checkStatus(res){
@@ -331,6 +336,9 @@ router.use("/:id/EventRequest/:Eid/:decision", async (req, res) => {
         .catch(err => {
           console.log(err);
         });
+    }
+    else{
+      return res.status(404).send({msg : "invalid inputs"});
     }
   } catch {
     console.log(error);
@@ -394,11 +402,18 @@ router.use("/:aid/assign/:pid/to/:mid", async (req, res) => {
           .catch(err => {
             console.log(err);
           });
+          return res.status(200).send({msg : "Member has been assigned"});
+
       }
-      return res.status(200).send("Member has been assigned");
+      else
+      return res.status(404).send({msg : "no application found"});
+    }
+    else{
+      return res.status(404).send({msg : "invalid inputs"});
     }
   } catch {
     console.log("error happened");
+    res.status(404).send({msg :"Error in catch block"})
   }
 });
 
@@ -425,7 +440,7 @@ async function AdminNotifyAcceptedCandidate(description, NotifiedPerson, date) {
     })
     .then(json => {
       if (!error) {
-        json = { msg: "Notifications is sent successfully" };
+        json = { msg: "Notification is sent successfully" };
       }
       j = json;
     })
@@ -445,7 +460,6 @@ async function postProject(id) {
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" }
   })
-    // .then(checkStatus)
     .then(res => {
       if (res.status === 200) {
         error = false;
@@ -460,9 +474,11 @@ async function postProject(id) {
       if (!error) {
         json = { msg: "Project is posted successfully" };
       }
+      result =json
       console.log(json);
     })
     .catch(err => console.log("Error", err));
+    return result
 }
 //Test 3.3
 // postProject("5c7a795e53f1ba0c1b351f75");
@@ -654,4 +670,158 @@ router.post("/:id/projects/:id2/sendRejection", async (req, res) => {
     return res.status(400).send("Error");
   }
 });
+//sprint 3 = >as admin i want to view all applications
+router.get(`/:id/applications`,async(req,res)=>{
+  if(ObjectId.isValid(req.params.id)){
+    const admin  = await Admin.findById(req.params.id)
+    if(admin){
+      var result ;
+      const url = `${server}/api/applications`;
+      await fetch(url,{
+        method : "GET",
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(res => {
+
+        return res.json();
+      })
+      .then(json => {
+        result=json;
+      }) 
+      .catch(err=> {return err})  
+    }
+    else{
+      return res.status(404).send({msg:"admin not found"});
+    }
+  }else{
+    return res.status(404).send({msg: "not found"})
+  }
+   return res.json(result);
+})
+
+//as an admin i want to view all eventrequests
+router.get("/:id/eventRequests", async (req, res) => {
+  const id = req.params.id;
+
+  if (ObjectId.isValid(id)) {
+    const admins = await Admin.findById(id);
+    if(admins){
+      await fetch(`${server}/api/eventrequests`)
+      .then(res => res.json())
+      .then(json => {
+        const eventrequests = json.data;
+        res.json({data: eventrequests});
+        
+    }).catch(err => console.log("Error", err));
+  }
+    else{
+      return res.status(404).send({ error: "Admin not found" });
+    }
+  } else {
+    return res.status(404).send({ error: "ID not found" });
+  }
+  
+});
+
+
+//as an admin i want to see all ca
+router.get("/:id/ShowAllCA", async (req, res) => {
+  const id = req.params.id;
+
+  if (ObjectId.isValid(id)) {
+    const admins = await Admin.findById(id);
+    if(admins){
+
+      await fetch(`${server}/api/ConsultancyAgency`)
+      .then(res => res.json())
+      .then(json => {
+        const ca = json.data;
+        res.json({data: ca});     
+    }).catch(err => console.log("Error", err));
+  }
+    else{
+      return res.status(404).send({ error: "Admin not found" });
+    }
+  } else {
+    return res.status(404).send({ error: "ID not found" });
+  }
+  
+});
+
+
+
+// 21- As an admin i want to view all Events 
+
+router.get("/:id/ShowAllEvents", async (req, res) => {
+  const id = req.params.id;
+
+  if (ObjectId.isValid(id)) {
+    const admins = await Admin.findById(id);
+    if(admins){
+      await fetch(`${server}/api/events`)
+      .then(res => res.json())
+      .then(json => {
+        const events = json.data;
+        res.json({data: events});
+        
+    }).catch(err => console.log("Error", err));
+  }
+    else{
+      return res.status(404).send({ error: "Admin not found" });
+    }
+  } else {
+    return res.status(404).send({ error: "ID not found" });
+  }
+  
+});
+
+//As an admin i want to view all members
+
+router.get("/:id/ShowAllMembers", async (req, res) => {
+  const id = req.params.id;
+
+  if (ObjectId.isValid(id)) {
+    const admins = await Admin.findById(id);
+    if(admins){
+      await fetch(`${server}/api/member`)
+      .then(res => res.json())
+      .then(json => {
+        const member = json.data;
+        res.json({data: member});
+        
+    }).catch(err => console.log("Error", err));
+  }
+    else{
+      return res.status(404).send({ error: "Admin not found" });
+    }
+  } else {
+    return res.status(404).send({ error: "ID not found" });
+  }
+  
+});
+
+//get all projects
+router.get("/:id/projects", async (req, res) => {
+  const id = req.params.id;
+
+  if (ObjectId.isValid(id)) {
+    const admins = await Admin.findById(id);
+    if(admins){
+      await fetch(`${server}/api/projects`)
+      .then(res => res.json())
+      .then(json => {
+        const projects = json.data;
+        res.json({data: projects});
+        
+    }).catch(err => console.log("Error", err));
+  }
+    else{
+      return res.status(404).send({ error: "Admin not found" });
+    }
+  } else {
+    return res.status(404).send({ error: "ID not found" });
+  }
+  
+});
+
 module.exports = router;

@@ -9,7 +9,7 @@ mongoose.set("useFindAndModify", false);
 
 router.get("/", async (req, res) => {
   const projects = await Project.find();
-  res.json({ data: projects });
+  res.status(200).json({ data: projects });
 });
 
 // get a project
@@ -28,7 +28,6 @@ router.get("/:id", async (req, res) => {
 // Create a project
 router.post("/", async (req, res) => {
   try {
-    console.log(req.body.description);
     const isValidated = validator.createValidation(req.body);
     if (isValidated.error) {
       return res
@@ -47,19 +46,19 @@ router.put("/:id", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id)) {
       const isValidated = validator.updateValidation(req.body);
-      if (isValidated.error)
+      if (isValidated.error){
         return res
           .status(400)
           .send({ error: isValidated.error.details[0].message });
-      const updatedProject = await Project.findByIdAndUpdate(
-        { _id: req.params.id },
-        req.body
-      );
+      }
+      const updatedProject = await Project.findOneAndUpdate({ _id: req.params.id },req.body);
+
       if (!updatedProject)
-        return res.status(404).send({ error: "Project does not exist" });
+        return res.status(404).send({ msg: "Project does not exist" });
       res.json({ msg: "Project updated successfully" });
     } else {
-      return res.status(404).send({ error: "not a project id" });
+      return res.status(404).send({ msg: "not a project id" });
+
     }
   } catch {
     console.log(error);
@@ -88,3 +87,4 @@ router.delete("/:id", async (req, res) => {
   }
 });
 module.exports = router;
+
