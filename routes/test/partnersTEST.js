@@ -5,6 +5,10 @@ const ObjectId = require("mongoose");
 // const consultancyagency = require('../../models/consultancyagency')//require your model
 const Partners = require("../../models/PartnerInfo");
 const Events = require('../../models/Event')
+const EventRequest = require('../../models/EventRequest')
+
+
+
 class PaTest extends AbstractTests {
   constructor(PORT, ROUTE) {
     super(PORT, ROUTE);
@@ -23,6 +27,7 @@ class PaTest extends AbstractTests {
     super.run();
     try {
       return new Promise((resolve, reject) => {
+
         describe('Making sure Partner routes work', () => {
           this.postRequest()
          this.postRequestFail()
@@ -59,7 +64,12 @@ class PaTest extends AbstractTests {
          this.getMyProjectsFail()
             this.sentTaskOrientationInvitation()
           this.cancelProject()
-
+              this.deleteProject()
+           this.ShowMyEvents() 
+           this.SubmitRequest()
+           this.ShowMyEventsFailure()
+           this.SubmitRequestFailure()
+           this.editProject()
         })
         resolve()
       })
@@ -912,8 +922,193 @@ getMyProjectsFail(){
 
       
     });
+  } 
+  
+  deleteProject () {
+    test(`delete ${this.base_url}`, async () => {
+            const partners = await Partner.find()
+      const partner = partners[0]
+      // console.log(partner._id)
+      const body ={
+                    "required_skills_set": [],
+                    "applyingCA": [],
+                    "description": "i was hereeeeee",
+                    "company": "GUCCO",
+                    "companyID": partner._id,
+                    "category": "Education",
+                    "want_consultancy": true,
+                    "posted_date": "1998-02-09T22:00:00.000Z",
+                    "life_cycle": "Negotiation",
+                    "memberID": "5c9300a7676da108728b0df0",
+                    "final_draft": "TESTDARFT",
+                    "consultancyID": "5c79283c92334b03f4b6244f"
+                  }
+      const pr = await fetch(`${this.projects_url}`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const result = await pr.json()
+      const response = await fetch(`${this.base_url}/${result.data.companyID}/deleteProject/${result.data._id}`, {
+        method: 'DELETE',
+        //body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+
+      expect(Object.keys(jsonResponse)).toEqual(['msg'])
+      expect(response.status).toEqual(200)
+   
+      
+    })
   }
- 
+
+  editProject () {
+    test(`edit ${this.base_url}`, async () => {
+      const partners = await Partner.find()
+      const partner = partners[0]
+      // console.log(partner._id)
+      const body ={
+                    "required_skills_set": [],
+                    "applyingCA": [],
+                    "description": "i was hereeeeee",
+                    "company": "GUCCO",
+                    "companyID": partner._id,
+                    "category": "Education",
+                    "want_consultancy": true,
+                    "posted_date": "1998-02-09T22:00:00.000Z",
+                    "life_cycle": "Negotiation",
+                    "memberID": "5c9300a7676da108728b0df0",
+                    "final_draft": "TESTDARFT",
+                    "consultancyID": "5c79283c92334b03f4b6244f"
+                  }
+      const pr = await fetch(`${this.projects_url}`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const result = await pr.json()
+      const response = await fetch(`${this.base_url}/${result.data.companyID}/editProject/${result.data._id}`, {
+        method: 'put',
+        body: JSON.stringify({"category": "History"}),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+
+      expect(Object.keys(jsonResponse)).toEqual(['msg'])
+      expect(response.status).toEqual(200)
+   
+      
+    })
+  }
+
+
+  ShowMyEvents(){
+    test(`get ${this.base_url}`, async () => {
+      const par = await Partner.find()
+      const par1 = par[0]
+      const parid = par1.id
+      const response = await fetch(`${this.base_url}/${parid}/ShowMyEvents`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+      if(jsonResponse.msg =="NO Events to show")
+      {
+      expect(Object.keys(jsonResponse)).toEqual(['msg'])
+      }
+      else {
+        expect(Object.keys(jsonResponse)).toEqual(['data'])
+      }
+
+      expect(response.status).toEqual(200)
+  }
+    )}
+    ShowMyEventsFailure(){
+      test(`get ${this.base_url}`, async () => {
+        const response = await fetch(`${this.base_url}/1234567890/ShowMyEvents`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        })
+        console.log("response stastus: "+ response.status)
+        const jsonResponse = await response.json()
+        console.log(jsonResponse)
+        
+        expect(Object.keys(jsonResponse).toString()).toEqual(["error"].toString())
+        expect(response.status).toEqual(404)
+    }
+      )
+    }
+       SubmitRequest(){
+      
+        
+          const requestBody = {
+              requestedBy: "reqzz",
+              description: "desc",
+              eventType: "type",
+              eventLocation: "loc",
+              eventDate: "1/1/2020",
+              isAccepted: false
+              // requestorId: "5c784be40bc82a5f186ac770"
+    }
+    test(`post ${this.base_url}`, async () => {
+      const pars = await Partner.find()
+      const p = pars[0]
+      console.log(p.id)
+      const response = await fetch(`${this.base_url}/${p.id}/eventrequests`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(['msg'])
+      expect(response.status).toEqual(200)
+    
+
+     
+    
+    
+    })
+  }
+
+  SubmitRequestFailure(){
+      
+        
+    const requestBody = {
+      requestedBy: "reqzz",
+      description: "desc",
+      eventType: "type",
+      eventLocation: "loc",
+      eventDate: "1/1/2020",
+      isAccepted: false
+      // requestorId: "5c784be40bc82a5f186ac770"
+}
+test(`post ${this.base_url}`, async () => {
+const pars = await Partner.find()
+const p = pars[0]
+console.log(p.id)
+const response = await fetch(`${this.base_url}/${p.id}/eventrequests`, {
+method: 'POST',
+body: JSON.stringify(requestBody),
+headers: { 'Content-Type': 'application/json' }
+})
+console.log("response stastus: "+ response.status)
+const jsonResponse = await response.json()
+console.log(jsonResponse)
+
+expect(Object.keys(jsonResponse)).toEqual(['msg'])
+expect(response.status).toEqual(200)
+})
+
+
+}
 }
 module.exports = PaTest
 

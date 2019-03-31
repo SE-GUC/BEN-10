@@ -67,6 +67,8 @@ class CATest extends AbstractTests {
              this.viewMyEvents()
            this.viewMyEventsFail()
             this.DoFinalReview()
+          this.DecideProject()
+          
        })
         resolve()
       })
@@ -918,6 +920,40 @@ DoFinalReview(){
       expect(response.status).toEqual(400);
     });
   }
+
+  DecideProject(){
+    test(`approve a project = > put ${this.base_url}`, async (done) => {
+      const projects = await Project.find()
+      const project = projects[0]
+      const cas = await ConsultancyAgency.find()
+      const ca = cas[0]
+      const caid = ca.id
+      const flag = true
+      console.log(caid)
+      console.log(project.id)
+      // console.log(project.id)
+      // console.log(project.companyID)
+      var requestBody={}
+      console.log(`${this.base_url}/${caid}/decide/${project.id}/${flag}`)
+      const response = await fetch(`${this.base_url}/${caid}/decide/${project.id}/${flag}`, {
+        method: 'PUT',
+        body: JSON.stringify(requestBody),
+       headers: { 'Content-Type': 'application/json' }
+      })
+    //  console.log("response stastus: "+ response.status)
+    //  const jsonResponse = await response.json()
+    //  if(jsonResponse.msg =='inValid inputs'||jsonResponse.msg=='Project does not exist'
+    // ||jsonResponse.msg==''||jsonResponse.msg=='not a project id'){
+     //   expect(response.status).toEqual(404)
+    //  }
+     // else{
+     //   expect(response.status).toEqual(200)
+    // }
+      done();
+  }
+ 
+    )}
+ 
 
   caRequestRatingFail() {
     const requestBody = {

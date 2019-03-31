@@ -35,10 +35,6 @@ const aTests = new ATest(3000, '/admins')
 const mTests = new MTest(3000, '/member')
 const paTests = new PaTest(3000, '/partners')
 
-
-
-
-
 // Calling tests
 describe("Event Requests Tests", () => {
   Promise.all([erTests.run()]).then(result => {});
@@ -71,8 +67,6 @@ describe('Consultancy Agencys Tests', () => {
     caTests.run(),
   ]).then(result => {})
 })
-
-
 
 describe('Projects Tests', () => {
   Promise.all([
