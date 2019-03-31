@@ -12,10 +12,22 @@ router.get("/", async (req, res) => {
   res.json({ data: applications });
 });
 
+// router.get("/:id", async (req, res) => {
+//   const id = req.params.id;
+//   const applications = await Application.findById(id);
+//   res.json({ data: applications });
+// });
+
 router.get("/:id", async (req, res) => {
-  const id = req.params.id;
-  const applications = await Application.findById(id);
-  res.json({ data: applications });
+  if (ObjectId.isValid(req.params.id)) {
+    const id = req.params.id;
+    const applications = await Application.findById(id);
+    if (!applications)
+      return res.status(404).send({ error: "Application does not exist" });
+    res.json({ data: applications });
+  } else {
+    return res.status(404).send({ error: "Application does not exist" });
+  }
 });
 
 // Create an application
