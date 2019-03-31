@@ -18,13 +18,13 @@ class adminTest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
-         // this.postRequest()
-          //this.getRequest()
-          //this.putRequest()
-          //this.deleteRequest()
-         // this.postEvent()
-         //this.postEventFail  () 
-         //this.getAllEventRequests()
+         this.postRequest()
+          this.getRequest()
+          this.putRequest()
+          this.deleteRequest()
+         this.postEvent()
+         this.postEventFail  () 
+         this.getAllEventRequests()
          this.getAllEventRequestsFail()
           // add all methods
 
