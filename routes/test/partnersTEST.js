@@ -1,10 +1,9 @@
-const Admin = require('../../models/partnerInfo') //require your model
 const fetch = require("node-fetch");
 const AbstractTests = require("./AbstractTests");
 const Projects = require("../../models/Project")
 const ObjectId = require("mongoose");
 // const consultancyagency = require('../../models/consultancyagency')//require your model
-// const partner = require("../../models/PartnerInfo");
+const Partners = require("../../models/PartnerInfo");
 const Events = require('../../models/Event')
 class PaTest extends AbstractTests {
   constructor(PORT, ROUTE) {
@@ -89,7 +88,7 @@ postRequest () {
       expect(response.status).toEqual(200)
 
       
-      const eRequest = await partner.findOne(requestBody).exec()
+      const eRequest = await Partners.findOne(requestBody).exec()
       expect(eRequest.name).toEqual(requestBody.name)
       expect(eRequest.age).toEqual(requestBody.age)
       expect(eRequest.gender).toEqual(requestBody.gender)
@@ -145,7 +144,7 @@ postRequest () {
 
   getRequestBYID  () {
     test(`get ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
       const response = await fetch(`${this.base_url}/${parid}`, {
@@ -185,7 +184,7 @@ postRequest () {
     }
 
     test(`put ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[1];
       const parid = par1.id;
       const response = await fetch(`${this.base_url}/${parid}`, {
@@ -200,7 +199,7 @@ postRequest () {
       expect(response.status).toEqual(200)
 
       
-      const eRequest = await partner.findOne(requestBody).exec()
+      const eRequest = await Partners.findOne(requestBody).exec()
       expect(eRequest.name).toEqual(requestBody.name)
       expect(eRequest.age).toEqual(requestBody.age)
       expect(eRequest.gender).toEqual(requestBody.gender)
@@ -229,7 +228,7 @@ postRequest () {
     }
 
     test(`put ${this.base_url}`, async () => { 
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[1];
       const parid = par1.id;
       const response = await fetch(`${this.base_url}/${parid}`, {
@@ -248,7 +247,7 @@ postRequest () {
 
   deleteRequest  () {
     test(`delete ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[2];
       const parid = par1.id;
       const response = await fetch(`${this.base_url}/${parid}`, {
@@ -287,7 +286,7 @@ postRequest () {
     }
 
     test(`post ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
       const response = await fetch(`${this.base_url}/${parid}/addProject`, {
@@ -394,7 +393,7 @@ cancelProject(){
 
    getMyProjects  () {
     test(`get ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
       const response = await fetch(`${this.base_url}/${parid}/myProjects`, {
@@ -427,7 +426,7 @@ cancelProject(){
     const requestBody = {
     }
     test(`put ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
       var projs = await Projects.find()
@@ -461,7 +460,7 @@ cancelProject(){
     const requestBody = {
     }
     test(`put ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
       const response = await fetch(`${this.base_url}/${parid}/myprojects/5c94436fc61339203ad8c7/finaldraft/approve`, {
@@ -479,7 +478,7 @@ cancelProject(){
 
   getMyProjects(){
     test(`get ${this.base_url}`, async () => {
-      const part = await partner.find();
+      const part = await Partners.find();
       const part1 = part[0];
       const partid = part1.id;
       const response = await fetch(`${this.base_url}/${partid}/ShowFinalDraft`, {
@@ -510,7 +509,7 @@ getMyProjectsFail(){
     const requestBody = {
     }
     test(`put ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
       var projs = await Projects.find()
@@ -545,7 +544,7 @@ getMyProjectsFail(){
     const requestBody = {
     }
     test(`put ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
       const response = await fetch(`${this.base_url}/${parid}/myprojects/5c94436fd0c339203ad8c7/finaldraft/disapprove`, {
@@ -566,7 +565,7 @@ getMyProjectsFail(){
     const requestBody = {
     }
     test(`put ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
       var projs = await Projects.find()
@@ -621,7 +620,7 @@ getMyProjectsFail(){
     const requestBody = {
     }
     test(`put ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
       var projs = await Projects.find()
@@ -648,7 +647,7 @@ getMyProjectsFail(){
   
   test(`post ${this.base_url}/:id/rating/:eid/`, async () => {
     const events = await Events.find()
-    const pas = await partner.find()
+    const pas = await Partners.find()
     var ids =[]
     var i=0
     for(i;i<pas.length;i++){

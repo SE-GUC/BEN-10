@@ -44,36 +44,36 @@ class MTest extends AbstractTests {
           this.getRequestbyId()
           this.putRequest()
           this.deleteRequest()
-         this.getProjects()
-         this.getProjectsFail()
-          this.getEvents()
-        this.getEventsFail()
-         this.getMyProjects()
-         this.getMyProjectsFail()
-          this.bookEvent()
-         this.bookEventFail();
+        //  this.getProjects()
+        //  this.getProjectsFail()
+        //   this.getEvents()
+        // this.getEventsFail()
+        //  this.getMyProjects()
+        //  this.getMyProjectsFail()
+        //   this.bookEvent()
+        //  this.bookEventFail();
 
          // add all methods
-          this.getmyNotifications();
-          this.appylyForproject();
-          this.viewTaskInvitation();
-          this.submitTask();
+          // this.getmyNotifications();
+          // this.appylyForproject();
+          // this.viewTaskInvitation();
+          // this.submitTask();
           // this.postevent()
           // this.posteventbywrongMemberID()
           // this.posteventbynotavalidatedMemberID()
           // this.posteventbywrongEventID()
           // this.posteventbynotavalidatedEventID()
-          this.submitTaskIDmistach();
-          this.submitTaskProjectDoesntExist();
-          this.submitTaskLifeCycleNotInProgress();
-          this.submitTaskNotAssignedToYou();
-          this.getmyNotificationsIdMistmatch();
-          this.viewTaskInvitationIdMisMatch();
-          this.viewTaskInvitationNoSuchMember();
-          this.getmyNotificationsNoSuchMember();
-          this.appylyForprojectIdMismatch();
-          this.appylyForprojectWithNoSuchMember();
-          this.appylyForprojectwithNotRequiredSkill();
+          // this.submitTaskIDmistach();
+          // this.submitTaskProjectDoesntExist();
+          // this.submitTaskLifeCycleNotInProgress();
+          // this.submitTaskNotAssignedToYou();
+          // this.getmyNotificationsIdMistmatch();
+          // this.viewTaskInvitationIdMisMatch();
+          // this.viewTaskInvitationNoSuchMember();
+          // this.getmyNotificationsNoSuchMember();
+          // this.appylyForprojectIdMismatch();
+          // this.appylyForprojectWithNoSuchMember();
+          // this.appylyForprojectwithNotRequiredSkill();
         })
         resolve()
       })
@@ -695,6 +695,8 @@ appylyForproject(){
         headers: { 'Content-Type': 'application/json' }
       })
       console.log("response stastus method 1 post: "+ response.status)
+      const jsonr = response.json()
+      console.log(jsonr)
       const PostedMember = await Member.findOne(requestBody).exec()
       this.sharedState.id=PostedMember.id
       expect(response.status).toEqual(200)
@@ -726,6 +728,8 @@ appylyForproject(){
         headers: { 'Content-Type': 'application/json' }
       })
       console.log("response stastus method 2 post bad: "+ response.status)
+      const jsonr = response.json()
+      console.log(jsonr)
       expect(response.status).toEqual(400)
       done();
     }
