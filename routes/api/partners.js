@@ -634,5 +634,25 @@ async function declineFinalReview(pid) {
 
   return j;
 }
+//as a partner i want to show my events
+router.get("/:id/ShowMyEvents", async (req, res) => {
+  const id = req.params.id;
 
+  if (ObjectId.isValid(id)) {
+    const partners = await PartnerInfo.findById(id);
+
+    if (partners) {
+      const e =await event.find()
+      const Myevents=e.filter(m=>m.requestorId===id);
+      if(Myevents.length===0){
+        res.send({msg: "NO Events to show"});}
+        else{
+           res.json({ data:Myevents });}
+    } else {
+      return res.status(404).send({ error: "Partner not found" });
+    }
+  } else {
+    return res.status(404).send({ error: "Partner not found" });
+  }
+});
 module.exports = router;

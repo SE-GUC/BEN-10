@@ -21,7 +21,8 @@ class PTest extends AbstractTests {
           // this.getRequest()
           // this.putRequest()
           // this.deleteRequest()
-           this.deleteProject()
+          // this.deleteProject()
+             this.showMyEvents() 
           // add all methods
 
         })
@@ -78,6 +79,25 @@ class PTest extends AbstractTests {
   getRequest  () {}
   putRequest  () {}
   deleteRequest  () {}
+
+
+  showMyEvents(){
+    test(`get ${this.base_url}`, async () => {
+      const par = await Partner.find()
+      const par1 = par[0]
+      const parid = par1.id
+      const response = await fetch(`${this.base_url}/${parid}/ShowMyEvents/`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse).toString()).toEqual(['data'].toString())
+      expect(response.status).toEqual(200)
+  }
+    )}
 
 }
 module.exports = PTest
