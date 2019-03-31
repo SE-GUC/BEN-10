@@ -175,10 +175,10 @@ router.post("/:id/eventrequests/", async (req, res) => {
         );
         res.status(200).send(j);
       } else {
-        return res.status(400).send({ error: "body is missing attrubites" });
+        return res.status(400).send({ msg: "body is missing attrubites" });
       }
-    } else return res.status(404).send({ error: "Partner does not exist" });
-  } else return res.status(404).send({ error: "Partner does not exist" });
+    } else return res.status(404).send({ msg: "Partner does not exist" });
+  } else return res.status(404).send({ msg: "Partner does not exist" });
 });
 
 router.delete("/:id", async (req, res) => {

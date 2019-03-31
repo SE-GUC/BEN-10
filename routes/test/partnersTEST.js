@@ -23,6 +23,7 @@ class PTest extends AbstractTests {
           // this.deleteRequest()
           // this.deleteProject()
            //this.ShowMyEvents() 
+           this.SubmitRequest()
           // add all methods
 
         })
@@ -120,24 +121,54 @@ class PTest extends AbstractTests {
       )
     }
     SubmitRequest(){
-      const requestBody = {
-        // enter model attributes
-             requestorId: "qw",
-             gender: "false",
-             nationality: "egyptian",
-             maritalStatus: "single",
-             militaryStatus: "excempt",
-             drivingLicense: "qwertyuio",
-             country: "egypt",
-             city: "cairo",
-             area: "tagamoa",
-             postalCode: "12211",
-             mobileNumber: "0123456789",
-             email: "asdfghjkl",
-             password: "qwertyuio",
-             birthdate: "1998-12-09T22:00:00.000+00:00"
+      
+        
+          const requestBody = {
+              requestedBy: "req",
+              description: "desc",
+              eventType: "type",
+              eventLocation: "loc",
+              eventDate: "1/1/2020",
+              isAccepted: false,
+              requestorId: "5c784be40bc82a5f186ac770"
     }
-    
+    test(`post ${this.base_url}`, async () => {
+      const par = await Partner.find()
+      const par1 = par[0]
+      const parid = par1.id
+      const response = await fetch(`${this.base_url}/${parid}/eventrequest`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
 
+      expect(Object.keys(jsonResponse).toString()).toEqual(['msg','data'].toString())
+      expect(response.status).toEqual(200)
+    const eRequest = await Admin.findOne(requestBody).exec()
+
+      expect(eRequest.requestedBy).toEqual(requestBody.requestedBy)
+      expect(eRequest.description).toEqual(requestBody.description)
+      expect(eRequest.eventType).toEqual(requestBody.eventType)
+      expect(eRequest.eventLocation).toEqual(requestBody.eventLocation)
+      expect(eRequest.eventDate).toEqual(requestBody.eventDate)
+      expect(eRequest.isAccepted).toEqual(requestBody.isAccepted)
+      expect(new String(eRequest.requestorId)).toEqual(requestBody.requestorId)
+
+      this.sharedState.requestedBy =  eRequest.requestedBy
+      this.sharedState.description =  eRequest.description
+      this.sharedState.eventType =  eRequest.eventType
+      this.sharedState.eventLocation =  eRequest.eventLocation
+      this.sharedState.eventDate =  eRequest.eventDate
+      this.sharedState.isAccepted =  eRequest.isAccepted
+      this.sharedState.requestorId = eRequest.requestorId
+    
+    
+    })
+  }
 }
+    
+  
 module.exports = PTest
