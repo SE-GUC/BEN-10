@@ -1,5 +1,7 @@
 const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
+const Admin = require('../../models/Admin') //require your model
+const project = require('../../models/Project')
 const Member = require('../../models/member')
 const Events = require('../../models/Event')
 const ObjectId = require('mongoose');
@@ -17,10 +19,17 @@ class MTest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
-          // this.postRequest()
-          // this.getRequest()
-          // this.putRequest()
-          // this.deleteRequest()
+         this.postRequest()
+         this.getRequest()
+         this.putRequest()
+         this.deleteRequest()
+         this.getProjects()
+         this.getProjectsFail()
+          this.getEvents()
+        this.getEventsFail()
+         this.getMyProjects()
+         this.getMyProjectsFail()
+
           // add all methods
           this.postevent()
           this.posteventbywrongMemberID()
@@ -47,7 +56,7 @@ class MTest extends AbstractTests {
       const m = await Member.find();
       const m1 = m[0];
       const mid = m1.id;
-      const ed = await Event.find();
+      const ed = await Events.find();
       const ed1 = ed[0];
       const edid = ed1.id;
       const response = await fetch(`${this.base_url}/${mid}/events/${edid}/`, {
@@ -63,6 +72,109 @@ class MTest extends AbstractTests {
     })
   }
 
+
+  //as a candidate i want to view tasks so that i can apply for them
+  getProjects(){
+    test(`get ${this.base_url}`, async () => {
+      const mem=await Member.find();
+      const mem1=mem[0];
+      const memid=mem1.id;
+      const response = await fetch(`${this.base_url}/${memid}/getProject`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(['data'])
+      expect(response.status).toEqual(200)
+  }
+    )
+  }
+  getProjectsFail(){
+    test(`get ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c9e5750086c7f40c08183/getProject`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(["error"])
+      expect(response.status).toEqual(404)
+  }
+    )
+  }
+  //as a candidate i want to view an events so that i can book a place in it
+  getEvents(){
+    test(`get ${this.base_url}`, async () => {
+      const mem=await Member.find();
+      const mem1=mem[0];
+      const memid=mem1.id;
+      const response = await fetch(`${this.base_url}/${memid}/getEvent`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(['data'])
+      expect(response.status).toEqual(200)
+  }
+    )
+  }
+  getEventsFail(){
+    test(`get ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c9e5750086c7f40c08183/getEvent`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+
+      expect(Object.keys(jsonResponse)).toEqual(["error"])
+      expect(response.status).toEqual(404)
+  }
+    )
+  }
+  //as a candidate i want to view my projects
+  getMyProjects(){
+    test(`get ${this.base_url}`, async () => {
+      const mem=await Member.find();
+      const mem1=mem[0];
+      const memid=mem1.id;
+      const response = await fetch(`${this.base_url}/${memid}/ShowMyProjects`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(['data'])
+      expect(response.status).toEqual(200)
+  }
+    )
+  }
+  getMyProjectsFail(){
+    test(`get ${this.base_url}`, async () => {
+      
+      const response = await fetch(`${this.base_url}/5c9e5750086c7f40c08183/ShowMyProjects`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse)).toEqual(["error"])
+      expect(response.status).toEqual(404)
+  }
+    )
+  }
   //4.9 As a candidate I want that the events I attended be added on my profile.
   posteventbywrongMemberID() {
     const requestBody = {}
@@ -123,5 +235,5 @@ class MTest extends AbstractTests {
     })
   }
 }
-
 module.exports = MTest
+
