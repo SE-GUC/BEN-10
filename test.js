@@ -30,7 +30,6 @@ beforeAll(async () => {
 // Calling the test files
 const erTests = new ERTest(3000, '/eventrequests')
 const oiTests = new OITest(3000, '/orientationinvitations')
-const memberTests = new memberTest(3000, '/member')
 const prTests = new PRTest(3000, '/projects')
 const caTests = new CATest(3000, '/consultancyagency')
 const aTests = new ATest(3000, '/admins')

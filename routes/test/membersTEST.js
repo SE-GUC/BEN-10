@@ -3,9 +3,7 @@ const AbstractTests = require('./AbstractTests')
 const Admin = require('../../models/Admin') //require your model
 const project = require('../../models/Project')
 const Member = require('../../models/member')
-const Member = require('../../models/member')
 const Events = require('../../models/Event')
->>>>>> Dev
 const ObjectId = require('mongoose');
 
 class MTest extends AbstractTests {

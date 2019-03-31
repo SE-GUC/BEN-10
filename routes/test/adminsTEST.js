@@ -425,8 +425,9 @@ class ATest extends AbstractTests {
   }
 
 
-}
-getAllCAFail (){//enter invalid admin id
+
+getAllCAFail (){
+  //enter invalid admin id
     test(`get ${this.base_url}`, async () => {
       const response = await fetch(`${this.base_url}/5c7a6797938ccd1e08e7c/ShowAllCA`, {
         method: 'GET',
@@ -438,7 +439,7 @@ getAllCAFail (){//enter invalid admin id
       expect(Object.keys(jsonResponse)).toEqual(["error"])
       expect(response.status).toEqual(404)
     })
-  }
+}
 
 
 }
