@@ -3,6 +3,9 @@ const AbstractTests = require('./AbstractTests')
 const eventRequest = require('../../models/EventRequest')
 const ObjectId = require('mongoose');
 
+//= =---------------------------------------------------= =//
+//= =--- UsersTest class
+//= =---------------------------------------------------= =//
 class ERTest extends AbstractTests {
   constructor (PORT, ROUTE) {
     super(PORT, ROUTE)
@@ -18,8 +21,8 @@ class ERTest extends AbstractTests {
     }
   }
 
-  run() {
-    super.run()
+  runIndependently () {
+    super.runIndependently()
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure ER routes work', () => {
@@ -33,15 +36,13 @@ class ERTest extends AbstractTests {
           this.getIdRequestFail()
           this.putRequestFail()
           this.deleteRequestFail()
-
         })
         resolve()
       })
     } catch (err) {}
   }
 
-
-  postRequest () {
+postRequest () {
     const requestBody = {
         requestedBy: "testreq",
         description: "testdesc",
@@ -225,6 +226,5 @@ class ERTest extends AbstractTests {
       expect(response.status).toEqual(404)
   })
   }
-
 }
 module.exports = ERTest

@@ -6,7 +6,7 @@ const ObjectId = require("mongodb").ObjectID;
 const fetch = require("node-fetch");
 const server = require("../../config/config");
 mongoose.set("useFindAndModify", false);
-
+const Project = require("../../models/Project");
 const ConsultancyAgency = require("../../models/ConsultancyAgency");
 const validator = require("../../validations/consultancyagencyValidations");
 
@@ -105,20 +105,20 @@ router.post("/:id/eventrequests/", async (req, res) => {
     const cid = await ConsultancyAgency.findById(req.params.id);
     if (cid) {
       if (
-        req.body.requestedBy != null &&
         req.body.description != null &&
         req.body.eventType != null &&
         req.body.eventLocation != null &&
         req.body.eventDate != null
       ) {
         const j = await CARequestEvent(
-          req.body.requestedBy,
+          req.params.id,
+          cid.name,
           req.body.description,
           req.body.eventType,
           req.body.eventLocation,
           req.body.eventDate
         );
-        res.status(200).send(j);
+        res.send(j);
       } else {
         return res.status(400).send({ error: "body is missing attrubites" });
       }
@@ -398,6 +398,7 @@ async function getFinished(caProjects) {
 
 //2.4 --As a consultancy agency I want to request to organize an event.
 async function CARequestEvent(
+  requestorId,
   requestedBy,
   description,
   eventType,
@@ -405,6 +406,7 @@ async function CARequestEvent(
   eventDate
 ) {
   const body = {
+    requestorId: requestorId,
     requestedBy: requestedBy,
     description: description,
     eventType: eventType,
@@ -475,34 +477,123 @@ async function caApplyProject(pID, applying) {
   return j;
 }
 
-// --11 As a consultancy agency I want to give the attendees a form to rate the event and give a feedback.
-
-router.post("/:cid/rating/:eid/", async (req, res) => {
-  if (ObjectId.isValid(req.params.cid) && ObjectId.isValid(req.params.eid)) {
-    const ca = await ConsultancyAgency.findById(req.params.cid);
-    const event = await Event.findById(req.params.eid);
-    if (ca && event) {
-      if (event.requestorId == req.params.cid) {
-        var i;
-        var success = true;
-        var date = Date.now();
-        const attendees = event.bookedMembers;
-        var arr = new Array(attendees.length);
-        for (i = 0; i < attendees.length; i++) {
-          const j = await carequestrating(event.formLink, attendees[i], date);
-          arr[i] = j;
-        }
-        for (i = 0; i < attendees.length; i++) {
-          if (arr[i].msg != "Form is sent successfully") success = false;
-        }
-        if (success) res.json({ msg: "Form is sent successfully" });
-        else res.json({ msg: "Error occured" });
-      } else {
-        return res.status(400).send({ error: "You can not access this event" });
-      }
-    } else return res.status(404).send({ error: "Error" });
-  } else return res.status(404).send({ error: "Error" });
+// 8 As a CA I wanto to approve the final review of a project
+router.put("/:id1/finalreview/:id2/approve/", async (req, res) => {
+  if (ObjectId.isValid(req.params.id1) && ObjectId.isValid(req.params.id2)) {
+    const ca = await ConsultancyAgency.findById(req.params.id1);
+    const project = await Project.findById(req.params.id2);
+    if (ca && project) {
+        if (project.consultancyID == req.params.id1){
+          if (project.life_cycle == "Final Review"){
+                  const j = await approvefinal(req.params.id2);
+                  res.status(200).send(j);
+              }else return res.status(404).send({ error: "project isn't in the Final Review stage" });
+          }else return res.status(404).send({ error: "you can't approve this project" }); 
+      } else return res.status(404).send({ error: "invalid inputs" });
+  } else {
+    return res.status(404).send({ error: "invalid inputs" });
+  }
 });
+
+// 8 As a CA I wanto to disapprove the final review of a project
+router.put("/:id1/finalreview/:id2/disapprove/", async (req, res) => {
+  if (ObjectId.isValid(req.params.id1) && ObjectId.isValid(req.params.id2)) {
+    const ca = await ConsultancyAgency.findById(req.params.id1);
+    const project = await Project.findById(req.params.id2);
+    if (ca && project) {
+      if (project.consultancyID == req.params.id1){
+          if (project.life_cycle == "Final Review"){    
+              const j = await disapprovefinal(req.params.id2);
+              res.status(200).send(j);
+          }else return res.status(404).send({ error: "project isn't in the Final Review stage" });
+      }else return res.status(404).send({ error: "you can't disapprove this project" }); 
+    } else return res.status(404).send({ error: "invalid inputs" });
+  } else {
+    return res.status(404).send({ error: "invalid inputs" });
+  }
+});
+
+// 8 As a CA I wanto to approve the final review of a project
+async function approvefinal(pid) {
+  var error = true;
+  const body = { life_cycle: "Finished" };
+  var j;
+  await fetch(`${server}/api/projects/${pid}`, {
+    method: "put",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" }
+  })
+    .then(res => {
+      if (res.status === 200) {
+        error = false;
+      }
+      return res.json();
+    })
+    .then(json => {
+      if (!error) {
+        json = { msg: "project's final review is approved successfully" };
+      }
+      j = json;
+    })
+    .catch(err => console.log("Error", err));
+  return j;
+}
+
+// 8 As a CA I wanto to disapprove the final review of a project
+async function disapprovefinal(pid) {
+  var error = true;
+  const body = { life_cycle: "In Progress" };
+  var j;
+  await fetch(`${server}/api/projects/${pid}`, {
+    method: "put",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" }
+  })
+    .then(res => {
+      if (res.status === 200) {
+        error = false;
+      }
+      return res.json();
+    })
+    .then(json => {
+      if (!error) {
+        json = { msg: "project's final review is disapproved successfully" };
+      }
+      j = json;
+    })
+    .catch(err => console.log("Error", err));
+  return j;
+}
+
+
+// 3- As a CA i want to view my projects 
+router.get("/:id/projects",async(req,res)=>{
+  const id = req.params.id ; 
+  if(ObjectId.isValid(id)){
+    var error = true; 
+    await fetch(`${server}/api/projects`,{
+      method:"get",
+      headers:{"Content-Type":"application/json"}
+    })
+      .then(res =>{
+        if(res.status === 200){
+          error = false ; 
+        }
+        return res.json();
+      })
+      .then(json =>{
+        const myprojects = json.data ; 
+        const consulted = myprojects.filter(
+          myprojects => myprojects.consultancyID === id
+        );
+        res.json({data: consulted}); 
+      })
+      .catch(err => console.log("Error",err));
+  }
+  else {
+    return res.status(404).send({error:"Not a consultancy agency id"});
+  }
+})
 
 // --11 As a consultancy agency I want to give the attendees a form to rate the event and give a feedback.
 
@@ -564,5 +655,4 @@ async function carequestrating(formLink, id, date) {
 
   return j;
 }
-
 module.exports = router;
