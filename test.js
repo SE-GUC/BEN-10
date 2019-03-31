@@ -1,5 +1,6 @@
 
 const mongoose = require('mongoose')
+jest.setTimeout(30000);
 
 // Import testfiles
 
@@ -26,14 +27,24 @@ beforeAll(async () => {
 
 
 // Calling the test files
-const erTests = new ERTest(3000, '/eventrequests')
 const prTests = new PRTest(3000, '/projects')
 const caTests = new CATest(3000, '/consultancyagency')
 const aTests = new ATest(3000, '/admins')
 const mTests = new MTest(3000, '/member')
-const paTests = new PATest(3000, '/partners')
+const paTests = new PaTest(3000, '/partners')
 
-// Calling tests
+ describe('Partner Requests Tests', () => {
+   Promise.all([
+     parTests.run(),
+   ]).then(result => {})
+ })
+
+describe('Admin Requests Tests', () => {
+  Promise.all([
+    adminTests.run(),
+  ]).then(result => {})
+})
+
 describe('Projects Tests', () => {
   Promise.all([
     prTests.run(),
