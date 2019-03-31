@@ -17,10 +17,10 @@ class CATest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
-          //this.postRequest()
-          //this.getRequest()
-          //this.putRequest()
-          //this.deleteRequest()
+          this.postRequest()
+          this.getRequest()
+          this.putRequest()
+          this.deleteRequest()
           
           // 2.1- As a consultancy agency i want to apply for task/project
           this.applyForProject()
