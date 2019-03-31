@@ -40,56 +40,56 @@ const paTests = new PaTest(3000, '/partners')
 
 
 // Calling tests
-// describe("Event Requests Tests", () => {
-//   Promise.all([erTests.run()]).then(result => {});
-// });
+describe("Event Requests Tests", () => {
+  Promise.all([erTests.run()]).then(result => {});
+});
 
-// describe("Admins Tests", () => {
-//   Promise.all([aTests.run()]).then(result => {});
-// });
-
-
-// describe('Event Tests', () => {
-//   Promise.all([
-//     eTests.run(),
-//     ]).then(result => {})
-// })
-
-// describe("Partner Tests", () => {
-//   Promise.all([paTests.run()]).then(result => {});
-// });
-
-// describe('Applications Tests', () => {
-//   Promise.all([
-//     apTests.run(),
-//   ]).then(result => {})
-// })
-
-// describe('Consultancy Agencys Tests', () => {
-//   Promise.all([
-
-//     caTests.run(),
-//   ]).then(result => {})
-// })
+describe("Admins Tests", () => {
+  Promise.all([aTests.run()]).then(result => {});
+});
 
 
+describe('Event Tests', () => {
+  Promise.all([
+    eTests.run(),
+    ]).then(result => {})
+})
 
-// describe('Projects Tests', () => {
-//   Promise.all([
-//     prTests.run(),
-//   ]).then(result => {})
-// })
+describe("Partner Tests", () => {
+  Promise.all([paTests.run()]).then(result => {});
+});
+
+describe('Applications Tests', () => {
+  Promise.all([
+    apTests.run(),
+  ]).then(result => {})
+})
+
+describe('Consultancy Agencys Tests', () => {
+  Promise.all([
+
+    caTests.run(),
+  ]).then(result => {})
+})
+
+
+
+describe('Projects Tests', () => {
+  Promise.all([
+    prTests.run(),
+  ]).then(result => {})
+})
 
 describe('Member Tests', () => {
   Promise.all([
     mTests.run(),
   ]).then(result => {})
 })
-// describe('orientation invitation Tests', () => {
-//   Promise.all([
-//     oiTests.run(),
-//   ]).then(result => {})
-// })
+describe('orientation invitation Tests', () => {
+  Promise.all([
+    oiTests.run(),
+  ]).then(result => {})
+})
 
 
 

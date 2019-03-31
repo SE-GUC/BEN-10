@@ -283,6 +283,21 @@ router.put("/:id1/events/:id2", async (req, res) => {
   }
 });
 
+router.post("/", async (req, res) => {
+  try {
+    const isValidated = validator.createValidation(req.body);
+    if (isValidated.error)
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
+    const newMember = await member.create(req.body);
+    res.json({ msg: "member was created successfully", data: newMember });
+  } catch (error) {
+    // error is to be handled  later
+    console.log(error);
+  }
+});
+
 // DELETE method to delete a member
 router.delete("/:id", async (req, res) => {
   try {
