@@ -22,7 +22,7 @@ class PTest extends AbstractTests {
           // this.putRequest()
           // this.deleteRequest()
           // this.deleteProject()
-           this.ShowMyEvents() 
+           //this.ShowMyEvents() 
           // add all methods
 
         })
@@ -118,6 +118,24 @@ class PTest extends AbstractTests {
         expect(response.status).toEqual(404)
     }
       )
+    }
+    SubmitRequest(){
+      const requestBody = {
+        // enter model attributes
+             requestorId: "qw",
+             gender: "false",
+             nationality: "egyptian",
+             maritalStatus: "single",
+             militaryStatus: "excempt",
+             drivingLicense: "qwertyuio",
+             country: "egypt",
+             city: "cairo",
+             area: "tagamoa",
+             postalCode: "12211",
+             mobileNumber: "0123456789",
+             email: "asdfghjkl",
+             password: "qwertyuio",
+             birthdate: "1998-12-09T22:00:00.000+00:00"
     }
     
 
