@@ -200,7 +200,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 router.delete("/:id/deleteProject/:pid/", async (req, res) => {
-  const p = await Project.findById(pid);
+  const p = await Project.findById(req.params.pid);
   if (p.companyID == req.params.id) {
     const j = await deleteProject(req.params.pid);
     return res.json(j);
@@ -283,7 +283,6 @@ async function deleteProject(id) {
   ) {
     await fetch(`${server}/api/partner/${id}`, {
       method: "delete",
-      body: JSON.stringify(body),
       headers: { "Content-Type": "application/json" }
     })
       .then(res => {
@@ -298,6 +297,7 @@ async function deleteProject(id) {
       })
 
       .catch(err => console.log("Error", err));
+      return result
   } else {
     console.log("error");
   }

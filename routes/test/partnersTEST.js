@@ -56,11 +56,11 @@ class PTest extends AbstractTests {
 
   deleteProject () {
     test(`delete ${this.base_url}`, async () => {
-      const partners = await Partner.find()
       const projects = await Project.find()
-      const partner = partners[0]
       const project = projects[0]
-      const response = await fetch(`${this.base_url}/${partner.id}/deleteProject/${project.id}`, {
+      console.log(project.id)
+      console.log(project.companyID)
+      const response = await fetch(`${this.base_url}/${project.companyID}/deleteProject/${project.id}`, {
         method: 'DELETE',
         //body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
