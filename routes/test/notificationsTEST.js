@@ -24,8 +24,8 @@ class NotificationTest extends AbstractTests {
           //this.postRequest();
           //this.getRequest();
           //this.putRequest();
-          this.deleteRequest();
-          // add all methods
+          //this.deleteRequest();
+          this.getRequestById();
         });
         resolve();
       });
@@ -36,7 +36,6 @@ class NotificationTest extends AbstractTests {
     test(`post ${this.base_url}`, async () => {
       let members = await Member.find();
       const requestBody = {
-        // enter model attributes
         description: "test1NotificationDescription",
         NotifiedPerson: members[0]._id,
         date: "2019-11-15",
@@ -78,18 +77,42 @@ class NotificationTest extends AbstractTests {
       expect(response.status).toEqual(200);
     });
   }
+  getRequestById() {
+    test(`get ${this.base_url}/by an id`, async () => {
+      const ns = await Notification.find();
+      const n = ns[0];
+      const response = await fetch(`${this.base_url}/${n._id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+      });
+      console.log("response status: " + response.status);
+      const jsonResponse = await response.json();
+
+      expect(Object.keys(jsonResponse).toString()).toEqual(["data"].toString());
+      expect(response.status).toEqual(200);
+      expect(jsonResponse.data.description.toString()).toEqual(
+        n.description.toString()
+      );
+      expect(jsonResponse.data.NotifiedPerson.toString()).toEqual(
+        n.NotifiedPerson.toString()
+      );
+      expect(new Date(jsonResponse.data.date)).toEqual(new Date(n.date));
+      expect(jsonResponse.data.seen.toString()).toEqual(n.seen.toString());
+    });
+  }
+
   putRequest() {
     test(`put ${this.base_url}`, async () => {
       const notification = await Notification.find();
       const n1 = notification[0];
       const requestBody = {
-        seen:!n1.seen
+        seen: !n1.seen
       };
 
-    console.log(this.base_url+"/"+n1._id);
+      console.log(this.base_url + "/" + n1._id);
       const response = await fetch(`${this.base_url}/${n1._id}`, {
         method: "PUT",
-        body:JSON.stringify(requestBody),
+        body: JSON.stringify(requestBody),
         headers: { "Content-Type": "application/json" }
       });
       const jsonResponse = await response.json();
@@ -101,45 +124,37 @@ class NotificationTest extends AbstractTests {
       );
 
       //returning the original state of the notification
-      requestBody= {
+      requestBody = {
         seen: n1.seen
       };
       await fetch(`${this.base_url}/${n1._id}`, {
         method: "PUT",
-        body:JSON.stringify(requestBody),
+        body: JSON.stringify(requestBody),
         headers: { "Content-Type": "application/json" }
       });
     });
   }
 
-
   deleteRequest() {
     test(`delete ${this.base_url}`, async () => {
       const notification = await Notification.find();
       const n1 = notification[0];
-      console.log(this.base_url+"/"+n1._id);
+      console.log(this.base_url + "/" + n1._id);
       var response = await fetch(`${this.base_url}/${n1._id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" }
       });
       const jsonResponse = await response.json();
-      expect(Object.keys(jsonResponse).toString()).toEqual(["msg","data"].toString());
+      expect(Object.keys(jsonResponse).toString()).toEqual(
+        ["msg", "data"].toString()
+      );
       expect(response.status).toEqual(200);
       const n2 = await Notification.findById(n1._id);
       expect(n2).toBe(null);
 
-
-    //rePosting the deleted notification 
-    const newNotification = await Notification.create(jsonResponse.data);
-
-
+      //rePosting the deleted notification
+      const newNotification = await Notification.create(jsonResponse.data);
     });
-
-
-
-
-
-
   }
 }
 module.exports = NotificationTest;
