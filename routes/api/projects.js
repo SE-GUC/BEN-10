@@ -9,7 +9,7 @@ mongoose.set("useFindAndModify", false);
 
 router.get("/", async (req, res) => {
   const projects = await Project.find();
-  res.json({ data: projects });
+  res.status(200).json({ data: projects });
 });
 
 // get a project
@@ -52,6 +52,7 @@ router.put("/:id", async (req, res) => {
           .send({ error: isValidated.error.details[0].message });
       }
       const updatedProject = await Project.findOneAndUpdate({ _id: req.params.id },req.body);
+
       if (!updatedProject)
         return res.status(404).send({ error: "Project does not exist" });
       res.json({ msg: "Project updated successfully" });

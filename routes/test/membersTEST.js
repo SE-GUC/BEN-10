@@ -1,9 +1,11 @@
 const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
-const member = require('../../models/member') //require your model
+// const member = require('../../models/member') //require your model
 const Notification = require('../../models/Notification') 
 const Task_invitation = require('../../models/OrientationInvitation') 
 const project = require('../../models/Project') 
+const Member = require('../../models/member')
+const Events = require('../../models/Event')
 const ObjectId = require('mongoose');
 
 class MTest extends AbstractTests {
@@ -23,14 +25,17 @@ class MTest extends AbstractTests {
           // this.getRequest()
           // this.putRequest()
           // this.deleteRequest()
+          
+          // add all methods
           this.getmyNotifications();
           this.appylyForproject();
           this.viewTaskInvitation();
           this.submitTask();
-          
-
-          // add all methods
-
+          this.postevent()
+          this.posteventbywrongMemberID()
+          this.posteventbynotavalidatedMemberID()
+          this.posteventbywrongEventID()
+          this.posteventbynotavalidatedEventID()
         })
         resolve()
       })
@@ -123,7 +128,7 @@ viewTaskInvitation(){
 appylyForproject(){
   test('testing for apply for a task or a project',async()=>{
     const project_toApply=await project.find();
-    const member_applying=await member.find();
+    const member_applying=await Member.find();
     var member_id=null;
     var member_index=null
     var project_id=null;
@@ -228,31 +233,94 @@ appylyForproject(){
   }
 
 
-  postRequest () {
-    const requestBody = {
-       // enter model attributes
-    }
-
-    test(`post ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}`, {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      console.log("response stastus: "+ response.status)
-      const jsonResponse = await response.json()
-
-      expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
-      expect(response.status).toEqual(200)
-
-     
-      
-    })
-  }
+  postRequest () {}
 
   getRequest  () {}
   putRequest  () {}
   deleteRequest  () {}
 
+  //4.9 As a candidate I want that the events I attended be added on my profile.
+  postevent() {
+    const requestBody = {}
+    test(`put ${this.base_url}/${this.sharedState.id}/events/:id2/`, async () => {
+      const m = await Member.find();
+      const m1 = m[0];
+      const mid = m1.id;
+      const ed = await Event.find();
+      const ed1 = ed[0];
+      const edid = ed1.id;
+      const response = await fetch(`${this.base_url}/${mid}/events/${edid}/`, {
+        method: 'PUT',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      expect(response.status).toEqual(200)
+      // const pRequest = await Project.findbyid(requestBody).exec()
+      // expect(pRequest.description).toEqual(requestBody.description)
+
+      // this.sharedState.description =  pRequest.description
+    })
+  }
+
+  //4.9 As a candidate I want that the events I attended be added on my profile.
+  posteventbywrongMemberID() {
+    const requestBody = {}
+    test(`put ${this.base_url}/:id1/events/:id2/`, async () => {
+      const response = await fetch(`${this.base_url}/5c93d983f3fe6358b41cd7a/events/5c9ce0e20ddd11042a301e26/`, {
+        method: 'PUT',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+    })
+  }
+
+  //4.9 As a candidate I want that the events I attended be added on my profile.
+  posteventbynotavalidatedMemberID() {
+    const requestBody = {}
+    test(`put ${this.base_url}/"id1"/events/:id2/`, async () => {
+      const response = await fetch(`${this.base_url}/5c93d983f3fe7358b41ccd7a/events/5c9ce0e20ddd11042a301e26/`, {
+        method: 'PUT',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+    })
+  }
+
+  //4.9 As a candidate I want that the events I attended be added on my profile.
+  posteventbywrongEventID() {
+    const requestBody = {}
+    test(`put ${this.base_url}/${this.sharedState.id}/events/:id2/`, async () => {
+      const response = await fetch(`${this.base_url}/5c93d983f3fe6358b41ccd7a/events/5c9ce0e20dd11042a301e26/`, {
+        method: 'PUT',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+    })
+  }
+
+  //4.9 As a candidate I want that the events I attended be added on my profile.
+  posteventbynotavalidatedEventID() {
+    const requestBody = {}
+    test(`put ${this.base_url}/${this.sharedState.id}/events/:id2/`, async () => {
+      const response = await fetch(`${this.base_url}/5c93d983f3fe6358b41ccd7a/events/5c9ce0e27ddd11042a301e26/`, {
+        method: 'PUT',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+    })
+  }
 }
+
 module.exports = MTest
