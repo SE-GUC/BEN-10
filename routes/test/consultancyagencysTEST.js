@@ -818,20 +818,42 @@ DoFinalReview(){
       this.base_url
     }/:id/myProjects/:pid/applyingMembers`, async () => {
       
+
+      var apps = await App.find()
       var projs = await Projects.find()
-      projs = projs.filter(p => p.consultancyID!=null)
-      const project = projs[0]
+      var prid = []
+      var i =0
+
+      for(i in  projs){
+        prid.push(projs[i].id)
+      }
+      var app
+      var prj
+      var ca
+      i=0
+      for(i in apps){
+        if(prid.includes(apps[i].projectId.toString())){
+          app=apps[i]
+          prj = await Projects.findById(apps[i].projectId)
+          if(prj.consultancyID!=null){
+            ca = prj.consultancyID
+            break
+          }
+        }
+      }
       
       const response = await fetch(
         `${
           this.base_url
-        }/${project.consultancyID}/myProjects/${project.id}/applyingMembers`,
+        }/${ca}/myProjects/${prj.id}/applyingMembers`,
         {
           method: "get",
           headers: { "Content-Type": "application/json" }
         }
       );
       const jsonResponse = await response.json();
+      console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhh")
+      console.log(jsonResponse)
 
       expect(Object.keys(jsonResponse)).toEqual(["data"]);
       expect(response.status).toEqual(200);
