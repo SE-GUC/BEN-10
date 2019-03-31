@@ -1,7 +1,7 @@
 const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
 
-const consultancyagency = require('../../models/consultancyagency')//require your model
+// const consultancyagency = require('../../models/consultancyagency')//require your model
 const Partners = require("../../models/PartnerInfo");
 const Events = require('../../models/Event')
 const Projects = require("../../models/Project")
@@ -59,132 +59,6 @@ class PaTest extends AbstractTests {
   }
   postRequest () {
     const requestBody = {
-      name: "partner's name",
-      age: 55,
-      gender: "gender",
-      e_mail: "partner's e_mail",
-      experience_level: "experience_level",
-      phone_number:"54525452115"
-    }
-
-    test(`post ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}`, {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      console.log("response stastus: "+ response.status)
-      const jsonResponse = await response.json()
-      console.log(jsonResponse)
-      expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
-      expect(response.status).toEqual(200)
-
-
-
-
-  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
-  Partnerrequestrating(){
-    const requestBody = {}
-  
-  test(`post ${this.base_url}/:id/rating/:eid/`, async () => {
-    const events = await Events.find()
-    const pas = await Partners.find()
-    var ids =[]
-    var i=0
-    for(i;i<pas.length;i++){
-      ids.push(pas[i].id.toString())        
-    }
-    var i=0
-    var result =[]
-    for(i;i<events.length;i++){
-      if(ids.includes(events[i].requestorId.toString())){
-        result.push(events[i])
-      }
-    
-
-  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
-  PartnerrequestratingbywrongPartnerID(){
-    const requestBody = {}
-  
-  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
-    const response = await fetch(`${this.base_url}/5c786899f8a8e826447d212f/rating/5c9cda328acdd615d268e514/`, {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      const jsonResponse = await response.json()
-
-      expect(Object.keys(jsonResponse)).toEqual(['error'])
-      expect(response.status).toEqual(404)
-    })
-  }
-
-  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
-  PartnerrequestratingbynotavalidatedPartnerID(){
-    const requestBody = {}
-  
-  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
-    const response = await fetch(`${this.base_url}/5c786899f8a8e26447d212f/rating/5c9cda328acdd615d268e514/`, {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      const jsonResponse = await response.json()
-      expect(Object.keys(jsonResponse)).toEqual(['error'])
-      expect(response.status).toEqual(404)
-    })
-  }
-
-  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
-  PartnerrequestratingbywrongEventID(){
-    const requestBody = {}
-  
-  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
-    const response = await fetch(`${this.base_url}/5c786899f8a8e026447d212f/rating/5c9cda328acdd615d868e514/`, {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: { 'Content-Type': 'application/json' }
-      })
-
-      const jsonResponse = await response.json()
-      expect(Object.keys(jsonResponse)).toEqual(['error'])
-      expect(response.status).toEqual(404)
-    })
-  }
-
-  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
-  PartnerrequestratingbynotavalidatedEventID(){
-    const requestBody = {}
-  
-  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
-    const response = await fetch(`${this.base_url}/5c786899f8a8e026447d212f/rating/5c9cda328add615d268e514/`, {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      const jsonResponse = await response.json()
-      expect(Object.keys(jsonResponse)).toEqual(['error'])
-      expect(response.status).toEqual(404)
-    })
-  }
-
-  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
-  PartnerrequestratingbynotanEventsOwner(){
-    const requestBody = {}
-  
-  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
-    const response = await fetch(`${this.base_url}/5c7a5ae73c28ff08583304ee/rating/5c9cda328add615d268e514/`, {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      const jsonResponse = await response.json()
-      expect(Object.keys(jsonResponse)).toEqual(['error'])
-      expect(response.status).toEqual(404)
-    })
-  }
-      postRequest () {
-    const requestBody = {
       name: "Partners's name",
       age: 55,
       gender: "gender",
@@ -199,9 +73,9 @@ class PaTest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
+      //console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
       expect(response.status).toEqual(200)
 
@@ -237,9 +111,9 @@ class PaTest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(["error"])
       expect(response.status).toEqual(400)
     })
@@ -251,9 +125,9 @@ class PaTest extends AbstractTests {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(['data'])
       expect(response.status).toEqual(200)
     })
@@ -268,9 +142,9 @@ class PaTest extends AbstractTests {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(['data'])
       expect(response.status).toEqual(200)
     })
@@ -282,9 +156,9 @@ class PaTest extends AbstractTests {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(['msg'])
       expect(response.status).toEqual(400)
     })
@@ -309,9 +183,9 @@ class PaTest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(['msg'])
       expect(response.status).toEqual(200)
 
@@ -353,9 +227,9 @@ class PaTest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(["error"])
       expect(response.status).toEqual(400)
     })
@@ -371,9 +245,9 @@ class PaTest extends AbstractTests {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
       expect(response.status).toEqual(200)
     })
@@ -385,9 +259,9 @@ class PaTest extends AbstractTests {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(["error"])
       expect(response.status).toEqual(404)
     })
@@ -411,9 +285,9 @@ class PaTest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(['msg'])
       expect(response.status).toEqual(200)
 
@@ -447,9 +321,9 @@ class PaTest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(["error"])
       expect(response.status).toEqual(404)
     })
@@ -464,9 +338,9 @@ class PaTest extends AbstractTests {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(['data'])
       expect(response.status).toEqual(200)
     })
@@ -478,9 +352,9 @@ class PaTest extends AbstractTests {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(["error"])
       expect(response.status).toEqual(404)
     })
@@ -505,16 +379,16 @@ class PaTest extends AbstractTests {
         }
       );
       const projid = proj.id;
-      console.log(parid)
-      console.log(projid)
+      //console.log(parid)
+      //console.log(projid)
       const response = await fetch(`${this.base_url}/${parid}/myprojects/${projid}/finaldraft/approve`, {
         method: 'PUT',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(['msg'])
       expect(response.status).toEqual(200)
     })    
@@ -532,9 +406,9 @@ class PaTest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse)
+      //console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(["error"])
       expect(response.status).toEqual(404)
 
@@ -560,16 +434,16 @@ class PaTest extends AbstractTests {
         }
       );
       const projid = proj.id;
-      console.log(projid)
-      console.log(parid)
+      //console.log(projid)
+      //console.log(parid)
       const response = await fetch(`${this.base_url}/${parid}/myprojects/${projid}/finaldraft/disapprove`, {
         method: 'PUT',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(['msg'])
       expect(response.status).toEqual(200)
 
@@ -588,9 +462,9 @@ class PaTest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(["error"])
       expect(response.status).toEqual(404)
 
@@ -617,7 +491,7 @@ class PaTest extends AbstractTests {
         }
       );
     }
-      const cas = await consultancyagency.find()
+      const cas = await ConsultancyAgency.find()
       var ids =[]
       var i=0
       for(i;i<cas.length;i++){
@@ -637,22 +511,21 @@ class PaTest extends AbstractTests {
       }
     }
       const consul = result[0]
-      console.log(consul)
+      ////console.log(consul)
       const proj = result2[0]
-      console.log(proj)
+      ////console.log(proj)
       const response = await fetch(`${this.base_url}/${parid}/project/${proj}/AssignCAtoProject/${consul}`, {
         method: 'PUT',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      ////console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      ////console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(['msg'])
       expect(response.status).toEqual(200)
     })    
   }
-      
   AssignCAtoProjFail() {//enter wrong id for consultancy agency 
     const requestBody = {
     }
@@ -669,14 +542,128 @@ class PaTest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(["error"])
       expect(response.status).toEqual(404)
 
     })    
   }
+
+  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+  Partnerrequestrating(){
+    const requestBody = {}
+  
+  test(`post ${this.base_url}/:id/rating/:eid/`, async () => {
+    const events = await Events.find()
+    const pas = await Partners.find()
+    var ids =[]
+    var i=0
+    for(i;i<pas.length;i++){
+      ids.push(pas[i].id.toString())        
+    }
+    var i=0
+    var result =[]
+    for(i;i<events.length;i++){
+      if(ids.includes(events[i].requestorId.toString())){
+        result.push(events[i])
+      }
+    }
+    const pid = result[0].requestorId
+    const eid = result[0].id
+    const response = await fetch(`${this.base_url}/${pid}/rating/${eid}/`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['msg'])
+      expect(response.status).toEqual(200)
+    })
+  }
+
+  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+  PartnerrequestratingbywrongPartnerID(){
+    const requestBody = {}
+  
+  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
+    const response = await fetch(`${this.base_url}/5c786899f8a8e826447d212f/rating/5c9cda328acdd615d268e514/`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+    })
+  }
+
+  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+  PartnerrequestratingbynotavalidatedPartnerID(){
+    const requestBody = {}
+  
+  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
+    const response = await fetch(`${this.base_url}/5c786899f8a8e26447d212f/rating/5c9cda328acdd615d268e514/`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+    })
+  }
+
+  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+  PartnerrequestratingbywrongEventID(){
+    const requestBody = {}
+  
+  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
+    const response = await fetch(`${this.base_url}/5c786899f8a8e026447d212f/rating/5c9cda328acdd615d868e514/`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+    })
+  }
+
+  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+  PartnerrequestratingbynotavalidatedEventID(){
+    const requestBody = {}
+  
+  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
+    const response = await fetch(`${this.base_url}/5c786899f8a8e026447d212f/rating/5c9cda328add615d268e514/`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+    })
+  }
+
+  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+  PartnerrequestratingbynotanEventsOwner(){
+    const requestBody = {}
+  
+  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
+    const response = await fetch(`${this.base_url}/5c7a5ae73c28ff08583304ee/rating/5c9cda328add615d268e514/`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+    })
+  }
+
+
 
 }
 module.exports = PaTest

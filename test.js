@@ -9,7 +9,7 @@ const PRTest = require('./routes/test/projectsTEST')
 const CATest = require('./routes/test/consultancyagencysTEST')
 const ATest = require('./routes/test/adminsTEST')
 const MTest = require('./routes/test/membersTEST')
-const PATest = require('./routes/test/partnersTEST')
+const PaTest = require('./routes/test/partnersTEST')
 
 // Connect to mongo atlas
 const db = require('./config/keys').mongoURI
@@ -35,21 +35,19 @@ const paTests = new PaTest(3000, '/partners')
 
  describe('Partner Requests Tests', () => {
    Promise.all([
-     parTests.run(),
+     prTests.run(),
    ]).then(result => {})
  })
 
 describe('Admin Requests Tests', () => {
   Promise.all([
-    adminTests.run(),
+    aTests.run(),
   ]).then(result => {})
 })
 
 describe('Projects Tests', () => {
   Promise.all([
-    prTests.run(),
     caTests.run(),
-    aTests.run(),
     mTests.run(),
     paTests.run()
   ]).then(result => {})

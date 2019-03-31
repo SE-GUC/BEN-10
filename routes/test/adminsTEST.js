@@ -245,9 +245,9 @@ class ATest extends AbstractTests {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(['data'])
       expect(response.status).toEqual(200)
     })
@@ -259,9 +259,9 @@ class ATest extends AbstractTests {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
+      //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
-      console.log(jsonResponse )
+      //console.log(jsonResponse )
       expect(Object.keys(jsonResponse)).toEqual(["error"])
       expect(response.status).toEqual(404)
     })
