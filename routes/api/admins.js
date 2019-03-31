@@ -507,12 +507,12 @@ async function addEvent(body) {
 }
 
 //sprint 3 = >as admin i want to view all applications
-router.get(`/:id/projects`,async(req,res)=>{
+router.get(`/:id/applications`,async(req,res)=>{
   if(ObjectId.isValid(req.params.id)){
     const admin  = await Admin.findById(req.params.id)
     if(admin){
       var result ;
-      const url = `${server}/api/projects`;
+      const url = `${server}/api/applications`;
       await fetch(url,{
         method : "GET",
         headers: { "Content-Type": "application/json" }
