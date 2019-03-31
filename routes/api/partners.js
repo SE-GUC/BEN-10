@@ -281,7 +281,7 @@ async function deleteProject(id) {
     pr.life_cycle !== "Final Review" &&
     pr.life_cycle !== "Finished"
   ) {
-    await fetch(`${server}/api/partner/${id}`, {
+    await fetch(`${server}/api/partners/${id}`, {
       method: "delete",
       headers: { "Content-Type": "application/json" }
     })
@@ -299,7 +299,7 @@ async function deleteProject(id) {
       .catch(err => console.log("Error", err));
       return result
   } else {
-    console.log("error");
+    return {error: "Project can not be deleted"};
   }
 }
 async function editProject(id, body) {
@@ -311,7 +311,7 @@ async function editProject(id, body) {
     pr.life_cycle !== "Final Review" &&
     pr.life_cycle !== "Finished"
   ) {
-    await fetch(`${server}/api/partner/${id}`, {
+    await fetch(`${server}/api/partners/${id}`, {
       method: "put",
       body: JSON.stringify(body),
       headers: { "Content-Type": "application/json" }
