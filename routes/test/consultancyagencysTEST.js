@@ -693,6 +693,8 @@ postRequest () {
 
       expect(Object.keys(jsonResponse)).toEqual(['error'])
       expect(response.status).toEqual(404)
+    })
+  }
 
 
 // monda sprint 2 = > 2.3 as ca i want to view all of my projects in final review state 
