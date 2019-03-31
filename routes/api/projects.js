@@ -10,10 +10,6 @@ mongoose.set("useFindAndModify", false);
 router.get("/", async (req, res) => {
   const projects = await Project.find();
   res.json({ data: projects });
-  // if(req.query.Member_id!=null){
-  //   member_id=req.query.Member_id;
-
-  // }
 });
 
 // get a project
@@ -29,7 +25,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Create a projectt
+// Create a project
 router.post("/", async (req, res) => {
   try {
     console.log(req.body.description);
@@ -74,12 +70,6 @@ router.put("/:id", async (req, res) => {
 // Delete a project
 router.delete("/:id", async (req, res) => {
   try {
-    const id = req.params.id;
-    const deletedProject = await Project.findByIdAndRemove(id);
-    if (!deletedProject)
-      return res.status(400).send({ error: "Project does not exist" });
-    res.json({ msg: "Project was deleted successfully", data: deletedProject });
-
     if (ObjectId.isValid(req.params.id)) {
       const id = req.params.id;
       const deletedProject = await Project.findByIdAndRemove(id);
@@ -91,19 +81,6 @@ router.delete("/:id", async (req, res) => {
       });
     } else {
       return res.status(404).send({ error: "not a project id" });
-    }
-
-    if (ObjectId.isValid(req.params.id)) {
-      const id = req.params.id;
-      const deletedProject = await Project.findByIdAndRemove(id);
-      if (!deletedProject)
-        return res.status(400).send({ error: "Project does not exist" });
-      res.json({
-        msg: "Project was deleted successfully",
-        data: deletedProject
-      });
-    } else {
-      return res.status(404).send({ error: "Project does not exist" });
     }
   } catch (error) {
     console.log(error);

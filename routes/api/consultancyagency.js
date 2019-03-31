@@ -359,9 +359,12 @@ router.get("/:caid/reviewprojects", async (req, res) => {
       const matchingProjects = await getProjectsInFinalReview(caid);
       res.json({ data: matchingProjects });
     }
+    else{
+      res.status(404).send({msg :" not valid id"})
+    }
   } catch (error) {
     console.log(error);
-    return res.status(400).send("Error");
+    return res.status(404).send({msg :"Error in catch block"});
   }
 });
 
@@ -469,4 +472,75 @@ async function caApplyProject(pID, applying) {
     .catch(err => console.log("Error", err));
   return j;
 }
+
+// --11 As a consultancy agency I want to give the attendees a form to rate the event and give a feedback.
+
+router.post("/:cid/rating/:eid/", async (req, res) => {
+  if (ObjectId.isValid(req.params.cid) && ObjectId.isValid(req.params.eid)) {
+    const ca = await ConsultancyAgency.findById(req.params.cid);
+    const event = await Event.findById(req.params.eid);
+    if (ca && event) {
+        if (event.requestorId == req.params.cid) {
+        var i;
+        var success = true;
+        var today = new Date();
+        var date =
+          today.getFullYear() +
+          "-" +
+          (today.getMonth() + 1) +
+          "-" +
+          today.getDate();
+        const attendees = event.bookedMembers
+        var arr = new Array(attendees.length);
+        for (i = 0; i < attendees.length; i++) {
+          const j = await carequestrating(event.formLink, attendees[i], date);
+          arr[i] = j;
+        }
+        for (i = 0; i < attendees.length; i++){
+          if (arr[i].msg != "Form is sent successfully")
+            success = false;
+        }
+        if (success)
+          res.json({ msg: "Form is sent successfully" })
+        else
+          res.json({ msg: "Error occured" })
+      } else {
+        return res.status(400).send({ error: 'You can not access this event' });
+      }
+    } else return res.status(404).send({ error: "Error" });
+  } else return res.status(404).send({ error: "Error" });
+});
+
+// 11 As a CA I want to give the attendees a form to rate the event and give a feedback
+async function carequestrating(formLink,id,date) {
+  var error = true;
+  const body = {
+    description: `Please rate thie event through this form ${formLink}`,
+    NotifiedPerson: id,
+    date: date,
+    seen: "false"
+  };
+  var j;
+  await fetch(`${server}/api/notifications/`, {
+    method: "post",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" }
+  })
+    .then(res => {
+      if (res.status === 200) {
+        error = false;
+      }
+      return res.json();
+    })
+    .then(json => {
+      if (!error) {
+        json = { msg: "Form is sent successfully" };
+      }
+      j = json;
+    })
+    .catch(err => console.log("Error", err));
+
+  return j;
+}
+
 module.exports = router;

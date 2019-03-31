@@ -328,6 +328,9 @@ router.use("/:id/EventRequest/:Eid/:decision", async (req, res) => {
           console.log(err);
         });
     }
+    else{
+      return res.status(404).send({msg : "invalid inputs"});
+    }
   } catch {
     console.log(error);
   }
@@ -390,11 +393,18 @@ router.use("/:aid/assign/:pid/to/:mid", async (req, res) => {
           .catch(err => {
             console.log(err);
           });
+          return res.status(200).send({msg : "Member has been assigned"});
+
       }
-      return res.status(200).send("Member has been assigned");
+      else
+      return res.status(404).send({msg : "no application found"});
+    }
+    else{
+      return res.status(404).send({msg : "invalid inputs"});
     }
   } catch {
     console.log("error happened");
+    res.status(404).send({msg :"Error in catch block"})
   }
 });
 
@@ -446,7 +456,6 @@ async function postProject(id) {
       if (res.status === 200) {
         error = false;
       }
-      console.log(res.status);
       if (!error) {
         result = res;
       }
@@ -460,8 +469,6 @@ async function postProject(id) {
     })
     .catch(err => console.log("Error", err));
 }
-//Test 3.3
-postProject("5c7a795e53f1ba0c1b351f75");
 
 //as an admin i want to create event
 
@@ -508,4 +515,32 @@ async function addEvent(body) {
     .catch(err => console.log("Error", err));
   return result;
 }
+//sprint 3 = >as admin i want to view all applications
+router.get(`/:id/applications`,async(req,res)=>{
+  if(ObjectId.isValid(req.params.id)){
+    const admin  = await Admin.findById(req.params.id)
+    if(admin){
+      var result ;
+      const url = `${server}/api/applications`;
+      await fetch(url,{
+        method : "GET",
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(res => {
+
+        return res.json();
+      })
+      .then(json => {
+        result=json;
+      }) 
+      .catch(err=> {return err})  
+    }
+    else{
+      return res.status(404).send({msg:"admin not found"});
+    }
+  }else{
+    return res.status(404).send({msg: "not found"})
+  }
+   return res.json(result);
+})
 module.exports = router;
