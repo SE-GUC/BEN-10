@@ -22,7 +22,7 @@ class PTest extends AbstractTests {
           // this.putRequest()
           // this.deleteRequest()
           // this.deleteProject()
-             this.ShowMyEvents() 
+           this.ShowMyEvents() 
           // add all methods
 
         })
@@ -93,8 +93,14 @@ class PTest extends AbstractTests {
       console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
       console.log(jsonResponse)
-
+      if(jsonResponse.msg =="NO Events to show")
+      {
       expect(Object.keys(jsonResponse)).toEqual(['msg'])
+      }
+      else {
+        expect(Object.keys(jsonResponse)).toEqual(['data'])
+      }
+
       expect(response.status).toEqual(200)
   }
     )}
@@ -107,7 +113,7 @@ class PTest extends AbstractTests {
         console.log("response stastus: "+ response.status)
         const jsonResponse = await response.json()
         console.log(jsonResponse)
-  
+        
         expect(Object.keys(jsonResponse).toString()).toEqual(["error"].toString())
         expect(response.status).toEqual(404)
     }

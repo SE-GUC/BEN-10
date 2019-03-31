@@ -39,6 +39,8 @@ class ATest extends AbstractTests {
           //this.putRequestFailure()
           //this.getRequestByIDFailure()
           //this.postRequestFailure()
+          //this.getProjects()
+          //this.getProjectsFailure()
           // add all methods
 
         })
@@ -351,7 +353,10 @@ putRequestFailure  () {const requestBody = {
 
   getProjects(){
     test(`get ${this.base_url}`, async () => {
-      const response = await fetch(`${this.base_url}`, {
+      const ad = await Admin.find()
+      const ad1 = ad[0]
+      const adid = ad1.id
+      const response = await fetch(`${this.base_url}/${adid}/projects`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
@@ -364,7 +369,21 @@ putRequestFailure  () {const requestBody = {
   }
     )
   }
+  getProjectsFailure(){
+    test(`get ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/12345678/projects`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
 
+      expect(Object.keys(jsonResponse).toString()).toEqual(["error"].toString())
+      expect(response.status).toEqual(404)
+  }
+    )
+  }
 
 }
 module.exports = ATest

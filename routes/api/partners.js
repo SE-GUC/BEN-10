@@ -650,10 +650,10 @@ router.get("/:id/ShowMyEvents", async (req, res) => {
         else{
            res.json({ data:Myevents });}
     } else {
-      return res.status(404).send({ error: "Partner not found" });
+      return res.status(404).send({ msg: "Partner not found" });
     }
   } else {
-    return res.status(404).send({ error: "Partner not found" });
+    return res.status(404).send({ msg: "Partner not found" });
   }
 });
 module.exports = router;
