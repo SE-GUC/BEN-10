@@ -26,16 +26,18 @@ router.get("/:id", async (req, res) => {
 });
 
 //3 --As an admin I want to further check the description of a task/project so that it will be posted for candidates to apply.
-router.get("/pdescription/:id/", async (req, res) => {
-  if (ObjectId.isValid(req.params.id)) {
+router.get("/:aid/pdescription/:id/", async (req, res) => {
+  if (ObjectId.isValid(req.params.aid) && ObjectId.isValid(req.params.id)) {
     const projects = await Project.findById(req.params.id);
-    if (projects) {
-      res.json(projects.description);
-    } else {
-      return res.status(404).send({ error: "Project does not exist" });
-    }
-  } else return res.status(404).send({ error: "Project does not exist" });
+    const admin = await Admin.findById(req.params.aid);
+    if(admin){
+      if (projects) {
+        res.json(projects.description);
+      } else return res.status(404).send({ error: "Project does not exist" });
+    } else return res.status(404).send({ error: "Not an Admin" });
+  } else return res.status(404).send({ error: "Invalid Inputs" });
 });
+
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
   const admins = await Admin.findById(id);
@@ -59,28 +61,25 @@ router.post("/", async (req, res) => {
 });
 
 //3.5 --As an admin I want to notify accepted candidates that he was accepted for a task/project
-router.post("/notifications/:id/", async (req, res) => {
-  if (ObjectId.isValid(req.params.id)) {
+router.post("/:aid/notifications/:id/", async (req, res) => {
+  if (ObjectId.isValid(req.params.aid) && ObjectId.isValid(req.params.id)) {
     const cid = await member.findById(req.params.id);
-    if (cid) {
-      if (req.body.description != null) {
-        var today = new Date();
-        var date =
-          today.getFullYear() +
-          "-" +
-          (today.getMonth() + 1) +
-          "-" +
-          today.getDate();
-        const j = await AdminNotifyAcceptedCandidate(
-          req.body.description,
-          req.params.id,
-          date
-        );
-        res.status(200).send(j);
-      } else {
-        return res.status(400).send({ error: '"description" is required' });
-      }
-    } else return res.status(404).send({ error: "Member does not exist" });
+    const admin = await Admin.findById(req.params.aid);
+    if(admin){
+      if (cid) {
+        if (req.body.description != null) {
+          var date = Date.now()
+          const j = await AdminNotifyAcceptedCandidate(
+            req.body.description,
+            req.params.id,
+            date
+          );
+          res.status(200).send(j);
+        } else {
+          return res.status(400).send({ error: '"description" is required' });
+        }
+      } else return res.status(404).send({ error: "Member does not exist" });
+    } else return res.status(404).send({ error: "Not an Admin" });
   } else return res.status(404).send({ error: "Member does not exist" });
 });
 
@@ -421,7 +420,7 @@ async function AdminNotifyAcceptedCandidate(description, NotifiedPerson, date) {
     })
     .then(json => {
       if (!error) {
-        json = { msg: "Notifications is sent successfully" };
+        json = { msg: "Notification is sent successfully" };
       }
       j = json;
     })
@@ -506,6 +505,30 @@ async function addEvent(body) {
   return result;
 }
 
+//as an admin i want to see all ca
+router.get("/:id/ShowAllCA", async (req, res) => {
+  const id = req.params.id;
+
+  if (ObjectId.isValid(id)) {
+    const admins = await Admin.findById(id);
+    if(admins){
+      await fetch(`${server}/api/ConsultancyAgency`)
+      .then(res => res.json())
+      .then(json => {
+        const ca = json.data;
+        res.json({data: ca});
+        
+    }).catch(err => console.log("Error", err));
+  }
+    else{
+      return res.status(404).send({ error: "Admin not found" });
+    }
+  } else {
+    return res.status(404).send({ error: "ID not found" });
+  }
+  
+});
+
 // 21- As an admin i want to view all Events 
 
 router.get("/:id/ShowAllEvents", async (req, res) => {
@@ -530,4 +553,5 @@ router.get("/:id/ShowAllEvents", async (req, res) => {
   }
   
 });
+
 module.exports = router;
