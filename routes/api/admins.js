@@ -328,6 +328,9 @@ router.use("/:id/EventRequest/:Eid/:decision", async (req, res) => {
           console.log(err);
         });
     }
+    else{
+      return res.status(200).send({msg : "invalid inputs"});
+    }
   } catch {
     console.log(error);
   }
@@ -390,8 +393,14 @@ router.use("/:aid/assign/:pid/to/:mid", async (req, res) => {
           .catch(err => {
             console.log(err);
           });
+          return res.status(200).send({msg : "Member has been assigned"});
+
       }
-      return res.status(200).send({msg : "Member has been assigned"});
+      else
+      return res.status(404).send({msg : "no application found"});
+    }
+    else{
+      return res.status(404).send({msg : "invalid inputs"});
     }
   } catch {
     console.log("error happened");

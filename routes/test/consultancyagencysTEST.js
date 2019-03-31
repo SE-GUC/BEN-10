@@ -68,8 +68,11 @@ DoFinalReview(){
       }) 
       console.log("response to story 2.3 "+response.status)
       const j  = await response.json()
-      console.log(j)
-      expect(response.status).toEqual(200)
+      //console.log(j)
+      if(j.msg==' not valid id'||j.msg=='Error')
+      expect(response.status).toEqual(404)
+      else
+       expect(response.status).toEqual(200)
       done(); 
   
   })

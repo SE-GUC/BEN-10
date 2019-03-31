@@ -76,7 +76,10 @@ class ATest extends AbstractTests {
    console.log("response to story 3.4 : "+response.status)
    const j = await response.json()
    console.log(j)
-   expect(response.status).toEqual(200)
+   if(j.msg=='invalid inputs'||j.msg=='no application found')
+   expect(response.status).toEqual(404)
+   else
+     expect(response.status).toEqual(200)
    done();
  })
 
@@ -96,6 +99,9 @@ DecideEventRequest(){
     console.log("response to story 2.7 "+response.status)
     const j = await response.json()
   // console.log(j)
+  if(j.msg =='invalid inputs'||j.msg=='Request does not exist'||j.msg=='Event Request does not exist')
+  expect(response.status).toEqual(404)
+  else
    expect(response.status).toEqual(200)
     done()
   })
@@ -110,8 +116,10 @@ ViewAllApplication(){
     })
     console.log("response to story 5"+response.status)
     const j = await response.json()
-   //console.log(j)
-   expect(response.status).toEqual(200)
+   if(j.msg =='admin not found' || j.msg =='not found')
+   expect(response.status).toEqual(404)
+   else
+     expect(response.status).toEqual(200)
     done()
   })
 }
