@@ -1,3 +1,5 @@
+const server = require("../../config/config");
+
 class AbstractTests {
   constructor (PORT, ROUTE) {
     if (this.constructor === AbstractTests) {
@@ -28,6 +30,7 @@ class AbstractTests {
     }
 
     this.base_url = `http://localhost:${PORT}/api${ROUTE}`
+    this.projects_url = `${server}/api/projects`
     this.sharedState = {}
     this.run = this.run .bind(this)
     this.postRequest = this.postRequest.bind(this)

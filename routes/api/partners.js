@@ -204,13 +204,14 @@ router.delete("/:id/deleteProject/:pid/", async (req, res) => {
   const p = await Project.findById(req.params.pid);
   if (p.companyID == req.params.id) {
     const j = await deleteProject(req.params.pid);
+    console.log(j)
     return res.json(j);
   } else {
     res.json({ msg: "error" });
   }
 });
 router.put("/:id/editProject/:pid/", async (req, res) => {
-  const p = await Project.findById(pid);
+  const p = await Project.findById(req.params.pid);
   if (p.companyID == req.params.id) {
     const j = await editProject(req.params.pid, req.body);
     return res.json(j);
@@ -282,7 +283,7 @@ async function deleteProject(id) {
     pr.life_cycle !== "Final Review" &&
     pr.life_cycle !== "Finished"
   ) {
-    await fetch(`${server}/api/partners/${id}`, {
+    await fetch(`${server}/api/projects/${id}`, {
       method: "delete",
       headers: { "Content-Type": "application/json" }
     })
@@ -291,14 +292,18 @@ async function deleteProject(id) {
           error = false;
         }
         console.log(res.status);
-        if (!error) {
-          result = res;
-        }
+        
         return res.json();
+      }).then(json => {
+        if (!error) {
+          json={msg: "Project Deleted"};
+        }
+        result = json;
+        console.log(json);
       })
-
       .catch(err => console.log("Error", err));
-      return result
+    return result;      
+
   } else {
     return {error: "Project can not be deleted"};
   }
@@ -312,7 +317,7 @@ async function editProject(id, body) {
     pr.life_cycle !== "Final Review" &&
     pr.life_cycle !== "Finished"
   ) {
-    await fetch(`${server}/api/partners/${id}`, {
+    await fetch(`${server}/api/projects/${id}`, {
       method: "put",
       body: JSON.stringify(body),
       headers: { "Content-Type": "application/json" }
@@ -321,10 +326,14 @@ async function editProject(id, body) {
         if (res.status === 200) {
           error = false;
         }
-        j = res.json;
         return res.json();
+      }).then(json => {
+        if (!error) {
+          json={msg: "Project Edited"};
+        }
+        j = json;
+        console.log(json);
       })
-
       .catch(err => console.log("Error", err));
     return j;
   } else {
