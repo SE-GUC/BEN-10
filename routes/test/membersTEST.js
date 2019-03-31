@@ -1,7 +1,7 @@
-
 const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
-// const member = require('../../models/member') //require your model
+const Notification = require('../../models/Notification')
+const Application = require('../../models/Application')
 const Notification = require('../../models/Notification') 
 const Task_invitation = require('../../models/OrientationInvitation') 
 const Admin = require('../../models/Admin') //require your model
@@ -10,6 +10,7 @@ const Member = require('../../models/member')
 const Events = require('../../models/Event')
 const ObjectId = require('mongoose');
 const server = require("../../config/config");
+
 class MTest extends AbstractTests {
   constructor (PORT, ROUTE) {
     super(PORT, ROUTE)
@@ -52,7 +53,7 @@ class MTest extends AbstractTests {
          this.getMyProjectsFail()
           this.bookEvent()
          this.bookEventFail();
-
+            this.matchSkillSetWithProjects();
          // add all methods
           this.getmyNotifications();
           this.appylyForproject();
@@ -1002,7 +1003,97 @@ appylyForproject(){
     })
   }
 
-  //4.9 As a candidate I want that the events I attended be added on my profile.
+
+  matchSkillSetWithProjects(){
+    test(`post ${this.base_url}/memberID/recommendations`, async () => {
+      const allMembers = await Member.find();
+      let myMember = allMembers[0];
+      var today = new Date();
+      var date =
+          today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+      let requestBody = {
+        skill_set:["skill1","skill2"]
+      };
+      await fetch(`${server}/api/member/${myMember._id}`, {
+        method: 'PUT',
+        body:JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      requestBody = {
+        description:"Test description1",
+        company:"Test Company",
+        category:"Test Category",
+        want_consultancy:false,
+        posted_date:date,
+        life_cycle:"InProgress",
+        required_skills_set:["skill1"]
+
+      };
+      await fetch(`${server}/api/projects/`, {
+        method: 'POST',
+        body:JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      
+      
+      requestBody = {
+        description:"Test description2",
+        company:"Test Company",
+        category:"Test Category",
+        want_consultancy:false,
+        posted_date:date,
+        life_cycle:"InProgress",
+        required_skills_set:["skill1","skill2"]
+
+      };
+      await fetch(`${server}/api/projects/`, {
+        method: 'POST',
+        body:JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      requestBody = {
+        description:"Test description3",
+        company:"Test Company",
+        category:"Test Category",
+        want_consultancy:false,
+        posted_date:date,
+        life_cycle:"InProgress",
+        required_skills_set:["skill1","skill2","skill3"]
+
+      };
+      await fetch(`${server}/api/projects/`, {
+        method: 'POST',
+        body:JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const response = await fetch(`${this.base_url}/${myMember._id}/recommendations`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const jsonResponse = await response.json();
+
+      expect(Object.keys(jsonResponse)).toEqual(['data']);
+      expect(response.status).toEqual(200);
+      let flag = true;
+      var i;
+      var j;
+      for(i = 0;i<jsonResponse.data.length;i++){
+        for(j = 0;j<jsonResponse.data[i].required_skills_set.length;j++){
+          if(jsonResponse.data[i].required_skills_set[j].toString()!=="skill1"&&jsonResponse.data[i].required_skills_set[j].toString()!=="skill2"){
+            flag = false;
+          }
+        }
+      }
+      expect(flag).toBe(true);
+
+    });
+  }
+
+
+
+//4.9 As a candidate I want that the events I attended be added on my profile.
   posteventbynotavalidatedEventID() {
     const requestBody = {}
     test(`put ${this.base_url}/${this.sharedState.id}/events/:id2/`, async () => {

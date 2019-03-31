@@ -4,6 +4,18 @@ const db = require("./config/keys").mongoURI;
 // Import testfiles
 const EventTest=require('./routes/test/eventsTEST');
 
+
+
+beforeAll(async () => {
+  jest.setTimeout(30000);
+  mongoose.Promise = Promise;
+  await mongoose
+    .connect(db, { useNewUrlParser: true })
+    .then(() => console.log("Connected to MongoDB"))
+    .catch(err => console.log(err));
+});
+
+const NTest = require("./routes/test/notificationsTEST");
 const ERTest = require('./routes/test/eventrequestsTEST')
 const OITest = require('./routes/test/orientationinvitationsTEST')
 const ApTest = require('./routes/test/applicationsTEST')
@@ -14,17 +26,8 @@ const MTest = require('./routes/test/membersTEST')
 const PaTest = require('./routes/test/partnersTEST')
 
 
-beforeAll(async()=>{
-  mongoose
-  .connect(db, { useNewUrlParser: true })
-  .then(() => console.log("Connected to MongoDB"))
-  .catch(err => console.log(err));
-})
-
-
-
 // Calling the test files
-
+const nTests = new NTest(3000, "/notifications");
 const eTests = new EventTest(3000,'/events')
 const erTests = new ERTest(3000, '/eventrequests')
 const oiTests = new OITest(3000, '/orientationinvitations')
@@ -40,6 +43,10 @@ describe("Event Requests Tests", () => {
   Promise.all([erTests.run()]).then(result => {});
 });
 
+describe("Notifications Tests", () => {
+  Promise.all([nTests.run()]).then(result => {});
+});  
+  
 describe("Admins Tests", () => {
   Promise.all([aTests.run()]).then(result => {});
 });

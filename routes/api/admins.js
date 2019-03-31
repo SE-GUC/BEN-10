@@ -8,6 +8,10 @@ const server = require("../../config/config");
 
 const Admin = require("../../models/Admin");
 const member = require("../../models/member");
+const Event = require("../../models/Event");
+const Application = require("../../models/Application");
+const Project = require("../../models/Project");
+
 const validator = require("../../validations/adminValidations");
 const notificationValidator = require("../../validations/memberValidations");
 
@@ -460,6 +464,7 @@ async function postProject(id) {
       if (res.status === 200) {
         error = false;
       }
+      console.log(res.status);
       if (!error) {
         result = res;
       }
@@ -475,6 +480,8 @@ async function postProject(id) {
     .catch(err => console.log("Error", err));
     return result
 }
+//Test 3.3
+// postProject("5c7a795e53f1ba0c1b351f75");
 
 //as an admin i want to create event
 
@@ -521,6 +528,148 @@ async function addEvent(body) {
     .catch(err => console.log("Error", err));
   return result;
 }
+
+// sprint3 #13  As an admin I want to give the attendees a form to rate the event and give a feedback.
+async function sendFeedBack(formLink, eventId) {
+  var error = true;
+  var result;
+  let myEvent = await Event.findById(eventId);
+  let attendingMembers = myEvent.bookedMembers;
+  var i;
+  var today = new Date();
+  var date =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  for (i = 0; i < attendingMembers.length; i++) {
+    const body = {
+      description: formLink,
+      NotifiedPerson: attendingMembers[i],
+      date: date,
+      seen: "false"
+    };
+
+    await fetch(`${server}/api/notifications/`, {
+      method: "post",
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" }
+    })
+      // .then(checkStatus)
+      .then(res => {
+        if (res.status === 200) {
+          error = false;
+        }
+        if (!error) {
+          result = res;
+        }
+      })
+      .then(json => {
+        if (!error) {
+          json =
+            attendingMembers ;
+        }
+        result = json;
+      })
+      .catch(err => console.log("Error", err));
+  }
+  return result;
+}
+
+router.post("/:id/events/:id2/sendFeedBackForm", async (req, res) => {
+  try {
+    const admin = await Admin.findById(req.params.id);
+    if (!admin) {
+      res.send({ error: "Not an admin id" });
+    } else {
+      const event = await Event.findById(req.params.id2);
+      if (!event) {
+        res.send({ error: "Not an event id" });
+      } else {
+        return res.send({
+          data: await sendFeedBack(req.body.feedBack, req.params.id2)
+        });
+      }
+    }
+  } catch (error) {
+    return res.status(400).send("Error");
+  }
+});
+
+// sprint3 #14 As a rejected candidate I want to be notified that I was rejected for a task/project so that I start looking for other tasks/projects.
+async function sendRejectionNotification(projectId) {
+  const project = await Project.findById(projectId);
+  if (!project) {
+    return { msg: "there is no Such project" };
+  }
+  const allApplications = await Application.find();
+  let myProjectApplications = [];
+  var i;
+  var result;
+  var today = new Date();
+  var date =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  for (i = 0; i < allApplications.length; i++) {
+    if (allApplications[i].projectId == projectId) {
+      myProjectApplications.push(allApplications[i].applicantId);
+    }
+  }
+  for (i = 0; i < myProjectApplications.length; i++) {
+    if (project.memberID.toString() !== myProjectApplications[i].toString()) {
+      const body = {
+        description:
+          "Sorry u were not accepted for project {" + project.description + "}",
+        NotifiedPerson: myProjectApplications[i],
+        date: date,
+        seen: "false"
+      };
+
+      await fetch(`${server}/api/notifications/`, {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: { "Content-Type": "application/json" }
+      })
+        // .then(checkStatus)
+        .then(res => {
+          if (res.status === 200) {
+            error = false;
+          }
+          if (!error) {
+            result = res;
+          }
+        })
+        .then(json => {
+          if (!error) {
+            json =myProjectApplications.filter(
+              myProjectApplications => project.memberID.toString() !== 
+              myProjectApplications.toString()
+            );
+            
+          }
+          result = json;
+        })
+        .catch(err => console.log("Error", err));
+    }
+  }
+  return result
+}
+
+router.post("/:id/projects/:id2/sendRejection", async (req, res) => {
+  try {
+    const admin = await Admin.findById(req.params.id);
+    if (!admin) {
+      res.send({ error: "Not an admin id" });
+    } else {
+      const project = await Project.findById(req.params.id2);
+      if (!project) {
+        res.send({ error: "Not a project id" });
+      } else {
+        return res.send({
+          data: await sendRejectionNotification(req.params.id2)
+        });
+      }
+    }
+  } catch (error) {
+    return res.status(400).send("Error");
+  }
+});
 //sprint 3 = >as admin i want to view all applications
 router.get(`/:id/applications`,async(req,res)=>{
   if(ObjectId.isValid(req.params.id)){
