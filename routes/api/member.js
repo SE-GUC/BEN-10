@@ -333,7 +333,9 @@ router.get("/:id/getEvent", async (req, res) => {
   const id = req.params.id;
   if (ObjectId.isValid(id)) {
     const j = await getEvents(id);
-    res.json({ data: j });
+    const mye = j.filter(m=>!( m.bookedMembers.includes(id)))
+    console.log(mye)
+    res.json({ data: mye });
   } else {
     return res.status(404).send({ error: "ID NOT FOUND" });
   }
@@ -479,6 +481,42 @@ async function bookEvent(eid, members) {
     })
     .catch(err => console.log("Error", err));
   return j;
+}
+//as a candidate i want to view my projects
+router.get("/:id/ShowMyProjects", async (req, res) => {
+  const id = req.params.id;
+
+  if(ObjectId.isValid(id))
+  {       
+      const Member= await member.findById(id);
+  
+      if(Member){
+
+      const j = await getTheProjects(id);
+      res.json({data:j});}
+  
+       else{
+          return res.status(404).send({ error: "member not found" })
+        }
+      }
+      else {
+       return res.status(404).send({ error: "ID not found" })
+       } 
+
+});
+
+async function getTheProjects(memberid) {
+  var result = [];
+  await fetch(`${server}/api/projects`)
+    .then(res => res.json())
+    .then(json => {
+      const projects = json.data;
+      const hisProjects = projects.filter(m => m.memberID === memberid );
+      result =hisProjects;
+      return hisProjects;
+    })
+    .catch(err => console.log("Error", err));
+  return result;
 }
 //test 4.8
 module.exports = router;
