@@ -633,7 +633,7 @@ getAllCAFail (){
       expect(response.status).toEqual(404)
     })
   }
-}
+
   postAProjectFail() {
     const requestBody = {};
 
