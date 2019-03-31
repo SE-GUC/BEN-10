@@ -2,6 +2,7 @@ const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
 const Partner = require('../../models/PartnerInfo') //require your model
 const Project = require('../../models/Project')
+const EventRequest = require('../../models/EventRequest')
 const ObjectId = require('mongoose');
 
 class PTest extends AbstractTests {
@@ -124,7 +125,7 @@ class PTest extends AbstractTests {
       
         
           const requestBody = {
-              requestedBy: "req",
+              requestedBy: "reqzz",
               description: "desc",
               eventType: "type",
               eventLocation: "loc",
@@ -133,10 +134,11 @@ class PTest extends AbstractTests {
               requestorId: "5c784be40bc82a5f186ac770"
     }
     test(`post ${this.base_url}`, async () => {
-      const par = await Partner.find()
-      const par1 = par[0]
-      const parid = par1.id
-      const response = await fetch(`${this.base_url}/${parid}/eventrequest`, {
+      const eventrequests = await EventRequest.find()
+      const eventrequest = eventrequests[0]
+      console.log(eventrequest.id)
+      console.log(eventrequest.requestorId)
+      const response = await fetch(`${this.base_url}/${eventrequest.requestorId}/submitRequest`, {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
@@ -145,15 +147,14 @@ class PTest extends AbstractTests {
       const jsonResponse = await response.json()
       console.log(jsonResponse)
 
-      expect(Object.keys(jsonResponse).toString()).toEqual(['msg','data'].toString())
+      expect(Object.keys(jsonResponse).toString()).toEqual(['msg'].toString())
       expect(response.status).toEqual(200)
-    const eRequest = await Admin.findOne(requestBody).exec()
+    const eRequest = await EventRequest.findOne(requestBody).exec()
 
-      expect(eRequest.requestedBy).toEqual(requestBody.requestedBy)
+      expect(new String(eRequest.requestedBy)).toEqual(requestBody.requestedBy)
       expect(eRequest.description).toEqual(requestBody.description)
       expect(eRequest.eventType).toEqual(requestBody.eventType)
       expect(eRequest.eventLocation).toEqual(requestBody.eventLocation)
-      expect(eRequest.eventDate).toEqual(requestBody.eventDate)
       expect(eRequest.isAccepted).toEqual(requestBody.isAccepted)
       expect(new String(eRequest.requestorId)).toEqual(requestBody.requestorId)
 
@@ -168,6 +169,37 @@ class PTest extends AbstractTests {
     
     })
   }
+
+  SubmitRequestFailure(){
+      
+        
+    const requestBody = {
+        requestedBy: "reqzz",
+        description: "desc",
+        eventType: "type",
+        eventLocation: "loc",
+        eventDate: "hi",
+        isAccepted: false,
+        requestorId: "5c784be40bc82a5f186ac770"
+}
+test(`post ${this.base_url}`, async () => {
+const eventrequests = await EventRequest.find()
+const eventrequest = eventrequests[0]
+console.log(eventrequest.id)
+console.log(eventrequest.requestorId)
+const response = await fetch(`${this.base_url}/${eventrequest.requestorId}/submitRequest`, {
+  method: 'POST',
+  body: JSON.stringify(requestBody),
+  headers: { 'Content-Type': 'application/json' }
+})
+console.log("response stastus: "+ response.status)
+const jsonResponse = await response.json()
+console.log(jsonResponse)
+
+expect(Object.keys(jsonResponse).toString()).toEqual(['msg'].toString())
+expect(response.status).toEqual(200)
+}
+)}
 }
     
   

@@ -55,5 +55,26 @@ class CATest extends AbstractTests {
   putRequest  () {}
   deleteRequest  () {}
 
+  approveProject(){
+    test(`put ${this.base_url}`, async () => {
+      const projects = await Project.find()
+      const project = projects[0]
+      const cas = await ConsultancyAgency.find()
+      const ca = cas[0]
+      const caid = ca.id
+
+      // console.log(project.id)
+      // console.log(project.companyID)
+      const response = await fetch(`${this.base_url}/${caid}/myprojects/${project.id}`, {
+        method: 'PUT',
+        //body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      
+  }
+
+    )}
 }
 module.exports = CAtest

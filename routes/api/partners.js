@@ -219,11 +219,27 @@ router.put("/:id/editProject/:pid/", async (req, res) => {
     res.json({ msg: "error" });
   }
 });
-router.post("/:id/submitRequest/", async (req, res) => {
-  const j = await PartnerRequestEvent(req.body);
-  return res.json(j);
+// router.post("/:id/submitRequest", async (req, res) => {
+//   const p = await PartnerInfo.findById(req.params.id)
+//   if (p.requestorId==req.params.id){
+//     const j = await PartnerRequestEvent(req.body);
+//   }
+//   return res.json(j);
+// });
+router.post("/:id/submitRequest", async (req, res) => {
+  try {
+    const isValidated = validator.createValidationPartnerInfo(req.body);
+    if (isValidated.error)
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
+    const newPartnerInfo = await PartnerInfo.create(req.body);
+    res.json({ msg: "Request was created successfully", data: newAdmin });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send("Error");
+  }
 });
-
 //1.0 as a partner i want to submit a description on a task/project
 router.post("/:id/addProject", async (req, res) => {
   try {
