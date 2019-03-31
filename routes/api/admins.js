@@ -568,11 +568,11 @@ router.post("/:id/events/:id2/sendFeedBackForm", async (req, res) => {
     const admin = await Admin.findById(req.params.id);
     let result = "";
     if (!admin) {
-      result = "not an admin id";
+      res.send({error:"Not an admin id"});
     } else {
       const event = await Event.findById(req.params.id2);
       if (!event) {
-        result = "not an event id";
+        res.send({error:"Not an event id"});
       } else {
         return res.send({
           data: await sendFeedBack(req.body.feedBack, req.params.id2)
@@ -603,6 +603,7 @@ async function sendRejectionNotification(projectId) {
     }
   }
   for (i = 0; i < myProjectApplications.length; i++) {
+    if(project.memberID !== myProjectApplications[i]){
     const body = {
       description:
         "Sorry u were not accepted for project {" + project.description + "}",
@@ -639,6 +640,7 @@ async function sendRejectionNotification(projectId) {
         result = json;
       })
       .catch(err => console.log("Error", err));
+    }
   }
   return { data: result };
 }
@@ -648,11 +650,11 @@ router.post("/:id/projects/:id2/sendRejection", async (req, res) => {
     const admin = await Admin.findById(req.params.id);
     let result = "";
     if (!admin) {
-      result = "not an admin id";
+      res.send({error:"Not an admin id"});
     } else {
       const project = await Project.findById(req.params.id2);
       if (!project) {
-        result = "not a project id";
+        res.send({error:"Not a project id"});
       } else {
         return res.send({
           data: await sendRejectionNotification(req.params.id2)
