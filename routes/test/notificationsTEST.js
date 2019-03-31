@@ -4,7 +4,7 @@ const Notification = require("../../models/Notification"); //require your model
 const Member = require("../../models/member");
 const ObjectId = require("mongoose");
 
-class NotificationTest extends AbstractTests {
+class NTest extends AbstractTests {
   constructor(PORT, ROUTE) {
     super(PORT, ROUTE);
     this.sharedState = {
@@ -21,10 +21,10 @@ class NotificationTest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe("Making sure notifications routes work", () => {
-          //this.postRequest();
-          //this.getRequest();
-          //this.putRequest();
-          //this.deleteRequest();
+          this.postRequest();
+          this.getRequest();
+          this.putRequest();
+          this.deleteRequest();
           this.getRequestById();
         });
         resolve();
@@ -105,7 +105,7 @@ class NotificationTest extends AbstractTests {
     test(`put ${this.base_url}`, async () => {
       const notification = await Notification.find();
       const n1 = notification[0];
-      const requestBody = {
+      let requestBody = {
         seen: !n1.seen
       };
 
@@ -157,4 +157,4 @@ class NotificationTest extends AbstractTests {
     });
   }
 }
-module.exports = NotificationTest;
+module.exports = NTest;
