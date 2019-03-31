@@ -45,7 +45,8 @@ module.exports = {
             required_skills_set: Joi.array().items(Joi.string()),
             memberID: Joi.objectId(),
             consultancyID: Joi.objectId(),
-            applyingCA : Joi.array().items(Joi.objectId())
+            applyingCA : Joi.array().items(Joi.objectId()),
+            submitted_project_link:Joi.string()
 
         }
 
