@@ -485,13 +485,7 @@ router.post("/:cid/rating/:eid/", async (req, res) => {
       if (event.requestorId == req.params.cid) {
         var i;
         var success = true;
-        var today = new Date();
-        var date =
-          today.getFullYear() +
-          "-" +
-          (today.getMonth() + 1) +
-          "-" +
-          today.getDate();
+        var date = Date.now();
         const attendees = event.bookedMembers;
         var arr = new Array(attendees.length);
         for (i = 0; i < attendees.length; i++) {
