@@ -8,7 +8,6 @@ const project = require('../../models/Project')
 const Member = require('../../models/member')
 const Events = require('../../models/Event')
 const ObjectId = require('mongoose');
-const Admin = require("../../models/Admin");
 const server = require("../../config/config");
 class MTest extends AbstractTests {
   constructor (PORT, ROUTE) {
