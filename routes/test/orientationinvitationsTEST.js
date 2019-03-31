@@ -22,16 +22,16 @@ class OITest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
-          //this.postRequest()
+          this.postRequest()
           this.postRequestFail()
-         // this.postRequestFail()
-          //this.getRequest()
-         // this.putRequest()
-        // this.putRequestFail  ()
-          //this.deleteRequest()
-          //this.deleteRequestFail  ()
-        // this.getRequestByid()
-       // this.getRequestByidFail ()
+         this.postRequestFail()
+          this.getRequest()
+         this.putRequest()
+        this.putRequestFail  ()
+          this.deleteRequest()
+          this.deleteRequestFail  ()
+        this.getRequestByid()
+       this.getRequestByidFail ()
 
           // add all methods
 
