@@ -516,6 +516,7 @@ async function addEvent(body) {
     .catch(err => console.log("Error", err));
   return result;
 }
+//get all projects
 router.get("/:id/projects", async (req, res) => {
   const id = req.params.id;
 

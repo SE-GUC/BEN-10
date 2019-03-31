@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 
 const Project = require("../../models/Project");
+const event = require("../../models/Event");
 const PartnerInfo = require("../../models/PartnerInfo");
 const fetch = require("node-fetch");
 const server = require("../../config/config");

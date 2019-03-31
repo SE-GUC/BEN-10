@@ -349,6 +349,22 @@ putRequestFailure  () {const requestBody = {
     )
   }
 
+  getProjects(){
+    test(`get ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+
+      expect(Object.keys(jsonResponse).toString()).toEqual(['data'].toString())
+      expect(response.status).toEqual(200)
+  }
+    )
+  }
+
 
 }
 module.exports = ATest
