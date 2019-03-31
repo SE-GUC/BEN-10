@@ -536,10 +536,10 @@ router.get(`/:id/applications`,async(req,res)=>{
       .catch(err=> {return err})  
     }
     else{
-      return res.status(404).send("admin not found");
+      return res.status(404).send({msg:"admin not found"});
     }
   }else{
-    return res.status(404).send("not found")
+    return res.status(404).send({msg: "not found"})
   }
    return res.json(result);
 })
