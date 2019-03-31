@@ -30,17 +30,17 @@ class ATest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
-          //this.postRequest()
-          //this.getRequest()
-         // this.putRequest()
-          //this.deleteRequest()
-          //this.getRequestByID()
-          //this.deleteRequestFailure()
-          //this.putRequestFailure()
-          //this.getRequestByIDFailure()
-          //this.postRequestFailure()
-          //this.getProjects()
-          //this.getProjectsFailure()
+          this.postRequest()
+          this.getRequest()
+         this.putRequest()
+          this.deleteRequest()
+          this.getRequestByID()
+          this.deleteRequestFailure()
+          this.putRequestFailure()
+          this.getRequestByIDFailure()
+          this.postRequestFailure()
+          this.getProjects()
+          this.getProjectsFailure()
           // add all methods
 
         })
