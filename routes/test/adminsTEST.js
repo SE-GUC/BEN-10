@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
-const Admin = require('../../models/admins') //require your model
+const Admin = require('../../models/admin') //require your model
 const ObjectId = require('mongoose');
 
 class ATest extends AbstractTests {
@@ -16,15 +16,16 @@ class ATest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
-          this.postRequest()
-          this.getRequest()
-          this.putRequest()
-          this.deleteRequest()
+        //  this.postRequest()
+        //  this.getRequest()
+        //  this.putRequest()
+        //  this.deleteRequest()
           //monda 3.4  sprint 2*/
-            AssignCandidateToproject()
+           this. AssignCandidateToproject()
           // monda 2.7 sprint 2
-            DecideEventRequest()
+           this.DecideEventRequest()
           // add all methods
+          this.ViewAllApplication()
 
         })
         resolve()
@@ -66,12 +67,15 @@ class ATest extends AbstractTests {
   const mid = '5c943ce710d91e0877f299b9' ;
   const pid = '5c9446ec609f7c5080979fdb' ;
  test(`assign one of candidates to one of the projects he applied on`,async (done)=>{
-   const response = await fetch(`use${this.base_url}/${aid}/assign/${pid}/to/${mid}`,{
+   console.log(" dakhl el test")
+   const response = await fetch(`${this.base_url}/${aid}/assign/${pid}/to/${mid}`,{
      method : 'PUT', 
      body : JSON.stringify({ memberID: mid }),
      headers: { 'Content-Type': 'application/json' }
    })
    console.log("response to story 3.4 : "+response.status)
+   const j = await response.json()
+   console.log(j)
    expect(response.status).toEqual(200)
    done();
  })
@@ -84,13 +88,33 @@ DecideEventRequest(){
   const eid = '5c9ccecc81f9461d58909374';
   const flag = true;
   test('decide event request',async (done)=>{
-    const response = await fetch(`"use${this.base_url}/${aid}/EventRequest/${eid}/${falg}`,{
+    const response = await fetch(`${this.base_url}/${aid}/EventRequest/${eid}/${flag}`,{
       method : 'PUT',
       body :JSON.stringify({ isAccepted: flag }),
       headers: { 'Content-Type': 'application/json' }
     })
-    console.log("response to story 2.7"+response.status)
+    console.log("response to story 2.7 "+response.status)
+    const j = await response.json()
+  // console.log(j)
+   expect(response.status).toEqual(200)
+    done()
   })
 }
+// sprint 3 => as admin i want to view all applications
+ViewAllApplication(){
+  const aid='5c7a603f0a4938ccd1e08e77';
+  test(' view all application for an admin',async (done)=>{
+    const response = await fetch(`${this.base_url}/${aid}/applications`,{
+      method : 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+    console.log("response to story 5"+response.status)
+    const j = await response.json()
+   //console.log(j)
+   expect(response.status).toEqual(200)
+    done()
+  })
 }
-module.exports = Atest
+
+}
+module.exports = ATest

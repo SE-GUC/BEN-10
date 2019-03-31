@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
-const Admin = require('../../models/admins') //require your model
+const Admin = require('../../models/ConsultancyAgency') //require your model
 const ObjectId = require('mongoose');
 
 class CATest extends AbstractTests {
@@ -16,11 +16,12 @@ class CATest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
-          this.postRequest()
-          this.getRequest()
-          this.putRequest()
-          this.deleteRequest()
+         // this.postRequest()
+         // this.getRequest()
+         // this.putRequest()
+          //this.deleteRequest()
           // add all methods
+          this.DoFinalReview()
 
         })
         resolve()
@@ -61,15 +62,17 @@ class CATest extends AbstractTests {
 DoFinalReview(){
   const caid = '5c79260b4328ab820437835c'
   test('showing projects in final review for that ca',async (done) => {
-      const response = await fetch(`get ${this.base_url}/${caid}/reviewprojects`,{
+      const response = await fetch(`${this.base_url}/${caid}/reviewprojects`,{
         method : 'GET',
         headers: { 'Content-Type': 'application/json' }
-      })
+      }) 
       console.log("response to story 2.3 "+response.status)
+      const j  = await response.json()
+      console.log(j)
       expect(response.status).toEqual(200)
       done(); 
   
   })
 }
 }
-module.exports = CAtest
+module.exports = CATest
