@@ -1,4 +1,4 @@
-
+const Admin = require('../../models/ConsultancyAgency') //require your model
 const fetch = require("node-fetch");
 const AbstractTests = require("./AbstractTests");
 const Events = require('../../models/Event') //require your model
@@ -66,7 +66,8 @@ class CATest extends AbstractTests {
           this.applyingMembersFail()
              this.viewMyEvents()
            this.viewMyEventsFail()
-        })
+            this.DoFinalReview()
+       })
         resolve()
       })
     } catch (err) {}
@@ -693,11 +694,30 @@ postRequest () {
       expect(Object.keys(jsonResponse)).toEqual(['error'])
       expect(response.status).toEqual(404)
 
-     
-      
-    })
-  }
+
+// monda sprint 2 = > 2.3 as ca i want to view all of my projects in final review state 
+// i.e : do review of final work  
+DoFinalReview(){
+  const caid = '5c79260b4328ab820437835c'
+  test('showing projects in final review for that ca',async (done) => {
+      const response = await fetch(`${this.base_url}/${caid}/reviewprojects`,{
+        method : 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      }) 
+      console.log("response to story 2.3 "+response.status)
+      const j  = await response.json()
+      //console.log(j)
+      if(j.msg==' not valid id'||j.msg=='Error in catch block"')
+      expect(response.status).toEqual(404)
+      else
+       expect(response.status).toEqual(200)
+      done(); 
   
+  })
+}
+
+     
+
   assignCandidate() {
     const requestBody = {
       // enter model attributes

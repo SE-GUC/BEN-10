@@ -91,11 +91,7 @@ describe('orientation invitation Tests', () => {
   ]).then(result => {})
 })
 
-describe('member Tests', () => {
-  Promise.all([
-    mTests.run(),
-   ]).then(result => {})
- })
+
 
 afterAll(async () => {
   mongoose.disconnect();

@@ -365,9 +365,12 @@ router.get("/:caid/reviewprojects", async (req, res) => {
       const matchingProjects = await getProjectsInFinalReview(caid);
       res.json({ data: matchingProjects });
     }
+    else{
+      res.status(404).send({msg :" not valid id"})
+    }
   } catch (error) {
     console.log(error);
-    return res.status(400).send("Error");
+    return res.status(404).send({msg :"Error in catch block"});
   }
 });
 
