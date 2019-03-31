@@ -1,10 +1,12 @@
 const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
-const partner = require('../../models/PartnerInfo')
-const project = require('../../models/Project') 
+
 const consultancyagency = require('../../models/consultancyagency')//require your model
+const Partners = require("../../models/PartnerInfo");
+const Events = require('../../models/Event')
+const Projects = require("../../models/Project")
 const ObjectId = require('mongoose');
-class PARTests extends AbstractTests {
+class PaTest extends AbstractTests {
   constructor (PORT, ROUTE) {
     super(PORT, ROUTE)
     this.sharedState = {
@@ -43,6 +45,13 @@ class PARTests extends AbstractTests {
          this.putDisapproveONFinalDraftFail()
           this.AssignCAtoProj()
          this.AssignCAtoProjFail()
+          this.Partnerrequestrating()
+          this.PartnerrequestratingbywrongPartnerID()
+          this.PartnerrequestratingbynotavalidatedPartnerID()
+          this.PartnerrequestratingbywrongEventID()
+          this.PartnerrequestratingbynotavalidatedEventID()
+          this.PartnerrequestratingbynotanEventsOwner()
+
         })
         resolve()
       })
@@ -70,8 +79,134 @@ class PARTests extends AbstractTests {
       expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
       expect(response.status).toEqual(200)
 
+
+
+
+  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+  Partnerrequestrating(){
+    const requestBody = {}
+  
+  test(`post ${this.base_url}/:id/rating/:eid/`, async () => {
+    const events = await Events.find()
+    const pas = await Partners.find()
+    var ids =[]
+    var i=0
+    for(i;i<pas.length;i++){
+      ids.push(pas[i].id.toString())        
+    }
+    var i=0
+    var result =[]
+    for(i;i<events.length;i++){
+      if(ids.includes(events[i].requestorId.toString())){
+        result.push(events[i])
+      }
+    
+
+  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+  PartnerrequestratingbywrongPartnerID(){
+    const requestBody = {}
+  
+  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
+    const response = await fetch(`${this.base_url}/5c786899f8a8e826447d212f/rating/5c9cda328acdd615d268e514/`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+    })
+  }
+
+  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+  PartnerrequestratingbynotavalidatedPartnerID(){
+    const requestBody = {}
+  
+  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
+    const response = await fetch(`${this.base_url}/5c786899f8a8e26447d212f/rating/5c9cda328acdd615d268e514/`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+    })
+  }
+
+  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+  PartnerrequestratingbywrongEventID(){
+    const requestBody = {}
+  
+  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
+    const response = await fetch(`${this.base_url}/5c786899f8a8e026447d212f/rating/5c9cda328acdd615d868e514/`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+    })
+  }
+
+  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+  PartnerrequestratingbynotavalidatedEventID(){
+    const requestBody = {}
+  
+  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
+    const response = await fetch(`${this.base_url}/5c786899f8a8e026447d212f/rating/5c9cda328add615d268e514/`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+    })
+  }
+
+  // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+  PartnerrequestratingbynotanEventsOwner(){
+    const requestBody = {}
+  
+  test(`post ${this.base_url}/:pid/rating/:eid/`, async () => {
+    const response = await fetch(`${this.base_url}/5c7a5ae73c28ff08583304ee/rating/5c9cda328add615d268e514/`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+    })
+  }
+      postRequest () {
+    const requestBody = {
+      name: "Partners's name",
+      age: 55,
+      gender: "gender",
+      e_mail: "Partners's e_mail",
+      experience_level: "experience_level",
+      phone_number:"54525452115"
+    }
+
+    test(`post ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+      expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
+      expect(response.status).toEqual(200)
+
       
-      const eRequest = await partner.findOne(requestBody).exec()
+      const eRequest = await Partners.findOne(requestBody).exec()
       expect(eRequest.name).toEqual(requestBody.name)
       expect(eRequest.age).toEqual(requestBody.age)
       expect(eRequest.gender).toEqual(requestBody.gender)
@@ -126,7 +261,7 @@ class PARTests extends AbstractTests {
 
   getRequestBYID  () {
     test(`get ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
       const response = await fetch(`${this.base_url}/${parid}`, {
@@ -166,7 +301,7 @@ class PARTests extends AbstractTests {
     }
 
     test(`put ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[1];
       const parid = par1.id;
       const response = await fetch(`${this.base_url}/${parid}`, {
@@ -181,7 +316,7 @@ class PARTests extends AbstractTests {
       expect(response.status).toEqual(200)
 
       
-      const eRequest = await partner.findOne(requestBody).exec()
+      const eRequest = await Partners.findOne(requestBody).exec()
       expect(eRequest.name).toEqual(requestBody.name)
       expect(eRequest.age).toEqual(requestBody.age)
       expect(eRequest.gender).toEqual(requestBody.gender)
@@ -210,7 +345,7 @@ class PARTests extends AbstractTests {
     }
 
     test(`put ${this.base_url}`, async () => { 
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[1];
       const parid = par1.id;
       const response = await fetch(`${this.base_url}/${parid}`, {
@@ -229,7 +364,7 @@ class PARTests extends AbstractTests {
 
   deleteRequest  () {
     test(`delete ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[2];
       const parid = par1.id;
       const response = await fetch(`${this.base_url}/${parid}`, {
@@ -268,7 +403,7 @@ class PARTests extends AbstractTests {
     }
 
     test(`post ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
       const response = await fetch(`${this.base_url}/${parid}/addProject`, {
@@ -283,7 +418,7 @@ class PARTests extends AbstractTests {
       expect(response.status).toEqual(200)
 
       
-      const eRequest = await project.findOne(requestBody).exec()
+      const eRequest = await Projects.findOne(requestBody).exec()
       expect(eRequest.description).toEqual(requestBody.description)
       expect(eRequest.company).toEqual(requestBody.company)
       expect(eRequest.category).toEqual(requestBody.category)
@@ -322,7 +457,7 @@ class PARTests extends AbstractTests {
 
    getMyProjects  () {
     test(`get ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
       const response = await fetch(`${this.base_url}/${parid}/myProjects`, {
@@ -355,10 +490,10 @@ class PARTests extends AbstractTests {
     const requestBody = {
     }
     test(`put ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
-      var projs = await project.find()
+      var projs = await Projects.find()
       projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==false)
       const proj = projs[0];
       await fetch(
@@ -385,11 +520,11 @@ class PARTests extends AbstractTests {
     })    
   }
 
-  putApproveONFinalDraftFail  () {//enter invalid project id
+  putApproveONFinalDraftFail  () {//enter invalid Projects id
     const requestBody = {
     }
     test(`put ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
       const response = await fetch(`${this.base_url}/${parid}/myprojects/5c94436fc61339203ad8c7/finaldraft/approve`, {
@@ -410,10 +545,10 @@ class PARTests extends AbstractTests {
     const requestBody = {
     }
     test(`put ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
-      var projs = await project.find()
+      var projs = await Projects.find()
       projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==false)
       const proj = projs[0]
       await fetch(
@@ -441,11 +576,11 @@ class PARTests extends AbstractTests {
     })    
   }
 
-  putDisapproveONFinalDraftFail () { //enter wrong project id 
+  putDisapproveONFinalDraftFail () { //enter wrong Projects id 
     const requestBody = {
     }
     test(`put ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
       const response = await fetch(`${this.base_url}/${parid}/myprojects/5c94436fd0c339203ad8c7/finaldraft/disapprove`, {
@@ -466,10 +601,10 @@ class PARTests extends AbstractTests {
     const requestBody = {
     }
     test(`put ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
-      var projs = await project.find()
+      var projs = await Projects.find()
       projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==true)
       var k=0
       for(k;k<projs.length;k++){
@@ -517,14 +652,15 @@ class PARTests extends AbstractTests {
       expect(response.status).toEqual(200)
     })    
   }
+      
   AssignCAtoProjFail() {//enter wrong id for consultancy agency 
     const requestBody = {
     }
     test(`put ${this.base_url}`, async () => {
-      const par = await partner.find();
+      const par = await Partners.find();
       const par1 = par[0];
       const parid = par1.id;
-      var projs = await project.find()
+      var projs = await Projects.find()
       projs = projs.filter(p => p.companyID == parid  && p.want_consultancy==true && p.consultancyID == null )
       const proj = projs[0]
       const projid = proj.id
@@ -540,7 +676,7 @@ class PARTests extends AbstractTests {
       expect(response.status).toEqual(404)
 
     })    
-  }  
+  }
 
 }
-module.exports = PARTests
+module.exports = PaTest

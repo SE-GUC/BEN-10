@@ -6,7 +6,8 @@ const Project = require("../../models/Project");
 const PartnerInfo = require("../../models/PartnerInfo");
 const fetch = require("node-fetch");
 const server = require("../../config/config");
-const partners = require("../../models/PartnerInfo");
+const Member = require("../../models/member");
+const Event = require("../../models/Event");
 const validator = require("../../validations/partnerValidations");
 const ObjectId = require("mongodb").ObjectID;
 
@@ -474,44 +475,50 @@ await fetch(url, {
     return j
 }
 
-// -- 7 As a partner I wanto to approve/disapprove the final review of a project
-
-router.put("/:id/myprojects/:pid/finalreview/approve", async (req, res) => {
-  try {
-    const par = await PartnerInfo.findById(req.params.id);
-    const proj = await Project.findById(req.params.pid);
-    if (par && proj) {
-      if (proj.companyID == req.params.id) {
-        if (proj.life_cycle === "Final Review") {
-          const j = await acceptFinalReview(req.params.pid);
-          res.json(j);
-        } else {
-          //not final review
-          res
-            .status(400)
-            .send({
-              error: "The project is not submitted to be finally reviewed"
-            });
+// 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+router.post("/:pid/rating/:eid/", async (req, res) => {
+  if (ObjectId.isValid(req.params.pid) && ObjectId.isValid(req.params.eid)) {
+    const partner = await PartnerInfo.findById(req.params.pid);
+    const event = await Event.findById(req.params.eid);
+    if (partner && event) {
+      if (event.requestorId == req.params.pid) {
+        var i;
+        var success = true;
+        var date = Date.now()
+        const attendees = event.bookedMembers
+        var arr = new Array(attendees.length);
+        for (i = 0; i < attendees.length; i++) {
+          const j = await Partnerrequestrating(event.formLink, attendees[i], date);
+          arr[i] = j;
         }
+        for (i = 0; i < attendees.length; i++){
+          if (arr[i].msg != "Notifications are sent successfully")
+            success = false;
+        }
+        if (success)
+          res.json({ msg: "Notifications are sent successfully" })
+        else
+          res.json({ msg: "Error occured" })
       } else {
-        //not your project
-        res.status(400).send({ error: "You can not access this project" });
+        return res.status(400).send({ error: 'this event does not belong to you' });
       }
-    } else {
-      //id error
-      res.status(400).send({ error: "ERROR: Project not found" });
-    }
-  } catch (error) {
-    res.status(404).send({ error: "Error" });
-  }
+    } else return res.status(404).send({ error: "inavalid inputs" });
+  } else return res.status(404).send({ error: "inavalid inputs" });
 });
 
-async function acceptFinalReview(pid) {
-  var j;
+// 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
+async function Partnerrequestrating(formLink,id,date) {
   var error = true;
-  await fetch(`${server}/api/projects/${pid}`, {
-    method: "put",
-    body: JSON.stringify({ life_cycle: "Finished" }),
+  const body = {
+    description: `please rate thie event through this form ${formLink}`,
+    NotifiedPerson: id,
+    date: date,
+    seen: "false"
+  };
+  var j;
+  await fetch(`${server}/api/notifications/`, {
+    method: "post",
+    body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" }
   })
     .then(res => {
@@ -522,73 +529,11 @@ async function acceptFinalReview(pid) {
     })
     .then(json => {
       if (!error) {
-        json = { msg: "Final Review accepted successfully" };
+        json = { msg: "Notifications are sent successfully" };
       }
       j = json;
     })
-    .catch(err => {
-      console.log("Error", err);
-      j = { msg: "Error" };
-    });
-
-  return j;
-}
-router.put("/:id/myprojects/:pid/finalreview/decline", async (req, res) => {
-  try {
-    const par = await PartnerInfo.findById(req.params.id);
-    const proj = await Project.findById(req.params.pid);
-    if (par && proj) {
-      if (proj.companyID == req.params.id) {
-        if (proj.life_cycle === "Final Review") {
-          const j = await declineFinalReview(req.params.pid);
-          res.json(j);
-        } else {
-          //not final review
-          res
-            .status(400)
-            .send({
-              error: "The project is not submitted to be finally reviewed"
-            });
-        }
-      } else {
-        //not your project
-        res.status(400).send({ error: "You can not access this project" });
-      }
-    } else {
-      //id error
-      res.status(400).send({ error: "ERROR: Project not found" });
-    }
-  } catch (error) {
-    res.status(404).send({ error: "Error" });
-  }
-});
-
-async function declineFinalReview(pid) {
-  var j;
-  var error = true;
-  await fetch(`${server}/api/projects/${pid}`, {
-    method: "put",
-    body: JSON.stringify({ life_cycle: "In Progress" }),
-    headers: { "Content-Type": "application/json" }
-  })
-    .then(res => {
-      if (res.status === 200) {
-        error = false;
-      }
-      return res.json();
-    })
-    .then(json => {
-      if (!error) {
-        json = {
-          msg: "Final Review declined successfully -> The project In Progress"
-        };
-      }
-      j = json;
-    })
-    .catch(err => {
-      console.log("Error", err);
-      j = { msg: "Error" };
-    });
+    .catch(err => console.log("Error", err));
 
   return j;
 }
