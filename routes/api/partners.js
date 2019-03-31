@@ -275,13 +275,13 @@ router.post("/:id/addProject", async (req, res) => {
 async function deleteProject(id) {
   var error = true;
   var result;
-  const p = await Project.findById(id);
+  const pr = await Project.findById(id);
   if (
     pr.life_cycle !== "Posted" &&
     pr.life_cycle !== "Final Review" &&
     pr.life_cycle !== "Finished"
   ) {
-    await fetch(`${server}/api/projects/${id}`, {
+    await fetch(`${server}/api/partner/${id}`, {
       method: "delete",
       body: JSON.stringify(body),
       headers: { "Content-Type": "application/json" }
@@ -299,7 +299,7 @@ async function deleteProject(id) {
 
       .catch(err => console.log("Error", err));
   } else {
-    console.log("fssss");
+    console.log("error");
   }
 }
 async function editProject(id, body) {
@@ -311,7 +311,7 @@ async function editProject(id, body) {
     pr.life_cycle !== "Final Review" &&
     pr.life_cycle !== "Finished"
   ) {
-    await fetch(`${server}/api/projects/${id}`, {
+    await fetch(`${server}/api/partner/${id}`, {
       method: "put",
       body: JSON.stringify(body),
       headers: { "Content-Type": "application/json" }

@@ -20,10 +20,21 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  const id = req.params.id;
-  const admins = await Admin.findById(id);
-  res.json({ data: admins });
+  if (ObjectId.isValid(req.params.id)) {
+    const id = req.params.id;
+    const admins = await Admin.findById(id);
+    if (!admins)
+      return res.status(404).send({ error: "Admin does not exist" });
+    res.json({ data: admins });
+  } else {
+    return res.status(404).send({ error: "Admin does not exist" });
+  }
 });
+// router.get("/:id", async (req, res) => {
+//   const id = req.params.id;
+//   const admins = await Admin.findById(id);
+//   res.json({ data: admins });
+// });
 
 //3 --As an admin I want to further check the description of a task/project so that it will be posted for candidates to apply.
 router.get("/pdescription/:id/", async (req, res) => {
