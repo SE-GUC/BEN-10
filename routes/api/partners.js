@@ -141,8 +141,8 @@ router.put("/:id", async (req, res) => {
 });
 router.post("/:id/eventrequests/", async (req, res) => {
   if (ObjectId.isValid(req.params.id)) {
-    const pid = await PartnerInfo.findById(req.params.id);
-    if (pid) {
+    const p = await PartnerInfo.findById(req.params.id);
+    if (p) {
       if (
         req.body.requestedBy != null &&
         req.body.description != null &&
@@ -151,19 +151,66 @@ router.post("/:id/eventrequests/", async (req, res) => {
         req.body.eventDate != null
       ) {
         const j = await PartnerRequestEvent(
+          req.params.id,
           req.body.requestedBy,
           req.body.description,
           req.body.eventType,
           req.body.eventLocation,
           req.body.eventDate
         );
+        console.log(j)
         res.status(200).send(j);
       } else {
-        return res.status(400).send({ msg: "body is missing attrubites" });
+        return res.status(400).send({ error: "body is missing attrubites" });
       }
-    } else return res.status(404).send({ msg: "Partner does not exist" });
-  } else return res.status(404).send({ msg: "Partner does not exist" });
+    } else
+      return res
+        .status(404)
+        .send({ error: "Partner does not exist" });
+  } else
+    return res.status(404).send({ error: "Partner does not exist" });
 });
+
+ async function PartnerRequestEvent(
+  rid,
+  requestedBy,
+  description,
+  eventType,
+  eventLocation,
+  eventDate
+) {
+  const body = {
+    requestorId :rid,
+    requestedBy: requestedBy,
+    description: description,
+    eventType: eventType,
+    eventLocation: eventLocation,
+    eventDate: eventDate,
+    isAccepted: "false"
+  }
+  var error = true;
+  var j;
+  await fetch(`${server}/api/eventrequests`, {
+    method: "post",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" }
+  })
+    .then(res => {
+      if (res.status === 200) {
+        error = false;
+      }
+      return res.json();
+    })
+    .then(json => {
+      if (!error) {
+        json = { msg: "Event is requested successfully" };
+      }
+      console.log(json)
+      j = json;
+    })
+    .catch(err => console.log("Error", err));
+  return j;
+}
 
 router.delete("/:id", async (req, res) => {
   try {
@@ -210,20 +257,20 @@ router.put("/:id/editProject/:pid/", async (req, res) => {
 //   }
 //   return res.json(j);
 // });
-router.post("/:id/submitRequest", async (req, res) => {
-  try {
-    const isValidated = validator.createValidationPartnerInfo(req.body);
-    if (isValidated.error)
-      return res
-        .status(400)
-        .send({ error: isValidated.error.details[0].message });
-    const newPartnerInfo = await PartnerInfo.create(req.body);
-    res.json({ msg: "Request was created successfully", data: newAdmin });
-  } catch (error) {
-    console.log(error);
-    return res.status(400).send("Error");
-  }
-});
+// router.post("/:id/submitRequest", async (req, res) => {
+//   try {
+//     const isValidated = validator.createValidationPartnerInfo(req.body);
+//     if (isValidated.error)
+//       return res
+//         .status(400)
+//         .send({ error: isValidated.error.details[0].message });
+//     const newPartnerInfo = await PartnerInfo.create(req.body);
+//     res.json({ msg: "Request was created successfully", data: newAdmin });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(400).send("Error");
+//   }
+// });
 //1.0 as a partner i want to submit a description on a task/project
 router.post("/:id/addProject", async (req, res) => {
   try {
@@ -342,30 +389,30 @@ async function editProject(id, body) {
   }
 }
 
-async function PartnerRequestEvent(body) {
-  var error = true;
-  var j;
-  await fetch(`${server}/api/eventrequests/`, {
-    method: "post",
-    body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" }
-  })
-    .then(res => {
-      if (res.status === 200) {
-        error = false;
-      }
-      return res.json();
-    })
-    .then(json => {
-      if (!error) {
-        json = { msg: "Event is requested successfully" };
-      }
-      j = json;
-      console.log(j);
-    })
-    .catch(err => console.log("Error", err));
-  return j;
-}
+// async function PartnerRequestEvent(body) {
+//   var error = true;
+//   var j;
+//   await fetch(`${server}/api/eventrequests/`, {
+//     method: "post",
+//     body: JSON.stringify(body),
+//     headers: { "Content-Type": "application/json" }
+//   })
+//     .then(res => {
+//       if (res.status === 200) {
+//         error = false;
+//       }
+//       return res.json();
+//     })
+//     .then(json => {
+//       if (!error) {
+//         json = { msg: "Event is requested successfully" };
+//       }
+//       j = json;
+//       console.log(j);
+//     })
+//     .catch(err => console.log("Error", err));
+//   return j;
+// }
 
 //1.5 As a partner I want to review the final work of the candidate who is working on my task/project.
 router.get("/:id/ShowFinalDraft", async (req, res) => {
@@ -577,7 +624,8 @@ router.post("/:pid/rating/:eid/", async (req, res) => {
         else
           res.json({ msg: "Error occured" })
       } else {
-        return res.status(400).send({ error: 'this event does not belong to you' });
+        return res.status(400).send({ error: 'this 
+                                     does not belong to you' });
       }
     } else return res.status(404).send({ error: "inavalid inputs" });
   } else return res.status(404).send({ error: "inavalid inputs" });
