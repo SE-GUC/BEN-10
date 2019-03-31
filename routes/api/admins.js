@@ -506,35 +506,33 @@ async function addEvent(body) {
   return result;
 }
 
-//sprint 3 = >as partner i want to cancel a project
-router.delete("/:id/cancelproject/:pid", async (req, res) => {
-  var error = true;
-  if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
-    const partner = await PartnerInfo.findById(req.params.id);
-    const project = await Project.findById(req.params.pid);
-    if (partner && project) {
-      if (project.companyID == req.params.id){
-        if(project.life_cycle == "Negotiation" || project.life_cycle == "Final Draft" || project.life_cycle == "Waiting For Consultancy Agency"){
-          var error = true;
-          await fetch(`${server}/api/projects/${req.params.pid}`, {
-            method: "delete",
-            headers: { "Content-Type": "application/json" }
-          })
-          .then(res => {
-            if (res.status === 200) {
-              error = false;
-            }
-            return res.json();
-          })
-          .then(json => {
-            if (!error) {
-              res.json({ msg: "Project is canceled" });
-            }
-          })
-          .catch(err => console.log("Error", err));
-        } else return res.status(404).send({ error: "you cannot cancel this project" });
-      } else return res.status(404).send({ error: "this project doesnot belong to you" });
-    } else return res.status(404).send({ error: "invalid inputs" });
-  } else return res.status(404).send({ error: "invalid inputs" });
-});
+//sprint 3 = >as admin i want to view all applications
+router.get(`/:id/projects`,async(req,res)=>{
+  if(ObjectId.isValid(req.params.id)){
+    const admin  = await Admin.findById(req.params.id)
+    if(admin){
+      var result ;
+      const url = `${server}/api/projects`;
+      await fetch(url,{
+        method : "GET",
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(res => {
+        
+        return res.json();
+      })
+      .then(json => {
+        result=json;
+      }) 
+      .catch(err=> {return err})  
+    }
+    else{
+      return res.status(404).send("admin not found");
+    }
+  }else{
+    return res.status(404).send("not found")
+  }
+   return res.json(result);
+})
+
 module.exports = router;
