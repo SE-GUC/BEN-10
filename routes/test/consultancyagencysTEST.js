@@ -2,6 +2,8 @@ const fetch = require("node-fetch");
 const AbstractTests = require("./AbstractTests");
 const Events = require('../../models/Event') //require your model
 const CAs = require('../../models/ConsultancyAgency')
+const App = require('../../models/Application')
+
 const Projects = require("../../models/Project")
 
 const ObjectId = require("mongoose");
@@ -50,16 +52,33 @@ class CATest extends AbstractTests {
     test(`assignCandidate ${
       this.base_url
     }/:id/myProjects/:pid/applyingMembers/:mid/assign`, async () => {
+      var apps = await App.find()
       var projs = await Projects.find()
-      projs = projs.filter(p => p.applyingCA.length != null && p.consultancyID!=null && p && p.applyingCA.length > 0)
-      const project = projs[0]
+      var prid = []
+      var i =0
 
-
+      for(i in  projs){
+        prid.push(projs[i].id)
+      }
+      var app
+      var prj
+      var ca
+      i=0
+      for(i in apps){
+        if(prid.includes(apps[i].projectId.toString())){
+          app=apps[i]
+          prj = await Projects.findById(apps[i].projectId)
+          if(prj.consultancyID!=null){
+            ca = prj.consultancyID
+            break
+          }
+        }
+      }
 
       const response = await fetch(
         `${
           this.base_url
-        }/${project.consultancyID}/myProjects/${project.id}/applyingMembers/${project.applyingCA[0]}/assign`,
+        }/${ca}/myProjects/${app.projectId}/applyingMembers/${app.applicantId}/assign`,
         {
           method: "put",
           body: JSON.stringify(requestBody),
