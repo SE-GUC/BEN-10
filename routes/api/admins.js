@@ -23,9 +23,12 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
+  if (ObjectId.isValid(req.params.id)){
   const id = req.params.id;
   const admins = await Admin.findById(id);
   res.json({ data: admins });
+}
+else return res.status(404).send({error:"ID ERROR"})
 });
 
 //3 --As an admin I want to further check the description of a task/project so that it will be posted for candidates to apply.

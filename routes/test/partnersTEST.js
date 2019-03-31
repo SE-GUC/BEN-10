@@ -926,7 +926,7 @@ getMyProjectsFail(){
   
   deleteProject () {
     test(`delete ${this.base_url}`, async () => {
-            const partners = await Partner.find()
+            const partners = await Partners.find()
       const partner = partners[0]
       // console.log(partner._id)
       const body ={
@@ -966,7 +966,7 @@ getMyProjectsFail(){
 
   editProject () {
     test(`edit ${this.base_url}`, async () => {
-      const partners = await Partner.find()
+      const partners = await Partners.find()
       const partner = partners[0]
       // console.log(partner._id)
       const body ={
@@ -1007,7 +1007,7 @@ getMyProjectsFail(){
 
   ShowMyEvents(){
     test(`get ${this.base_url}`, async () => {
-      const par = await Partner.find()
+      const par = await Partners.find()
       const par1 = par[0]
       const parid = par1.id
       const response = await fetch(`${this.base_url}/${parid}/ShowMyEvents`, {
@@ -1038,7 +1038,7 @@ getMyProjectsFail(){
         const jsonResponse = await response.json()
         console.log(jsonResponse)
         
-        expect(Object.keys(jsonResponse).toString()).toEqual(["error"].toString())
+        expect(Object.keys(jsonResponse)).toEqual(["msg"])
         expect(response.status).toEqual(404)
     }
       )
@@ -1056,7 +1056,7 @@ getMyProjectsFail(){
               // requestorId: "5c784be40bc82a5f186ac770"
     }
     test(`post ${this.base_url}`, async () => {
-      const pars = await Partner.find()
+      const pars = await Partners.find()
       const p = pars[0]
       console.log(p.id)
       const response = await fetch(`${this.base_url}/${p.id}/eventrequests`, {
@@ -1091,7 +1091,7 @@ getMyProjectsFail(){
       // requestorId: "5c784be40bc82a5f186ac770"
 }
 test(`post ${this.base_url}`, async () => {
-const pars = await Partner.find()
+const pars = await Partners.find()
 const p = pars[0]
 console.log(p.id)
 const response = await fetch(`${this.base_url}/${p.id}/eventrequests`, {

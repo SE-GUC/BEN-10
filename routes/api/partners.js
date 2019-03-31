@@ -624,8 +624,7 @@ router.post("/:pid/rating/:eid/", async (req, res) => {
         else
           res.json({ msg: "Error occured" })
       } else {
-        return res.status(400).send({ error: 'this 
-                                     does not belong to you' });
+        return res.status(400).send({ error: 'this Event does not belong to you' });
       }
     } else return res.status(404).send({ error: "inavalid inputs" });
   } else return res.status(404).send({ error: "inavalid inputs" });

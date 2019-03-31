@@ -235,7 +235,7 @@ class ATest extends AbstractTests {
         const jsonResponse = await response.json()
         console.log(jsonResponse)
   
-        expect(Object.keys(jsonResponse).toString()).toEqual(["error"].toString())
+        expect(Object.keys(jsonResponse)).toEqual(["error"])
         expect(response.status).toEqual(404)
     }
       )
