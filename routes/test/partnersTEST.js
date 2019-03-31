@@ -1,15 +1,15 @@
-const fetch = require('node-fetch')
-const AbstractTests = require('./AbstractTests')
-
+const fetch = require("node-fetch");
+const AbstractTests = require("./AbstractTests");
+const Projects = require("../../models/Project")
+const ObjectId = require("mongoose");
 // const consultancyagency = require('../../models/consultancyagency')//require your model
 const Partners = require("../../models/PartnerInfo");
 const Events = require('../../models/Event')
-const Projects = require("../../models/Project")
-const ObjectId = require('mongoose');
 class PaTest extends AbstractTests {
-  constructor (PORT, ROUTE) {
-    super(PORT, ROUTE)
+  constructor(PORT, ROUTE) {
+    super(PORT, ROUTE);
     this.sharedState = {
+
       name: null,
       age: null,
       gender: null,
@@ -20,10 +20,11 @@ class PaTest extends AbstractTests {
   }
 
   run() {
-    super.run()
+    super.run();
     try {
       return new Promise((resolve, reject) => {
-        describe('Making sure A routes work', () => {
+
+        describe('Making sure Partner routes work', () => {
           this.postRequest()
          this.postRequestFail()
           this.getRequest()
@@ -51,13 +52,17 @@ class PaTest extends AbstractTests {
           this.PartnerrequestratingbywrongEventID()
           this.PartnerrequestratingbynotavalidatedEventID()
           this.PartnerrequestratingbynotanEventsOwner()
+          this.acceptFinalReview();
+          this.declineFinalReview();
+          this.declineFinalReviewFail();
+          this.acceptFinalReviewFail();
 
         })
         resolve()
       })
     } catch (err) {}
   }
-  postRequest () {
+postRequest () {
     const requestBody = {
       name: "Partners's name",
       age: 55,
@@ -662,8 +667,167 @@ class PaTest extends AbstractTests {
       expect(response.status).toEqual(404)
     })
   }
+  
+  acceptFinalReview() {
+    const requestBody = {
+      // enter model attributes
+    };
+
+    test(`acceptFinalReview ${
+      this.base_url
+    }/:id/myprojects/:pid/finalreview/approve`, async () => {
+
+      const prs = await Projects.find()
+      const pr = prs[0]
+      await fetch(
+        `${this.projects_url}/${pr.id}/`,
+        {
+          method: "put",
+          body: JSON.stringify({life_cycle : "Final Review"}),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
 
 
+      const response = await fetch(
+        `${
+          this.base_url
+        }/${pr.companyID}/myprojects/${pr.id}/finalreview/approve`,
+        {
+          method: "put",
+          body: JSON.stringify(requestBody),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+      const jsonResponse = await response.json();
 
+      expect(Object.keys(jsonResponse)).toEqual(["msg"]);
+      expect(response.status).toEqual(200);
+
+      
+    });
+  }
+
+  declineFinalReview() {
+    const requestBody = {
+      // enter model attributes
+    };
+
+    test(`declineFinalReview ${
+      this.base_url
+    }/:id/myprojects/:pid/finalreview/approve`, async () => {
+
+      const prs = await Projects.find()
+      const pr = prs[0]
+      await fetch(
+        `${this.projects_url}/${pr.id}/`,
+        {
+          method: "put",
+          body: JSON.stringify({life_cycle : "Final Review"}),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+
+
+      const response = await fetch(
+        `${
+          this.base_url
+        }/${pr.companyID}/myprojects/${pr.id}/finalreview/decline`,
+        {
+          method: "put",
+          body: JSON.stringify(requestBody),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+      const jsonResponse = await response.json();
+
+      expect(Object.keys(jsonResponse)).toEqual(["msg"]);
+      expect(response.status).toEqual(200);
+
+      
+    });
+  }
+
+  acceptFinalReviewFail() {
+    const requestBody = {
+      // enter model attributes
+    };
+
+    test(`acceptFinalReviewFail ${
+      this.base_url
+    }/:id/myprojects/:pid/finalreview/approve`, async () => {
+
+      const prs = await Projects.find()
+      const pr = prs[0]
+      await fetch(
+        `${this.projects_url}/${pr.id}/`,
+        {
+          method: "put",
+          body: JSON.stringify({life_cycle : "In Progress"}),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+
+
+      const response = await fetch(
+        `${
+          this.base_url
+        }/${pr.companyID}/myprojects/${pr.id}/finalreview/approve`,
+        {
+          method: "put",
+          body: JSON.stringify(requestBody),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+      const jsonResponse = await response.json();
+
+      expect(Object.keys(jsonResponse)).toEqual(["error"]);
+      expect(response.status).toEqual(400);
+
+      
+    });
+  }
+
+  declineFinalReviewFail() {
+    const requestBody = {
+      // enter model attributes
+    };
+
+    test(`declineFinalReviewFail ${
+      this.base_url
+    }/:id/myprojects/:pid/finalreview/approve`, async () => {
+
+      const prs = await Projects.find()
+      const pr = prs[0]
+      await fetch(
+        `${this.projects_url}/${pr.id}/`,
+        {
+          method: "put",
+          body: JSON.stringify({life_cycle : "In Progress"}),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+
+
+      const response = await fetch(
+        `${
+          this.base_url
+        }/${pr.companyID}/myprojects/${pr.id}/finalreview/decline`,
+        {
+          method: "put",
+          body: JSON.stringify(requestBody),
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+      const jsonResponse = await response.json();
+
+      expect(Object.keys(jsonResponse)).toEqual(["error"]);
+      expect(response.status).toEqual(400);
+
+      
+    });
+  }
+ 
 }
+
 module.exports = PaTest
