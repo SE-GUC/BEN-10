@@ -28,22 +28,22 @@ const oiTests = new OITest(3000, '/orientationinvitations')
 const adminTests = new adminTest(3000, '/admins')
 const memberTests = new memberTest(3000, '/member')
 
-// Calling tests
-//describe('Event Requests Tests', () => {
-  //Promise.all([
-    //erTests.run(),
-  //]).then(result => {})
-//})
-// describe('orientation invitation Tests', () => {
-//   Promise.all([
-//     oiTests.run(),
-//   ]).then(result => {})
-// })
-// describe('admin Tests', () => {
-//   Promise.all([
-//     adminTests.run(),
-//   ]).then(result => {})
-// })
+Calling tests
+describe('Event Requests Tests', () => {
+  Promise.all([
+    erTests.run(),
+  ]).then(result => {})
+})
+describe('orientation invitation Tests', () => {
+  Promise.all([
+    oiTests.run(),
+  ]).then(result => {})
+})
+describe('admin Tests', () => {
+  Promise.all([
+    adminTests.run(),
+  ]).then(result => {})
+})
 describe('member Tests', () => {
   Promise.all([
     memberTests.run(),
