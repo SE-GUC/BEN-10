@@ -517,11 +517,13 @@ async function disapproveProject(id, decision) {
 }
 
 //sprint3 => 5- as partner i want to cancel my project
-router.put("/:id/cancelproject/:pid", async (req, res) => {
+router.use("/:id/cancelproject/:pid", async (req, res) => {
   var error = true;
+  console.log("here1")
   if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
     const partner = await PartnerInfo.findById(req.params.id);
     const project = await Project.findById(req.params.pid);
+    var result ;
     if (partner && project) {
       if (project.companyID == req.params.id){
         if(project.life_cycle == "Negotiation" || project.life_cycle == "Final Draft" || 
@@ -539,14 +541,42 @@ router.put("/:id/cancelproject/:pid", async (req, res) => {
           })
           .then(json => {
             if (!error) {
-              res.json({ msg: "Project is canceled" });
+              json = { msg: "Project is canceled" };
             }
           })
           .catch(err => console.log("Error", err));
-        } else return res.status(404).send({ error: "you cannot cancel this project" });
-      } else return res.status(404).send({ error: "this project doesnot belong to you" });
+          // remove the project from array of projects for the partner
+          var arrayOfProjects = partner["projects"];
+          var comp = JSON.stringify(req.params.id)
+          arrayOfProjects.splice(arrayOfProjects.indexOf(comp),1)
+          console.log(arrayOfProjects)
+          // update the array 
+          var err = true;
+          var k;
+          await fetch(`${server}/api/partners/${req.params.id}`,{
+            method : "PUT",
+            body : JSON.stringify({projects : arrayOfProjects}),
+            headers: { "Content-Type": "application/json" }
+          })
+          .then(res =>{
+            console.log(res.status)
+            if(res.status === 200){
+             err = false
+            }
+            return res.json()
+          })
+          .then(json =>{
+            if(!err && ! error){
+              json = {msg: "canceled and removed from array"};
+            }
+             k = json 
+          })
+         .catch(err => {return err})
+      } else return res.status(404).send({ error: "you cannot cancel this project" });
+   } else return res.status(404).send({ error: "this project doesnot belong to you" });
     } else return res.status(404).send({ error: "invalid inputs" });
   } else return res.status(404).send({ error: "invalid inputs" });
+  return res.json(k) ;
 });
 // -- 7 As a partner I wanto to approve/disapprove the final review of a project
 
@@ -607,6 +637,8 @@ async function acceptFinalReview(pid) {
 
   return j;
 }
+
+
 router.put("/:id/myprojects/:pid/finalreview/decline", async (req, res) => {
   try {
     const par = await PartnerInfo.findById(req.params.id);
@@ -666,5 +698,86 @@ async function declineFinalReview(pid) {
 
   return j;
 }
+
+// as partner i want to send task orientation invitation
+router.post("/:id/sendOrientationInvitations/:pid/", async (req, res) => {
+  if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
+    const partner = await PartnerInfo.findById(req.params.id);
+    const project = await Project.findById(req.params.pid);
+    if (partner && project) {
+      if (project.companyID == req.params.id) {
+        if (project.life_cycle == "Posted"){
+          var i;
+          var success = true;
+          var today = new Date();
+          var date =
+            today.getFullYear() +
+            "-" +
+            (today.getMonth() + 1) +
+            "-" +
+            today.getDate();
+          const Applications = await Application.find()
+          const candidates = Applications.filter(c => c.projectId == req.params.pid)
+          var arr = new Array(candidates.length);
+          for (i = 0; i < candidates.length; i++) {
+            const m = await Member.findById(candidates[i].applicantId);
+            const j = await Partnersendtask(candidates[i].applicantId,
+              `${m.fname} ${m.mname} ${m.lname}`,
+              req.body.description,
+              req.params.pid,
+              partner.name,
+              date);
+            arr[i] = j;
+          }
+          for (i = 0; i < candidates.length; i++){
+            if (arr[i].msg != "task is sent successfully")
+              success = false;
+          }
+          if (success)
+            res.json({ msg: "Task Orientations are sent successfully" })
+          else
+            res.json({ msg: "Error occured" })
+        } else return res.status(404).send({ error: "Project has already started" });
+      } else {
+        return res.status(400).send({ error: 'This project does not belong to you' });
+      }
+    } else return res.status(404).send({ error: "inavalid inputs" });
+  } else return res.status(404).send({ error: "inavalid inputs" });
+});
+
+// 9 As a partner I want to send a task orientation invitation to applying candidates
+async function Partnersendtask(mid,mname,description,pid,pname,date) {
+  var error = true;
+  const body = {
+    senttoID: mid,
+    sentto: mname,
+    description: `get to know the project better through this session ${description}`,
+    sentByID: pid,
+    sentBy: pname,
+    sentAt: date
+  }; 
+  var j;
+  await fetch(`${server}/api/orientationinvitations/`, {
+    method: "post",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" }
+  })
+    .then(res => {
+      if (res.status === 200) {
+        error = false;
+      }
+      return res.json();
+    })
+    .then(json => {
+      if (!error) {
+        json = { msg: "task is sent successfully" };
+      }
+      j = json;
+    })
+    .catch(err => console.log("Error", err));
+
+  return j;
+}
+
 
 module.exports = router;
