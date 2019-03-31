@@ -54,6 +54,6 @@ class ATest extends AbstractTests {
   getRequest  () {}
   putRequest  () {}
   deleteRequest  () {}
-
+  
 }
 module.exports = Atest
