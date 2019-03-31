@@ -1043,7 +1043,7 @@ getMyProjectsFail(){
     }
       )
     }
-    SubmitRequest(){
+       SubmitRequest(){
       
         
           const requestBody = {
@@ -1052,15 +1052,14 @@ getMyProjectsFail(){
               eventType: "type",
               eventLocation: "loc",
               eventDate: "1/1/2020",
-              isAccepted: false,
-              requestorId: "5c784be40bc82a5f186ac770"
+              isAccepted: false
+              // requestorId: "5c784be40bc82a5f186ac770"
     }
     test(`post ${this.base_url}`, async () => {
-      const eventrequests = await EventRequest.find()
-      const eventrequest = eventrequests[0]
-      console.log(eventrequest.id)
-      console.log(eventrequest.requestorId)
-      const response = await fetch(`${this.base_url}/${eventrequest.requestorId}/submitRequest`, {
+      const pars = await Partner.find()
+      const p = pars[0]
+      console.log(p.id)
+      const response = await fetch(`${this.base_url}/${p.id}/eventrequests`, {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
@@ -1069,24 +1068,11 @@ getMyProjectsFail(){
       const jsonResponse = await response.json()
       console.log(jsonResponse)
 
-      expect(Object.keys(jsonResponse).toString()).toEqual(['msg'].toString())
+      expect(Object.keys(jsonResponse)).toEqual(['msg'])
       expect(response.status).toEqual(200)
-    const eRequest = await EventRequest.findOne(requestBody).exec()
+    
 
-      expect(new String(eRequest.requestedBy)).toEqual(requestBody.requestedBy)
-      expect(eRequest.description).toEqual(requestBody.description)
-      expect(eRequest.eventType).toEqual(requestBody.eventType)
-      expect(eRequest.eventLocation).toEqual(requestBody.eventLocation)
-      expect(eRequest.isAccepted).toEqual(requestBody.isAccepted)
-      expect(new String(eRequest.requestorId)).toEqual(requestBody.requestorId)
-
-      this.sharedState.requestedBy =  eRequest.requestedBy
-      this.sharedState.description =  eRequest.description
-      this.sharedState.eventType =  eRequest.eventType
-      this.sharedState.eventLocation =  eRequest.eventLocation
-      this.sharedState.eventDate =  eRequest.eventDate
-      this.sharedState.isAccepted =  eRequest.isAccepted
-      this.sharedState.requestorId = eRequest.requestorId
+     
     
     
     })
@@ -1096,32 +1082,33 @@ getMyProjectsFail(){
       
         
     const requestBody = {
-        requestedBy: "reqzz",
-        description: "desc",
-        eventType: "type",
-        eventLocation: "loc",
-        eventDate: "hi",
-        isAccepted: false,
-        requestorId: "5c784be40bc82a5f186ac770"
+      requestedBy: "reqzz",
+      description: "desc",
+      eventType: "type",
+      eventLocation: "loc",
+      eventDate: "1/1/2020",
+      isAccepted: false
+      // requestorId: "5c784be40bc82a5f186ac770"
 }
 test(`post ${this.base_url}`, async () => {
-const eventrequests = await EventRequest.find()
-const eventrequest = eventrequests[0]
-console.log(eventrequest.id)
-console.log(eventrequest.requestorId)
-const response = await fetch(`${this.base_url}/${eventrequest.requestorId}/submitRequest`, {
-  method: 'POST',
-  body: JSON.stringify(requestBody),
-  headers: { 'Content-Type': 'application/json' }
+const pars = await Partner.find()
+const p = pars[0]
+console.log(p.id)
+const response = await fetch(`${this.base_url}/${p.id}/eventrequests`, {
+method: 'POST',
+body: JSON.stringify(requestBody),
+headers: { 'Content-Type': 'application/json' }
 })
 console.log("response stastus: "+ response.status)
 const jsonResponse = await response.json()
 console.log(jsonResponse)
 
-expect(Object.keys(jsonResponse).toString()).toEqual(['msg'].toString())
+expect(Object.keys(jsonResponse)).toEqual(['msg'])
 expect(response.status).toEqual(200)
+})
+
+
 }
-)}
 }
 module.exports = PaTest
 
