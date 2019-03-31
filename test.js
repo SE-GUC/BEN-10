@@ -12,7 +12,6 @@ const ATest = require('./routes/test/adminsTEST')
 const MTest = require('./routes/test/membersTEST')
 const PaTest = require('./routes/test/partnersTEST')
 
-
 beforeAll(async()=>{
   mongoose
   .connect(db, { useNewUrlParser: true })

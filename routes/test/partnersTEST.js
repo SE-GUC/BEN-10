@@ -23,7 +23,6 @@ class PaTest extends AbstractTests {
     super.run();
     try {
       return new Promise((resolve, reject) => {
-
         describe('Making sure Partner routes work', () => {
           this.postRequest()
          this.postRequestFail()
@@ -56,6 +55,8 @@ class PaTest extends AbstractTests {
           this.declineFinalReview();
           this.declineFinalReviewFail();
           this.acceptFinalReviewFail();
+  this.getMyProjects()
+         this.getMyProjectsFail()
 
         })
         resolve()
@@ -116,6 +117,7 @@ postRequest () {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
+
       //console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
       //console.log(jsonResponse )
@@ -416,8 +418,36 @@ postRequest () {
       //console.log(jsonResponse)
       expect(Object.keys(jsonResponse)).toEqual(["error"])
       expect(response.status).toEqual(404)
+      })    
+  }
 
-    })    
+  getMyProjects(){
+    test(`get ${this.base_url}`, async () => {
+      const part = await Partners.find();
+      const part1 = part[0];
+      const partid = part1.id;
+      const response = await fetch(`${this.base_url}/${partid}/ShowFinalDraft`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['data'])
+      expect(response.status).toEqual(200)
+  
+    })
+  }
+  
+getMyProjectsFail(){
+    test(`get ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c786899f8ab7d212f/ShowFinalDraft`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+  
+    })
   }
 
   putDisapproveONFinalDraft() {
@@ -601,6 +631,7 @@ postRequest () {
       const jsonResponse = await response.json()
       expect(Object.keys(jsonResponse)).toEqual(['error'])
       expect(response.status).toEqual(404)
+
     })
   }
 

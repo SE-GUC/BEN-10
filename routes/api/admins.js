@@ -508,6 +508,7 @@ async function addEvent(body) {
     .catch(err => console.log("Error", err));
   return result;
 }
+
 //as an admin i want to view all eventrequests
 router.get("/:id/eventRequests", async (req, res) => {
   const id = req.params.id;
@@ -540,12 +541,12 @@ router.get("/:id/ShowAllCA", async (req, res) => {
   if (ObjectId.isValid(id)) {
     const admins = await Admin.findById(id);
     if(admins){
+
       await fetch(`${server}/api/ConsultancyAgency`)
       .then(res => res.json())
       .then(json => {
         const ca = json.data;
-        res.json({data: ca});
-        
+        res.json({data: ca});     
     }).catch(err => console.log("Error", err));
   }
     else{
@@ -556,6 +557,7 @@ router.get("/:id/ShowAllCA", async (req, res) => {
   }
   
 });
+
 
 
 // 21- As an admin i want to view all Events 
@@ -582,5 +584,31 @@ router.get("/:id/ShowAllEvents", async (req, res) => {
   }
   
 });
+
+//As an admin i want to view all members
+
+router.get("/:id/ShowAllMembers", async (req, res) => {
+  const id = req.params.id;
+
+  if (ObjectId.isValid(id)) {
+    const admins = await Admin.findById(id);
+    if(admins){
+      await fetch(`${server}/api/member`)
+      .then(res => res.json())
+      .then(json => {
+        const member = json.data;
+        res.json({data: member});
+        
+    }).catch(err => console.log("Error", err));
+  }
+    else{
+      return res.status(404).send({ error: "Admin not found" });
+    }
+  } else {
+    return res.status(404).send({ error: "ID not found" });
+  }
+  
+});
+
 
 module.exports = router;

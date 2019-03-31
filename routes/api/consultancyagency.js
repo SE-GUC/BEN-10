@@ -6,6 +6,7 @@ const ObjectId = require("mongodb").ObjectID;
 const fetch = require("node-fetch");
 const server = require("../../config/config");
 mongoose.set("useFindAndModify", false);
+const event = require("../../models/Event");
 const Project = require("../../models/Project");
 const ConsultancyAgency = require("../../models/ConsultancyAgency");
 const validator = require("../../validations/consultancyagencyValidations");
@@ -655,4 +656,29 @@ async function carequestrating(formLink, id, date) {
 
   return j;
 }
+
+
+//22 AS a consultancy Agency i want to view my events
+
+router.get("/:id/ShowMyEvents", async (req, res) => {
+  const id = req.params.id;
+
+  if (ObjectId.isValid(id)) {
+    const consultancyagencys = await ConsultancyAgency.findById(id);
+
+    if (consultancyagencys) {
+      const e =await event.find()
+      const Myevents=e.filter(m=>m.requestorId==id);
+      if(Myevents.length===0){
+        res.send({msg: "NO Events to show"});}
+        else{
+           res.json({ data:Myevents });}
+    } else {
+      return res.status(404).send({ error: "Consultancy Agency not found" });
+    }
+  } else {
+    return res.status(404).send({ error: "Consultancy Agency not found" });
+  }
+});
+
 module.exports = router;

@@ -18,7 +18,8 @@ class MTest extends AbstractTests {
     super.run()
     try {
       return new Promise((resolve, reject) => {
-        describe('Making sure A routes work', () => {
+        describe('Making sure Members routes work', () => {
+
          this.postRequest()
          this.getRequest()
          this.putRequest()
@@ -29,6 +30,8 @@ class MTest extends AbstractTests {
         this.getEventsFail()
          this.getMyProjects()
          this.getMyProjectsFail()
+          this.bookEvent()
+         this.bookEventFail();
 
           // add all methods
           this.postevent()
@@ -64,6 +67,7 @@ class MTest extends AbstractTests {
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
       })
+
       expect(response.status).toEqual(200)
       // const pRequest = await Project.findbyid(requestBody).exec()
       // expect(pRequest.description).toEqual(requestBody.description)
@@ -190,6 +194,36 @@ class MTest extends AbstractTests {
     })
   }
 
+ bookEvent(){
+    
+    test(`put ${this.base_url}`, async () => {
+      const mem = await Member.find();
+      const mem1 = mem[0];
+      const memid = mem1.id;
+      const ev = await Events.find();
+      const ev1 = ev[0];
+      const evid = ev1.id;
+      const response = await fetch(`${this.base_url}/${memid}/bookEvent/${evid}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['msg'])
+      expect(response.status).toEqual(200)
+    })
+  }
+   
+  bookEventFail(){
+    test(`put ${this.base_url}`, async () => {
+      const response = await fetch(`${this.base_url}/5c9e5514086c0c08183d8/bookEvent/5c93e86e61fb9b030dc8e`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json()
+      expect(Object.keys(jsonResponse)).toEqual(['error'])
+      expect(response.status).toEqual(404)
+    })
+  }
   //4.9 As a candidate I want that the events I attended be added on my profile.
   posteventbynotavalidatedMemberID() {
     const requestBody = {}
@@ -236,4 +270,3 @@ class MTest extends AbstractTests {
   }
 }
 module.exports = MTest
-
