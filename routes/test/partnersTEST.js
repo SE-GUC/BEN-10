@@ -64,8 +64,12 @@ class PaTest extends AbstractTests {
          this.getMyProjectsFail()
             this.sentTaskOrientationInvitation()
           this.cancelProject()
-             this.ShowMyEvents() 
+              this.deleteProject()
+           this.ShowMyEvents() 
            this.SubmitRequest()
+           this.ShowMyEventsFailure()
+           this.SubmitRequestFailure()
+           this.editProject()
         })
         resolve()
       })
@@ -922,11 +926,30 @@ getMyProjectsFail(){
   
   deleteProject () {
     test(`delete ${this.base_url}`, async () => {
-      const projects = await Project.find()
-      const project = projects[0]
-      console.log(project.id)
-      console.log(project.companyID)
-      const response = await fetch(`${this.base_url}/${project.companyID}/deleteProject/${project.id}`, {
+            const partners = await Partner.find()
+      const partner = partners[0]
+      // console.log(partner._id)
+      const body ={
+                    "required_skills_set": [],
+                    "applyingCA": [],
+                    "description": "i was hereeeeee",
+                    "company": "GUCCO",
+                    "companyID": partner._id,
+                    "category": "Education",
+                    "want_consultancy": true,
+                    "posted_date": "1998-02-09T22:00:00.000Z",
+                    "life_cycle": "Negotiation",
+                    "memberID": "5c9300a7676da108728b0df0",
+                    "final_draft": "TESTDARFT",
+                    "consultancyID": "5c79283c92334b03f4b6244f"
+                  }
+      const pr = await fetch(`${this.projects_url}`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const result = await pr.json()
+      const response = await fetch(`${this.base_url}/${result.data.companyID}/deleteProject/${result.data._id}`, {
         method: 'DELETE',
         //body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
@@ -934,10 +957,49 @@ getMyProjectsFail(){
       console.log("response stastus: "+ response.status)
       const jsonResponse = await response.json()
 
-      expect(Object.keys(jsonResponse)).toEqual(['msg','data'])
+      expect(Object.keys(jsonResponse)).toEqual(['msg'])
       expect(response.status).toEqual(200)
+   
+      
+    })
+  }
 
-     
+  editProject () {
+    test(`edit ${this.base_url}`, async () => {
+      const partners = await Partner.find()
+      const partner = partners[0]
+      // console.log(partner._id)
+      const body ={
+                    "required_skills_set": [],
+                    "applyingCA": [],
+                    "description": "i was hereeeeee",
+                    "company": "GUCCO",
+                    "companyID": partner._id,
+                    "category": "Education",
+                    "want_consultancy": true,
+                    "posted_date": "1998-02-09T22:00:00.000Z",
+                    "life_cycle": "Negotiation",
+                    "memberID": "5c9300a7676da108728b0df0",
+                    "final_draft": "TESTDARFT",
+                    "consultancyID": "5c79283c92334b03f4b6244f"
+                  }
+      const pr = await fetch(`${this.projects_url}`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const result = await pr.json()
+      const response = await fetch(`${this.base_url}/${result.data.companyID}/editProject/${result.data._id}`, {
+        method: 'put',
+        body: JSON.stringify({"category": "History"}),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      console.log("response stastus: "+ response.status)
+      const jsonResponse = await response.json()
+
+      expect(Object.keys(jsonResponse)).toEqual(['msg'])
+      expect(response.status).toEqual(200)
+   
       
     })
   }
