@@ -28,7 +28,7 @@ const oiTests = new OITest(3000, '/orientationinvitations')
 const adminTests = new adminTest(3000, '/admins')
 const memberTests = new memberTest(3000, '/member')
 
-Calling tests
+//Calling tests
 describe('Event Requests Tests', () => {
   Promise.all([
     erTests.run(),
