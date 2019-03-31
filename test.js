@@ -11,7 +11,6 @@ const CATest = require('./routes/test/consultancyagencysTEST')
 const ATest = require('./routes/test/adminsTEST')
 const MTest = require('./routes/test/membersTEST')
 const PaTest = require('./routes/test/partnersTEST')
- Dev
 
 // Connect to mongo atlas
 const db = require('./config/keys').mongoURI
@@ -31,7 +30,6 @@ beforeAll(async () => {
 // Calling the test files
 const erTests = new ERTest(3000, '/eventrequests')
 const apTests = new ApTest(3000, '/applications')
-const caTests = new CATest(3000, '/consultancyagency')
 const prTests = new PRTest(3000, '/projects')
 const caTests = new CATest(3000, '/consultancyagency')
 const aTests = new ATest(3000, '/admins')
@@ -65,7 +63,9 @@ describe('Admin Requests Tests', () => {
 describe('Projects Tests', () => {
   Promise.all([
     mTests.run(),
-    paTests.run()
+    paTests.run(),
+  ]).then(result => {})
+})
 
 afterAll(async () => {
   await mongoose.disconnect();
