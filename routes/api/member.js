@@ -28,7 +28,6 @@ router.get("/:id", async (req, res) => {
       res.json({ data: mem });
     }
   } catch {
-    //console.log('Invalid Object id');
     return res.status(400).send({ error: "the provided id is not valid one " });
   }
 });
