@@ -99,7 +99,7 @@ DecideEventRequest(){
     console.log("response to story 2.7 "+response.status)
     const j = await response.json()
   // console.log(j)
-  if(j.msg =='invalid inputs'||j.msg=='Request does not exist'||j.msg=='Event Request does not exist')
+  if(j.msg =='invalid inputs'||j.error=='Request does not exist'||j.error=='Event Request does not exist')
   expect(response.status).toEqual(404)
   else
    expect(response.status).toEqual(200)

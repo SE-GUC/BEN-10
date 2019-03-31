@@ -364,7 +364,7 @@ router.get("/:caid/reviewprojects", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.status(400).send("Error");
+    return res.status(400).send({msg :"Error in catch block"});
   }
 });
 
