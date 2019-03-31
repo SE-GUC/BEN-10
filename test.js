@@ -61,8 +61,13 @@ describe('Consultancy Agencys Tests', () => {
 
 describe('Projects Tests', () => {
   Promise.all([
-    mTests.run(),
     prTests.run(),
+  ]).then(result => {})
+})
+
+describe('Member Tests', () => {
+  Promise.all([
+    mTests.run(),
   ]).then(result => {})
 })
 
