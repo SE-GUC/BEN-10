@@ -7,7 +7,8 @@ const project = require('../../models/Project')
 const Member = require('../../models/member')
 const Events = require('../../models/Event')
 const ObjectId = require('mongoose');
-
+const Admin = require("../../models/Admin");
+const server = require("../../config/config");
 class MTest extends AbstractTests {
   constructor (PORT, ROUTE) {
     super(PORT, ROUTE)
@@ -31,16 +32,256 @@ class MTest extends AbstractTests {
           this.appylyForproject();
           this.viewTaskInvitation();
           this.submitTask();
-          this.postevent()
-          this.posteventbywrongMemberID()
-          this.posteventbynotavalidatedMemberID()
-          this.posteventbywrongEventID()
-          this.posteventbynotavalidatedEventID()
+          // this.postevent()
+          // this.posteventbywrongMemberID()
+          // this.posteventbynotavalidatedMemberID()
+          // this.posteventbywrongEventID()
+          // this.posteventbynotavalidatedEventID()
+          this.submitTaskIDmistach();
+          this.submitTaskProjectDoesntExist();
+          this.submitTaskLifeCycleNotInProgress();
+          this.submitTaskNotAssignedToYou();
+          this.getmyNotificationsIdMistmatch();
+          this.viewTaskInvitationIdMisMatch();
+          this.viewTaskInvitationNoSuchMember();
+          this.getmyNotificationsNoSuchMember();
+          this.appylyForprojectIdMismatch();
+          this.appylyForprojectWithNoSuchMember();
+          this.appylyForprojectwithNotRequiredSkill();
         })
         resolve()
       })
     } catch (err) {}
   }
+
+// submit a project to be finally reviewed
+submitTaskIDmistach(){
+  test('testing an id mismtach',async ()=>{
+    const member_id=1;
+    const projects=await project.find();
+    const project_id=projects[0]["_id"];
+    const requestBody={
+
+    }
+    const response = await fetch(`${this.base_url}/${member_id}/Myprojects/${project_id}/submit/www.projectlzink.com`, {
+      method: 'PUT',
+      body: JSON.stringify(requestBody),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const jsonResponse =  await response.json();
+    console.log(jsonResponse);
+    expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+    expect(response.status).toBe(404);
+
+
+  })
+
+}
+
+submitTaskProjectDoesntExist(){
+  test("testing for a project that doesn't exist",async()=>{
+    // not a project :)
+    const projects =await Notification.find();
+    const pid=projects[0]["_id"];
+    const members=await member.find();
+    const mid=members[0]["_id"];
+
+
+
+
+    const requestBody={
+
+    }
+    const response = await fetch(`${this.base_url}/${mid}/Myprojects/${pid}/submit/www.projectlzink.com`, {
+      method: 'PUT',
+      body: JSON.stringify(requestBody),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const jsonResponse =  await response.json();
+    console.log(jsonResponse);
+    expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+    expect(response.status).toBe(404);
+  })
+}
+
+
+submitTaskLifeCycleNotInProgress(){
+  test('test for a life cycle other than In Progress',async()=>{
+    const projects=await project.find();
+    let index=null;
+    for(var i=0;projects.length>i;i++){
+      if(projects[i].life_cycle!=='In Progress'&&projects[i].memberID!=null){
+        index=i;
+        break;
+      }
+    }
+    if(index!=null){
+      const member_id=projects[index].memberID;
+      const project_id=projects[index]._id;
+
+
+
+    const requestBody={
+
+    }
+    const response = await fetch(`${this.base_url}/${member_id}/Myprojects/${project_id}/submit/www.projectlzink.com`, {
+      method: 'PUT',
+      body: JSON.stringify(requestBody),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const jsonResponse =  await response.json();
+    expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+    expect(response.status).toBe(404);
+
+    }
+    else{
+      console.log("sorry no matching in the db")
+    }
+  })
+}
+
+
+submitTaskNotAssignedToYou(){
+test('submit a task that is not assigned to you',async()=>{
+  const members=await member.find();
+  const member_id=members[0]._id;
+  const member_id2=members[1]._id;
+  const projects=await project.find();
+  const project_id=projects[0]._id;
+  // ------------------------------------------------------------------------ \\
+if(project_id!=null){
+  const body={
+    life_cycle:"In Progress",
+    memberID:member_id
+  }
+  const response1 =  await fetch(`${server}/api/projects/${project_id}`, {
+    method: "PUT",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" }
+  })
+    const jsonResponse1=await response1.json();
+    if(Object.keys(jsonResponse1).toString()!='error'){
+     if(member_id2!=null){
+      const requestBody={
+
+      }
+      const response = await fetch(`${this.base_url}/${member_id2}/Myprojects/${project_id}/submit/www.projectlzink.com`, {
+        method: 'PUT',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse =  await response.json();
+      console.log(jsonResponse);
+      expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+      expect(response.status).toBe(404);
+    }
+    }
+    else{
+      console.log("there is no such project")
+    }
+
+
+    }
+    else{
+      console.log("it didnt update a project :(")
+    }
+    
+  // --------------------------------------------------------------------------- \\
+  
+})
+
+}
+
+
+// ----------------------------- view notifications ---------------------------
+getmyNotificationsIdMistmatch(){
+  test('testing for notifications viewing id mismatch',async()=>{
+    const member_id=1;
+    const response = await fetch(`${this.base_url}/${member_id}/notifications`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const jsonResponse = await response.json();
+    expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+    expect(response.status).toBe(404);
+  })
+}
+
+getmyNotificationsNoSuchMember(){
+  test('testing for notification for an id that is not a member id',async()=>{
+    const admin=await Admin.find();
+    const admin_id=admin[0]._id;
+    if(admin_id!=null){
+      const response = await fetch(`${this.base_url}/${admin_id}/notifications`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json();
+      console.log(jsonResponse)
+      expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+      expect(response.status).toBe(404);
+
+
+    }
+    else{
+
+    }
+    
+    
+  })
+}
+// ------------------------------------ done ----------------------------------
+// ----------------------------- view task orientation invitation ---------------------------
+viewTaskInvitationIdMisMatch(){
+  test('testing for task orientation viewing id mismatch',async()=>{
+    const member_id=1;
+    const response = await fetch(`${this.base_url}/${member_id}/task_orientation`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const jsonResponse = await response.json();
+    expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+    expect(response.status).toBe(404);
+  })
+}
+viewTaskInvitationNoSuchMember(){
+  test('testing for task orientation for an id that is not a member id',async()=>{
+    const admin=await Admin.find();
+    const admin_id=admin[0]._id;
+    if(admin_id!=null){
+      const response = await fetch(`${this.base_url}/${admin_id}/task_orientation`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json();
+      console.log(jsonResponse)
+      expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+      expect(response.status).toBe(404);
+
+
+    }
+    else{
+
+    }
+    
+    
+  })
+}
+// ------------------------------------ done ----------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // as a member i want to submit a project to be finally reviewed
 submitTask(){
   test('submitting a task to be finally reviewed',async()=>{
@@ -124,9 +365,84 @@ viewTaskInvitation(){
   })
 }
 
-// as a member i want to apply for a project
-appylyForproject(){
-  test('testing for apply for a task or a project',async()=>{
+// -------------------------- apply for a project failures -------------------------
+
+appylyForprojectIdMismatch(){
+  test('apply for a project with id mismatch',async()=>{
+    const member_id=1;
+    const project_id=2;
+    const requestBody={
+      applicantName:"nada elaraby",
+      gender:"female",
+      age:21,
+      email:"nadaelarabyy@gmail.com",
+      mobile:"01066118715",
+      applyingDate:new Date(),
+      skills:["java"],
+      yearsOfExp:2,
+      hasJob:false,
+      activeTasks:0
+    
+    }
+    const response = await fetch(`${this.base_url}/${member_id}/projects/${project_id}/apply`, {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    const jsonResponse = await response.json();
+    console.log(jsonResponse);
+    expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+    expect(response.status).toBe(404);
+
+
+  })
+}
+appylyForprojectWithNoSuchMember(){
+  test('testing for a member that is not a member :)',async()=>{
+
+    const admins=await Admin.find();
+    const projects=await project.find();
+    const admin_id=admins[0]._id;
+    const project_id=projects[0]._id;
+    if(admin_id!=null && project_id!=null){
+      const requestBody={
+        applicantName:"nada elaraby",
+        gender:"female",
+        age:21,
+        email:"nadaelarabyy@gmail.com",
+        mobile:"01066118715",
+        applyingDate:new Date(),
+        skills:["java"],
+        yearsOfExp:2,
+        hasJob:false,
+        activeTasks:0
+      
+      }
+      const response = await fetch(`${this.base_url}/${admin_id}/projects/${project_id}/apply`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json();
+      console.log(jsonResponse);
+      expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+      expect(response.status).toBe(404);
+  
+  
+    }
+    else{
+      console.log("no data:(")
+    }
+
+
+  })
+  
+
+}
+
+appylyForprojectwithNotRequiredSkill(){
+  test('testing for applying for a project that doesnt have the requiredSkill',async()=>{
+
     const project_toApply=await project.find();
     const member_applying=await Member.find();
     var member_id=null;
@@ -138,12 +454,16 @@ appylyForproject(){
 
       for(var j=0;member_applying.length>j;j++){
         if(project_toApply[i]["memberID"]==null){
-          if(project_toApply[i]["required_skills_set"].toString()==member_applying[j]["skill_set"].toString()){
+          if(project_toApply[i]["required_skills_set"].toString()!=member_applying[j]["skill_set"].toString()){
               member_id=member_applying[j]["_id"];
               member_index=j;
               project_id=project_toApply[i]["_id"];
-              flag=true;
-              break;
+              const members=Member.findById(member_id);
+              const projects=project.findById(project_id);
+              if(members!=null && projects!=null){
+                flag=true;
+                break;
+              }
 
           }
         }
@@ -180,6 +500,92 @@ appylyForproject(){
         headers: { 'Content-Type': 'application/json' }
       })
       const jsonResponse = await response.json();
+      console.log(jsonResponse);
+      expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
+      expect(response.status).toBe(404);
+
+  })
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+// ---------------------------------------------------------------------------------
+
+
+// as a member i want to apply for a project
+appylyForproject(){
+  test('testing for apply for a task or a project',async()=>{
+    const project_toApply=await project.find();
+    const member_applying=await Member.find();
+    var member_id=null;
+    var member_index=null
+    var project_id=null;
+    var flag=false;
+
+    for(var i=0;project_toApply.length>i;i++){
+
+      for(var j=0;member_applying.length>j;j++){
+        if(project_toApply[i]["memberID"]==null){
+          if(project_toApply[i]["required_skills_set"].toString()==member_applying[j]["skill_set"].toString()){
+              member_id=member_applying[j]["_id"];
+              member_index=j;
+              project_id=project_toApply[i]["_id"];
+              const members=Member.findById(member_id);
+              const projects=project.findById(project_id);
+              if(members!=null && projects!=null){
+                flag=true;
+                break;
+              }
+              member_id=null;
+              project_id=null;
+
+          }
+        }
+
+      }
+      if(flag)
+      break;
+    }
+    if(member_id!=null && project_id!=null){
+    var gender1=null
+    var skill="java"
+    if(member_applying[member_index]["skill_set"].length>0)
+      skill=member_applying[member_index]["skill_set"][0]
+    if(member_applying[member_index]["gender"])
+      gender1="male"
+    else
+      gender1="female"
+    const requestBody={
+      applicantName:member_applying[member_index]["fname"],
+      gender:gender1,
+      age:(new Date().getFullYear())-(member_applying[member_index]["birthdate"].getFullYear()),
+      email:member_applying[member_index]["email"],
+      mobile:"01066118715",
+      applyingDate:new Date(),
+      skills:skill,
+      yearsOfExp:2,
+      hasJob:false,
+      activeTasks:0
+    
+    }
+    console.log(requestBody)
+
+     const response = await fetch(`${this.base_url}/${member_id}/projects/${project_id}/apply`, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      const jsonResponse = await response.json();
       if(Object.keys(jsonResponse).toString()!=='error'){
       expect(Object.keys(jsonResponse).toString()).toEqual(['msg','data'].toString())
       expect(response.status).toEqual(200)
@@ -188,6 +594,10 @@ appylyForproject(){
         expect(Object.keys(jsonResponse).toString()).toEqual(['error'].toString())
         expect(response.status).toBe(404);
       }
+    }else{
+      console.log("no data in db:(")
+      
+    }
   })
 }
 

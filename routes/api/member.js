@@ -179,7 +179,7 @@ router.post("/:id1/projects/:id2/apply", async (req, res) => {
     const project_appliedfor = await project.findById(project_id);
     const member_applying= await member.findById(member_id);
     console.log(project_appliedfor);
-    if(member_applying!=null){
+    if(member_applying!=null && project_appliedfor!=null){
       console.log("hello2");
     var found=true;
     for(var i=0;project_appliedfor["required_skills_set"].length>i;i++){
@@ -224,7 +224,7 @@ router.post("/:id1/projects/:id2/apply", async (req, res) => {
 
   }
   else{
-    return res.status(404).send({ error: "this member doesnt exists" });
+    return res.status(404).send({ error: "there no such data with these ids" });
   }
   } else {
     return res.status(404).send({ error: "Not a valid id format" });

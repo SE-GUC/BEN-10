@@ -38,17 +38,17 @@ const aTests = new ATest(3000, '/admins')
 const mTests = new MTest(3000, '/member')
 const paTests = new PaTest(3000, '/partners')
 
- describe('Partner Requests Tests', () => {
-   Promise.all([
-     prTests.run(),
-   ]).then(result => {})
- })
+//  describe('Partner Requests Tests', () => {
+//    Promise.all([
+//      prTests.run(),
+//    ]).then(result => {})
+//  })
 
-describe('Admin Requests Tests', () => {
-  Promise.all([
-    aTests.run(),
-  ]).then(result => {})
-})
+// describe('Admin Requests Tests', () => {
+//   Promise.all([
+//     aTests.run(),
+//   ]).then(result => {})
+// })
 
 describe('Event Tests', () => {
   Promise.all([
@@ -58,9 +58,9 @@ describe('Event Tests', () => {
 
 describe('Projects Tests', () => {
   Promise.all([
-    caTests.run(),
+    // caTests.run(),
     mTests.run(),
-    paTests.run()
+    // paTests.run()
     ]).then(result => {})
 })
   
