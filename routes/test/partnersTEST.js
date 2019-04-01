@@ -71,7 +71,9 @@ sentTaskOrientationInvitation(){
     expect(response.status).toEqual(200)
   }
   else if(j.msg == ('Project has already started')
-       || j.msg == ('inavalid inputs')) {
+       || j.msg == ('inavalid inputs')
+       ||  j.msg == ('This project does not belong to you')
+       || j.msg ==('Error occured')) {
     expect(response.status).toEqual(404)
   }
   else

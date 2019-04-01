@@ -329,7 +329,7 @@ router.use("/:id/EventRequest/:Eid/:decision", async (req, res) => {
         });
     }
     else{
-      return res.status(200).send({msg : "invalid inputs"});
+      return res.status(404).send({msg : "invalid inputs"});
     }
   } catch {
     console.log(error);
@@ -404,6 +404,7 @@ router.use("/:aid/assign/:pid/to/:mid", async (req, res) => {
     }
   } catch {
     console.log("error happened");
+    res.status(404).send({msg :"Error in catch block"})
   }
 });
 

@@ -733,9 +733,9 @@ router.post("/:id/sendOrientationInvitations/:pid/", async (req, res) => {
               success = false;
           }
           if (success)
-            res.json({ msg: "Task Orientations are sent successfully" })
+            res.status(200).send({ msg: "Task Orientations are sent successfully" })
           else
-            res.json({ msg: "Error occured" })
+            res.status(404).send({ msg: "Error occured" })
         } else return res.status(404).send({ msg: "Project has already started" });
       } else {
         return res.status(400).send({ msg: 'This project does not belong to you' });
