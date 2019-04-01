@@ -76,7 +76,7 @@ class ATest extends AbstractTests {
    console.log("response to story 3.4 : "+response.status)
    const j = await response.json()
    console.log(j)
-   if(j.msg=='invalid inputs'||j.msg=='no application found')
+   if(j.msg=='invalid inputs'||j.msg=='no application found'||j.msg=='Error in catch block')
    expect(response.status).toEqual(404)
    else
      expect(response.status).toEqual(200)
