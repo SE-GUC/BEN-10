@@ -261,8 +261,13 @@ router.put("/:id/myprojects/:pid/finaldraft/approve/", async (req, res) => {
     return res.status(404).send({ error: "not a project id" });
   }
 });
-async function ApproveProject(id, decision) {
-  const url = `${server}/api/projects/${id}`;
+// as ca approve/disapprove
+router.put("/:caid/decide/:pid/:flag",async (req,res)=> {
+  const caid = req.params.caid;
+  const pid = req.params.pid;
+  const decision =  req.params.flag;
+  if(ObjectId.isValid(caid)&&ObjectId.isValid(pid)){
+  const url = `${server}/api/projects/${caid}`;
   var j;
   await fetch(url, {
     method: "put",
@@ -270,17 +275,20 @@ async function ApproveProject(id, decision) {
     headers: { "Content-Type": "application/json" }
   })
     .then(res => {
-      j = res.json();
       return res.json();
     })
     .then(json => {
+      j=json;
       console.log(json);
     })
     .catch(err => {
       console.log(err);
     });
-  return j;
-}
+  }else{
+      res.status(404).send({msg : "inValid inputs"})
+  }
+  return res.json(j);
+})
 // part 2 as a CA i want to disapprove
 router.put("/:id/myprojects/:pid/finaldraft/disapprove", async (req, res) => {
   try {
@@ -296,26 +304,26 @@ router.put("/:id/myprojects/:pid/finaldraft/disapprove", async (req, res) => {
     return res.status(404).send({ error: "not a project id" });
   }
 });
-async function disapproveProject(id, decision) {
-  var j;
-  const url = `${server}/api/projects/${id}`;
-  await fetch(url, {
-    method: "put",
-    body: JSON.stringify({ life_cycle: decision }),
-    headers: { "Content-Type": "application/json" }
-  })
-    .then(res => {
-      j = res.json();
-      return res.json();
-    })
-    .then(json => {
-      console.log(json);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  return j;
-}
+//async function disapproveProject(id, decision) {
+ // var j;
+ // const url = `${server}/api/projects/${id}`;
+ // await fetch(url, {
+  //  method: "put",
+  //  body: JSON.stringify({ life_cycle: decision }),
+  //  headers: { "Content-Type": "application/json" }
+  //})
+ //   .then(res => {
+  //    j = res.json();
+   //   return res.json();
+   // })
+  //  .then(json => {
+  //    console.log(json);
+  //  })
+  //  .catch(err => {
+  //    console.log(err);
+  //  });
+  //return j;
+//}
 module.exports = router;
 
 // test approve

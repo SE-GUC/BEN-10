@@ -56,10 +56,10 @@ router.put("/:id", async (req, res) => {
         req.body
       );
       if (!updatedProject)
-        return res.status(404).send({ error: "Project does not exist" });
+        return res.status(404).send({ msg: "Project does not exist" });
       res.json({ msg: "Project updated successfully" });
     } else {
-      return res.status(404).send({ error: "not a project id" });
+      return res.status(404).send({ msg: "not a project id" });
     }
   } catch {
     console.log(error);

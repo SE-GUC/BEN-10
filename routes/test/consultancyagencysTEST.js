@@ -1,7 +1,7 @@
 const fetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
-const Admin = require('../../models/admins') //require your model
-const ObjectId = require('mongoose');
+const CAs = require("../../models/ConsultancyAgency");
+const Projects = require("../../models/Project");
 
 class CATest extends AbstractTests {
   constructor (PORT, ROUTE) {
@@ -16,11 +16,12 @@ class CATest extends AbstractTests {
     try {
       return new Promise((resolve, reject) => {
         describe('Making sure A routes work', () => {
-          this.postRequest()
-          this.getRequest()
-          this.putRequest()
-          this.deleteRequest()
+         // this.postRequest()
+         // this.getRequest()
+         // this.putRequest()
+         // this.deleteRequest()
           // add all methods
+          this.DecideProject()
 
         })
         resolve()
@@ -55,26 +56,38 @@ class CATest extends AbstractTests {
   putRequest  () {}
   deleteRequest  () {}
 
-  approveProject(){
-    test(`put ${this.base_url}`, async () => {
+  DecideProject(){
+    test(`approve a project = > put ${this.base_url}`, async (done) => {
       const projects = await Project.find()
       const project = projects[0]
       const cas = await ConsultancyAgency.find()
       const ca = cas[0]
       const caid = ca.id
-
+      const flag = true
+      console.log(caid)
+      console.log(project.id)
       // console.log(project.id)
       // console.log(project.companyID)
-      const response = await fetch(`${this.base_url}/${caid}/myprojects/${project.id}`, {
+      var requestBody={}
+      console.log(`${this.base_url}/${caid}/decide/${project.id}/${flag}`)
+      const response = await fetch(`${this.base_url}/${caid}/decide/${project.id}/${flag}`, {
         method: 'PUT',
-        //body: JSON.stringify(requestBody),
-        headers: { 'Content-Type': 'application/json' }
+        body: JSON.stringify(requestBody),
+       headers: { 'Content-Type': 'application/json' }
       })
-      console.log("response stastus: "+ response.status)
-      const jsonResponse = await response.json()
-      
+    //  console.log("response stastus: "+ response.status)
+    //  const jsonResponse = await response.json()
+    //  if(jsonResponse.msg =='inValid inputs'||jsonResponse.msg=='Project does not exist'
+    // ||jsonResponse.msg==''||jsonResponse.msg=='not a project id'){
+     //   expect(response.status).toEqual(404)
+    //  }
+     // else{
+     //   expect(response.status).toEqual(200)
+    // }
+      done();
   }
-
+ 
     )}
+ 
 }
-module.exports = CAtest
+module.exports = CATest
