@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Card } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 class Project extends React.Component {
   constructor(props) {
@@ -11,13 +12,12 @@ class Project extends React.Component {
   render() {
     return (
       <div>
-        <Card style={{ width: "18rem" }}>
+        <Card border="success" style={{ width: "18rem" }}>
           <Card.Body>
             <Card.Title>{this.state.project.company}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">nihal</Card.Subtitle>
             <Card.Text>{this.state.project.description}</Card.Text>
-            <Card.Link href="#">View</Card.Link>
-            <Card.Link href="#">Delete</Card.Link>
+            <Button variant="primary">View</Button>
           </Card.Body>
         </Card>
         <br />
