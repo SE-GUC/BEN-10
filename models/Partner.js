@@ -15,15 +15,15 @@ const PartnerSchema = new Schema({
         type: String,
         required: true
     },
-    e_mail: {
+    email: {
         type: String,
         required: true
     },
-    experience_level: {
+    experienceLevel: {
         type: String,
         required: true  
     },
-    phone_number: {
+    phoneNumber: {
         type: String,
         required: true  
     },

@@ -46,15 +46,15 @@ router.put('/:id1/Myprojects/:id2/submit/:link',async(req,res)=>{
     const project_appliedfor = await project.findById(project_id);
     const member_applying= await member.findById(member_id);
     if(project_appliedfor!=null && member_applying!=null){
-      var life_cycle_project=project_appliedfor["life_cycle"];
-      if(life_cycle_project==="In Progress"){
+      var lifeCycle_project=project_appliedfor["lifeCycle"];
+      if(lifeCycle_project==="In Progress"){
         if(project_appliedfor["memberID"].toString()!=member_id.toString()){
           return res.status(404).send({ error: "this projects is not assigned to you" });
         }
       var error=true;
       const body={
-        life_cycle:"Final Review",
-        submitted_project_link:link
+        lifeCycle:"Final Review",
+        submittedProjectLink:link
       }
       await fetch(`${server}/api/projects/${project_id}`, {
         method: "PUT",
@@ -74,7 +74,7 @@ router.put('/:id1/Myprojects/:id2/submit/:link',async(req,res)=>{
         .catch(err => console.log("Error", err));
       }
       else{
-        return res.status(404).send({ error: `this project is in phase"${life_cycle_project}` });
+        return res.status(404).send({ error: `this project is in phase"${lifeCycle_project}` });
       }
     }
     else{
@@ -111,7 +111,7 @@ router.get('/:id/task_orientation',async(req,res)=>{
       .then(json => {
         const mytasks_orientation = json.data;
         const task = mytasks_orientation.filter(
-          task1 => task1.senttoID === member_id
+          task1 => task1.sentToID === member_id
         );
         res.json({ data: task });
       })
@@ -153,7 +153,7 @@ router.get("/:id/notifications", async (req, res) => {
       .then(json => {
         const mynotification = json.data;
         const notif = mynotification.filter(
-          mynotification => mynotification.NotifiedPerson === id
+          mynotification => mynotification.notifiedPerson === id
         );
         res.json({ data: notif });
       })
@@ -182,8 +182,8 @@ router.post("/:id1/projects/:id2/apply", async (req, res) => {
     if(member_applying!=null && project_appliedfor!=null){
       console.log("hello2");
     var found=true;
-    for(var i=0;project_appliedfor["required_skills_set"].length>i;i++){
-      if(!member_applying["skill_set"].includes(project_appliedfor["required_skills_set"][i])){
+    for(var i=0;project_appliedfor["requiredSkillsSet"].length>i;i++){
+      if(!member_applying["skillsSet"].includes(project_appliedfor["requiredSkillsSet"][i])){
         found=false;
         console.log("hello3");
         break;
@@ -336,7 +336,7 @@ async function getProjects() {
     .then(res => res.json())
     .then(json => {
       const projects = json.data;
-      const hisProjects = projects.filter(m => m.life_cycle === "Posted");
+      const hisProjects = projects.filter(m => m.lifeCycle === "Posted");
       result = hisProjects;
       return hisProjects;
     })
@@ -419,18 +419,18 @@ router.get("/:id/recommendations", async (req, res) => {
 async function getAvailableProjects(id) {
   //---
   const myMember = await member.findById(id);
-  let skills = myMember.skill_set;
+  let skills = myMember.skillsSet;
   let myProjects = await project.find();
   var i;
   let returnResult = [];
   for (i = 0; i < myProjects.length; i++) {
     var j;
     let flag = true;
-    for (j = 0; j < myProjects[i].required_skills_set.length; j++) {
+    for (j = 0; j < myProjects[i].requiredSkillsSet.length; j++) {
       var k;
       let Available = true;
       for (k = 0; k < skills.length; k++) {
-        if (skills[k] === myProjects[i].required_skills_set[j]) {
+        if (skills[k] === myProjects[i].requiredSkillsSet[j]) {
           Available = false;
           break;
         }
@@ -456,7 +456,7 @@ router.put("/:id1/bookEvent/:id2", async (req, res) => {
     const event = await Event.findById(eventId);
     if (mem && event) {
       const type = event.eventType;
-      var skills = mem.skill_set;
+      var skills = mem.skillsSet;
       var allowed = skills.includes(type);
 
       if (allowed === true) {

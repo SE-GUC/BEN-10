@@ -17,9 +17,9 @@ class ETest extends AbstractTests {
       topics: null,
       speaker: null,
       feedback: null,
-      regist_start_date: null,
-      regist_expiry_date: null,
-      request_id: null,
+      registStartDate: null,
+      registExpiryDate: null,
+      requestId: null,
       eventDate: null,
       bookedMembers: null,
       formLink: null
@@ -58,8 +58,8 @@ class ETest extends AbstractTests {
         "workshop"
       ],
       speaker: "bill gates",
-      regist_start_date: "2019-09-27",
-      regist_expiry_date: "2019-11-27",
+      registStartDate: "2019-09-27",
+      registExpiryDate: "2019-11-27",
       requestorId: "5c9cd0f23c242d1d38b8731c"
     };
 
@@ -87,11 +87,11 @@ class ETest extends AbstractTests {
         expect(requestBody.remainingPlace).toEqual(event.remainingPlace);
         expect(requestBody.topics.toString()).toEqual(event.topics.toString());
         expect(requestBody.speaker).toEqual(event.speaker);
-        expect(new Date(requestBody.regist_start_date)).toEqual(
-          new Date(event.regist_start_date)
+        expect(new Date(requestBody.registStartDate)).toEqual(
+          new Date(event.registStartDate)
         );
-        expect(new Date(requestBody.regist_expiry_date)).toEqual(
-          new Date(event.regist_expiry_date)
+        expect(new Date(requestBody.registExpiryDate)).toEqual(
+          new Date(event.registExpiryDate)
         );
         expect(requestBody.requestorId.toString()).toEqual(
           event.requestorId.toString()
@@ -106,8 +106,8 @@ class ETest extends AbstractTests {
         this.sharedState.remainingPlace = event.remainingPlace;
         this.sharedState.topics = event.topics;
         this.sharedState.speaker = event.speaker;
-        this.sharedState.regist_start_date = event.regist_start_date;
-        this.sharedState.regist_expiry_date = event.regist_expiry_date;
+        this.sharedState.registStartDate = event.registStartDate;
+        this.sharedState.registExpiryDate = event.registExpiryDate;
         this.sharedState.requestorId = event.requestorId;
         this.sharedState._id = event._id;
       } else {
@@ -164,11 +164,11 @@ class ETest extends AbstractTests {
           this.sharedState.topics.toString()
         );
         expect(jsonResponse.data.speaker).toEqual(this.sharedState.speaker);
-        expect(new Date(jsonResponse.data.regist_start_date)).toEqual(
-          this.sharedState.regist_start_date
+        expect(new Date(jsonResponse.data.registStartDate)).toEqual(
+          this.sharedState.registStartDate
         );
-        expect(new Date(jsonResponse.data.regist_expiry_date)).toEqual(
-          this.sharedState.regist_expiry_date
+        expect(new Date(jsonResponse.data.registExpiryDate)).toEqual(
+          this.sharedState.registExpiryDate
         );
         expect(jsonResponse.data.requestorId.toString()).toEqual(
           this.sharedState.requestorId.toString()

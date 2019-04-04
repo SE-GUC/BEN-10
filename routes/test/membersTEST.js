@@ -14,21 +14,21 @@ class MTest extends AbstractTests {
   constructor(PORT, ROUTE) {
     super(PORT, ROUTE);
     this.sharedState = {
-      fname: null,
-      mname: null,
-      lname: null,
+      firstName: null,
+      middleName: null,
+      lastName: null,
       SSN: null,
-      birthdate: null,
+      birthDate: null,
       Gender: null,
       Nationality: null,
-      Marital_status: null,
-      Military_status: null,
-      Driving_license: null,
+      maritalStatus: null,
+      militaryStatus: null,
+      drivingLicense: null,
       Country: null,
       City: null,
       email: null,
       password: null,
-      Mobile_number: null
+      mobileNumber: null
     };
   }
 
@@ -137,7 +137,7 @@ class MTest extends AbstractTests {
       let index = null;
       for (var i = 0; projects.length > i; i++) {
         if (
-          projects[i].life_cycle !== "In Progress" &&
+          projects[i].lifeCycle !== "In Progress" &&
           projects[i].memberID != null
         ) {
           index = i;
@@ -180,7 +180,7 @@ class MTest extends AbstractTests {
       // ------------------------------------------------------------------------ \\
       if (project_id != null) {
         const body = {
-          life_cycle: "In Progress",
+          lifeCycle: "In Progress",
           memberID: member_id
         };
         const response1 = await fetch(`${server}/api/projects/${project_id}`, {
@@ -311,8 +311,8 @@ class MTest extends AbstractTests {
       var member_id = null;
       const projects = await project.find();
       for (var i = 0; projects.length > i; i++) {
-        //console.lo(projects[i]["life_cycle"]);
-        if (projects[i]["life_cycle"] === "In Progress") {
+        //console.lo(projects[i]["lifeCycle"]);
+        if (projects[i]["lifeCycle"] === "In Progress") {
           project_id = projects[i]["_id"];
           member_id = projects[i]["memberID"];
           if (project_id != null && member_id != null) {
@@ -358,8 +358,8 @@ class MTest extends AbstractTests {
       const task = await Task_invitation.find();
       var notified_member = null;
       for (var i = 0; task.length > i; i++) {
-        if (task[i]["senttoID"] != null) {
-          notified_member = task[i]["senttoID"];
+        if (task[i]["sentToID"] != null) {
+          notified_member = task[i]["sentToID"];
           break;
         }
       }
@@ -379,7 +379,7 @@ class MTest extends AbstractTests {
           );
           expect(Object.keys(jsonResponse)).not.toEqual([" error"]);
           for (var i = 0; jsonResponse.data.length > i; i++) {
-            expect(jsonResponse.data[i]["senttoID"].toString()).toEqual(
+            expect(jsonResponse.data[i]["sentToID"].toString()).toEqual(
               notified_member.toString()
             );
           }
@@ -481,8 +481,8 @@ class MTest extends AbstractTests {
         for (var j = 0; member_applying.length > j; j++) {
           if (project_toApply[i]["memberID"] == null) {
             if (
-              project_toApply[i]["required_skills_set"].toString() !=
-              member_applying[j]["skill_set"].toString()
+              project_toApply[i]["requiredSkillsSet"].toString() !=
+              member_applying[j]["skillsSet"].toString()
             ) {
               member_id = member_applying[j]["_id"];
               member_index = j;
@@ -500,16 +500,16 @@ class MTest extends AbstractTests {
       }
       var gender1 = null;
       var skill = "java";
-      if (member_applying[member_index]["skill_set"].length > 0)
-        skill = member_applying[member_index]["skill_set"][0];
+      if (member_applying[member_index]["skillsSet"].length > 0)
+        skill = member_applying[member_index]["skillsSet"][0];
       if (member_applying[member_index]["gender"]) gender1 = "male";
       else gender1 = "female";
       const requestBody = {
-        applicantName: member_applying[member_index]["fname"],
+        applicantName: member_applying[member_index]["firstName"],
         gender: gender1,
         age:
           new Date().getFullYear() -
-          member_applying[member_index]["birthdate"].getFullYear(),
+          member_applying[member_index]["birthDate"].getFullYear(),
         email: member_applying[member_index]["email"],
         mobile: "01066118715",
         applyingDate: new Date(),
@@ -552,8 +552,8 @@ class MTest extends AbstractTests {
         for (var j = 0; member_applying.length > j; j++) {
           if (project_toApply[i]["memberID"] == null) {
             if (
-              project_toApply[i]["required_skills_set"].toString() ==
-              member_applying[j]["skill_set"].toString()
+              project_toApply[i]["requiredSkillsSet"].toString() ==
+              member_applying[j]["skillsSet"].toString()
             ) {
               member_id = member_applying[j]["_id"];
               member_index = j;
@@ -574,16 +574,16 @@ class MTest extends AbstractTests {
       if (member_id != null && project_id != null) {
         var gender1 = null;
         var skill = "java";
-        if (member_applying[member_index]["skill_set"].length > 0)
-          skill = member_applying[member_index]["skill_set"][0];
+        if (member_applying[member_index]["skillsSet"].length > 0)
+          skill = member_applying[member_index]["skillsSet"][0];
         if (member_applying[member_index]["gender"]) gender1 = "male";
         else gender1 = "female";
         const requestBody = {
-          applicantName: member_applying[member_index]["fname"],
+          applicantName: member_applying[member_index]["firstName"],
           gender: gender1,
           age:
             new Date().getFullYear() -
-            member_applying[member_index]["birthdate"].getFullYear(),
+            member_applying[member_index]["birthDate"].getFullYear(),
           email: member_applying[member_index]["email"],
           mobile: "01066118715",
           applyingDate: new Date(),
@@ -626,8 +626,8 @@ class MTest extends AbstractTests {
       const notifications = await Notification.find();
       var notified_member = null;
       for (var i = 0; notifications.length > i; i++) {
-        if (notifications[i]["NotifiedPerson"] != null) {
-          notified_member = notifications[i]["NotifiedPerson"];
+        if (notifications[i]["notifiedPerson"] != null) {
+          notified_member = notifications[i]["notifiedPerson"];
           break;
         }
       }
@@ -646,7 +646,7 @@ class MTest extends AbstractTests {
           );
           expect(Object.keys(jsonResponse)).not.toEqual([" error"]);
           for (var i = 0; jsonResponse.data.length > i; i++) {
-            expect(jsonResponse.data[i]["NotifiedPerson"].toString()).toEqual(
+            expect(jsonResponse.data[i]["notifiedPerson"].toString()).toEqual(
               notified_member.toString()
             );
           }
@@ -664,21 +664,21 @@ class MTest extends AbstractTests {
 
   postRequest() {
     const requestBody = {
-      fname: "ahmed",
-      mname: "mohamed",
-      lname: "abdel-aal",
+      firstName: "ahmed",
+      middleName: "mohamed",
+      lastName: "abdel-aal",
       SSN: 12455698,
-      birthdate: "1/1/1998",
+      birthDate: "1/1/1998",
       Gender: true,
       Nationality: "egyptian",
-      Marital_status: "single",
-      Military_status: "not yet",
-      Driving_license: "yes",
+      maritalStatus: "single",
+      militaryStatus: "not yet",
+      drivingLicense: "yes",
       Country: "Egypt",
       City: "cairo",
       email: "a7med_201196@yahoo.com",
       password: "12345678AaAa",
-      Mobile_number: "01119461010"
+      mobileNumber: "01119461010"
     };
 
     test(`post ${this.base_url}`, async done => {
@@ -698,19 +698,19 @@ class MTest extends AbstractTests {
   }
   postRequestBadRequest() {
     const requestBody = {
-      fname: "ahmed",
-      mname: "mohamed",
-      lname: "abdel-aal",
+      firstName: "ahmed",
+      middleName: "mohamed",
+      lastName: "abdel-aal",
       SSN: 12455698,
       Gender: true,
-      Marital_status: "single",
-      Military_status: "not yet",
-      Driving_license: "yes",
+      maritalStatus: "single",
+      militaryStatus: "not yet",
+      drivingLicense: "yes",
       Country: "Egypt",
       City: "cairo",
       email: "a7med_201196@yahoo.com",
       password: "12345678AaAa",
-      Mobile_number: "01119461010"
+      mobileNumber: "01119461010"
     };
 
     test(`post ${this.base_url}`, async done => {
@@ -754,9 +754,9 @@ class MTest extends AbstractTests {
   }
   putRequest() {
     const requestBody = {
-      fname: "ahmed 2 ",
-      mname: "mohamed 2",
-      lname: "abdel-aal 2"
+      firstName: "ahmed 2 ",
+      middleName: "mohamed 2",
+      lastName: "abdel-aal 2"
     };
     test(`put ${this.base_url}/${this.sharedState.id}`, async done => {
       const response = await fetch(`${this.base_url}/${this.sharedState.id}`, {
@@ -1023,7 +1023,7 @@ class MTest extends AbstractTests {
         "-" +
         today.getDate();
       let requestBody = {
-        skill_set: ["skill1", "skill2"]
+        skillsSet: ["skill1", "skill2"]
       };
       await fetch(`${server}/api/members/${myMember._id}`, {
         method: "PUT",
@@ -1034,10 +1034,10 @@ class MTest extends AbstractTests {
         description: "Test description1",
         company: "Test Company",
         category: "Test Category",
-        want_consultancy: false,
-        posted_date: date,
-        life_cycle: "InProgress",
-        required_skills_set: ["skill1"]
+        wantConsultancy: false,
+        postedDate: date,
+        lifeCycle: "InProgress",
+        requiredSkillsSet: ["skill1"]
       };
       await fetch(`${server}/api/projects/`, {
         method: "POST",
@@ -1049,10 +1049,10 @@ class MTest extends AbstractTests {
         description: "Test description2",
         company: "Test Company",
         category: "Test Category",
-        want_consultancy: false,
-        posted_date: date,
-        life_cycle: "InProgress",
-        required_skills_set: ["skill1", "skill2"]
+        wantConsultancy: false,
+        postedDate: date,
+        lifeCycle: "InProgress",
+        requiredSkillsSet: ["skill1", "skill2"]
       };
       await fetch(`${server}/api/projects/`, {
         method: "POST",
@@ -1064,10 +1064,10 @@ class MTest extends AbstractTests {
         description: "Test description3",
         company: "Test Company",
         category: "Test Category",
-        want_consultancy: false,
-        posted_date: date,
-        life_cycle: "InProgress",
-        required_skills_set: ["skill1", "skill2", "skill3"]
+        wantConsultancy: false,
+        postedDate: date,
+        lifeCycle: "InProgress",
+        requiredSkillsSet: ["skill1", "skill2", "skill3"]
       };
       await fetch(`${server}/api/projects/`, {
         method: "POST",
@@ -1090,11 +1090,11 @@ class MTest extends AbstractTests {
       var i;
       var j;
       for (i = 0; i < jsonResponse.data.length; i++) {
-        for (j = 0; j < jsonResponse.data[i].required_skills_set.length; j++) {
+        for (j = 0; j < jsonResponse.data[i].requiredSkillsSet.length; j++) {
           if (
-            jsonResponse.data[i].required_skills_set[j].toString() !==
+            jsonResponse.data[i].requiredSkillsSet[j].toString() !==
               "skill1" &&
-            jsonResponse.data[i].required_skills_set[j].toString() !== "skill2"
+            jsonResponse.data[i].requiredSkillsSet[j].toString() !== "skill2"
           ) {
             flag = false;
           }

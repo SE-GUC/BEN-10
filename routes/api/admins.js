@@ -169,8 +169,8 @@ async function assignAttributes(pid, body) {
 router.put("/:id/myProjects/:pid/sendDraft", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
-      if (req.body.final_draft != null) {
-        const j = await sendFinalDraft(req.params.pid, req.body.final_draft);
+      if (req.body.finalDraft != null) {
+        const j = await sendFinalDraft(req.params.pid, req.body.finalDraft);
         res.status(200).send(j);
       } else {
         return res.status(400).send({ error: "Please insert the final draft" });
@@ -186,8 +186,8 @@ router.put("/:id/myProjects/:pid/sendDraft", async (req, res) => {
 
 async function sendFinalDraft(projectID, draft) {
   const body = {
-    life_cycle: "Final Draft",
-    final_draft: draft
+    lifeCycle: "Final Draft",
+    finalDraft: draft
   };
   var error = true;
   var j;
@@ -232,7 +232,7 @@ router.put("/:id/postProject/:pid", async (req, res) => {
 });
 
 // async function postProject(id) {
-//   const body = { life_cycle: "Posted" };
+//   const body = { lifeCycle: "Posted" };
 //   var error = true;
 //   var j;
 
@@ -418,10 +418,10 @@ router.use("/:aid/assign/:pid/to/:mid", async (req, res) => {
 });
 
 //3.5 --As an admin I want to notify accepted candidates that he was accepted for a task/project
-async function AdminNotifyAcceptedCandidate(description, NotifiedPerson, date) {
+async function AdminNotifyAcceptedCandidate(description, notifiedPerson, date) {
   const body = {
     description: description,
-    NotifiedPerson: NotifiedPerson,
+    notifiedPerson: notifiedPerson,
     date: date,
     seen: "false"
   };
@@ -451,7 +451,7 @@ async function AdminNotifyAcceptedCandidate(description, NotifiedPerson, date) {
 
 //3.3 --As an admin I want to post the task/project to the website so that candidates can apply for it.
 async function postProject(id) {
-  const body = { life_cycle: "Posted" };
+  const body = { lifeCycle: "Posted" };
   var error = true;
   var result;
 
@@ -542,7 +542,7 @@ async function sendFeedBack(formLink, eventId) {
   for (i = 0; i < attendingMembers.length; i++) {
     const body = {
       description: formLink,
-      NotifiedPerson: attendingMembers[i],
+      notifiedPerson: attendingMembers[i],
       date: date,
       seen: "false"
     };
@@ -616,7 +616,7 @@ async function sendRejectionNotification(projectId) {
       const body = {
         description:
           "Sorry u were not accepted for project {" + project.description + "}",
-        NotifiedPerson: myProjectApplications[i],
+        notifiedPerson: myProjectApplications[i],
         date: date,
         seen: "false"
       };

@@ -24,11 +24,11 @@ router.post('/:id/addProject', async (req,res) => {
   try {
       if(ObjectId.isValid(req.params.id))
       {
-          console.log(req.body.want_consultancy)
-          console.log(req.body.want_consultancy == true)
+          console.log(req.body.wantConsultancy)
+          console.log(req.body.wantConsultancy == true)
           const company_id=req.params.id
           var life;
-          if(req.body.want_consultancy == true){
+          if(req.body.wantConsultancy == true){
               life = "Waiting for consultancy"
           }
           else{
@@ -41,9 +41,9 @@ router.post('/:id/addProject', async (req,res) => {
           company:req.body.company,
           companyID: company_id,
           category:req.body.category,
-          want_consultancy:req.body.want_consultancy,
-          posted_date:req.body.posted_date,
-          life_cycle : life
+          wantConsultancy:req.body.wantConsultancy,
+          postedDate:req.body.postedDate,
+          lifeCycle : life
           }
           await fetch(`${server}/api/projects/`, {
               method: 'post',
@@ -281,9 +281,9 @@ router.post("/:id/addProject", async (req, res) => {
         company: req.body.company,
         companyID: company_id,
         category: req.body.category,
-        want_consultancy: req.body.want_consultancy,
-        posted_date: req.body.posted_date,
-        life_cycle: "Submitted"
+        wantConsultancy: req.body.wantConsultancy,
+        postedDate: req.body.postedDate,
+        lifeCycle: "Submitted"
       };
 
       var error = true;
@@ -327,9 +327,9 @@ async function deleteProject(id) {
   var result;
   const pr = await Project.findById(id);
   if (
-    pr.life_cycle !== "Posted" &&
-    pr.life_cycle !== "Final Review" &&
-    pr.life_cycle !== "Finished"
+    pr.lifeCycle !== "Posted" &&
+    pr.lifeCycle !== "Final Review" &&
+    pr.lifeCycle !== "Finished"
   ) {
     await fetch(`${server}/api/projects/${id}`, {
       method: "delete",
@@ -361,9 +361,9 @@ async function editProject(id, body) {
   var j;
   const pr = await Project.findById(id);
   if (
-    pr.life_cycle !== "Posted" &&
-    pr.life_cycle !== "Final Review" &&
-    pr.life_cycle !== "Finished"
+    pr.lifeCycle !== "Posted" &&
+    pr.lifeCycle !== "Final Review" &&
+    pr.lifeCycle !== "Finished"
   ) {
     await fetch(`${server}/api/projects/${id}`, {
       method: "put",
@@ -439,7 +439,7 @@ async function getProjects(partnerid) {
     .then(json => {
       const projects = json.data;
       const hisProjects = projects.filter(
-        m => m.companyID === partnerid && m.life_cycle === "Final Review"
+        m => m.companyID === partnerid && m.lifeCycle === "Final Review"
       );
       result = hisProjects;
       return hisProjects;
@@ -468,7 +468,7 @@ router.put("/:id3/project/:id1/AssignCAtoProject/:id2", async (req, res) => {
           break;
         }
       }
-      var need = project.want_consultancy;
+      var need = project.wantConsultancy;
       if (need === true) {
         if (found === true) {
           const j = await assigning(caId, projID);
@@ -523,8 +523,8 @@ if(ObjectId.isValid(part) && ObjectId.isValid(proj)){
   console.log(partner)
   console.log(project)
   if (partner && project){
-      var app = project.life_cycle
-      var consl = project.want_consultancy
+      var app = project.lifeCycle
+      var consl = project.wantConsultancy
       if(consl == false){
       if(app == "Final Draft" ){
        const decision="Approved"
@@ -546,7 +546,7 @@ const url  = `${server}/api/projects/${id}`;
 var j
 await fetch(url, {
           method:'put',
-          body : JSON.stringify({life_cycle : decision}),
+          body : JSON.stringify({lifeCycle : decision}),
           headers: { 'Content-Type': 'application/json' }
           })
     .then(res =>{  console.log(res.status)  
@@ -565,8 +565,8 @@ if(ObjectId.isValid(part) && ObjectId.isValid(proj)){
 const partner = await Partner.findById(part);
 const project = await Project.findById(proj);
 if (partner && project){
-var dis = project.life_cycle
-var consl = project.want_consultancy
+var dis = project.lifeCycle
+var consl = project.wantConsultancy
 if(consl == false){
 if(dis == "Final Draft"){
 const decision="Negotiation"
@@ -586,7 +586,7 @@ async function disapproveProject(id,decision){
 const url  = `${server}/api/projects/${id}`;
 await fetch(url, {
           method:'put',
-          body : JSON.stringify({life_cycle : decision}),
+          body : JSON.stringify({lifeCycle : decision}),
           headers: { 'Content-Type': 'application/json' }
           })
     .then(res =>{  console.log(res.status)  
@@ -635,7 +635,7 @@ async function Partnerrequestrating(formLink,id,date) {
   var error = true;
   const body = {
     description: `please rate thie event through this form ${formLink}`,
-    NotifiedPerson: id,
+    notifiedPerson: id,
     date: date,
     seen: "false"
   };
@@ -703,7 +703,7 @@ router.put("/:id/myprojects/:pid/finalreview/approve", async (req, res) => {
     const proj = await Project.findById(req.params.pid);
     if (par && proj) {
       if (proj.companyID == req.params.id) {
-        if (proj.life_cycle === "Final Review") {
+        if (proj.lifeCycle === "Final Review") {
           const j = await acceptFinalReview(req.params.pid);
           console.log(j)
           res.send(j);
@@ -733,7 +733,7 @@ async function acceptFinalReview(pid) {
   var error = true;
   await fetch(`${server}/api/projects/${pid}`, {
     method: "put",
-    body: JSON.stringify({ life_cycle: "Finished" }),
+    body: JSON.stringify({ lifeCycle: "Finished" }),
     headers: { "Content-Type": "application/json" }
   })
     .then(res => {
@@ -761,7 +761,7 @@ router.put("/:id/myprojects/:pid/finalreview/decline", async (req, res) => {
     const proj = await Project.findById(req.params.pid);
     if (par && proj) {
       if (proj.companyID == req.params.id) {
-        if (proj.life_cycle === "Final Review") {
+        if (proj.lifeCycle === "Final Review") {
           const j = await declineFinalReview(req.params.pid);
           res.json(j);
         } else {
@@ -790,7 +790,7 @@ async function declineFinalReview(pid) {
   var error = true;
   await fetch(`${server}/api/projects/${pid}`, {
     method: "put",
-    body: JSON.stringify({ life_cycle: "In Progress" }),
+    body: JSON.stringify({ lifeCycle: "In Progress" }),
     headers: { "Content-Type": "application/json" }
   })
     .then(res => {
@@ -825,8 +825,8 @@ router.use("/:id/cancelproject/:pid", async (req, res) => {
     var result ;
     if (partner && project) {
       if (project.companyID == req.params.id){
-        if(project.life_cycle == "Negotiation" || project.life_cycle == "Final Draft" || 
-             project.life_cycle == "Waiting For Consultancy Agency"){
+        if(project.lifeCycle == "Negotiation" || project.lifeCycle == "Final Draft" || 
+             project.lifeCycle == "Waiting For Consultancy Agency"){
           var error = true;
           await fetch(`${server}/api/projects/${req.params.pid}`, {
             method: "delete",
@@ -886,7 +886,7 @@ router.post("/:id/sendOrientationInvitations/:pid/", async (req, res) => {
     const project = await Project.findById(req.params.pid);
     if (partner && project) {
       if (project.companyID == req.params.id) {
-        if (project.life_cycle == "Posted"){
+        if (project.lifeCycle == "Posted"){
           var i;
           var success = true;
           var today = new Date();
@@ -902,7 +902,7 @@ router.post("/:id/sendOrientationInvitations/:pid/", async (req, res) => {
           for (i = 0; i < candidates.length; i++) {
             const m = await Member.findById(candidates[i].applicantId);
             const j = await Partnersendtask(candidates[i].applicantId,
-              `${m.fname} ${m.mname} ${m.lname}`,
+              `${m.firstName} ${m.middleName} ${m.lastName}`,
               req.body.description,
               req.params.pid,
               partner.name,
@@ -926,11 +926,11 @@ router.post("/:id/sendOrientationInvitations/:pid/", async (req, res) => {
 });
 
 // 9 As a partner I want to send a task orientation invitation to applying candidates
-async function Partnersendtask(mid,mname,description,pid,pname,date) {
+async function Partnersendtask(mid,middleName,description,pid,pname,date) {
   var error = true;
   const body = {
-    senttoID: mid,
-    sentto: mname,
+    sentToID: mid,
+    sentTo: middleName,
     description: `get to know the project better through this session ${description}`,
     sentByID: pid,
     sentBy: pname,

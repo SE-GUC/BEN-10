@@ -10,7 +10,7 @@ class NTest extends AbstractTests {
     this.sharedState = {
       // enter model attributes an set them to null
       description: null,
-      NotifiedPerson: null,
+      notifiedPerson: null,
       date: null,
       seen: null
     };
@@ -37,7 +37,7 @@ class NTest extends AbstractTests {
       let members = await Member.find();
       const requestBody = {
         description: "test1NotificationDescription",
-        NotifiedPerson: members[0]._id,
+        notifiedPerson: members[0]._id,
         date: "2019-11-15",
         seen: "false"
       };
@@ -54,8 +54,8 @@ class NTest extends AbstractTests {
       expect(myNotification.description.toString()).toEqual(
         requestBody.description.toString()
       );
-      expect(myNotification.NotifiedPerson.toString()).toEqual(
-        requestBody.NotifiedPerson.toString()
+      expect(myNotification.notifiedPerson.toString()).toEqual(
+        requestBody.notifiedPerson.toString()
       );
       expect(myNotification.date).toEqual(new Date(requestBody.date));
       expect(myNotification.seen.toString()).toEqual(
@@ -93,8 +93,8 @@ class NTest extends AbstractTests {
       expect(jsonResponse.data.description.toString()).toEqual(
         n.description.toString()
       );
-      expect(jsonResponse.data.NotifiedPerson.toString()).toEqual(
-        n.NotifiedPerson.toString()
+      expect(jsonResponse.data.notifiedPerson.toString()).toEqual(
+        n.notifiedPerson.toString()
       );
       expect(new Date(jsonResponse.data.date)).toEqual(new Date(n.date));
       expect(jsonResponse.data.seen.toString()).toEqual(n.seen.toString());

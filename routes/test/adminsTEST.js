@@ -30,7 +30,7 @@ class ATest extends AbstractTests {
       mobileNumber: null,
       email: null,
       password: null,
-      birthdate: null
+      birthDate: null
     };
   }
 
@@ -105,7 +105,7 @@ class ATest extends AbstractTests {
       mobileNumber: "0123456789",
       email: "asdfghjkl",
       password: "qwertyuio",
-      birthdate: "1998-12-09T22:00:00.000+00:00"
+      birthDate: "1998-12-09T22:00:00.000+00:00"
     };
 
     test(`post ${this.base_url}`, async () => {
@@ -137,8 +137,8 @@ class ATest extends AbstractTests {
       expect(eRequest.mobileNumber).toEqual(requestBody.mobileNumber);
       expect(eRequest.email).toEqual(requestBody.email);
       expect(eRequest.password).toEqual(requestBody.password);
-      //expect(new String(eRequest.birthdate)).toEqual(requestBody.birthdate)
-      // expect(eRequest.birthdate).toEqual(requestBody.birthdate)
+      //expect(new String(eRequest.birthDate)).toEqual(requestBody.birthDate)
+      // expect(eRequest.birthDate).toEqual(requestBody.birthDate)
 
       this.sharedState.name = eRequest.name;
       this.sharedState.gender = eRequest.gender;
@@ -153,7 +153,7 @@ class ATest extends AbstractTests {
       this.sharedState.mobileNumber = eRequest.mobileNumber;
       this.sharedState.email = eRequest.email;
       this.sharedState.password = eRequest.password;
-      this.sharedState.birthdate = eRequest.birthdate;
+      this.sharedState.birthDate = eRequest.birthDate;
     });
   }
   postRequestFailure() {
@@ -172,7 +172,7 @@ class ATest extends AbstractTests {
       mobileNumber: "0123456789",
       email: "asdfghjkl",
       password: "qwertyuio",
-      birthdate: "ho"
+      birthDate: "ho"
     };
 
     test(`post ${this.base_url}`, async () => {
@@ -255,7 +255,7 @@ class ATest extends AbstractTests {
       mobileNumber: "012345678",
       email: "asdfghjkl",
       password: "qwertyuio",
-      birthdate: "1998-12-09T22:00:00.000+00:00"
+      birthDate: "1998-12-09T22:00:00.000+00:00"
     };
 
     test(`put ${this.base_url}`, async () => {
@@ -288,8 +288,8 @@ class ATest extends AbstractTests {
       expect(eRequest.mobileNumber).toEqual(requestBody.mobileNumber);
       expect(eRequest.email).toEqual(requestBody.email);
       expect(eRequest.password).toEqual(requestBody.password);
-      //expect(new String(eRequest.birthdate)).toEqual(requestBody.birthdate)
-      // expect(eRequest.birthdate).toEqual(requestBody.birthdate)
+      //expect(new String(eRequest.birthDate)).toEqual(requestBody.birthDate)
+      // expect(eRequest.birthDate).toEqual(requestBody.birthDate)
 
       this.sharedState.name = eRequest.name;
       this.sharedState.gender = eRequest.gender;
@@ -304,7 +304,7 @@ class ATest extends AbstractTests {
       this.sharedState.mobileNumber = eRequest.mobileNumber;
       this.sharedState.email = eRequest.email;
       this.sharedState.password = eRequest.password;
-      this.sharedState.birthdate = eRequest.birthdate;
+      this.sharedState.birthDate = eRequest.birthDate;
     });
   }
   putRequestFailure() {
@@ -323,7 +323,7 @@ class ATest extends AbstractTests {
       mobileNumber: "012345678",
       email: "asdfghjkl",
       password: "qwertyuio",
-      birthdate: "ho"
+      birthDate: "ho"
     };
 
     test(`put ${this.base_url}`, async () => {
@@ -693,8 +693,8 @@ class ATest extends AbstractTests {
       remainingPlace: "50",
       topics: "[]",
       speaker: "no speaker",
-      regist_start_date: "1/1/2019",
-      regist_expiry_date: "2/1/2019",
+      registStartDate: "1/1/2019",
+      registExpiryDate: "2/1/2019",
       requestorId: "5c79260b4328ab820437835c"
     };
 
@@ -724,13 +724,13 @@ class ATest extends AbstractTests {
       //   expect(eRequest.remainingPlace).toEqual(requestBody.remainingPlace)
       //   expect(eRequest.topics).toEqual(requestBody.topics)
       //   expect(eRequest.speaker).toEqual(requestBody.speaker)
-      //   expect(eRequest.regist_start_date).toEqual(requestBody.regist_start_date)
-      //   expect(eRequest.regist_expiry_date).toEqual(requestBody.regist_expiry_date)
+      //   expect(eRequest.registStartDate).toEqual(requestBody.registStartDate)
+      //   expect(eRequest.registExpiryDate).toEqual(requestBody.registExpiryDate)
       //   expect(eRequest.requestorId).toEqual(requestBody.requestorId)
       //   //expect(eRequest.sentAt).toEqual(requestBody.sentAt)
-      //  // expect(eRequest.senttoID).toEqual(requestBody.senttoID)
+      //  // expect(eRequest.sentToID).toEqual(requestBody.sentToID)
       // //  expect(eRequest.sentByID).toEqual(requestBody.sentByID)
-      //  // expect(new String(eRequest.senttoID)).toEqual(requestBody.senttoID)
+      //  // expect(new String(eRequest.sentToID)).toEqual(requestBody.sentToID)
       //   //expect(new String(eRequest.sentByID)).toEqual(requestBody.sentByID)
       //   this.sharedState.requestedBy =  eRequest.requestedBy
       //   this.sharedState.description =  eRequest.description
@@ -741,8 +741,8 @@ class ATest extends AbstractTests {
       //   this.sharedState.remainingPlace =  eRequest.remainingPlace
       //   this.sharedState.topics =  eRequest.topics
       //   this.sharedState.speaker =  eRequest.speaker
-      //   this.sharedState.regist_start_date =  eRequest.regist_start_date
-      //   this.sharedState.regist_expiry_date =  eRequest.regist_expiry_date
+      //   this.sharedState.registStartDate =  eRequest.registStartDate
+      //   this.sharedState.registExpiryDate =  eRequest.registExpiryDate
       //   this.sharedState.requestorId =  eRequest.requestorId
     });
   }
@@ -758,8 +758,8 @@ class ATest extends AbstractTests {
       remainingPlace: "50",
       topics: "[]",
       speaker: "no speaker",
-      regist_start_date: "1/1/2019",
-      regist_expiry_date: "2/1/2019",
+      registStartDate: "1/1/2019",
+      registExpiryDate: "2/1/2019",
       requestorId: "5c79260b4328ab820437835c"
     };
 
@@ -789,13 +789,13 @@ class ATest extends AbstractTests {
       //   expect(eRequest.remainingPlace).toEqual(requestBody.remainingPlace)
       //   expect(eRequest.topics).toEqual(requestBody.topics)
       //   expect(eRequest.speaker).toEqual(requestBody.speaker)
-      //   expect(eRequest.regist_start_date).toEqual(requestBody.regist_start_date)
-      //   expect(eRequest.regist_expiry_date).toEqual(requestBody.regist_expiry_date)
+      //   expect(eRequest.registStartDate).toEqual(requestBody.registStartDate)
+      //   expect(eRequest.registExpiryDate).toEqual(requestBody.registExpiryDate)
       //   expect(eRequest.requestorId).toEqual(requestBody.requestorId)
       //   //expect(eRequest.sentAt).toEqual(requestBody.sentAt)
-      //  // expect(eRequest.senttoID).toEqual(requestBody.senttoID)
+      //  // expect(eRequest.sentToID).toEqual(requestBody.sentToID)
       // //  expect(eRequest.sentByID).toEqual(requestBody.sentByID)
-      //  // expect(new String(eRequest.senttoID)).toEqual(requestBody.senttoID)
+      //  // expect(new String(eRequest.sentToID)).toEqual(requestBody.sentToID)
       //   //expect(new String(eRequest.sentByID)).toEqual(requestBody.sentByID)
       //   this.sharedState.requestedBy =  eRequest.requestedBy
       //   this.sharedState.description =  eRequest.description
@@ -806,8 +806,8 @@ class ATest extends AbstractTests {
       //   this.sharedState.remainingPlace =  eRequest.remainingPlace
       //   this.sharedState.topics =  eRequest.topics
       //   this.sharedState.speaker =  eRequest.speaker
-      //   this.sharedState.regist_start_date =  eRequest.regist_start_date
-      //   this.sharedState.regist_expiry_date =  eRequest.regist_expiry_date
+      //   this.sharedState.registStartDate =  eRequest.registStartDate
+      //   this.sharedState.registExpiryDate =  eRequest.registExpiryDate
       //   this.sharedState.requestorId =  eRequest.requestorId
     });
   }
@@ -1073,10 +1073,10 @@ class ATest extends AbstractTests {
         allNotifications =>
           allNotifications.description === requestBody.feedBack.toString()
       );
-      expect(allNotifications[0].NotifiedPerson.toString()).toEqual(
+      expect(allNotifications[0].notifiedPerson.toString()).toEqual(
         m1._id.toString()
       );
-      expect(allNotifications[1].NotifiedPerson.toString()).toEqual(
+      expect(allNotifications[1].notifiedPerson.toString()).toEqual(
         m2._id.toString()
       );
       // delete created notifications
@@ -1107,11 +1107,11 @@ class ATest extends AbstractTests {
         description: "Test description",
         company: "Test Company",
         category: "Test Category",
-        want_consultancy: false,
-        posted_date: date,
+        wantConsultancy: false,
+        postedDate: date,
         memberID: m1._id,
-        life_cycle: "InProgress",
-        required_skills_set: ["testSkillSet1", "testSkillSet2"]
+        lifeCycle: "InProgress",
+        requiredSkillsSet: ["testSkillSet1", "testSkillSet2"]
       };
       let allProjects = await Project.find();
       let filteredProjects = allProjects.filter(
@@ -1137,7 +1137,7 @@ class ATest extends AbstractTests {
       const myProject = filteredProjects[0];
       requestBody = {
         applicantId: m1._id,
-        applicantName: m1.fname,
+        applicantName: m1.firstName,
         gender: "Male",
         age: 35,
         email: "test@gmail.com",
@@ -1156,7 +1156,7 @@ class ATest extends AbstractTests {
 
       requestBody = {
         applicantId: m2._id,
-        applicantName: m2.fname,
+        applicantName: m2.firstName,
         gender: "Male",
         age: 35,
         email: "test@gmail.com",
@@ -1174,7 +1174,7 @@ class ATest extends AbstractTests {
       });
       requestBody = {
         applicantId: m3._id,
-        applicantName: m3.fname,
+        applicantName: m3.firstName,
         gender: "Male",
         age: 35,
         email: "test@gmail.com",
@@ -1210,7 +1210,7 @@ class ATest extends AbstractTests {
       let filteredNotifications = [];
       for (i = 0; i < allNotifications.length; i++) {
         if (
-          allNotifications[i].NotifiedPerson.toString() === m1._id.toString()
+          allNotifications[i].notifiedPerson.toString() === m1._id.toString()
         ) {
           filteredNotifications.push(allNotifications[i]);
         }
@@ -1229,7 +1229,7 @@ class ATest extends AbstractTests {
       filteredNotifications = [];
       for (i = 0; i < allNotifications.length; i++) {
         if (
-          allNotifications[i].NotifiedPerson.toString() === m2._id.toString()
+          allNotifications[i].notifiedPerson.toString() === m2._id.toString()
         ) {
           filteredNotifications.push(allNotifications[i]);
         }
@@ -1248,7 +1248,7 @@ class ATest extends AbstractTests {
       filteredNotifications = [];
       for (i = 0; i < allNotifications.length; i++) {
         if (
-          allNotifications[i].NotifiedPerson.toString() === m3._id.toString()
+          allNotifications[i].notifiedPerson.toString() === m3._id.toString()
         ) {
           filteredNotifications.push(allNotifications[i]);
         }
@@ -1313,7 +1313,7 @@ class ATest extends AbstractTests {
 
   sendFinalDraft() {
     const requestBody = {
-      final_draft: "TESTDARFT"
+      finalDraft: "TESTDARFT"
     };
     test(`Admin Send Final Draft ${
       this.base_url

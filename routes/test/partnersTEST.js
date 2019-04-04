@@ -14,9 +14,9 @@ class PaTest extends AbstractTests {
       name: null,
       age: null,
       gender: null,
-      e_mail: null,
-      experience_level: null,
-      phone_number: null
+      email: null,
+      experienceLevel: null,
+      phoneNumber: null
     };
   }
 
@@ -76,9 +76,9 @@ class PaTest extends AbstractTests {
       name: "Partners's name",
       age: 55,
       gender: "gender",
-      e_mail: "Partners's e_mail",
-      experience_level: "experience_level",
-      phone_number: "54525452115"
+      email: "Partners's email",
+      experienceLevel: "experienceLevel",
+      phoneNumber: "54525452115"
     };
 
     test(`post ${this.base_url}`, async () => {
@@ -97,15 +97,15 @@ class PaTest extends AbstractTests {
       expect(eRequest.name).toEqual(requestBody.name);
       expect(eRequest.age).toEqual(requestBody.age);
       expect(eRequest.gender).toEqual(requestBody.gender);
-      expect(eRequest.e_mail).toEqual(requestBody.e_mail);
-      expect(eRequest.experience_level).toEqual(requestBody.experience_level);
-      expect(eRequest.phone_number).toEqual(requestBody.phone_number);
+      expect(eRequest.email).toEqual(requestBody.email);
+      expect(eRequest.experienceLevel).toEqual(requestBody.experienceLevel);
+      expect(eRequest.phoneNumber).toEqual(requestBody.phoneNumber);
       this.sharedState.name = eRequest.name;
       this.sharedState.age = eRequest.age;
       this.sharedState.gender = eRequest.gender;
-      this.sharedState.e_mail = eRequest.e_mail;
-      this.sharedState.experience_level = eRequest.experience_level;
-      this.sharedState.phone_number = eRequest.phone_number;
+      this.sharedState.email = eRequest.email;
+      this.sharedState.experienceLevel = eRequest.experienceLevel;
+      this.sharedState.phoneNumber = eRequest.phoneNumber;
     });
   }
   postRequestFail() {
@@ -114,9 +114,9 @@ class PaTest extends AbstractTests {
       name: "name",
       age: "String",
       gender: "gender",
-      e_mail: "e_mail",
-      experience_level: "experience_level",
-      phone_number: "54525452115"
+      email: "email",
+      experienceLevel: "experienceLevel",
+      phoneNumber: "54525452115"
     };
 
     test(`post ${this.base_url}`, async () => {
@@ -185,9 +185,9 @@ class PaTest extends AbstractTests {
       name: "Mariam",
       age: 30,
       gender: "Female",
-      e_mail: "dont have",
-      experience_level: "beginner",
-      phone_number: "010265642362"
+      email: "dont have",
+      experienceLevel: "beginner",
+      phoneNumber: "010265642362"
     };
 
     test(`put ${this.base_url}`, async () => {
@@ -209,16 +209,16 @@ class PaTest extends AbstractTests {
       expect(eRequest.name).toEqual(requestBody.name);
       expect(eRequest.age).toEqual(requestBody.age);
       expect(eRequest.gender).toEqual(requestBody.gender);
-      expect(eRequest.e_mail).toEqual(requestBody.e_mail);
-      expect(eRequest.experience_level).toEqual(requestBody.experience_level);
-      expect(eRequest.phone_number).toEqual(requestBody.phone_number);
+      expect(eRequest.email).toEqual(requestBody.email);
+      expect(eRequest.experienceLevel).toEqual(requestBody.experienceLevel);
+      expect(eRequest.phoneNumber).toEqual(requestBody.phoneNumber);
       this.sharedState.id = eRequest.id;
       this.sharedState.name = eRequest.name;
       this.sharedState.age = eRequest.age;
       this.sharedState.gender = eRequest.gender;
-      this.sharedState.e_mail = eRequest.e_mail;
-      this.sharedState.experience_level = eRequest.experience_level;
-      this.sharedState.phone_number = eRequest.phone_number;
+      this.sharedState.email = eRequest.email;
+      this.sharedState.experienceLevel = eRequest.experienceLevel;
+      this.sharedState.phoneNumber = eRequest.phoneNumber;
     });
   }
 
@@ -228,9 +228,9 @@ class PaTest extends AbstractTests {
       name: true,
       age: "70",
       gender: "male",
-      e_mail: "dont have",
-      experience_level: "beginner",
-      phone_number: "010265642362"
+      email: "dont have",
+      experienceLevel: "beginner",
+      phoneNumber: "010265642362"
     };
 
     test(`put ${this.base_url}`, async () => {
@@ -287,8 +287,8 @@ class PaTest extends AbstractTests {
       description: "New Project description",
       company: "Dell",
       category: "category",
-      want_consultancy: true,
-      posted_date: "1/1/2020"
+      wantConsultancy: true,
+      postedDate: "1/1/2020"
     };
 
     test(`post ${this.base_url}`, async () => {
@@ -310,15 +310,15 @@ class PaTest extends AbstractTests {
       expect(eRequest.description).toEqual(requestBody.description);
       expect(eRequest.company).toEqual(requestBody.company);
       expect(eRequest.category).toEqual(requestBody.category);
-      expect(eRequest.want_consultancy).toEqual(requestBody.want_consultancy);
-      expect(new Date(eRequest.posted_date)).toEqual(
-        new Date(requestBody.posted_date)
+      expect(eRequest.wantConsultancy).toEqual(requestBody.wantConsultancy);
+      expect(new Date(eRequest.postedDate)).toEqual(
+        new Date(requestBody.postedDate)
       );
       this.sharedState.description = eRequest.description;
       this.sharedState.company = eRequest.company;
       this.sharedState.category = eRequest.category;
-      this.sharedState.want_consultancy = eRequest.want_consultancy;
-      this.sharedState.posted_date = eRequest.posted_date;
+      this.sharedState.wantConsultancy = eRequest.wantConsultancy;
+      this.sharedState.postedDate = eRequest.postedDate;
     });
   }
 
@@ -382,8 +382,8 @@ class PaTest extends AbstractTests {
       description: "description",
       company: "company",
       category: "category",
-      want_consultancy: true,
-      posted_date: "11/11/2018"
+      wantConsultancy: true,
+      postedDate: "11/11/2018"
     };
 
     test(`post ${this.base_url}`, async () => {
@@ -446,12 +446,12 @@ class PaTest extends AbstractTests {
       const parid = par1.id;
       var projs = await Projects.find();
       projs = projs.filter(
-        p => p.companyID == parid && p.want_consultancy == false
+        p => p.companyID == parid && p.wantConsultancy == false
       );
       const proj = projs[0];
       await fetch(`${this.projects_url}/${proj.id}/`, {
         method: "put",
-        body: JSON.stringify({ life_cycle: "Final Draft" }),
+        body: JSON.stringify({ lifeCycle: "Final Draft" }),
         headers: { "Content-Type": "application/json" }
       });
       const projid = proj.id;
@@ -539,12 +539,12 @@ class PaTest extends AbstractTests {
       const parid = par1.id;
       var projs = await Projects.find();
       projs = projs.filter(
-        p => p.companyID == parid && p.want_consultancy == false
+        p => p.companyID == parid && p.wantConsultancy == false
       );
       const proj = projs[0];
       await fetch(`${this.projects_url}/${proj.id}/`, {
         method: "put",
-        body: JSON.stringify({ life_cycle: "Final Draft" }),
+        body: JSON.stringify({ lifeCycle: "Final Draft" }),
         headers: { "Content-Type": "application/json" }
       });
       const projid = proj.id;
@@ -599,7 +599,7 @@ class PaTest extends AbstractTests {
       const parid = par1.id;
       var projs = await Projects.find();
       projs = projs.filter(
-        p => p.companyID == parid && p.want_consultancy == true
+        p => p.companyID == parid && p.wantConsultancy == true
       );
       var k = 0;
       for (k; k < projs.length; k++) {
@@ -657,7 +657,7 @@ class PaTest extends AbstractTests {
       projs = projs.filter(
         p =>
           p.companyID == parid &&
-          p.want_consultancy == true &&
+          p.wantConsultancy == true &&
           p.consultancyID == null
       );
       const proj = projs[0];
@@ -829,7 +829,7 @@ class PaTest extends AbstractTests {
       const pr = prs[0];
       await fetch(`${this.projects_url}/${pr.id}/`, {
         method: "put",
-        body: JSON.stringify({ life_cycle: "Final Review" }),
+        body: JSON.stringify({ lifeCycle: "Final Review" }),
         headers: { "Content-Type": "application/json" }
       });
 
@@ -862,7 +862,7 @@ class PaTest extends AbstractTests {
       const pr = prs[0];
       await fetch(`${this.projects_url}/${pr.id}/`, {
         method: "put",
-        body: JSON.stringify({ life_cycle: "Final Review" }),
+        body: JSON.stringify({ lifeCycle: "Final Review" }),
         headers: { "Content-Type": "application/json" }
       });
 
@@ -895,7 +895,7 @@ class PaTest extends AbstractTests {
       const pr = prs[0];
       await fetch(`${this.projects_url}/${pr.id}/`, {
         method: "put",
-        body: JSON.stringify({ life_cycle: "In Progress" }),
+        body: JSON.stringify({ lifeCycle: "In Progress" }),
         headers: { "Content-Type": "application/json" }
       });
 
@@ -928,7 +928,7 @@ class PaTest extends AbstractTests {
       const pr = prs[0];
       await fetch(`${this.projects_url}/${pr.id}/`, {
         method: "put",
-        body: JSON.stringify({ life_cycle: "In Progress" }),
+        body: JSON.stringify({ lifeCycle: "In Progress" }),
         headers: { "Content-Type": "application/json" }
       });
 
@@ -955,17 +955,17 @@ class PaTest extends AbstractTests {
       const partner = partners[0];
       // //console.lo(partner._id)
       const body = {
-        required_skills_set: [],
+        requiredSkillsSet: [],
         applyingCA: [],
         description: "i was hereeeeee",
         company: "GUCCO",
         companyID: partner._id,
         category: "Education",
-        want_consultancy: true,
-        posted_date: "1998-02-09T22:00:00.000Z",
-        life_cycle: "Negotiation",
+        wantConsultancy: true,
+        postedDate: "1998-02-09T22:00:00.000Z",
+        lifeCycle: "Negotiation",
         memberID: "5c9300a7676da108728b0df0",
-        final_draft: "TESTDARFT",
+        finalDraft: "TESTDARFT",
         consultancyID: "5c79283c92334b03f4b6244f"
       };
       const pr = await fetch(`${this.projects_url}`, {
@@ -998,17 +998,17 @@ class PaTest extends AbstractTests {
       const partner = partners[0];
       // //console.lo(partner._id)
       const body = {
-        required_skills_set: [],
+        requiredSkillsSet: [],
         applyingCA: [],
         description: "i was hereeeeee",
         company: "GUCCO",
         companyID: partner._id,
         category: "Education",
-        want_consultancy: true,
-        posted_date: "1998-02-09T22:00:00.000Z",
-        life_cycle: "Negotiation",
+        wantConsultancy: true,
+        postedDate: "1998-02-09T22:00:00.000Z",
+        lifeCycle: "Negotiation",
         memberID: "5c9300a7676da108728b0df0",
-        final_draft: "TESTDARFT",
+        finalDraft: "TESTDARFT",
         consultancyID: "5c79283c92334b03f4b6244f"
       };
       const pr = await fetch(`${this.projects_url}`, {

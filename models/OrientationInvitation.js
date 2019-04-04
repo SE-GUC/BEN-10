@@ -3,11 +3,11 @@ const Schema = mongoose.Schema
 
 // Create the schema
 const OrientationInvitationSchema = new Schema({
-    senttoID: {
+    sentToID: {
         type: Schema.Types.ObjectId,ref:"Member",
         required: true
     },
-    sentto: {
+    sentTo: {
         type: String,
         required: true
     },

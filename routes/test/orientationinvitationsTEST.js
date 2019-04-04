@@ -7,11 +7,11 @@ class OITest extends AbstractTests {
   constructor(PORT, ROUTE) {
     super(PORT, ROUTE);
     this.sharedState = {
-      sentto: null,
+      sentTo: null,
       description: null,
       sentBy: null,
       sentAt: null,
-      senttoID: null,
+      sentToID: null,
       sentByID: null
     };
   }
@@ -41,11 +41,11 @@ class OITest extends AbstractTests {
 
   postRequest() {
     const requestBody = {
-      sentto: "ahmed",
+      sentTo: "ahmed",
       description: "ay haga ",
       sentBy: "hisham",
       sentAt: "2019-03-27T22:00:00.000+00:00",
-      senttoID: "5c93d983f3fe6358b41ccd7a",
+      sentToID: "5c93d983f3fe6358b41ccd7a",
       sentByID: "5c96711e683cf704874a3052"
     };
 
@@ -64,29 +64,29 @@ class OITest extends AbstractTests {
       const eRequest = await OrientationInvitation.findOne(requestBody).exec();
       expect(eRequest.description).toEqual(requestBody.description);
       //   expect(eRequest.eventDate).toBeCloseTo(eventDate)
-      expect(eRequest.sentto).toEqual(requestBody.sentto);
+      expect(eRequest.sentTo).toEqual(requestBody.sentTo);
       expect(eRequest.description).toEqual(requestBody.description);
       expect(eRequest.sentBy).toEqual(requestBody.sentBy);
       //expect(eRequest.sentAt).toEqual(requestBody.sentAt)
-      // expect(eRequest.senttoID).toEqual(requestBody.senttoID)
+      // expect(eRequest.sentToID).toEqual(requestBody.sentToID)
       //  expect(eRequest.sentByID).toEqual(requestBody.sentByID)
-      expect(new String(eRequest.senttoID)).toEqual(requestBody.senttoID);
+      expect(new String(eRequest.sentToID)).toEqual(requestBody.sentToID);
       expect(new String(eRequest.sentByID)).toEqual(requestBody.sentByID);
-      this.sharedState.sentto = eRequest.sentto;
+      this.sharedState.sentTo = eRequest.sentTo;
       this.sharedState.description = eRequest.description;
       this.sharedState.sentBy = eRequest.sentBy;
       this.sharedState.sentAt = eRequest.sentAt;
-      this.sharedState.senttoID = eRequest.senttoID;
+      this.sharedState.sentToID = eRequest.sentToID;
       this.sharedState.sentByID = eRequest.sentByID;
     });
   }
   postRequestFail() {
     const requestBody = {
-      sentto: "karim",
+      sentTo: "karim",
       description: "ay haga ",
       sentBy: "hisham",
       sentAt: "19",
-      senttoID: "5c93d983f3fe6358b41ccd7",
+      sentToID: "5c93d983f3fe6358b41ccd7",
       sentByID: "5c96711e683cf704874a3052"
     };
 
@@ -152,11 +152,11 @@ class OITest extends AbstractTests {
 
   putRequest() {
     const requestBody = {
-      sentto: "ahmed",
+      sentTo: "ahmed",
       description: "ay NELA ",
       sentBy: "hisham",
       sentAt: "2019-03-27T22:00:00.000+00:00",
-      senttoID: "5c93d983f3fe6358b41ccd7a",
+      sentToID: "5c93d983f3fe6358b41ccd7a",
       sentByID: "5c96711e683cf704874a3052"
     };
 
@@ -179,30 +179,30 @@ class OITest extends AbstractTests {
       const eRequest = await OrientationInvitation.findOne(requestBody).exec();
       expect(eRequest.description).toEqual(requestBody.description);
       //   expect(eRequest.eventDate).toBeCloseTo(eventDate)
-      expect(eRequest.sentto).toEqual(requestBody.sentto);
+      expect(eRequest.sentTo).toEqual(requestBody.sentTo);
       expect(eRequest.description).toEqual(requestBody.description);
       expect(eRequest.sentBy).toEqual(requestBody.sentBy);
       //expect(eRequest.sentAt).toEqual(requestBody.sentAt)
-      // expect(eRequest.senttoID).toEqual(requestBody.senttoID)
+      // expect(eRequest.sentToID).toEqual(requestBody.sentToID)
       //  expect(eRequest.sentByID).toEqual(requestBody.sentByID)
-      expect(new String(eRequest.senttoID)).toEqual(requestBody.senttoID);
+      expect(new String(eRequest.sentToID)).toEqual(requestBody.sentToID);
       expect(new String(eRequest.sentByID)).toEqual(requestBody.sentByID);
-      this.sharedState.sentto = eRequest.sentto;
+      this.sharedState.sentTo = eRequest.sentTo;
       this.sharedState.description = eRequest.description;
       this.sharedState.sentBy = eRequest.sentBy;
       this.sharedState.sentAt = eRequest.sentAt;
-      this.sharedState.senttoID = eRequest.senttoID;
+      this.sharedState.sentToID = eRequest.sentToID;
       this.sharedState.sentByID = eRequest.sentByID;
       this.sharedState.id = eRequest.id;
     });
   }
   putRequestFail() {
     const requestBody = {
-      sentto: "ahmed",
+      sentTo: "ahmed",
       description: "ay NELA ",
       sentBy: "hisham",
       sentAt: "2019-03-27T22:00:00.000+00:00",
-      senttoID: "5c93d983f3fe6358b41ccd",
+      sentToID: "5c93d983f3fe6358b41ccd",
       sentByID: "5c96711e683cf704874a3052"
     };
 
@@ -225,19 +225,19 @@ class OITest extends AbstractTests {
       // const eRequest = await OrientationInvitation.findOne(requestBody).exec()
       //expect(eRequest.description).toEqual(requestBody.description)
       //   expect(eRequest.eventDate).toBeCloseTo(eventDate)
-      //expect(eRequest.sentto).toEqual(requestBody.sentto)
+      //expect(eRequest.sentTo).toEqual(requestBody.sentTo)
       //expect(eRequest.description).toEqual(requestBody.description)
       //expect(eRequest.sentBy).toEqual(requestBody.sentBy)
       //expect(eRequest.sentAt).toEqual(requestBody.sentAt)
-      // expect(eRequest.senttoID).toEqual(requestBody.senttoID)
+      // expect(eRequest.sentToID).toEqual(requestBody.sentToID)
       //  expect(eRequest.sentByID).toEqual(requestBody.sentByID)
-      //expect(new String(eRequest.senttoID)).toEqual(requestBody.senttoID)
+      //expect(new String(eRequest.sentToID)).toEqual(requestBody.sentToID)
       //expect(new String(eRequest.sentByID)).toEqual(requestBody.sentByID)
-      //this.sharedState.sentto =  eRequest.sentto
+      //this.sharedState.sentTo =  eRequest.sentTo
       //this.sharedState.description =  eRequest.description
       //this.sharedState.sentBy =  eRequest.sentBy
       //this.sharedState.sentAt =  eRequest.sentAt
-      //this.sharedState.senttoID =  eRequest.senttoID
+      //this.sharedState.sentToID =  eRequest.sentToID
       //this.sharedState.sentByID =  eRequest.sentByID
       //this.sharedState.id=eRequest.id
     });

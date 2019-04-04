@@ -41,14 +41,14 @@ const EventSchema={
     },feedback:{
         type:[String],
         required:false
-    },regist_start_date:{
+    },registStartDate:{
         type: Date,
         required:true
-    },regist_expiry_date:{
+    },registExpiryDate:{
         type:Date,
         required:true
     },
-    request_id:{
+    requestId:{
         type:Schema.Types.ObjectId,ref:'EventRequest',
         required:false
     },

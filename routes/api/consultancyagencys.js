@@ -277,7 +277,7 @@ router.put("/:caid/decide/:pid/:flag",async (req,res)=> {
   var j;
   await fetch(url, {
     method: "put",
-    body: JSON.stringify({ life_cycle: decision }),
+    body: JSON.stringify({ lifeCycle: decision }),
     headers: { "Content-Type": "application/json" }
   })
     .then(res => {
@@ -315,7 +315,7 @@ router.put("/:id/myprojects/:pid/finaldraft/disapprove", async (req, res) => {
  // const url = `${server}/api/projects/${id}`;
  // await fetch(url, {
   //  method: "put",
-  //  body: JSON.stringify({ life_cycle: decision }),
+  //  body: JSON.stringify({ lifeCycle: decision }),
   //  headers: { "Content-Type": "application/json" }
   //})
  //   .then(res => {
@@ -388,7 +388,7 @@ async function getProjectsInFinalReview(caid) {
   for (var i in allprojects) {
     if (
       allprojects[i].consultancyID == caid &&
-      allprojects[i].life_cycle == "Final Review"
+      allprojects[i].lifeCycle == "Final Review"
     ) {
       matchingProjects.push(allprojects[i]);
     }
@@ -401,7 +401,7 @@ async function getFinished(caProjects) {
   var finished = [];
   for (var i = 0; i < caProjects.length; i++) {
     const p = await Project.findById(caProjects[i]);
-    if (p.life_cycle === "Finished") {
+    if (p.lifeCycle === "Finished") {
       finished.push(p);
     }
   }
@@ -496,7 +496,7 @@ router.put("/:id1/finalreview/:id2/approve/", async (req, res) => {
     const project = await Project.findById(req.params.id2);
     if (ca && project) {
         if (project.consultancyID == req.params.id1){
-          if (project.life_cycle == "Final Review"){
+          if (project.lifeCycle == "Final Review"){
                   const j = await approvefinal(req.params.id2);
                   res.status(200).send(j);
               }else return res.status(404).send({ error: "project isn't in the Final Review stage" });
@@ -514,7 +514,7 @@ router.put("/:id1/finalreview/:id2/disapprove/", async (req, res) => {
     const project = await Project.findById(req.params.id2);
     if (ca && project) {
       if (project.consultancyID == req.params.id1){
-          if (project.life_cycle == "Final Review"){    
+          if (project.lifeCycle == "Final Review"){    
               const j = await disapprovefinal(req.params.id2);
               res.status(200).send(j);
           }else return res.status(404).send({ error: "project isn't in the Final Review stage" });
@@ -528,7 +528,7 @@ router.put("/:id1/finalreview/:id2/disapprove/", async (req, res) => {
 // 8 As a CA I wanto to approve the final review of a project
 async function approvefinal(pid) {
   var error = true;
-  const body = { life_cycle: "Finished" };
+  const body = { lifeCycle: "Finished" };
   var j;
   await fetch(`${server}/api/projects/${pid}`, {
     method: "put",
@@ -554,7 +554,7 @@ async function approvefinal(pid) {
 // 8 As a CA I wanto to disapprove the final review of a project
 async function disapprovefinal(pid) {
   var error = true;
-  const body = { life_cycle: "In Progress" };
+  const body = { lifeCycle: "In Progress" };
   var j;
   await fetch(`${server}/api/projects/${pid}`, {
     method: "put",
@@ -641,7 +641,7 @@ async function carequestrating(formLink, id, date) {
   var error = true;
   const body = {
     description: `Please rate thie event through this form ${formLink}`,
-    NotifiedPerson: id,
+    notifiedPerson: id,
     date: date,
     seen: "false"
   };

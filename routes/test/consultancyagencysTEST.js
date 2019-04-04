@@ -363,7 +363,7 @@ class CATest extends AbstractTests {
       const pr = result[0].id;
       await fetch(`${this.projects_url}/${pr}/`, {
         method: "put",
-        body: JSON.stringify({ life_cycle: "Final Review" }),
+        body: JSON.stringify({ lifeCycle: "Final Review" }),
         headers: { "Content-Type": "application/json" }
       });
       const response = await fetch(
@@ -538,7 +538,7 @@ class CATest extends AbstractTests {
       if (cid != null && pr != null) {
         await fetch(`${this.projects_url}/${pr}/`, {
           method: "put",
-          body: JSON.stringify({ life_cycle: "Final Review" }),
+          body: JSON.stringify({ lifeCycle: "Final Review" }),
           headers: { "Content-Type": "application/json" }
         });
         const response = await fetch(

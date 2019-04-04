@@ -4,11 +4,11 @@ Joi.objectId = require('joi-objectid')(Joi);
 module.exports = {
     createValidationOrientationInvitation: request => {
         const createSchema = {
-            sentto: Joi.string().max(500).required(),
+            sentTo: Joi.string().max(500).required(),
             description: Joi.string().required(),
             sentBy: Joi.string().max(500).required(),
             sentAt: Joi.date().required(),
-            senttoID: Joi.objectId().required(),
+            sentToID: Joi.objectId().required(),
             sentByID: Joi.objectId().required()
         }
 
@@ -17,11 +17,11 @@ module.exports = {
 
     updateValidationOrientationInvitation: request => {
         const updateSchema = {
-            sentto: Joi.string().max(500),
+            sentTo: Joi.string().max(500),
             description: Joi.string(),
             sentBy: Joi.string().max(500),
             sentAt: Joi.date(),
-            senttoID: Joi.objectId(),
+            sentToID: Joi.objectId(),
             sentByID: Joi.objectId()
         }
 

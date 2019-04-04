@@ -16,7 +16,7 @@ module.exports = {
             mobileNumber: Joi.string().max(300).required(),
             email: Joi.string().required(),
             password: Joi.string().max(300).required(),
-            birthdate: Joi.date().required()
+            birthDate: Joi.date().required()
         }
 
         return Joi.validate(request, createSchema)
@@ -37,7 +37,7 @@ module.exports = {
             mobileNumber: Joi.string().max(3000),
             email: Joi.string(),
             password: Joi.string().max(300),
-            birthdate: Joi.date()
+            birthDate: Joi.date()
         }
 
         return Joi.validate(request, updateSchema)

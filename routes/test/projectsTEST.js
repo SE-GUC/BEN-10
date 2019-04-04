@@ -11,10 +11,10 @@ class PrTEST extends AbstractTests {
       description: null,
       company: null,
       category: null,
-      want_consultancy: null,
-      posted_date: null,
-      life_cycle: null,
-      required_skills_set: null
+      wantConsultancy: null,
+      postedDate: null,
+      lifeCycle: null,
+      requiredSkillsSet: null
     };
   }
 
@@ -49,10 +49,10 @@ class PrTEST extends AbstractTests {
       description: "no description",
       company: "no company",
       category: "no category",
-      want_consultancy: false,
-      posted_date: "1/1/2019",
-      life_cycle: "posted",
-      required_skills_set: "[]"
+      wantConsultancy: false,
+      postedDate: "1/1/2019",
+      lifeCycle: "posted",
+      requiredSkillsSet: "[]"
     };
 
     test(`post ${this.base_url}`, async () => {
@@ -68,21 +68,21 @@ class PrTEST extends AbstractTests {
       expect(pRequest.description).toEqual(requestBody.description);
       expect(pRequest.company).toEqual(requestBody.company);
       expect(pRequest.category).toEqual(requestBody.category);
-      expect(pRequest.want_consultancy).toEqual(requestBody.want_consultancy);
-      // expect(new Date(pRequest.posted_date)).toEqual(new Date((posted_date)))
-      expect(pRequest.life_cycle).toEqual(requestBody.life_cycle);
-      expect(pRequest.required_skills_set.toString()).toEqual(
-        requestBody.required_skills_set.toString()
+      expect(pRequest.wantConsultancy).toEqual(requestBody.wantConsultancy);
+      // expect(new Date(pRequest.postedDate)).toEqual(new Date((postedDate)))
+      expect(pRequest.lifeCycle).toEqual(requestBody.lifeCycle);
+      expect(pRequest.requiredSkillsSet.toString()).toEqual(
+        requestBody.requiredSkillsSet.toString()
       );
 
       this.sharedState.id = pRequest.id;
       this.sharedState.description = pRequest.description;
       this.sharedState.company = pRequest.company;
       this.sharedState.category = pRequest.category;
-      this.sharedState.want_consultancy = pRequest.want_consultancy;
-      this.sharedState.posted_date = pRequest.posted_date;
-      this.sharedState.life_cycle = pRequest.life_cycle;
-      this.sharedState.required_skills_set = pRequest.required_skills_set;
+      this.sharedState.wantConsultancy = pRequest.wantConsultancy;
+      this.sharedState.postedDate = pRequest.postedDate;
+      this.sharedState.lifeCycle = pRequest.lifeCycle;
+      this.sharedState.requiredSkillsSet = pRequest.requiredSkillsSet;
     });
   }
 
@@ -90,10 +90,10 @@ class PrTEST extends AbstractTests {
     const requestBody = {
       company: "no company",
       category: "no category",
-      want_consultancy: false,
-      posted_date: "1/1/2019",
-      life_cycle: "posted",
-      required_skills_set: "[]"
+      wantConsultancy: false,
+      postedDate: "1/1/2019",
+      lifeCycle: "posted",
+      requiredSkillsSet: "[]"
     };
     test(`post ${this.base_url}`, async () => {
       const response = await fetch(`${this.base_url}`, {
@@ -112,10 +112,10 @@ class PrTEST extends AbstractTests {
       description: 20,
       company: "no company",
       category: "no category",
-      want_consultancy: false,
-      posted_date: "1/1/2019",
-      life_cycle: "posted",
-      required_skills_set: "[]"
+      wantConsultancy: false,
+      postedDate: "1/1/2019",
+      lifeCycle: "posted",
+      requiredSkillsSet: "[]"
     };
     test(`post ${this.base_url}`, async () => {
       const response = await fetch(`${this.base_url}`, {

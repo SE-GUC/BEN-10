@@ -15,11 +15,11 @@ module.exports = {
             topics:Joi.array().items(Joi.string()).required(),
             speaker:Joi.string().required(),
             feedback:Joi.array().items(Joi.string()),
-            regist_start_date:  Joi.date().required(),
-            regist_expiry_date:Joi.date().required(),
+            registStartDate:  Joi.date().required(),
+            registExpiryDate:Joi.date().required(),
             requestorId: Joi.objectId().required(),
             bookedMembers:Joi.array().items(Joi.string()),
-            request_id: Joi.objectId(),
+            requestId: Joi.objectId(),
             formLink: Joi.string()
         
         }
@@ -39,8 +39,8 @@ module.exports = {
             topics:Joi.array().items(Joi.string()),
             speaker:Joi.string(),
             feedback:Joi.array().items(Joi.string()),
-            regist_start_date:  Joi.date(),
-            regist_expiry_date:Joi.date() ,
+            registStartDate:  Joi.date(),
+            registExpiryDate:Joi.date() ,
             bookedMembers:Joi.array().items(Joi.string()),
             formLink: Joi.string()
         }
