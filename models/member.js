@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 // Create the schema
-const memberSchema = new Schema({
+const MemberSchema = new Schema({
     //personal info
     fname: {
         type: String,
@@ -93,4 +93,4 @@ const memberSchema = new Schema({
     }
 })
 
-module.exports = member = mongoose.model('member', memberSchema)
+module.exports = Member = mongoose.model('Member', MemberSchema)

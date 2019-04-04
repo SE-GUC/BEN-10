@@ -139,7 +139,7 @@ router.get("/:id/myProjects/:pid/applyingMembers", async (req, res) => {
   var result = [];
   var i;
   for (i = 0; i < j.length; i++) {
-    await fetch(`${server}/api/member/${j[i]}`)
+    await fetch(`${server}/api/members/${j[i]}`)
       .then(res => res.json())
       .then(json => {
         const member = json.data;

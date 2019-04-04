@@ -33,9 +33,9 @@ const erTests = new ERTest(3000, '/eventrequests')
 const oiTests = new OITest(3000, '/orientationinvitations')
 const apTests = new ApTest(3000, '/applications')
 const prTests = new PRTest(3000, '/projects')
-const caTests = new CATest(3000, '/consultancyagency')
+const caTests = new CATest(3000, '/consultancyagencys')
 const aTests = new ATest(3000, '/admins')
-const mTests = new MTest(3000, '/member')
+const mTests = new MTest(3000, '/members')
 const paTests = new PaTest(3000, '/partners')
 
 // Calling tests

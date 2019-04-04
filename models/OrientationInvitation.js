@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 // Create the schema
 const OrientationInvitationSchema = new Schema({
     senttoID: {
-        type: Schema.Types.ObjectId,ref:"member",
+        type: Schema.Types.ObjectId,ref:"Member",
         required: true
     },
     sentto: {
@@ -16,7 +16,7 @@ const OrientationInvitationSchema = new Schema({
         required: true
     },
     sentByID: {
-        type: Schema.Types.ObjectId,ref:"PartnerInfo",
+        type: Schema.Types.ObjectId,ref:"Partner",
         required: true
     },
     sentBy: {

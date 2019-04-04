@@ -5,7 +5,7 @@ const Application = require("../../models/Application");
 const Task_invitation = require("../../models/OrientationInvitation");
 const Admin = require("../../models/Admin"); //require your model
 const project = require("../../models/Project");
-const Member = require("../../models/member");
+const Member = require("../../models/Member");
 const Events = require("../../models/Event");
 const ObjectId = require("mongoose");
 const server = require("../../config/config");
@@ -110,7 +110,7 @@ class MTest extends AbstractTests {
       // not a project :)
       const projects = await Notification.find();
       const pid = projects[0]["_id"];
-      const members = await member.find();
+      const members = await Member.find();
       const mid = members[0]["_id"];
 
       const requestBody = {};
@@ -172,7 +172,7 @@ class MTest extends AbstractTests {
 
   submitTaskNotAssignedToYou() {
     test("submit a task that is not assigned to you", async () => {
-      const members = await member.find();
+      const members = await Member.find();
       const member_id = members[0]._id;
       const member_id2 = members[1]._id;
       const projects = await project.find();
@@ -1025,7 +1025,7 @@ class MTest extends AbstractTests {
       let requestBody = {
         skill_set: ["skill1", "skill2"]
       };
-      await fetch(`${server}/api/member/${myMember._id}`, {
+      await fetch(`${server}/api/members/${myMember._id}`, {
         method: "PUT",
         body: JSON.stringify(requestBody),
         headers: { "Content-Type": "application/json" }

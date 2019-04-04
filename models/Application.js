@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 // Create the schema
 const ApplicationSchema = new Schema({
     applicantId: {
-        type: Schema.Types.ObjectId,ref:"member",
+        type: Schema.Types.ObjectId,ref:"Member",
         required: false
     },
     applicantName: {

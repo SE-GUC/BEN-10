@@ -34,8 +34,8 @@ const PartnerSchema = new Schema({
         type: [{ type: Schema.Types.ObjectId, ref: "Project" }]
     },
     partners: {
-        type: [{ type: Schema.Types.ObjectId, ref: "PartnerInfo" }]
+        type: [{ type: Schema.Types.ObjectId, ref: "Partner" }]
     }
 })
 
-module.exports = PartnerInfo = mongoose.model('partners', PartnerSchema)
+module.exports = Partner = mongoose.model('partners', PartnerSchema)

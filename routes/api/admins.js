@@ -7,7 +7,7 @@ const fetch = require("node-fetch");
 const server = require("../../config/config");
 
 const Admin = require("../../models/Admin");
-const member = require("../../models/member");
+const member = require("../../models/Member");
 const Event = require("../../models/Event");
 const Application = require("../../models/Application");
 const Project = require("../../models/Project");
@@ -732,7 +732,7 @@ router.get("/:id/ShowAllCA", async (req, res) => {
     const admins = await Admin.findById(id);
     if(admins){
 
-      await fetch(`${server}/api/ConsultancyAgency`)
+      await fetch(`${server}/api/ConsultancyAgencys`)
       .then(res => res.json())
       .then(json => {
         const ca = json.data;
@@ -783,7 +783,7 @@ router.get("/:id/ShowAllMembers", async (req, res) => {
   if (ObjectId.isValid(id)) {
     const admins = await Admin.findById(id);
     if(admins){
-      await fetch(`${server}/api/member`)
+      await fetch(`${server}/api/members`)
       .then(res => res.json())
       .then(json => {
         const member = json.data;

@@ -12,7 +12,7 @@ const ProjectSchema = new Schema({
         required: true
     },
     companyID: {
-        type: Schema.Types.ObjectId,ref: "PartnerInfo",
+        type: Schema.Types.ObjectId,ref: "Partner",
         required:false
     },
     category: {
@@ -40,7 +40,7 @@ const ProjectSchema = new Schema({
         required: false
     },
     memberID: {
-        type: Schema.Types.ObjectId,ref: "member",
+        type: Schema.Types.ObjectId,ref: "Member",
         required:false
     },
     life_cycle:{

@@ -3,7 +3,7 @@ const AbstractTests = require("./AbstractTests");
 const Projects = require("../../models/Project");
 const ObjectId = require("mongoose");
 // const consultancyagency = require('../../models/consultancyagency')//require your model
-const Partners = require("../../models/PartnerInfo");
+const Partners = require("../../models/Partner");
 const Events = require("../../models/Event");
 const EventRequest = require("../../models/EventRequest");
 

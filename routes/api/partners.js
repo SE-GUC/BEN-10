@@ -4,10 +4,10 @@ const mongoose = require("mongoose");
 
 const Project = require("../../models/Project");
 const event = require("../../models/Event");
-const PartnerInfo = require("../../models/PartnerInfo");
+const Partner = require("../../models/Partner");
 const fetch = require("node-fetch");
 const server = require("../../config/config");
-const Member = require("../../models/member");
+const Member = require("../../models/Member");
 const Event = require("../../models/Event");
 const validator = require("../../validations/partnerValidations");
 const ObjectId = require("mongodb").ObjectID;
@@ -15,7 +15,7 @@ const ObjectId = require("mongodb").ObjectID;
 mongoose.set("useFindAndModify", false);
 
 router.get("/", async (req, res) => {
-  const partners = await PartnerInfo.find();
+  const partners = await Partner.find();
   res.json({ data: partners });
 });
 
@@ -90,7 +90,7 @@ router.get("/:id", async (req, res) => {
   if (id.match(/^[0-9a-fA-F]{24}$/)) {
     // it's an ObjectID
 
-    const partners = await PartnerInfo.findById(id);
+    const partners = await Partner.findById(id);
     if (partners) {
       return res.json({ data: partners });
     } else {
@@ -103,13 +103,13 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const isValidated = validator.createValidationPartnerInfo(req.body);
+    const isValidated = validator.createValidationPartner(req.body);
     if (isValidated.error)
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
-    const newPartnerInfo = await PartnerInfo.create(req.body);
-    res.json({ msg: "Partner was created successfully", data: newPartnerInfo });
+    const newPartner = await Partner.create(req.body);
+    res.json({ msg: "Partner was created successfully", data: newPartner });
   } catch (error) {
     console.log(error);
     return res.status(400).send("Error");
@@ -119,12 +119,12 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id)) {
-      const isValidated = validator.updateValidationPartnerInfo(req.body);
+      const isValidated = validator.updateValidationPartner(req.body);
       if (isValidated.error)
         return res
           .status(400)
           .send({ error: isValidated.error.details[0].message });
-      const updatedPartner = await PartnerInfo.findByIdAndUpdate(
+      const updatedPartner = await Partner.findByIdAndUpdate(
         { _id: req.params.id },
         req.body
       );
@@ -141,7 +141,7 @@ router.put("/:id", async (req, res) => {
 });
 router.post("/:id/eventrequests/", async (req, res) => {
   if (ObjectId.isValid(req.params.id)) {
-    const p = await PartnerInfo.findById(req.params.id);
+    const p = await Partner.findById(req.params.id);
     if (p) {
       if (
         req.body.requestedBy != null &&
@@ -216,7 +216,7 @@ router.delete("/:id", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id)) {
       const id = req.params.id;
-      const deletedPartner = await PartnerInfo.findByIdAndRemove(id);
+      const deletedPartner = await Partner.findByIdAndRemove(id);
       if (!deletedPartner)
         return res.status(400).send({ error: "Partner does not exists" });
       res.json({
@@ -251,7 +251,7 @@ router.put("/:id/editProject/:pid/", async (req, res) => {
   }
 });
 // router.post("/:id/submitRequest", async (req, res) => {
-//   const p = await PartnerInfo.findById(req.params.id)
+//   const p = await Partner.findById(req.params.id)
 //   if (p.requestorId==req.params.id){
 //     const j = await PartnerRequestEvent(req.body);
 //   }
@@ -259,12 +259,12 @@ router.put("/:id/editProject/:pid/", async (req, res) => {
 // });
 // router.post("/:id/submitRequest", async (req, res) => {
 //   try {
-//     const isValidated = validator.createValidationPartnerInfo(req.body);
+//     const isValidated = validator.createValidationPartner(req.body);
 //     if (isValidated.error)
 //       return res
 //         .status(400)
 //         .send({ error: isValidated.error.details[0].message });
-//     const newPartnerInfo = await PartnerInfo.create(req.body);
+//     const newPartner = await Partner.create(req.body);
 //     res.json({ msg: "Request was created successfully", data: newAdmin });
 //   } catch (error) {
 //     console.log(error);
@@ -419,7 +419,7 @@ router.get("/:id/ShowFinalDraft", async (req, res) => {
   const id = req.params.id;
 
   if (ObjectId.isValid(id)) {
-    const partners = await PartnerInfo.findById(id);
+    const partners = await Partner.findById(id);
 
     if (partners) {
       const j = await getProjects(id);
@@ -455,7 +455,7 @@ router.put("/:id3/project/:id1/AssignCAtoProject/:id2", async (req, res) => {
   if (ObjectId.isValid(projID) && ObjectId.isValid(caId) && ObjectId.isValid(part) ) {
     const project = await Project.findById(projID);
     const consultancy = await ConsultancyAgency.findById(caId);
-    const partner = await PartnerInfo.findById(part)
+    const partner = await Partner.findById(part)
     if (project && consultancy && partner) {
       var consul = project.applyingCA;
       var found = false;
@@ -518,7 +518,7 @@ router.put('/:id1/myprojects/:id2/finaldraft/approve', async (req,res)=>{
   const  part=req.params.id1;
   const   proj =req.params.id2;
 if(ObjectId.isValid(part) && ObjectId.isValid(proj)){
-  const partner = await PartnerInfo.findById(part);
+  const partner = await Partner.findById(part);
   const project = await Project.findById(proj);
   console.log(partner)
   console.log(project)
@@ -562,7 +562,7 @@ router.put('/:id/myprojects/:pid/finaldraft/disapprove', async (req,res)=>{
 const  part=req.params.id;
 const   proj =req.params.pid;
 if(ObjectId.isValid(part) && ObjectId.isValid(proj)){
-const partner = await PartnerInfo.findById(part);
+const partner = await Partner.findById(part);
 const project = await Project.findById(proj);
 if (partner && project){
 var dis = project.life_cycle
@@ -602,7 +602,7 @@ await fetch(url, {
 // 10 As a patrner I want to give the attendees a form to rate the event and give a feedback
 router.post("/:pid/rating/:eid/", async (req, res) => {
   if (ObjectId.isValid(req.params.pid) && ObjectId.isValid(req.params.eid)) {
-    const partner = await PartnerInfo.findById(req.params.pid);
+    const partner = await Partner.findById(req.params.pid);
     const event = await Event.findById(req.params.eid);
     if (partner && event) {
       if (event.requestorId == req.params.pid) {
@@ -666,7 +666,7 @@ async function Partnerrequestrating(formLink,id,date) {
 router.get("/:id/myProjects", async (req, res) => {
   const id = req.params.id;
   if (ObjectId.isValid(id)) {
-    const partner = await PartnerInfo.findById(id);
+    const partner = await Partner.findById(id);
     if(partner){
     var error = true;
     await fetch(`${server}/api/projects`, {
@@ -699,7 +699,7 @@ router.get("/:id/myProjects", async (req, res) => {
 
 router.put("/:id/myprojects/:pid/finalreview/approve", async (req, res) => {
   try {
-    const par = await PartnerInfo.findById(req.params.id);
+    const par = await Partner.findById(req.params.id);
     const proj = await Project.findById(req.params.pid);
     if (par && proj) {
       if (proj.companyID == req.params.id) {
@@ -757,7 +757,7 @@ async function acceptFinalReview(pid) {
 }
 router.put("/:id/myprojects/:pid/finalreview/decline", async (req, res) => {
   try {
-    const par = await PartnerInfo.findById(req.params.id);
+    const par = await Partner.findById(req.params.id);
     const proj = await Project.findById(req.params.pid);
     if (par && proj) {
       if (proj.companyID == req.params.id) {
@@ -820,7 +820,7 @@ router.use("/:id/cancelproject/:pid", async (req, res) => {
   var error = true;
   console.log("here1")
   if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
-    const partner = await PartnerInfo.findById(req.params.id);
+    const partner = await Partner.findById(req.params.id);
     const project = await Project.findById(req.params.pid);
     var result ;
     if (partner && project) {
@@ -882,7 +882,7 @@ router.use("/:id/cancelproject/:pid", async (req, res) => {
 // as partner i want to send task orientation invitation
 router.post("/:id/sendOrientationInvitations/:pid/", async (req, res) => {
   if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
-    const partner = await PartnerInfo.findById(req.params.id);
+    const partner = await Partner.findById(req.params.id);
     const project = await Project.findById(req.params.pid);
     if (partner && project) {
       if (project.companyID == req.params.id) {
@@ -964,7 +964,7 @@ router.get("/:id/ShowMyEvents", async (req, res) => {
   const id = req.params.id;
 
   if (ObjectId.isValid(id)) {
-    const partners = await PartnerInfo.findById(id);
+    const partners = await Partner.findById(id);
 
     if (partners) {
       const e =await event.find()
