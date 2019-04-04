@@ -5,7 +5,7 @@ const ObjectId = require("mongodb").ObjectID;
 mongoose.set("useFindAndModify", false);
 
 const notification = require("../../models/Notification");
-const validator = require("../../validations/notificationsValidation");
+const validator = require("../../validations/notificationValidations");
 
 router.get("/", async (req, res) => {
   const myNotifications = await notification.find();

@@ -8,7 +8,7 @@ const server = require("../../config/config");
 const Event = require("../../models/Event");
 const member = require("../../models/Member");
 const validator = require("../../validations/memberValidations");
-const notificationValidator = require("../../validations/notificationsValidation");
+const notificationValidator = require("../../validations/notificationValidations");
 const project = require("../../models/Project");
 
 // GET method to retrieve all members
