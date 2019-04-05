@@ -1,50 +1,36 @@
-import React, { Component } from "react";
-import "./App.css";
-import MyProjects from "./pages/MyProjects";
-import axios from "axios";
-import { BrowserRouter as Router } from "react-router-dom";
-import Route  from "react-router-dom/Route";
+import React, { Component } from 'react';
+import './myProjects.css';
+// const axios = require('axios');
+ export class myProjects extends Component {
 
-
-
-class App extends Component {
-  state = {
-    partner_id:null,
-    partner_name:null
-  };
-  
-  componentDidMount() {
-    axios.get("http://localhost:5000/api/partners")
-    .then(res => {
-      return res.data;
-    })
-    .then(a => this.setState({ partner_id: a.data[0]._id, partner_name:a.data[0].name }));
-  }
-
-  render() {
-    if(this.state.partner_id!==null){
-    return (
-      <Router>
-        <div className="App">
-              <Route path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
-        </div>
-      </Router>
-    );
-    }else{
-      return(
-        <Router>
-        <div className="App">
-        <Route path="/MyProjects" render={
-        ()=>{
-          return <label>Loading...</label>
-        }
-      }
-      />
-      </div>
-      </Router>
-      )
+  constructor(props){
+    super(props);
+    this.state = {
+      Project: []
     }
+  }
+  componentDidMount(){
+    fetch('http://localhost:5000/api/partners/5c786899f8a8e026447d212f/myProjects').then(res=>res.json())
+    .then(projects=>this.setState({Project:projects.data}))
+    
+  }
+  render() {
+    return (
+      <div className="App">
+      <h1>My Projects </h1>
+      <ul>
+        {this.state.Project.map(Project=><li key={Project._id}>Company name: {Project.company} <br></br>
+          description: {Project.description}<br></br>
+          category:{Project.category}<br></br>
+          want consultancy:{Project.want_consultancy}<br></br>
+          posted_date: {Project.posted_date}<br></br>
+          life_cycle:{Project.life_cycle}</li>)}
+      </ul>
+
+        
+      </div>
+    );
   }
 }
 
-export default App;
+export default myProjects;
