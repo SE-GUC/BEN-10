@@ -28,8 +28,8 @@ class App extends Component {
       <Router>
         <div className="App">
         
-        <Route path="/MyProjects" component={MyProjects}/>
         <Route path="/MyEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
+        <Route path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
         </div>
       </Router>
     );
