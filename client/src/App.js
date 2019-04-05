@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
-import MyProjects from "./pages/MyProjects";
 import MyEvents from "./pages/MyEvents";
 import axios from "axios";
-import fetch from "node-fetch"
 import { BrowserRouter as Router } from "react-router-dom";
 import Route  from "react-router-dom/Route";
-
-
 
 class App extends Component {
   state = {
@@ -28,9 +24,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-        
-        <Route path="/MyEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
-        <Route path="/MyProjects" component={MyProjects}/>
+          <Route path="/MyEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
         </div>
       </Router>
     );
@@ -38,15 +32,9 @@ class App extends Component {
       return(
         <Router>
         <div className="App">
-        <Route path="/MyProjects" render={
-        ()=>{
-          return <label>Loading...</label>
-        }
-      }
-      />
-      <Route path="/MyEvents" render={
-        ()=>{
-          return <label>Loading...</label>
+          <Route path="/MyEvents" render={
+            ()=>{
+            return <label>Loading...</label>
         }
       }
       />

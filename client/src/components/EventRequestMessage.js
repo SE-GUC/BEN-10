@@ -4,7 +4,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import axios from "axios";
 
 
-class PositionedSnackbar extends React.Component {
+class EventRequestMessage extends React.Component {
   state = {
     open: false,
     vertical: 'top',
@@ -77,4 +77,4 @@ class PositionedSnackbar extends React.Component {
   }
 }
 
-export default PositionedSnackbar;
+export default EventRequestMessage;

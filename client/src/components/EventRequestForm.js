@@ -1,12 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import axios from "axios";
-import PositionedSnackbar from "./PositionedSnackbar"
+import EventRequestMessage from "./EventRequestMessage"
 
 
 const styles = theme => ({
@@ -45,7 +42,7 @@ const locations = [
   }
 ];
 
-class EventRequest extends React.Component {
+class EventRequestForm extends React.Component {
   
   constructor(props) {
     super(props);
@@ -68,9 +65,20 @@ class EventRequest extends React.Component {
     })
   }
   
-  view(classes){
+  
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value
+    });
+  };
+
+  
+
+  render() {
+    const { classes } = this.props;
+    
     return (
-    <div>
+      <div>
         <div>
           <label>
             Request an event
@@ -145,65 +153,20 @@ class EventRequest extends React.Component {
         </div>
        
         <div>
-          <PositionedSnackbar className={classes.button} description={this.state.description} date={this.state.date}
+          <EventRequestMessage className={classes.button} description={this.state.description} date={this.state.date}
           type={this.state.type} location={this.state.location} requestorId={this.props.requestorId} requestedBy={this.props.requestedBy}
           clear={this.clear}/>
         </div>
       </div>
-    )
+  );
+    
   }
-
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value
-    });
-  };
-
-  
-
-  render() {
-    const { classes } = this.props;
-    if(!this.state.response){
-    return (
-      this.view(classes)
-    );
-    }else{
-      return(
-        this.view(classes)
-      )
-    }
-  }
-
-  submitRequest = () => {
-    const body ={
-        requestedBy: this.props.requestedBy,
-        description: this.state.description,
-        eventType: this.state.type,
-        eventLocation: this.state.location,
-        eventDate: this.state.date,
-        isAccepted: "false",
-        requestorId: this.props.requestorId
-    }
-
-    axios.post(`http://localhost:5000/api/partners/${this.props.requestorId}/eventrequests/`, body)
-    .then(function (response) {
-      return response.data;
-    })
-    .then(res => {
-      console.log(res)
-      this.setState({response:res})
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
-  };
   
 }
 
 
-EventRequest.propTypes = {
+EventRequestForm.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(EventRequest);
+export default withStyles(styles)(EventRequestForm);
