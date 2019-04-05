@@ -30,7 +30,7 @@ class myEvents extends Component {
   render() {
     return (
       <div className="App">
-        <EventRequest requestorId={this.props.partner_id} />
+        <EventRequest requestorId={this.props.partner_id} requestedBy={this.props.partner_name} />
       </div>
     );
   }

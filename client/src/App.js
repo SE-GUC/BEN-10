@@ -10,7 +10,8 @@ import Route  from "react-router-dom/Route";
 
 class App extends Component {
   state = {
-    partner_id:null
+    partner_id:null,
+    partner_name:null
   };
   
   componentDidMount() {
@@ -18,18 +19,40 @@ class App extends Component {
     .then(res => {
       return res.data;
     })
-    .then(a => this.setState({ partner_id: a.data[0]._id }));
+    .then(a => this.setState({ partner_id: a.data[0]._id, partner_name:a.data[0].name }));
   }
 
   render() {
+    if(this.state.partner_id!==null){
     return (
       <Router>
         <div className="App">
+        
         <Route path="/MyProjects" component={MyProjects}/>
-        <Route path="/MyEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} />}/>
+        <Route path="/MyEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
         </div>
       </Router>
     );
+    }else{
+      return(
+        <Router>
+        <div className="App">
+        <Route path="/MyProjects" render={
+        ()=>{
+          return <label>Loading...</label>
+        }
+      }
+      />
+      <Route path="/MyEvents" render={
+        ()=>{
+          return <label>Loading...</label>
+        }
+      }
+      />
+      </div>
+      </Router>
+      )
+    }
   }
 }
 

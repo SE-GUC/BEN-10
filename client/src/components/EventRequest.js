@@ -6,6 +6,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
+import PositionedSnackbar from "./PositionedSnackbar"
 
 
 const styles = theme => ({
@@ -53,22 +54,19 @@ class EventRequest extends React.Component {
       description:"",
       location: "Lirten Office",
       date:"2019-01-01",
-      type:""
+      type:"",
+      response:null
     };
   }
   
-
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value
-    });
-  };
-
-  render() {
-    const { classes } = this.props;
-
+  view(classes){
     return (
-      <div>
+    <div>
+        <div>
+          <label>
+            Request an event
+          </label>
+          </div>
         <div>
           <TextField
             id="description"
@@ -80,7 +78,7 @@ class EventRequest extends React.Component {
             multiline
             rows="4"
           />
-          <br />
+          {/* <br /> */}
         </div>
         <div>
           <TextField
@@ -139,13 +137,38 @@ class EventRequest extends React.Component {
             Submit Request
           </Button>
         </div>
+        <div>
+          <PositionedSnackbar className={classes.button} description={this.state.description} date={this.state.date}
+          type={this.state.type} location={this.state.location} requestorId={this.props.requestorId} requestedBy={this.props.requestedBy}/>
+        </div>
       </div>
+    )
+  }
+
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value
+    });
+  };
+
+  
+
+  render() {
+    const { classes } = this.props;
+    if(!this.state.response){
+    return (
+      this.view(classes)
     );
+    }else{
+      return(
+        this.view(classes)
+      )
+    }
   }
 
   submitRequest = () => {
     const body ={
-        requestedBy: "Abdelrahman",
+        requestedBy: this.props.requestedBy,
         description: this.state.description,
         eventType: this.state.type,
         eventLocation: this.state.location,
@@ -153,13 +176,15 @@ class EventRequest extends React.Component {
         isAccepted: "false",
         requestorId: this.props.requestorId
     }
-    console.log(this.props.requestorId)
 
     axios.post(`http://localhost:5000/api/partners/${this.props.requestorId}/eventrequests/`, body)
     .then(function (response) {
       return response.data;
     })
-    .then(res => console.log(res))
+    .then(res => {
+      console.log(res)
+      this.setState({response:res})
+    })
     .catch(function (error) {
       console.log(error);
     });
@@ -167,6 +192,7 @@ class EventRequest extends React.Component {
   };
   
 }
+
 
 EventRequest.propTypes = {
   classes: PropTypes.object.isRequired
