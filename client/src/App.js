@@ -1,43 +1,35 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import Project from "./components/Project";
-import fetch from "node-fetch";
+import MyProjects from "./pages/MyProjects";
+import MyEvents from "./pages/MyEvents";
 import axios from "axios";
+import { BrowserRouter as Router } from "react-router-dom";
+import Route  from "react-router-dom/Route";
+
+
 
 class App extends Component {
   state = {
-    projects: null
+    partner_id:null
   };
-
+  
   componentDidMount() {
-    axios
-      .get("http://localhost:5000/api/projects")
-      .then(res => {
-        return res.data;
-      })
-      .then(a => this.setState({ projects: a.data }));
+    axios.get("http://localhost:5000/api/partners")
+    .then(res => {
+      return res.data;
+    })
+    .then(a => this.setState({ partner_id: a.data[0]._id }));
   }
 
   render() {
-    if (this.state.projects === null) {
-      return (
+    return (
+      <Router>
         <div className="App">
-          <label>Loading....</label>
+        <Route path="/MyProjects" component={MyProjects}/>
+        <Route path="/MyEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} />}/>
         </div>
-      );
-    } else {
-      return (
-        <div className="App">
-          <ul>
-            {this.state.projects.map(i => (
-              <Project project={i} />
-            ))}
-          </ul>
-          
-        </div>
-      );
-    }
+      </Router>
+    );
   }
 }
 
