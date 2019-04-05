@@ -3,6 +3,7 @@ import "./App.css";
 import MyProjects from "./pages/MyProjects";
 import MyEvents from "./pages/MyEvents";
 import axios from "axios";
+import fetch from "node-fetch"
 import { BrowserRouter as Router } from "react-router-dom";
 import Route  from "react-router-dom/Route";
 
@@ -29,7 +30,7 @@ class App extends Component {
         <div className="App">
         
         <Route path="/MyEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
-        <Route path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
+        <Route path="/MyProjects" component={MyProjects}/>
         </div>
       </Router>
     );
