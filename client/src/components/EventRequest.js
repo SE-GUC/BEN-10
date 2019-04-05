@@ -50,6 +50,8 @@ class EventRequest extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.clear = this.clear.bind(this)
+
     this.state = {
       description:"",
       location: "Lirten Office",
@@ -57,6 +59,13 @@ class EventRequest extends React.Component {
       type:"",
       response:null
     };
+  }
+
+  clear() {
+    this.setState({
+      description: "",
+      type:""
+    })
   }
   
   view(classes){
@@ -73,6 +82,7 @@ class EventRequest extends React.Component {
             label="Description"
             className={classes.textField}
             onChange={this.handleChange("description")}
+            value={this.state.description}
             margin="normal"
             variant="outlined"
             multiline
@@ -85,6 +95,7 @@ class EventRequest extends React.Component {
             id="eventType"
             label="Event Type"
             className={classes.textField}
+            value={this.state.type}
             onChange={this.handleChange("type")}
             margin="normal"
             variant="outlined"
@@ -132,14 +143,11 @@ class EventRequest extends React.Component {
           />
           <br />
         </div>
-        <div>
-          <Button onClick={this.submitRequest} variant="contained" className={classes.button}>
-            Submit Request
-          </Button>
-        </div>
+       
         <div>
           <PositionedSnackbar className={classes.button} description={this.state.description} date={this.state.date}
-          type={this.state.type} location={this.state.location} requestorId={this.props.requestorId} requestedBy={this.props.requestedBy}/>
+          type={this.state.type} location={this.state.location} requestorId={this.props.requestorId} requestedBy={this.props.requestedBy}
+          clear={this.clear}/>
         </div>
       </div>
     )

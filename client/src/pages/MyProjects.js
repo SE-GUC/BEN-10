@@ -3,7 +3,7 @@ import Project from "../components/Project";
 import fetch from "node-fetch";
 import axios from "axios";
 
-class myProjects extends Component {
+class MyProjects extends Component {
   state = {
     projects: null
   };
@@ -39,4 +39,4 @@ class myProjects extends Component {
   }
 }
 
-export default myProjects;
+export default MyProjects;

@@ -43,6 +43,7 @@ class PositionedSnackbar extends React.Component {
         this.setState({
           result:res.msg
         })
+        this.props.clear()
       }
     })
     .catch(function (error) {
@@ -51,7 +52,7 @@ class PositionedSnackbar extends React.Component {
 
   };
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, result:"Loading..." });
   };
 
   render() {
