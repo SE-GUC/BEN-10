@@ -26,9 +26,14 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-              <Route path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
+        {
+          console.log(this.state.partner_id)
+        }
+              {/* <Route path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/> */}
+              <MyProjects partner_id={this.state.partner_id}/>
         </div>
       </Router>
+      
     );
     }else{
       return(

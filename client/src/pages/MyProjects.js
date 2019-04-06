@@ -4,10 +4,13 @@ import fetch from "node-fetch";
 import axios from "axios";
 
 class MyProjects extends Component {
-  state = {
-    projects: null
+  constructor(props){
+    super(props)
+    this.state = {
+    projects: null,
+    partner_id:props.partner_id
   };
-
+}
   componentDidMount() {
     axios
       .get("http://localhost:5000/api/projects")
@@ -18,6 +21,7 @@ class MyProjects extends Component {
   }
 
   render() {
+   
     if (this.state.projects === null) {
       return (
         <div className="App">
@@ -29,7 +33,7 @@ class MyProjects extends Component {
         <div className="App">
           <ul>
             {this.state.projects.map(i => (
-              <Project project={i} />
+              <Project project={i} partner_id={this.state.partner_id} />
             ))}
           </ul>
           
