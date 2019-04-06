@@ -11,12 +11,20 @@ class App extends Component {
   };
 
   componentDidMount() {
-    axios
-      .get("http://localhost:5000/api/projects")
-      .then(res => {
-        return res.data;
+    var bodyFormData = new FormData();
+    bodyFormData.set('userName', 'Fred');
+    axios({
+      method: 'post',
+      url: 'http://localhost:5000/api/partners/:id/addProject',
+      data: bodyFormData,
+      config: { headers: {'Content-Type': 'application/json' }}
       })
-      .then(a => this.setState({ projects: a.data }));
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
   }
 
   render() {
@@ -27,16 +35,16 @@ class App extends Component {
         </div>
       );
     } else {
-      return (
-        <div className="App">
-          <ul>
-            {this.state.projects.map(i => (
-              <Project project={i} />
-            ))}
-          </ul>
+      // return (
+      //   <div className="App">
+      //     <ul>
+      //       {this.state.projects.map(i => (
+      //         <Project project={i} />
+      //       ))}
+      //     </ul>
           
-        </div>
-      );
+      //   </div>
+      // );
     }
 
   }
