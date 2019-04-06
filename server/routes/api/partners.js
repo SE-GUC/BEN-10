@@ -159,7 +159,7 @@ router.post("/:id/eventrequests/", async (req, res) => {
           req.body.eventDate
         );
         console.log(j)
-        res.status(200).send(j);
+        res.send(j);
       } else {
         return res.status(400).send({ error: "body is missing attrubites" });
       }
@@ -968,7 +968,7 @@ router.get("/:id/ShowMyEvents", async (req, res) => {
 
     if (partners) {
       const e =await event.find()
-      const Myevents=e.filter(m=>m.requestorId===id);
+      const Myevents=e.filter(m=>m.requestorId==id);
       if(Myevents.length===0){
         res.send({msg: "NO Events to show"});}
         else{
