@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Project from "../components/Project";
-import fetch from "node-fetch";
 import axios from "axios";
 
 class MyProjects extends Component {
