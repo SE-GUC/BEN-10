@@ -4,6 +4,7 @@ import MyProjects from "./pages/MyProjects";
 import axios from "axios";
 import { BrowserRouter as Router } from "react-router-dom";
 import Route  from "react-router-dom/Route";
+import ViewAnEvent from "./components/viewAnEvent"
 
 
 
@@ -22,28 +23,7 @@ class App extends Component {
   }
 
   render() {
-    if(this.state.partner_id!==null){
-    return (
-      <Router>
-        <div className="App">
-              <Route path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
-        </div>
-      </Router>
-    );
-    }else{
-      return(
-        <Router>
-        <div className="App">
-        <Route path="/MyProjects" render={
-        ()=>{
-          return <label>Loading...</label>
-        }
-      }
-      />
-      </div>
-      </Router>
-      )
-    }
+    return(<ViewAnEvent/>);
   }
 }
 
