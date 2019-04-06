@@ -4,7 +4,9 @@
   "description": "LirtenHub",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.18.0",
     "config": "^3.0.1",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "jest": "^24.5.0",
     "joi": "^14.3.1",
