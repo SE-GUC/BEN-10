@@ -1,52 +1,56 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import Project from "./components/Project";
-import fetch from "node-fetch";
+import MyEvents from "./pages/MyEvents";
+import MyProjects from "./pages/MyProjects";
 import axios from "axios";
+import { BrowserRouter as Router } from "react-router-dom";
+import Route  from "react-router-dom/Route";
 
 class App extends Component {
   state = {
-    projects: null
+    partner_id:null,
+    partner_name:null
   };
-
+  
   componentDidMount() {
-    var bodyFormData = new FormData();
-    bodyFormData.set('userName', 'Fred');
-    axios({
-      method: 'post',
-      url: 'http://localhost:5000/api/partners/:id/addProject',
-      data: bodyFormData,
-      config: { headers: {'Content-Type': 'application/json' }}
-      })
-    .then(function (response) {
-      console.log(response);
+    axios.get("http://localhost:5000/api/partners")
+    .then(res => {
+      return res.data;
     })
-    .catch(function (error) {
-        console.log(error);
-    });
+    .then(a => this.setState({ partner_id: a.data[0]._id, partner_name:a.data[0].name }));
   }
 
   render() {
-    if (this.state.projects === null) {
-      return (
+    if(this.state.partner_id!==null){
+    return (
+      <Router>
         <div className="App">
-          <label>Loading....</label>
+          <Route path="/MyEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
+          <Route path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
         </div>
+      </Router>
+    );
+    }else{
+      return(
+        <Router>
+        <div className="App">
+          <Route path="/MyEvents" render={
+            ()=>{
+            return <label>Loading...</label>
+            }
+          }
+          />
+        
+          <Route path="/MyProjects" render={
+            ()=>{
+              return <label>Loading...</label>
+          }
+        }
+        />
+        </div>
+        </Router>
       );
-    } else {
-      // return (
-      //   <div className="App">
-      //     <ul>
-      //       {this.state.projects.map(i => (
-      //         <Project project={i} />
-      //       ))}
-      //     </ul>
-          
-      //   </div>
-      // );
     }
-
   }
 }
 
