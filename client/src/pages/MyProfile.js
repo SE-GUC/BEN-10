@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import fetch from "node-fetch";
 import axios from "axios";
-import MyProfile from "../components/Profile"
+import MyProfileComponent from "../components/Profile"
 
 
 class MyProfile extends Component {
@@ -49,7 +49,7 @@ class MyProfile extends Component {
       return (
         <div className="App">
 
-          <MyProfile name ={this.state.name} 
+          <MyProfileComponent name ={this.state.name} 
                      age= {this.state.age}
                      gender= {this.state.gender}
                      e_mail= {this.state.e_mail}

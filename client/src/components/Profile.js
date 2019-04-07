@@ -34,7 +34,8 @@ class Profile extends React.Component {
              {this.state.events} <br /> 
              {this.state.projects} <br /> 
              {this.state.partners} </div> </Card.Text>
-             ]
+             <Button variant="primary">View Events</Button>
+             <Button variant="primary">View Projects</Button>
           </Card.Body>
         </Card>
         <br />
