@@ -4,16 +4,23 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Route  from "react-router-dom/Route";
 import {Card} from "react-bootstrap";
 
-class viewAnEvent extends React.Component {
-    state = {
+class ViewAnEvent extends React.Component {
+    constructor(props){
+        super(props);
+        
+        this.state = {
        // open : false ,
+        eventId : this.props.id ,
         items : null , 
         isLoaded : false 
     };
 
+    }
+    
+
     componentDidMount() {
         axios
-          .get("http://localhost:5000/api/events/5ca8c51c374dde0870a30205")
+          .get("http://localhost:5000/api/events/"+this.state.eventId)
           .then(res => {
             return res.data;
           })
@@ -67,4 +74,4 @@ class viewAnEvent extends React.Component {
 
       }
 }
-export default viewAnEvent ;
+export default ViewAnEvent ;
