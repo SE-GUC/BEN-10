@@ -14,7 +14,8 @@ class feedBackSending extends React.Component {
       items: null,
       owner: null,
       submitClicked: false,
-      showMessage:null
+      showMessage:null,
+      eventId:this.props.id
     };
   }
   async sendClicked() {
@@ -40,7 +41,7 @@ class feedBackSending extends React.Component {
 
   async componentDidMount() {
     await axios
-      .get(`http://localhost:5000/api/events/${this.props.id}`)
+      .get(`http://localhost:5000/api/events/${this.state.eventId}`)
       .then(res => {
         console.log(res);
         return res.data;
@@ -51,7 +52,7 @@ class feedBackSending extends React.Component {
         })
       );
     await axios
-      .get(`http://localhost:5000/api/partners/5ca8b9d9374dde0870a301ff`)
+      .get(`http://localhost:5000/api/partners/${this.state.items.requestorId}`)
       .then(res => {
         console.log(res.data);
         return res.data;

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import MyProjects from "./pages/MyProjects";
-import MyEvents from "./pages/MyEventsId";
+import MyEventsId from "./pages/MyEventsId";
 
 import axios from "axios";
 import { BrowserRouter, Route } from "react-router-dom";
@@ -31,7 +31,7 @@ class App extends Component {
     if (this.state.partner_id !== null) {
       return (
         <BrowserRouter>
-            <Route path="/" component={MyEvents} id={123} />
+            <Route path="/myEvents/:id" component={MyEventsId} />
         </BrowserRouter>
       );
     } else {
