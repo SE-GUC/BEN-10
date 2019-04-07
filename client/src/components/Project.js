@@ -19,6 +19,27 @@ class Project extends Component {
     };
     
   }
+  DeletePage  = ()=>{
+   
+    const requestOptions = {
+      method: 'DELETE'
+    };
+    fetch(`http://localhost:5000/api/partners/${this.state.partner_id}/deleteProject/${this.state.project._id}` , requestOptions).then((response) => {
+      return response.json();
+    }).then((result) => {
+      if(result.status===404)
+      alert(result.error)
+      if(result.status===200){
+      alert(result.msg);        
+      }
+      if(result.status===400)
+      alert(result)
+      else
+      alert(result.msg)
+      
+    });
+  }
+
   goToEditPage  = ()=>{
     let path = `/MyProject/edit/${this.state.project._id}`;
     this.props.history.push({
@@ -43,6 +64,7 @@ class Project extends Component {
             <Card.Subtitle className="mb-2 text-muted">nihal</Card.Subtitle>
             <Card.Text>{this.state.project.description}</Card.Text>
             <Button onClick={this.goToEditPage}>Edit</Button>
+            <Button variant="danger" onClick={this.DeletePage}>Delete</Button>
             <Button onClick={this.handleClicksz} variant="primary" >View</Button>
           </Card.Body>
         </Card>

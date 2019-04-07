@@ -10,7 +10,7 @@ export default class MyProjectsId extends Component{
     }
   }
   render(){
-    console.log(this.state)
+    console.log(this.state.partner_id)
     return (
       <DeleteProjectId  id={this.state.id} partner_id={this.state.partner_id}/>
       

@@ -43,7 +43,7 @@ class App extends Component {
         <div className="App">
 
              <Route exact path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
-             <Route exact path="/MyProjects/:id" render={(props) => <MyProjectsId {...props} partner_id={this.state.partner_id}/>}/> 
+             <Route exact path="/MyProjects/:id" render={(props) => <MyProjectsId {...props}  partner_id={this.state.partner_id}/>}/> 
              <Route exact path="/MyProject/edit/:id" component={EditMyProject} /> 
         </div>
       </Router>
