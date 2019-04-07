@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import "./App.css";
 import MyProjects from "./pages/MyProjects";
+import MyProjects from "./pages/MyProjectsId";
+import MyEvents from "./pages/MyEvents";
 import MyEventsId from "./pages/MyEventsId";
-
 import axios from "axios";
 import { BrowserRouter, Route } from "react-router-dom";
 
-import FeedBackSending from "./components/feedBackSending";
+
 
 class App extends Component {
   state = {
@@ -31,7 +32,10 @@ class App extends Component {
     if (this.state.partner_id !== null) {
       return (
         <BrowserRouter>
+            <Route path="/myEvents/" component={MyEvents} />
             <Route path="/myEvents/:id" component={MyEventsId} />
+            <Route path="/myProjects/" component={MyProjects} />
+            <Route path="/myProjects/:id" component={MyEventsId} />
         </BrowserRouter>
       );
     } else {
