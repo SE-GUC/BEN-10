@@ -6,6 +6,7 @@ import MyEventsId from "./pages/MyEventsId";
 import MyProjectsId from "./pages/MyProjectsId"
 import axios from "axios";
 
+
 import { BrowserRouter as Router  , Redirect , withRouter } from "react-router-dom";
 import Route  from "react-router-dom/Route";
 import EditMyProject from './pages/EditMyProject';
@@ -44,7 +45,32 @@ class App extends Component {
 
   render() {
     if(this.state.partner_id!==null){
+      
     return (
+      
+      <BrowserRouter >
+        <div className="App">
+            {/* <Route path="/" component={Home} exact/>  */}
+
+             <Route path="/" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
+             <Route path="myProjects/:id" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
+
+        </div>
+      </BrowserRouter>
+    );
+    }else{
+      return(
+        <BrowserRouter>
+        <div className="App">
+        <Route path="/MyProjects" render={
+        ()=>{
+          return <label>Loading...</label>
+        }
+      }
+      />
+      </div>
+      </BrowserRouter>
+      )
       <Router history={history}>
         <div className="App">
               <Route exact path="/MyProjects" render={
