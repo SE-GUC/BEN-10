@@ -26,11 +26,11 @@ const styles = theme => ({
 const states = [
   {
     value: "true",
-    label: "true"
+    label: "Yes"
   },
   {
     value: "false",
-    label: "false"
+    label: "No"
   }
 ];
 
