@@ -12,6 +12,7 @@ import MyProjectId from './MyProjectsId';
 class MyProjects extends Component {
   constructor(props){
     super(props)
+    this.routeChange = this.routeChange.bind(this)
     this.state = {
     projects: null,
     partner_id:props.partner_id,
@@ -23,6 +24,7 @@ class MyProjects extends Component {
     .then(projects=>{
       this.setState({projects:projects.data})
   })
+}
 routeChange() {
     this.setState({redirect:true})
 

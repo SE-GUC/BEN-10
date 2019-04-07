@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./App.css";
 import MyEvents from "./pages/MyEvents";
 import MyProjects from "./pages/MyProjects";
-import MyEvents from "./pages/MyEvents";
 import MyEventsId from "./pages/MyEventsId";
 import MyProjectsId from "./pages/MyProjectsId"
 import EditMyProject from "./pages/EditMyProject"
