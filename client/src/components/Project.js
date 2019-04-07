@@ -15,22 +15,22 @@ class Project extends Component {
     super(props);
     this.state = {
       project: props.project,
-      partner_id:props.partner_id
+      
     };
     
   }
   DeletePage  = ()=>{
-   
     const requestOptions = {
       method: 'DELETE'
     };
-    fetch(`http://localhost:5000/api/partners/${this.state.partner_id}/deleteProject/${this.state.project._id}` , requestOptions).then((response) => {
+    fetch(`http://localhost:5000/api/partners/${this.state.project.companyID}/deleteProject/${this.state.project._id}` , requestOptions).then((response) => {
       return response.json();
     }).then((result) => {
+      console.log(result)
       if(result.status===404)
       alert(result.error)
       if(result.status===200){
-      alert(result.msg);        
+      alert(result.msg);
       }
       if(result.status===400)
       alert(result)
