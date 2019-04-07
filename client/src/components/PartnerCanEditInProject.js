@@ -11,7 +11,7 @@ import { createHashHistory } from 'history'
 export const history = createHashHistory()
 
 
-class Project extends React.Component {
+class PartnerCanEditInProject extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,4 +43,4 @@ class Project extends React.Component {
   }
 }
 
-export default withRouter(Project);
+export default withRouter(PartnerCanEditInProject);

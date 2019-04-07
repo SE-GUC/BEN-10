@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import Project from "../components/Project";
-//import axios from "axios";
-import { BrowserRouter  ,Route } from "react-router-dom";
+import axios from "axios";
+
+import  PropTypes from 'prop-types'; 
+import { BrowserRouter as Router , Route } from "react-router-dom";
+import MyProjectId from './MyProjectsId';
+
+
 
 class MyProjects extends Component {
   constructor(props){
@@ -18,6 +23,7 @@ class MyProjects extends Component {
       this.setState({projects:projects.data})
   })
   }
+ 
 
   render() {   
     if (this.state.projects === null) {

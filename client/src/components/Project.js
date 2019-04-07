@@ -10,12 +10,12 @@ import EditMyProject from '../pages/EditMyProject';
 import ReactDOM from 'react-dom';
 
 
-
-class Project extends React.Component {
+class Project extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      project: props.project
+      project: props.project,
+      partner_id:props.partner_id
     };
     
   }
@@ -34,10 +34,13 @@ class Project extends React.Component {
   render() {
   //  const{_id}= this.props.project._id;
     return (
+     
       <div>
+        
         <Card border="success" style={{ width: "18rem" }}>
           <Card.Body>
             <Card.Title>{this.state.project.company}</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">nihal</Card.Subtitle>
             <Card.Text>{this.state.project.description}</Card.Text>
             <Button onClick={this.goToEditPage}>Edit</Button>
             <Button onClick={this.handleClicksz} variant="primary" >View</Button>

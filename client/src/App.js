@@ -6,13 +6,20 @@ import MyEventsId from "./pages/MyEventsId";
 import MyProjectsId from "./pages/MyProjectsId"
 import EditMyProject from "./pages/EditMyProject"
 import axios from "axios";
-import { BrowserRouter, Route } from "react-router-dom";
+
+
+import { BrowserRouter as Router  , Route,Redirect , withRouter } from "react-router-dom";
+
+
+
+
 
 class App extends Component {
   state = {
-    partner_id: null
-  };
+    partner_id:null,
+    partner_name:null,
 
+  }
   componentDidMount() {
     axios 
       .get("http://localhost:5000/api/partners")
@@ -28,24 +35,34 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.partner_id !== null) {
-      console.log(this.state.partner_id)
-      return (
-        <BrowserRouter>
-            <div className="App">
-             <Route path="/MyProjects/" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
-            
-            <Route exact path="/MyProject/edit/:id" component={EditMyProject}/>
+    if(this.state.partner_id!==null){
+      
+    return (
+      
+      <Router>
+        <div className="App">
 
-            <Route exact path="/myEvents/" component={MyEvents} />
-            <Route exact path="/myEvents/:id" component={MyEventsId} />
-            <Route exact path="/MyProjects/:id" component={MyProjectsId} />
-            </div>
-      </BrowserRouter>
+             <Route exact path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
+             <Route exact path="/MyProjects/:id" render={(props) => <MyProjectsId {...props} partner_id={this.state.partner_id}/>}/> 
+             <Route exact path="/MyProject/edit/:id" component={EditMyProject} /> 
+        </div>
+      </Router>
+    );
+    }else{
+      return(
+        <Router>
+        <div className="App">
+        <Route path="/MyProjects" render={
+        ()=>{
+          return <label>Loading...</label>
+        }
+      }
+      />
+      </div>
+      </Router>
       );
-    } else {
-      return <div>Loading....</div>;
     }
-  }
-}
-export default App;
+ }
+
+}  
+    export default App;
