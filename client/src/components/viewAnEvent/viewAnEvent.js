@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Route  from "react-router-dom/Route";
 import {Card} from "react-bootstrap";
 
-class ViewAnEvent extends React.Component {
+class viewAnEvent extends React.Component {
     constructor(props){
         super(props);
         
@@ -74,4 +74,4 @@ class ViewAnEvent extends React.Component {
 
       }
 }
-export default ViewAnEvent ;
+export default viewAnEvent ;
