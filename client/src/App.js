@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import MyProjects from "./pages/MyProjects";
-import MyProjects from "./pages/MyProjectsId";
+import MyProjectsId from "./pages/MyProjectsId";
 import MyEvents from "./pages/MyEvents";
 import MyEventsId from "./pages/MyEventsId";
 import MyProfile from "./pages/MyProfile";
@@ -37,7 +37,7 @@ class App extends Component {
             <Route path="/myEvents/:id" component={MyEventsId} />
             <Route path="/myProjects/" component={MyProjects} />
             <Route path="/myProjects/:id" component={MyEventsId} />
-            <Route path="/myProfile/" component={MyProfile} />
+            <Route path="/myProfile/:id" component={MyProfile} />
 
         </BrowserRouter>
       );

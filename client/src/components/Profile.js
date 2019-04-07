@@ -26,13 +26,15 @@ class Profile extends React.Component {
           <Card.Body>
             <Card.Title>{this.state.name}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">{this.state.e_mail}</Card.Subtitle>
-            <Card.Text>{this.state.age <br>
-             this.state.gender <br> 
-             this.state.experience_level <br> 
-             this.state.phone_number <br> 
-             this.state.events <br> 
-             this.state.projects <br> 
-             this.state.partners}</Card.Text>
+            
+            <Card.Text><div>{this.state.age} <br />
+             {this.state.gender} <br /> 
+             {this.state.experience_level} <br /> 
+             {this.state.phone_number} <br /> 
+             {this.state.events} <br /> 
+             {this.state.projects} <br /> 
+             {this.state.partners} </div> </Card.Text>
+             ]
           </Card.Body>
         </Card>
         <br />
@@ -40,4 +42,4 @@ class Profile extends React.Component {
     );
   }
 }
-export default Project;
+export default Profile;

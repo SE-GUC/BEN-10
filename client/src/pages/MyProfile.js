@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import fetch from "node-fetch";
 import axios from "axios";
+import MyProfile from "../components/Profile"
 
 
 class MyProfile extends Component {
   constructor(props){
     super(props);
     this.state = {
-    name: "",
+    id: this.props.match.params.id,  
+    name: null,
     age: 0,
     gender: "",
     e_mail: "",
@@ -20,7 +22,7 @@ class MyProfile extends Component {
     }
   }
   componentDidMount(){
-    fetch('http://localhost:5000/api/partners/5c786899f8a8e026447d212f').then(res=>{
+    fetch(`http://localhost:5000/api/partners/${this.state.id}`).then(res=>{
       return res.json()
     })
     .then(partner=>{this.setState({
@@ -46,16 +48,19 @@ class MyProfile extends Component {
     } else {
       return (
         <div className="App">
-          
-    <h1> {this.state.name} </h1>
-    <h1> {this.state.age} </h1>
-    <h1> {this.state.gender} </h1>
-    <h1> {this.state.e_mail} </h1>
-    <h1> {this.state.experience_level} </h1>
-    <h1> {this.state.phone_number} </h1>
-    <h1> {this.state.events} </h1>
-    <h1> {this.state.projects} </h1>
-    <h1> {this.state.partners} </h1>
+
+          <MyProfile name ={this.state.name} 
+                     age= {this.state.age}
+                     gender= {this.state.gender}
+                     e_mail= {this.state.e_mail}
+                     experience_level= {this.state.experience_level}
+                     phone_number= {this.state.phone_number}
+                     events= {this.state.events}
+                     projects= {this.state.projects}
+                     partners= {this.state.partners}
+                      />
+
+    
       
           
         </div>
