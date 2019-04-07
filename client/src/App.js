@@ -34,9 +34,9 @@ class App extends Component {
             <div className="App">
              <Route path="/myProjects/" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
         </div>
-            <Route path="/myEvents/" component={MyEvents} />
-            <Route path="/myEvents/:id" component={MyEventsId} />
-            <Route path="/myProjects/:id" component={MyProjectsId} />
+            <Route exact path="/myEvents/" component={MyEvents} />
+            <Route exact path="/myEvents/:id" component={MyEventsId} />
+            <Route exact path="/myProjects/:id" component={MyProjectsId} />
       </BrowserRouter>
       );
     } else {

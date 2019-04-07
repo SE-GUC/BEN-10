@@ -1,17 +1,56 @@
 import React, { Component } from "react";
-import MyProject from "../components/myProjects/myProjects"
-class MyProjects extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-          partnerId: props.partner_id
-        };
-        console.log(props.partner_id)
-        console.log(this.state.partnerId)
-    }
+import Project from "../components/Project";
+//import axios from "axios";
+import { BrowserRouter  ,Route } from "react-router-dom";
 
-    render(){
-        return(<div> <MyProject id={this.state.partnerId}/> </div>);
-    }
+class MyProjects extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+    projects: null,
+    partner_id:props.partner_id
+  };
 }
+
+  // componentDidMount() {
+  //   axios
+  //     .get("http://localhost:5000/api/projects")
+  //     .then(res => {
+  //       return res.data;
+  //     })
+  //     .then(a => this.setState({ projects: a.data }));
+  // }
+  componentDidMount(){
+    fetch(`http://localhost:5000/api/partners/${this.state.partner_id}/myProjects`).then(res=>res.json())
+    .then(projects=>{
+      this.setState({projects:projects.data})
+  })
+  }
+
+  render() {   
+    if (this.state.projects === null) {
+      return (
+        <div className="App">
+          <label>Loading....</label>
+        </div>
+      );
+    } else {
+      return (
+        <div className="App">
+          <ul>
+            {this.state.projects.map(i => (
+              // <Project project={i} partner_id={this.state.partner_id} />
+              
+              <BrowserRouter>
+             <Route path="/" render={(props) => <Project project={i} {...props} partner_id={this.state.partner_id} />}/>         
+             </BrowserRouter>
+            ))}
+          </ul>
+          
+        </div>
+      );
+    }
+  }
+}
+
 export default MyProjects;
