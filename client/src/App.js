@@ -26,9 +26,9 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Route path="/MyEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
-          <Route path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
-          <Route path="/PostProject" render={(props) => <PostProject {...props} partner_id={this.state.partner_id} />}/>
+          <Route path="/myEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
+          <Route path="/myProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
+          <Route path="/postProject" render={(props) => <PostProject {...props} partner_id={this.state.partner_id} />}/>
         </div>
       </Router>
     );
