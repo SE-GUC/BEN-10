@@ -1,11 +1,13 @@
 import React,{ Component } from "react";
 import { Button,Jumbotron } from "react-bootstrap";
-// import Member from './Member.js'
-// import ConsultancyAgency from ''
+import App from '../App'
+import { BrowserRouter  ,Route} from "react-router-dom";
+
 export default class DeleteProjectId extends Component{
     constructor(props){
         super(props);
         this.state={
+          deletedFlag:false,
             id:this.props.id,
             partner_id:this.props.partner_id,
             applying_CA:[],
@@ -183,7 +185,7 @@ export default class DeleteProjectId extends Component{
         if(result.status===404)
         alert(result.error)
         if(result.status===200){
-        alert(result.msg)
+        alert(result.msg);        
         }
         if(result.status===400)
         alert(result)
@@ -198,6 +200,7 @@ export default class DeleteProjectId extends Component{
 
 
     render(){
+      if(!this.state.deletedFlag){
         return (
             <div>
                 {/* project info */}
@@ -280,7 +283,18 @@ export default class DeleteProjectId extends Component{
 
         
 </div> 
+    
 
         );
+}
+else{
+  return(
+    <BrowserRouter>
+    <Route path="/" component={App} />
+    </BrowserRouter>
+    
+    
+  );
+}
     }
 }

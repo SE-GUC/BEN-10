@@ -6,7 +6,6 @@ import { BrowserRouter  ,Route} from "react-router-dom";
 // import Route  from "react-router-dom/Route";
 
 
-
 class App extends Component {
   state = {
     partner_id:null,
@@ -23,11 +22,16 @@ class App extends Component {
 
   render() {
     if(this.state.partner_id!==null){
+      
     return (
+      
       <BrowserRouter >
         <div className="App">
+            {/* <Route path="/" component={Home} exact/>  */}
+
              <Route path="/" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
-              {/* <MyProjects partner_id={this.state.partner_id}/> */}
+             <Route path="myProjects/:id" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
+
         </div>
       </BrowserRouter>
     );

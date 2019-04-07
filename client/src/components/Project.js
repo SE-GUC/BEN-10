@@ -15,12 +15,18 @@ class Project extends Component {
   }
   handleClick(e){
     ReactDOM.render(
+      
     <MyProjectsId id={this.state.project._id} partner_id={this.state.partner_id}/>
      ,document.getElementById('root')
     );
+    // console.log("helloza");
+    
+    
+   
 
   }
-  render() { 
+  
+render() { 
     
    
     return (

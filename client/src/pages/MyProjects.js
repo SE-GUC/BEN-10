@@ -12,6 +12,14 @@ class MyProjects extends Component {
   };
 }
 
+  // componentDidMount() {
+  //   axios
+  //     .get("http://localhost:5000/api/projects")
+  //     .then(res => {
+  //       return res.data;
+  //     })
+  //     .then(a => this.setState({ projects: a.data }));
+  // }
   componentDidMount() {
     axios
       .get("http://localhost:5000/api/projects")
@@ -21,8 +29,7 @@ class MyProjects extends Component {
       .then(a => this.setState({ projects: a.data }));
   }
 
-  render() {
-   
+  render() {   
     if (this.state.projects === null) {
       return (
         <div className="App">
@@ -37,10 +44,8 @@ class MyProjects extends Component {
               // <Project project={i} partner_id={this.state.partner_id} />
               
               <BrowserRouter>
-             <Route path="/" render={(props) => <Project project={i} {...props} partner_id={this.state.partner_id} />}/> 
-              {/* <MyProjects partner_id={this.state.partner_id}/> */}
-        
-      </BrowserRouter>
+             <Route path="/" render={(props) => <Project project={i} {...props} partner_id={this.state.partner_id} />}/>         
+             </BrowserRouter>
             ))}
           </ul>
           
