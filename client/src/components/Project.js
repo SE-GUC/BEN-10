@@ -36,7 +36,6 @@ class Project extends Component {
       alert(result)
       else
       alert(result.msg)
-      
     });
   }
 
