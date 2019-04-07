@@ -6,14 +6,8 @@ import MyEventsId from "./pages/MyEventsId";
 import MyProjectsId from "./pages/MyProjectsId"
 import EditMyProject from "./pages/EditMyProject"
 import axios from "axios";
-
-
-import { BrowserRouter as Router  , Route,Redirect , withRouter } from "react-router-dom";
-
-
 import MyProfile from "./pages/MyProfile";
 
-import axios from "axios";
 import { BrowserRouter, Route } from "react-router-dom";
 import viewAnEvent from "./components/viewAnEvent/viewAnEvent"
 
