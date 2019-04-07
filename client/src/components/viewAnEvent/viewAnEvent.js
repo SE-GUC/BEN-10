@@ -9,7 +9,6 @@ class viewAnEvent extends React.Component {
         super(props);
         
         this.state = {
-       // open : false ,
         eventId : this.props.id ,
         items : null , 
         isLoaded : false 
