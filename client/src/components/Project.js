@@ -9,15 +9,22 @@ class Project extends React.Component {
       project: props.project
     };
   }
+  handleClicksz  = ()=>{
+    let path = `/myProjects/${this.state.project._id}`;
+    this.props.history.push({
+      pathname : path,
+    });
+  }
   render() {
     return (
       <div>
         <Card border="success" style={{ width: "18rem" }}>
           <Card.Body>
-            <Card.Title>{this.state.project.company}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">nihal</Card.Subtitle>
-            <Card.Text>{this.state.project.description}</Card.Text>
-            <Button variant="primary">View</Button>
+            <Card.Title>Company name : {this.state.project.company}</Card.Title>
+            <Card.Title>Category: {this.state.project.category}</Card.Title>
+            <Card.Title>Life_Cycle:{this.state.project.life_cycle}</Card.Title>
+            <Card.Text>Description:{this.state.project.description}</Card.Text>
+            <Button onClick={this.handleClicksz} variant="primary" >View</Button>
           </Card.Body>
         </Card>
         <br />
