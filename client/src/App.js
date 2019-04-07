@@ -96,7 +96,10 @@ class App extends Component {
             </ToggleDisplay>
             <ToggleDisplay if={this.state.conFound&&this.state.show} >
             <dt className="co">> Assigned Consultancy</dt>
-                                  <dd>Name: {this.state.consult.name} </dd></ToggleDisplay>
+                                   <dd>Name: {this.state.consult.name} </dd>
+                                   <dd>Mobile: {this.state.consult.telephoneNumber} </dd>
+                                   <dd>Email: {this.state.consult.email} </dd>
+            </ToggleDisplay>
 
             <ToggleDisplay if={this.state.CAFound&&this.state.show} >
             <dt className="co">> Applying Consultancy agency:</dt><ul>{ this.state.CA.map(c=><dd key={c._id}>{c.name}</dd>)}</ul>
