@@ -25,6 +25,12 @@ class Project extends React.Component {
       pathname : path,
     });
   }
+  handleClicksz  = ()=>{
+    let path = `/myProjects/${this.state.project._id}`;
+    this.props.history.push({
+      pathname : path,
+    });
+  }
   render() {
   //  const{_id}= this.props.project._id;
     return (
@@ -36,6 +42,11 @@ class Project extends React.Component {
             <Card.Text>{this.state.project.description}</Card.Text>
             <Button variant="primary">View</Button>
             <Button onClick={this.goToEditPage}>Edit</Button>
+            <Card.Title>Company name : {this.state.project.company}</Card.Title>
+            <Card.Title>Category: {this.state.project.category}</Card.Title>
+            <Card.Title>Life_Cycle:{this.state.project.life_cycle}</Card.Title>
+            <Card.Text>Description:{this.state.project.description}</Card.Text>
+            <Button onClick={this.handleClicksz} variant="primary" >View</Button>
           </Card.Body>
         </Card>
         <br />
