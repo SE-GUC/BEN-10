@@ -13,6 +13,7 @@ class myEvents extends Component {
   render() {
     return (
       <div className="App">
+      {/*Event Request*/}
         <EventRequestForm requestorId={this.props.partner_id} requestedBy={this.props.partner_name} />
       </div>
     );
