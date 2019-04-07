@@ -5,7 +5,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import ToggleDisplay from 'react-toggle-display';
 // const axios = require('axios');
 
-class App extends Component {
+class GetProjectId extends Component {
   
 
   constructor(props){
@@ -137,6 +137,4 @@ class App extends Component {
 }
 
 
-
-
-export default App;
+export default GetProjectId;
