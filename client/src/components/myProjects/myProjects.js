@@ -19,12 +19,11 @@ class MyProjects extends Component {
       this.setState({Project:projects.data})
   })
   }
-  viewProject(){
-{/* <BrowserRouter>
-            <div className="myProjects">
-             <Route path="/myProjects/:id" render={(props) => <MyProjectsId {...props} id={this.state.Project._id}/>}/> 
-        </div>
-      </BrowserRouter> */}
+  handleClicksz  = (x)=>{
+    let path = `/MyProject/${x}`;
+    this.props.history.push({
+      pathname : path,
+    });
   }
   render() {
     if(this.state.Project===null)
@@ -43,8 +42,8 @@ class MyProjects extends Component {
     description: {Project.description}<br></br>
     category:{Project.category}<br></br>
     life_cycle:{Project.life_cycle}<br></br>
-    <Button onClick = {() => this.viewProject(Project._id)} className = "Primary"> View Project </Button>
-            </li>)
+    <button onClick={this.handleClicksz(Project._id)} className = "Primary">View Project</button>
+                </li>)
           }
     </Card.Text>
   </Card.Body>

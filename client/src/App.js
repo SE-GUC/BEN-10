@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
 import MyProjects from "./pages/MyProjects";
+import MyEvents from "./pages/MyEvents";
+import MyEventsId from "./pages/MyEventsId";
+import MyProjectsId from "./pages/MyProjectsId"
 import axios from "axios";
 import { BrowserRouter, Route } from "react-router-dom";
 
@@ -29,8 +32,11 @@ class App extends Component {
       return (
         <BrowserRouter>
             <div className="App">
-             <Route path="/myProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
+             <Route path="/myProjects/" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
         </div>
+            <Route path="/myEvents/" component={MyEvents} />
+            <Route path="/myEvents/:id" component={MyEventsId} />
+            <Route path="/myProjects/:id" component={MyProjectsId} />
       </BrowserRouter>
       );
     } else {

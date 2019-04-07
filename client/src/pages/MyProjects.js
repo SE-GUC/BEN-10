@@ -4,14 +4,14 @@ class MyProjects extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-          projectId: props.partner_id
+          partnerId: props.partner_id
         };
         console.log(props.partner_id)
-        console.log(this.state.projectId)
+        console.log(this.state.partnerId)
     }
 
     render(){
-        return(<div> <MyProject id={this.state.projectId}/> </div>);
+        return(<div> <MyProject id={this.state.partnerId}/> </div>);
     }
 }
 export default MyProjects;
