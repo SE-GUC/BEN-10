@@ -16,7 +16,15 @@ const notification = require('./routes/api/notifications')
 
 const cors = require("cors");
 const app = express();
+var cors = require('cors')
 
+app.use(cors())
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 // DB Config
 const db = require('./config/keys').mongoURI
 
@@ -35,6 +43,16 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
+
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+//   });
+var cors = require('cors')
+
+app.use(cors())
+
 // Entry point
 app.get('/', (req,res) => res.send(`<h1>Lirten Hub </h1>`))
 
