@@ -24,10 +24,15 @@ class Profile extends React.Component {
       <div>
         <Card border="success" style={{ width: "18rem" }}>
           <Card.Body>
-            <Card.Title>{this.state.project.name}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">nihal</Card.Subtitle>
-            <Card.Text>{this.state.project.description}</Card.Text>
-            <Button variant="primary">View</Button>
+            <Card.Title>{this.state.name}</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">{this.state.e_mail}</Card.Subtitle>
+            <Card.Text>{this.state.age <br>
+             this.state.gender <br> 
+             this.state.experience_level <br> 
+             this.state.phone_number <br> 
+             this.state.events <br> 
+             this.state.projects <br> 
+             this.state.partners}</Card.Text>
           </Card.Body>
         </Card>
         <br />
