@@ -1,22 +1,17 @@
-import React,{Component} from "react";
-import Event from "../components/viewAnEvent/viewAnEvent.js";
-
-
-class MyEventsId extends Component{
-
+import React, { Component } from "react";
+import FeedBackSending from "../components/feedBackSending"
+class MyEventsId extends React.Component{
     constructor(props){
         super(props);
-        this.state={
-        eventID:this.props.match.params.id}
+        this.state = {
+            eventId:this.props.match.params.id
+        };
     }
 
     render(){
-        return(
-       <div className="App">
-            <Event id={this.state.eventID}/>
-       </div>
-
-        );
+        return(<div> <FeedBackSending id={this.state.eventId} />
+               <Event id={this.state.eventID}/> 
+               </div>);
     }
 }
 export default MyEventsId;
