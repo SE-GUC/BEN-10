@@ -4,7 +4,6 @@ import MyProjects from "./pages/MyProjects";
 import MyProjectsId from "./pages/MyProjectsId";
 import MyEvents from "./pages/MyEvents";
 import MyEventsId from "./pages/MyEventsId";
-import MyProfile from "./pages/MyProfile";
 import axios from "axios";
 import { BrowserRouter, Route } from "react-router-dom";
 import viewAnEvent from "./components/viewAnEvent/viewAnEvent"
@@ -37,14 +36,13 @@ class App extends Component {
             <Route exact path="/myEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} />}/>
             <Route exact path="/myProjects/:id" component={MyProjectsId} />
             <Route exact path="/myProjects/" component={MyProjects} />
-            <Route exact path="/myProfile/:id" component={MyProfile} />
 
         </BrowserRouter>
       );
     } else {
-
       return <div>Loading.... in app</div>;
     }
   }
 }
+
 export default App;
