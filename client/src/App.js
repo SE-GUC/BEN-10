@@ -7,7 +7,7 @@ import MyEventsId from "./pages/MyEventsId";
 import MyProfile from "./pages/MyProfile";
 import axios from "axios";
 import { BrowserRouter, Route } from "react-router-dom";
-
+import viewAnEvent from "./components/viewAnEvent/viewAnEvent"
 
 
 class App extends Component {
@@ -33,22 +33,17 @@ class App extends Component {
     if (this.state.partner_id !== null) {
       return (
         <BrowserRouter>
-
-            <Route path="/myEvents/" render={
-                (props) => <MyEvents {...props} partner_id={this.state.partner_id} 
-                partner_name={this.state.partner_name} />} />
-            <Route path="/myEvents/:id" component={MyEventsId} />
-            <Route path="/myProjects/" render={
-                (props) => <MyProjects {...props} partner_id={this.state.partner_id} 
-                partner_name={this.state.partner_name} />} />
-            <Route path="/myProjects/:id" component={MyEventsId} />
-            <Route path="/myProfile/:id" component={MyProfile} />
-            
+            <Route exact path="/myEvents/:id" component={MyEventsId} />
+            <Route exact path="/myEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} />}/>
+            <Route exact path="/myProjects/:id" component={MyProjectsId} />
+            <Route exact path="/myProjects/" component={MyProjects} />
+            <Route exact path="/myProfile/:id" component={MyProfile} />
 
         </BrowserRouter>
       );
     } else {
-      return <div>Loading....</div>;
+
+      return <div>Loading.... in app</div>;
     }
   }
 }

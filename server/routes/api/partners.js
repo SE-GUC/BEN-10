@@ -968,7 +968,7 @@ router.get("/:id/ShowMyEvents", async (req, res) => {
 
     if (partners) {
       const e =await event.find()
-      const Myevents=e.filter(m=>m.requestorId===id);
+      const Myevents=e.filter(m=>m.requestorId==id);
       if(Myevents.length===0){
         res.send({msg: "NO Events to show"});}
         else{
