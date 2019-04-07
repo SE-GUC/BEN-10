@@ -1,6 +1,5 @@
-import React, { Component } from "react";
-import { Card } from "react-bootstrap";
-import { Button } from "react-bootstrap";
+import React from "react";
+import { Card, Button} from 'react-bootstrap';
 
 class Project extends React.Component {
   constructor(props) {

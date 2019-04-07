@@ -1,23 +1,27 @@
 import React, { Component } from "react";
-import Project from "../components/Project";
-import fetch from "node-fetch";
-import axios from "axios";
+import PostProjectButton from "../components/PostProjectButton";
+import {Redirect} from 'react-router-dom'
 
 class MyProjects extends Component {
-  state = {
-    projects: null
-  };
+  constructor(props) {
+    super(props);
+    this.routeChange = this.routeChange.bind(this);
+    this.state = {
+        redirect: false,
+      }
+}
 
-  componentDidMount() {
-    axios
-      .get("http://localhost:5000/api/projects")
-      .then(res => {
-        return res.data;
-      })
-      .then(a => this.setState({ projects: a.data }));
+routeChange() {
+    this.setState({redirect:true})
   }
 
+ 
   render() {
+    const { redirect  } = this.state;
+
+    if(redirect){
+      return <Redirect to='/postProject'/>;
+    }else{
     if (this.state.projects === null) {
       return (
         <div className="App">
@@ -27,16 +31,13 @@ class MyProjects extends Component {
     } else {
       return (
         <div className="App">
-          <ul>
-            {this.state.projects.map(i => (
-              <Project project={i} />
-            ))}
-          </ul>
+        <PostProjectButton name={"Request a Project"} routeChange={this.routeChange}/>
           
         </div>
       );
     }
   }
+}
 }
 
 export default MyProjects;

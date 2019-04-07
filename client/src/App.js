@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import "./App.css";
+import MyEvents from "./pages/MyEvents";
 import MyProjects from "./pages/MyProjects";
+import PostProject from "./pages/PostProject";
 import axios from "axios";
 import { BrowserRouter as Router } from "react-router-dom";
 import Route  from "react-router-dom/Route";
-
-
 
 class App extends Component {
   state = {
@@ -26,7 +26,9 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-              <Route path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
+          <Route path="/myEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
+          <Route path="/myProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
+          <Route path="/postProject" render={(props) => <PostProject {...props} partner_id={this.state.partner_id} />}/>
         </div>
       </Router>
     );
@@ -34,15 +36,29 @@ class App extends Component {
       return(
         <Router>
         <div className="App">
-        <Route path="/MyProjects" render={
-        ()=>{
-          return <label>Loading...</label>
+          <Route path="/MyEvents" render={
+            ()=>{
+            return <label>Loading...</label>
+            }
+          }
+          />
+
+          <Route path="/PostProject" render={
+            ()=>{
+            return <label>Loading...</label>
+            }
+          }
+          />
+        
+          <Route path="/MyProjects" render={
+            ()=>{
+              return <label>Loading...</label>
+          }
         }
-      }
-      />
-      </div>
-      </Router>
-      )
+        />
+        </div>
+        </Router>
+      );
     }
   }
 }
