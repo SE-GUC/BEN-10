@@ -9,13 +9,14 @@ export class myEvents extends Component {
     this.state = {
       Event: null,
       isLoaded: false,
-      show: false
+      show: false,
+      partnerID : props.id
     };
     this.onClicking = this.onClicking.bind(this);
   }
   componentDidMount() {
     fetch(
-      "http://localhost:5000/api/partners/5ca8b9d9374dde0870a301ff/ShowMyEvents"
+      `http://localhost:5000/api/partners/${this.state.partnerID}/ShowMyEvents`
     )
       .then(res => res.json())
       .then(events => this.setState({ Event: events.data, isLoaded: true }));

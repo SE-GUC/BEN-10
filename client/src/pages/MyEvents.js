@@ -1,26 +1,18 @@
 import React, { Component } from "react";
-import { Button } from 'react-bootstrap';
-import MyEvent from "../components/myEvents/myEvents.js";
-// import fetch from "node-fetch";
-// import axios from "axios";
+import MyEvent from "../components/myEvents/myEvents"
+class MyEvents extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+          partnerID: props.partner_id
+        };
+        
+        console.log(props.partner_id)
+        console.log(this.state.partnerID)
+    }
 
-class MyEvents extends Component {
-  
-  render() {
-      return (
-        <div className="App">
-          <ul>
-            {
-              <MyEvent />
-              }
-                  
-  <Button variant="Show more">Primary</Button>
-  
- 
-          </ul>
-        </div>
-      );
-  }
+    render(){
+        return(<div> <MyEvent id={this.state.partnerID}/> </div>);
+    }
 }
-
 export default MyEvents;
