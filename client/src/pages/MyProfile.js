@@ -9,7 +9,7 @@ class MyProfile extends Component {
   constructor(props){
     super(props);
     this.state = {
-    id: this.props.match.params.id,  
+    id: this.props.partner_id,  
     name: null,
     age: 0,
     gender: "",
