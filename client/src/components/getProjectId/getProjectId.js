@@ -15,22 +15,44 @@ class App extends Component {
       projects: [],
       CAID:[],
       CAFound:false,
-      CA:[]
+      CA:[],
+      memID:[],
+      memFound:false,
+      mem:[],
+      skills:[],
+      is_loading:false,
+      consultId:[],
+      conFound:false,
+      consult:[]
     }
   }
    async componentDidMount(){
-    await fetch('http://localhost:5000/api/projects/5c9cd72e3c242d1d38b87320').then(res=>res.json())
-    .then(proj=>this.setState({projects:proj.data,CAID:proj.data.applyingCA,is_loading:false}))
+    await fetch('http://localhost:5000/api/projects/5c9cadf62ebb340f1324e458').then(res=>res.json())
+    .then(proj=>this.setState({projects:proj.data,CAID:proj.data.applyingCA,is_loading:true,memID:proj.data.memberID,
+      skills:proj.data.required_skills_set,consultId:proj.data.consultancyID}))
 
-    if(this.state.CAID!=null){
+    if(this.state.CAID!==null){
       this.setState({CAFound:true})
     for(var i=0;i<this.state.CAID.length;i++){
-      console.log(this.state.CAID[i])
       await fetch('http://localhost:5000/api/consultancyagency/'+this.state.CAID[i]).then(res=>res.json())
     .then(proj=>this.setState({CA: [...this.state.CA,proj.data]}))
+    }}
+    if(this.state.memID!==null){
+      
+      this.setState({memFound:true})
+      await fetch('http://localhost:5000/api/member/'+this.state.memID).then(res=>res.json())
+       .then(proj=>this.setState({mem:proj.data}))
+       
     }
-  console.log(this.state.CA)}
+    if(this.state.consultId!==null){
+      
+      this.setState({conFound:true})
+      await fetch('http://localhost:5000/api/consultancyagency/'+this.state.consultId).then(res=>res.json())
+       .then(proj=>this.setState({consult:proj.data}))
+       
+    }
   }
+
   handleClick() {
     this.setState({
       show: !this.state.show
@@ -40,7 +62,10 @@ class App extends Component {
 
   render() {
     const projects=this.state.projects;
+    const sk=this.state.skills;
     
+
+    if(this.state.is_loading){
     return (
       <div className="App ">
       
@@ -55,18 +80,32 @@ class App extends Component {
 
             <ToggleDisplay if={this.state.show}>
             <dl>
-            <dt>Category:</dt>  <dd>{projects.category}</dd>
-            <dt> Posted date:</dt>  <dd>{projects.posted_date}</dd>
-            <dt> Lifecycle:</dt>  <dd>{projects.life_cycle}</dd>
-            <dt> Required skills set:</dt>  <dd>{projects.required_skills_set}</dd>
+            <dt className="co">>Category:</dt>  <dd>{projects.category}</dd>
+            <dt className="co">> Posted date:</dt>  <dd>{(new Date(projects.posted_date)).getDate()+"-"+((new Date(projects.posted_date)).getMonth()+1)
+            +"-"+(new Date(projects.posted_date)).getFullYear()}</dd>
+            <dt className="co">> Lifecycle:</dt>  <dd>{projects.life_cycle}</dd>
+            <dt className="co">> Required skills set:</dt>  <ul>{sk.map(s=><dd key={s._id}>{s}</dd>)}</ul>
             </dl>
+            </ToggleDisplay>
+            
+            <ToggleDisplay if={this.state.memFound&&this.state.show} >
+            <dt className="co">> Member Assigned:</dt>
+                                  <dd>Name: {this.state.mem.fname} {this.state.mem.mname} {this.state.mem.lname}  </dd>
+                                  <dd>Email :{this.state.mem.email} </dd>
+                                  <dd>Mobile : {this.state.mem.Mobile_number}</dd>
+            </ToggleDisplay>
+            <ToggleDisplay if={this.state.conFound&&this.state.show} >
+            <dt className="co">> Assigned Consultancy</dt>
+                                   <dd>Name: {this.state.consult.name} </dd>
+                                   <dd>Mobile: {this.state.consult.telephoneNumber} </dd>
+                                   <dd>Email: {this.state.consult.email} </dd>
             </ToggleDisplay>
 
             <ToggleDisplay if={this.state.CAFound&&this.state.show} >
-            
-            <dt> Applying Consultancy agency:</dt>  <ul>{ this.state.CA.map(c=><dd key={c._id}>{c.name}</dd>)}</ul>
+            <dt className="co">> Applying Consultancy agency:</dt><ul>{ this.state.CA.map(c=><dd key={c._id}>{c.name}</dd>)}</ul>
             </ToggleDisplay>
 
+           
      <p>
      <Button  onClick={ () => this.handleClick() }  className="primary">Show {this.state.show?"less":"more" }</Button>
      </p>
@@ -76,7 +115,22 @@ class App extends Component {
 
 </div>
       
-    );
+    );}
+    else{
+      return (
+        <div className="App ">
+        <Jumbotron>
+        <h1>Project Info</h1>
+        <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+        <p>
+        <Button  onClick={ () => this.handleClick() }  className="primary">Show {this.state.show?"less":"more" }</Button>
+         </p>
+        </Jumbotron>
+        </div>
+      );
+    }
   }
 
 }
