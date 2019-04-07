@@ -22,7 +22,7 @@ class MyProjects extends Component {
     fetch(`http://localhost:5000/api/partners/${this.state.partner_id}/myProjects`).then(res=>res.json())
     .then(projects=>{
       this.setState({projects:projects.data})
-  })
+  })}
 routeChange() {
     this.setState({redirect:true})
 
