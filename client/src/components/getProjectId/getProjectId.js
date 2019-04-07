@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import './App.css';
+import React,{ Component } from 'react';
+import './getProjectId.css';
 import Button from 'react-bootstrap/Button';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import ToggleDisplay from 'react-toggle-display';
@@ -11,6 +11,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
+      projectID:this.props.id,
       show:false,
       projects: [],
       CAID:[],
@@ -27,7 +28,7 @@ class App extends Component {
     }
   }
    async componentDidMount(){
-    await fetch('http://localhost:5000/api/projects/5c9cadf62ebb340f1324e458').then(res=>res.json())
+    await fetch('http://localhost:5000/api/projects/'+this.state.projectID).then(res=>res.json())
     .then(proj=>this.setState({projects:proj.data,CAID:proj.data.applyingCA,is_loading:true,memID:proj.data.memberID,
       skills:proj.data.required_skills_set,consultId:proj.data.consultancyID}))
 
