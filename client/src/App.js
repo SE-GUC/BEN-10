@@ -32,15 +32,15 @@ class App extends Component {
     if (this.state.partner_id !== null) {
       return (
         <BrowserRouter>
-            <Route path="/myEvents/" component={MyEvents} />
-            <Route path="/myEvents/:id" component={MyEventsId} />
-            <Route path="/myProjects/" component={MyProjects} />
-            <Route path="/myProjects/:id" component={MyEventsId} />
+            <Route exact path="/myEvents/:id" component={MyEventsId} />
+            <Route exact path="/myEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} />}/>
+            <Route exact path="/myProjects/:id" component={MyProjectsId} />
+            <Route exact path="/myProjects/" component={MyProjects} />
 
         </BrowserRouter>
       );
     } else {
-      return <div>Loading....</div>;
+      return <div>Loading.... in app</div>;
     }
   }
 }

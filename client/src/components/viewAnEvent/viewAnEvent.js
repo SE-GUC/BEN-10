@@ -7,7 +7,6 @@ import {Card} from "react-bootstrap";
 class viewAnEvent extends React.Component {
     constructor(props){
         super(props);
-        
         this.state = {
         eventId : this.props.id ,
         items : null , 
@@ -19,7 +18,7 @@ class viewAnEvent extends React.Component {
 
     componentDidMount() {
         axios
-          .get("http://localhost:5000/api/events/"+this.state.eventId)
+          .get(`http://localhost:5000/api/events/${this.state.eventId}`)
           .then(res => {
             return res.data;
           })
@@ -68,7 +67,7 @@ class viewAnEvent extends React.Component {
          )
          else 
          return (
-             <label>Loading..</label>
+             <label>Loading.. H</label>
          ) 
 
       }

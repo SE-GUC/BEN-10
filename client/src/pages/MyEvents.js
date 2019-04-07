@@ -6,9 +6,6 @@ class MyEvents extends React.Component{
         this.state = {
           partnerID: props.partner_id
         };
-        
-        console.log(props.partner_id)
-        console.log(this.state.partnerID)
     }
 
     render(){
