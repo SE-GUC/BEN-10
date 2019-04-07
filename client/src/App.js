@@ -32,6 +32,7 @@ class App extends Component {
     if (this.state.partner_id !== null) {
       return (
         <BrowserRouter>
+
             <Route path="/myEvents/:id" component={MyEventsId} />
             <Route path="/myProjects/" component={MyProjects} />
             <Route path="/myProjects/:id" component={MyProjectsId} />
