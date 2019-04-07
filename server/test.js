@@ -27,16 +27,16 @@ const PaTest = require('./routes/test/partnersTEST')
 
 
 // Calling the test files
-const nTests = new NTest(3000, "/notifications");
-const eTests = new EventTest(3000,'/events')
-const erTests = new ERTest(3000, '/eventrequests')
-const oiTests = new OITest(3000, '/orientationinvitations')
-const apTests = new ApTest(3000, '/applications')
-const prTests = new PRTest(3000, '/projects')
-const caTests = new CATest(3000, '/consultancyagency')
-const aTests = new ATest(3000, '/admins')
-const mTests = new MTest(3000, '/member')
-const paTests = new PaTest(3000, '/partners')
+const nTests = new NTest(5000, "/notifications");
+const eTests = new EventTest(5000,'/events')
+const erTests = new ERTest(5000, '/eventrequests')
+const oiTests = new OITest(5000, '/orientationinvitations')
+const apTests = new ApTest(5000, '/applications')
+const prTests = new PRTest(5000, '/projects')
+const caTests = new CATest(5000, '/consultancyagency')
+const aTests = new ATest(5000, '/admins')
+const mTests = new MTest(5000, '/member')
+const paTests = new PaTest(5000, '/partners')
 
 // Calling tests
 describe("Event Requests Tests", () => {

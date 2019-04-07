@@ -1,17 +1,15 @@
 import React, { Component } from "react";
 import "./App.css";
+import MyEvents from "./pages/MyEvents";
 import MyProjects from "./pages/MyProjects";
 import MyEvents from "./pages/MyEvents";
 import MyEventsId from "./pages/MyEventsId";
 import MyProjectsId from "./pages/MyProjectsId"
 import EditMyProject from "./pages/EditMyProject"
+import PostProject from "./pages/PostProject";
 import axios from "axios";
 import MyProfile from "./pages/MyProfile";
-
 import { BrowserRouter, Route } from "react-router-dom";
-import viewAnEvent from "./components/viewAnEvent/viewAnEvent"
-
-
 class App extends Component {
   state = {
     partner_id:null,
@@ -38,18 +36,20 @@ class App extends Component {
       return (
         <BrowserRouter>
                      <Route exact path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
-             <Route exact path="/MyProjects/:id" render={(props) => <MyProjectsId {...props}  partner_id={this.state.partner_id}/>}/> 
+          <Route exact path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
              <Route exact path="/MyProject/edit/:id" component={EditMyProject} /> 
 
             <Route exact path="/myEvents/:id" render={(props) => <MyEventsId {...props} partner_id={this.state.partner_id} />} />
-            <Route exact path="/myEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} />}/>
+            <Route exact path="/myEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
             <Route exact path="/myProfile/:id"render={(props) => <MyProfile {...props} partner_id={this.state.partner_id} />} />
+                <Route exact path="/postProject" render={(props) => <PostProject {...props} partner_id={this.state.partner_id} />}/>
         </BrowserRouter>
       );
     } else {
       return <div>Loading.... in app</div>;
+
     }
  }
-
 }  
     export default App;
+

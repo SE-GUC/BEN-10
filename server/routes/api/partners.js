@@ -19,77 +19,12 @@ router.get("/", async (req, res) => {
   res.json({ data: partners });
 });
 
-//1.0 as a partner i want to submit a description on a task/project 
-router.post('/:id/addProject', async (req,res) => {
-  try {
-      if(ObjectId.isValid(req.params.id))
-      {
-          console.log(req.body.want_consultancy)
-          console.log(req.body.want_consultancy == true)
-          const company_id=req.params.id
-          var life;
-          if(req.body.want_consultancy == true){
-              life = "Waiting for consultancy"
-          }
-          else{
-              life = "Negotiation"
-          }
-          var result;
-          var error = true
-          const Project={
-          description:req.body.description,
-          company:req.body.company,
-          companyID: company_id,
-          category:req.body.category,
-          want_consultancy:req.body.want_consultancy,
-          posted_date:req.body.posted_date,
-          life_cycle : life
-          }
-          await fetch(`${server}/api/projects/`, {
-              method: 'post',
-              body:    JSON.stringify(Project),
-              headers: { 'Content-Type': 'application/json' },
-          })
-          // .then(checkStatus)
-          .then(res => {
-              if(res.status === 200){
-                  error = false;
-              }
-              console.log(res.status)
-              if(!error){
-                  result = res
-              }
-              return res.json()
-          })
-          .then(json => {
-              if(!error){
-                  json = ({msg:`created successfully`});
-              }
-              result = json
-              console.log(json)
-              
-          })
-          .catch((err) => console.log("Error",err));
-       res.json(result)
-                  
-           
-      }
-      else {
-          return res.status(404).send({ error: "Error" })
-      }
-  }
-  catch(error) {
-      console.log(error)
-      return res.status(400).send('Error')
-  }
-    
-})
 
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
   if (id.match(/^[0-9a-fA-F]{24}$/)) {
     // it's an ObjectID
-
+    
     const partners = await PartnerInfo.findById(id);
     if (partners) {
       return res.json({ data: partners });
@@ -105,9 +40,9 @@ router.post("/", async (req, res) => {
   try {
     const isValidated = validator.createValidationPartnerInfo(req.body);
     if (isValidated.error)
-      return res
-        .status(400)
-        .send({ error: isValidated.error.details[0].message });
+    return res
+    .status(400)
+    .send({ error: isValidated.error.details[0].message });
     const newPartnerInfo = await PartnerInfo.create(req.body);
     res.json({ msg: "Partner was created successfully", data: newPartnerInfo });
   } catch (error) {
@@ -121,15 +56,15 @@ router.put("/:id", async (req, res) => {
     if (ObjectId.isValid(req.params.id)) {
       const isValidated = validator.updateValidationPartnerInfo(req.body);
       if (isValidated.error)
-        return res
-          .status(400)
-          .send({ error: isValidated.error.details[0].message });
+      return res
+      .status(400)
+      .send({ error: isValidated.error.details[0].message });
       const updatedPartner = await PartnerInfo.findByIdAndUpdate(
         { _id: req.params.id },
         req.body
       );
       if (!updatedPartner)
-        return res.status(404).send({ error: "Partner does not exists" });
+      return res.status(404).send({ error: "Partner does not exists" });
       res.json({ msg: "Partner updated successfully" });
     } else {
       return res.status(404).send({ error: "not a Partner id" });
@@ -139,6 +74,99 @@ router.put("/:id", async (req, res) => {
     return res.status(404).send({ error: "Partner does not exist" });
   }
 });
+
+router.delete("/:id", async (req, res) => {
+  try {
+    if (ObjectId.isValid(req.params.id)) {
+      const id = req.params.id;
+      const deletedPartner = await PartnerInfo.findByIdAndRemove(id);
+      if (!deletedPartner)
+        return res.status(400).send({ error: "Partner does not exists" });
+      res.json({
+        msg: "Partner was deleted successfully",
+        data: deletedPartner
+      });
+    } else {
+      return res.status(404).send({ error: "not a Partner id" });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send("Error");
+  }
+});
+
+//1.0 as a partner i want to submit a description on a task/project 
+router.post('/:id/addProject', async (req,res) => {
+  try {
+      if(ObjectId.isValid(req.params.id))
+      {
+        const partners= await PartnerInfo.findById(req.params.id);
+        if (partners) {
+          if (
+            req.body.description != null &&
+            req.body.category != null &&
+            req.body.want_consultancy != null
+          ) {
+            const company_id=req.params.id
+            var life;
+            var date = Date.now()
+            if(req.body.want_consultancy == true){
+                life = "Waiting for consultancy"
+            }
+            else{
+                life = "Negotiation"
+            }
+            var result;
+            var error = true
+            const Project={
+            description:req.body.description,
+            company:partners.name,
+            companyID: company_id,
+            category:req.body.category,
+            want_consultancy:req.body.want_consultancy,
+            posted_date:date,
+            life_cycle : life
+            }
+            await fetch(`${server}/api/projects/`, {
+                method: 'post',
+                body:    JSON.stringify(Project),
+                headers: { 'Content-Type': 'application/json' },
+            })
+            // .then(checkStatus)
+            .then(res => {
+                if(res.status === 200){
+                    error = false;
+                }
+                console.log(res.status)
+                if(!error){
+                    result = res
+                }
+                return res.json()
+            })
+            .then(json => {
+                if(!error){
+                    json = ({msg:`created successfully`});
+                }
+                result = json
+                console.log(json)
+                
+            })
+            .catch((err) => console.log("Error",err));
+          res.json(result)       
+        }else 
+          return res.status(400).send({ error: "body is missing attrubites" });
+        }else
+          return res.status(400).json({ msg: `a partner  with id ${id} not found` });
+      }else
+          return res.status(404).send({ error: `a partner  with id ${id} not found` })
+      }
+      catch(error) {
+        console.log(error)
+        return res.status(400).send('Error')
+      }
+    })
+    
+
 router.post("/:id/eventrequests/", async (req, res) => {
   if (ObjectId.isValid(req.params.id)) {
     const p = await PartnerInfo.findById(req.params.id);
@@ -157,20 +185,20 @@ router.post("/:id/eventrequests/", async (req, res) => {
           req.body.eventType,
           req.body.eventLocation,
           req.body.eventDate
-        );
-        console.log(j)
-        res.status(200).send(j);
-      } else {
-        return res.status(400).send({ error: "body is missing attrubites" });
-      }
-    } else
+          );
+          console.log(j)
+          res.send(j);
+        } else {
+          return res.status(400).send({ error: "body is missing attrubites" });
+        }
+      } else
       return res
-        .status(404)
-        .send({ error: "Partner does not exist" });
-  } else
+      .status(404)
+      .send({ error: "Partner does not exist" });
+    } else
     return res.status(404).send({ error: "Partner does not exist" });
-});
-
+  });
+  
  async function PartnerRequestEvent(
   rid,
   requestedBy,
@@ -212,25 +240,6 @@ router.post("/:id/eventrequests/", async (req, res) => {
   return j;
 }
 
-router.delete("/:id", async (req, res) => {
-  try {
-    if (ObjectId.isValid(req.params.id)) {
-      const id = req.params.id;
-      const deletedPartner = await PartnerInfo.findByIdAndRemove(id);
-      if (!deletedPartner)
-        return res.status(400).send({ error: "Partner does not exists" });
-      res.json({
-        msg: "Partner was deleted successfully",
-        data: deletedPartner
-      });
-    } else {
-      return res.status(404).send({ error: "not a Partner id" });
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(400).send("Error");
-  }
-});
 router.delete("/:id/deleteProject/:pid/", async (req, res) => {
   const p = await Project.findById(req.params.pid);
   if (p.companyID == req.params.id) {
@@ -241,6 +250,7 @@ router.delete("/:id/deleteProject/:pid/", async (req, res) => {
     res.json({ msg: "error" });
   }
 });
+
 router.put("/:id/editProject/:pid/", async (req, res) => {
   const p = await Project.findById(req.params.pid);
   if (p.companyID == req.params.id) {
@@ -250,6 +260,7 @@ router.put("/:id/editProject/:pid/", async (req, res) => {
     res.json({ msg: "error" });
   }
 });
+
 // router.post("/:id/submitRequest", async (req, res) => {
 //   const p = await PartnerInfo.findById(req.params.id)
 //   if (p.requestorId==req.params.id){
@@ -271,56 +282,6 @@ router.put("/:id/editProject/:pid/", async (req, res) => {
 //     return res.status(400).send("Error");
 //   }
 // });
-//1.0 as a partner i want to submit a description on a task/project
-router.post("/:id/addProject", async (req, res) => {
-  try {
-    if (ObjectId.isValid(req.params.id)) {
-      const company_id = req.params.id;
-      const Project = {
-        description: req.body.description,
-        company: req.body.company,
-        companyID: company_id,
-        category: req.body.category,
-        want_consultancy: req.body.want_consultancy,
-        posted_date: req.body.posted_date,
-        life_cycle: "Submitted"
-      };
-
-      var error = true;
-      await fetch(`${server}/api/projects/`, {
-        method: "post",
-        body: JSON.stringify(Project),
-        headers: { "Content-Type": "application/json" }
-      })
-        // .then(checkStatus)
-        .then(res => {
-          if (res.status === 200) {
-            error = false;
-          }
-          console.log(res.status);
-          if (!error) {
-            result = res;
-          }
-          return res.json();
-        })
-        .then(json => {
-          if (!error) {
-            res.json(json);
-          }
-          result = json;
-          console.log(json);
-        })
-        .catch(err => console.log("Error", err));
-      return res.json(result);
-    } else {
-      return res.status(404).send({ error: "Error" });
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(400).send("Error");
-  }
-});
-
 
 async function deleteProject(id) {
   var error = true;

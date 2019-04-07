@@ -175,22 +175,22 @@ router.post("/:id1/projects/:id2/apply", async (req, res) => {
     project_id.match(/^[0-9a-fA-F]{24}$/) &&
     member_id.match(/^[0-9a-fA-F]{24}$/)
   ) {
-    console.log("hello1");
+    // console.log("hello1");
     const project_appliedfor = await project.findById(project_id);
     const member_applying= await member.findById(member_id);
     console.log(project_appliedfor);
     if(member_applying!=null && project_appliedfor!=null){
-      console.log("hello2");
+      // console.log("hello2");
     var found=true;
     for(var i=0;project_appliedfor["required_skills_set"].length>i;i++){
       if(!member_applying["skill_set"].includes(project_appliedfor["required_skills_set"][i])){
         found=false;
-        console.log("hello3");
+        // console.log("hello3");
         break;
       }
     }
     if(!found){
-      console.log("hello4");
+      // console.log("hello4");
 
       return res.status(404).send({ error: "this member doesnot have the required skills for this project" });
     }
