@@ -34,11 +34,11 @@ class App extends Component {
     if (this.state.partner_id !== null) {
       return (
         <BrowserRouter>
-            <Route exact path="/myEvents/:id" component={MyEventsId} />
+            <Route exact path="/myEvents/:id" render={(props) => <MyEventsId {...props} partner_id={this.state.partner_id} />} />
             <Route exact path="/myEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} />}/>
-            <Route exact path="/myProjects/:id" component={MyProjectsId} />
-            <Route exact path="/myProjects/" component={MyProjects} />
-            <Route exact path="/myProfile/:id" component={MyProfile} />
+            <Route exact path="/myProjects/:id" render={(props) => <MyProjectsId {...props} partner_id={this.state.partner_id} />} />
+            <Route exact path="/myProjects/" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id} />} />
+            <Route exact path="/myProfile/:id"render={(props) => <MyProfile {...props} partner_id={this.state.partner_id} />} />
         </BrowserRouter>
       );
     } else {

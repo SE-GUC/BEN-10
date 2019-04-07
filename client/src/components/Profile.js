@@ -21,16 +21,16 @@ class Profile extends React.Component {
     };
   }
   viewProjects  = ()=>{
-    let path = `/MyProjects`;
+    let path = `/myProjects`;
     this.props.history.push({
-      pathname : path,
+      pathname : path
     });
   }
 
     viewEvents  = ()=>{
-      let path = `/MyEvents`;
+      let path = `/myEvents`;
       this.props.history.push({
-        pathname : path,
+        pathname : path
       });
     }
   

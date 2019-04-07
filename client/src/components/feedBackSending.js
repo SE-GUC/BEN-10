@@ -5,6 +5,7 @@ import {
   Card
 } from "react-bootstrap";
 import axios from "axios";
+import {withRouter} from "react-router-dom";
 
 class feedBackSending extends React.Component {
   constructor(props) {
@@ -64,7 +65,12 @@ class feedBackSending extends React.Component {
         })
       );
   }
-
+  returnClicked  = ()=>{
+    let path = `/myProfile/${this.state.Owner._id}`;
+    this.props.history.push({
+      pathname : path
+    });
+  }
   render() {
     if (this.state.isLoaded) {
       return (
@@ -78,6 +84,9 @@ class feedBackSending extends React.Component {
               <Card.Text>Date: {this.state.items.eventDate}</Card.Text>
               <Button onClick={this.sendClicked.bind(this)} variant="primary">
                 Send FeedBack
+              </Button>
+              <Button onClick={this.returnClicked.bind(this)} variant="danger">
+                return to My Profile
               </Button>
             </Card.Body>
           </Card>
@@ -98,4 +107,4 @@ class feedBackSending extends React.Component {
     }
   }
 }
-export default feedBackSending;
+export default withRouter(feedBackSending);
