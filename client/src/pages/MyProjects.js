@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Project from "../components/Project";
-import fetch from "node-fetch";
 import axios from "axios";
+import { BrowserRouter  ,Route } from "react-router-dom";
 
 class MyProjects extends Component {
   constructor(props){
@@ -11,6 +11,7 @@ class MyProjects extends Component {
     partner_id:props.partner_id
   };
 }
+
   componentDidMount() {
     axios
       .get("http://localhost:5000/api/projects")
@@ -33,7 +34,13 @@ class MyProjects extends Component {
         <div className="App">
           <ul>
             {this.state.projects.map(i => (
-              <Project project={i} partner_id={this.state.partner_id} />
+              // <Project project={i} partner_id={this.state.partner_id} />
+              
+              <BrowserRouter>
+             <Route path="/" render={(props) => <Project project={i} {...props} partner_id={this.state.partner_id} />}/> 
+              {/* <MyProjects partner_id={this.state.partner_id}/> */}
+        
+      </BrowserRouter>
             ))}
           </ul>
           

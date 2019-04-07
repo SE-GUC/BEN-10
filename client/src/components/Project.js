@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import MyProjectsId from "../pages/MyProjectsId";
 import ReactDOM from 'react-dom';
 
-class Project extends React.Component {
+class Project extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +14,10 @@ class Project extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick(e){
-    ReactDOM.render(<MyProjectsId id={this.state.project._id} partner_id={this.state.partner_id}/>, document.getElementById('root'));
+    ReactDOM.render(
+    <MyProjectsId id={this.state.project._id} partner_id={this.state.partner_id}/>
+     ,document.getElementById('root')
+    );
 
   }
   render() { 
