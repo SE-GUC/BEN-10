@@ -9,7 +9,9 @@ class MyEventsId extends React.Component{
     }
 
     render(){
-        return(<div> <FeedBackSending id={this.state.eventId} /> </div>);
+        return(<div> <FeedBackSending id={this.state.eventId} />
+               <Event id={this.state.eventID}/> 
+               </div>);
     }
 }
 export default MyEventsId;
