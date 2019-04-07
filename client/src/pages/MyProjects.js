@@ -12,14 +12,6 @@ class MyProjects extends Component {
   };
 }
 
-  // componentDidMount() {
-  //   axios
-  //     .get("http://localhost:5000/api/projects")
-  //     .then(res => {
-  //       return res.data;
-  //     })
-  //     .then(a => this.setState({ projects: a.data }));
-  // }
   componentDidMount(){
     fetch(`http://localhost:5000/api/partners/${this.state.partner_id}/myProjects`).then(res=>res.json())
     .then(projects=>{
@@ -37,15 +29,11 @@ class MyProjects extends Component {
     } else {
       return (
         <div className="App">
-          <ul>
             {this.state.projects.map(i => (
-              // <Project project={i} partner_id={this.state.partner_id} />
-              
-              <BrowserRouter>
-             <Route path="/" render={(props) => <Project project={i} {...props} partner_id={this.state.partner_id} />}/>         
-             </BrowserRouter>
+        
+           <Project project={i} key={i._id} />         
+             
             ))}
-          </ul>
           
         </div>
       );

@@ -13,13 +13,14 @@ const applications = require('./routes/api/applications')
 const consultancyagencys = require('./routes/api/consultancyagency')
 const member = require('./routes/api/member')
 const notification = require('./routes/api/notifications')
-const cors = require("cors")
 
 
 
 
 const app = express();
+var cors = require('cors')
 
+app.use(cors())
 // DB Config
 const db = require('./config/keys').mongoURI
 

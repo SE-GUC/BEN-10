@@ -4,6 +4,7 @@ import MyProjects from "./pages/MyProjects";
 import MyEvents from "./pages/MyEvents";
 import MyEventsId from "./pages/MyEventsId";
 import MyProjectsId from "./pages/MyProjectsId"
+import EditMyProject from "./pages/EditMyProject"
 import axios from "axios";
 import { BrowserRouter, Route } from "react-router-dom";
 
@@ -13,10 +14,10 @@ class App extends Component {
   };
 
   componentDidMount() {
-    axios
+    axios 
       .get("http://localhost:5000/api/partners")
       .then(res => {
-        return res.data;
+        return res.data; 
       })
       .then(a =>
         this.setState({
@@ -32,11 +33,14 @@ class App extends Component {
       return (
         <BrowserRouter>
             <div className="App">
-             <Route path="/myProjects/" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
-        </div>
+             <Route path="/MyProjects/" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
+            
+            <Route exact path="/MyProject/edit/:id" component={EditMyProject}/>
+
             <Route exact path="/myEvents/" component={MyEvents} />
             <Route exact path="/myEvents/:id" component={MyEventsId} />
-            <Route exact path="/myProjects/:id" component={MyProjectsId} />
+            <Route exact path="/MyProjects/:id" component={MyProjectsId} />
+            </div>
       </BrowserRouter>
       );
     } else {

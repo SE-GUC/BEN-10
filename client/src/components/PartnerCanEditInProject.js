@@ -6,9 +6,9 @@ import axios from "axios";
 import { BrowserRouter as Router , Route , withRouter } from "react-router-dom";
 import MyProjectsId from '../pages/MyProjectsId';
 import EditMyProject from '../pages/EditMyProject';
-
 import ReactDOM from 'react-dom';
-
+import { createHashHistory } from 'history'
+export const history = createHashHistory()
 
 
 class Project extends React.Component {
@@ -19,18 +19,7 @@ class Project extends React.Component {
     };
     
   }
-  goToEditPage  = ()=>{
-    let path = `/MyProject/edit/${this.state.project._id}`;
-    this.props.history.push({
-      pathname : path,
-    });
-  }
-  handleClicksz  = ()=>{
-    let path = `/MyProjects/${this.state.project._id}`;
-    this.props.history.push({
-      pathname : path,
-    });
-  }
+
   render() {
   //  const{_id}= this.props.project._id;
     return (
@@ -38,9 +27,14 @@ class Project extends React.Component {
         <Card border="success" style={{ width: "18rem" }}>
           <Card.Body>
             <Card.Title>{this.state.project.company}</Card.Title>
-            <Card.Text>{this.state.project.description}</Card.Text>
-            <Button onClick={this.goToEditPage}>Edit</Button>
-            <Button onClick={this.handleClicksz} variant="primary" >View</Button>
+         description:   <Card.Text>{this.state.project.description}</Card.Text>
+          Category  <Card.Text>{this.state.project.category}</Card.Text>
+          life_cycle  <Card.Text>{this.state.project.life_cycle}</Card.Text>
+          estimated_effort  <Card.Text>{this.state.project.estimated_effort}</Card.Text>
+          estimated_time  <Card.Text>{this.state.project.estimated_time}</Card.Text>
+          experience_level_needed  <Card.Text>{this.state.project.experience_level_needed}</Card.Text>
+           required_skill_set <Card.Text>{this.state.project.required_skill_set}</Card.Text>
+
           </Card.Body>
         </Card>
         <br />
