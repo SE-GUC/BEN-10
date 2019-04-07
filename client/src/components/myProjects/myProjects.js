@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './myProjects.css';
 import {Button,Card} from "react-bootstrap";
+// import MyProjectsId from "./pages/MyProjectsId";
 // const axios = require('axios');
 class MyProjects extends Component {
 
@@ -19,15 +20,18 @@ class MyProjects extends Component {
   })
   }
   viewProject(){
-    // <MyProjectsId/>
-    // <Route path="./pages/MyProjectsId" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
-
+{/* <BrowserRouter>
+            <div className="myProjects">
+             <Route path="/myProjects/:id" render={(props) => <MyProjectsId {...props} id={this.state.Project._id}/>}/> 
+        </div>
+      </BrowserRouter> */}
   }
   render() {
     if(this.state.Project===null)
     {
       return(<div>Loading.......</div>);
     }else{
+      console.log(this.state.Project)
       return (
         <div className="myProjects">
         <h1>My Projects </h1>
@@ -36,15 +40,15 @@ class MyProjects extends Component {
   <Card.Body>
     <Card.Text>
     {this.state.Project.map(Project=><li key={Project._id}>Company name:{Project.company} <br></br>
-            description: {Project.description}<br></br>
-            category:{Project.category}<br></br>
-            life_cycle:{Project.life_cycle}<br></br>
-            <Button onClick = {() => this.viewProject(Project._id)} className = "Primary"> View Project </Button>
+    description: {Project.description}<br></br>
+    category:{Project.category}<br></br>
+    life_cycle:{Project.life_cycle}<br></br>
+    <Button onClick = {() => this.viewProject(Project._id)} className = "Primary"> View Project </Button>
             </li>)
           }
     </Card.Text>
   </Card.Body>
-</Card>;
+   </Card>
         </ul>
         </div>
       );

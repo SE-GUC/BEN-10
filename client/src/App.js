@@ -17,7 +17,7 @@ class App extends Component {
       })
       .then(a =>
         this.setState({
-          partner_id: a.data[a.data.length - 1]._id,
+          partner_id: a.data[0]._id,
           partner_name: a.data[0].name
         })
       );
@@ -28,8 +28,10 @@ class App extends Component {
       console.log(this.state.partner_id)
       return (
         <BrowserRouter>
-            <Route path="/myProjects" component={MyProjects}/>
-        </BrowserRouter>
+            <div className="App">
+             <Route path="/myProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
+        </div>
+      </BrowserRouter>
       );
     } else {
       return <div>Loading....</div>;

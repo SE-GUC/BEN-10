@@ -4,9 +4,9 @@ class MyProjects extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-          projectId: props.id
+          projectId: props.partner_id
         };
-        console.log(props.id)
+        console.log(props.partner_id)
         console.log(this.state.projectId)
     }
 
