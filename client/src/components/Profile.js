@@ -28,7 +28,7 @@ class Profile extends React.Component {
   }
 
     viewEvents  = ()=>{
-      let path = `/myEvents`;
+      let path = `/MyEvents`;
       this.props.history.push({
         pathname : path,
       });
