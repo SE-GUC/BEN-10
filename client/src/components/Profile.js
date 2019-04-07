@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card } from "react-bootstrap";
 import { Button } from "react-bootstrap";
+import { BrowserRouter as Router , Route , withRouter } from "react-router-dom";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -19,6 +20,20 @@ class Profile extends React.Component {
 
     };
   }
+  viewProjects  = ()=>{
+    let path = `/MyProjects`;
+    this.props.history.push({
+      pathname : path,
+    });
+  }
+
+    viewEvents  = ()=>{
+      let path = `/myEvents`;
+      this.props.history.push({
+        pathname : path,
+      });
+    }
+  
   render() {
     return (
       <div>
@@ -34,8 +49,10 @@ class Profile extends React.Component {
              {this.state.events} <br /> 
              {this.state.projects} <br /> 
              {this.state.partners} </div> </Card.Text>
-             <Button variant="primary">View Events</Button>
-             <Button variant="primary">View Projects</Button>
+             <Button variant="primary"
+             onClick={this.viewEvents}>View Events</Button>
+             <Button variant="primary"
+             onClick={this.viewProjects} >View Projects</Button>
           </Card.Body>
         </Card>
         <br />
@@ -43,4 +60,4 @@ class Profile extends React.Component {
     );
   }
 }
-export default Profile;
+export default withRouter(Profile);
