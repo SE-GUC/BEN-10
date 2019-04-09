@@ -19,6 +19,10 @@ const ConsultancyAgencySchema = new Schema({
         type: String,
         required: true
     },
+    password:{
+        type: String,
+        required: true
+    },
     location: {
         type: String,
         required: true
@@ -36,7 +40,7 @@ const ConsultancyAgencySchema = new Schema({
         required: false
     },
     partners: {
-        type: [{ type: Schema.Types.ObjectId, ref: "PartnerInfo" }]
+        type: [{ type: Schema.Types.ObjectId, ref: "Partner" }]
     },
     projects: {
         type: [{ type: Schema.Types.ObjectId, ref: "Project" }]

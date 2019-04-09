@@ -7,10 +7,6 @@ const EventRequestSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true
     },
-    requestedBy: {
-        type: String,
-        required: true
-    },
     description: {
         type: String,
         required: true

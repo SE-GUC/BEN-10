@@ -7,8 +7,8 @@ const NotificationSchema = new Schema({
         type: String,
         required: true
     },
-    NotifiedPerson:{
-        type:Schema.Types.ObjectId,ref:'member',
+    notifiedPerson:{
+        type:Schema.Types.ObjectId,ref:'Member',
         required:true
     },
     date: {
@@ -19,7 +19,11 @@ const NotificationSchema = new Schema({
         type: Boolean,
         required: true,
         default:false
-    }
+    },
+    sentById:{
+        type: Schema.Types.ObjectId,
+        required: true
+    },
 
 })
 module.exports = Notification = mongoose.model('notification', NotificationSchema)

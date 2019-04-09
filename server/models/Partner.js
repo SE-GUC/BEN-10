@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 // Create the schema
-const AdminSchema = new Schema({
+const PartnerSchema = new Schema({
     firstName: {
         type: String,
         required: true
@@ -18,7 +18,7 @@ const AdminSchema = new Schema({
     birthdate: {
         type: Date,
         required: true
-    }, 
+    },    
     gender: {
         type: Boolean,
         required: true
@@ -73,7 +73,16 @@ const AdminSchema = new Schema({
     alternativeMobileNumber: {
         type: String, 
         required: false
+    },
+    events: {
+        type: [{ type: Schema.Types.ObjectId, ref: "Event" }]
+    },
+    projects: {
+        type: [{ type: Schema.Types.ObjectId, ref: "Project" }]
+    },
+    partners: {
+        type: [{ type: String }]
     }
 })
 
-module.exports = Admin = mongoose.model('admins', AdminSchema)
+module.exports = PartnerInfo = mongoose.model('partners', PartnerSchema)

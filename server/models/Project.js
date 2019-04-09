@@ -7,64 +7,52 @@ const ProjectSchema = new Schema({
         type: String,
         required: true
     },
-    company: {
-        type: String,
-        required: true
-    },
     companyID: {
-        type: Schema.Types.ObjectId,ref: "PartnerInfo",
+        type: Schema.Types.ObjectId,ref: "Partner",
         required:false
     },
     category: {
         type: String,
         required: true
     },
-    want_consultancy: {
+    wantConsultancy: {
         type: Boolean,
         required: true
-    },
-    consultancy: {
-        type: String,
-        required: false
     },
     consultancyID: {
         type: Schema.Types.ObjectId,ref: "ConsultancyAgency",
         required:false
     },
-    posted_date: {
+    postedDate: {
         type: Date,
         required: true
     },
-    assigned_member: {
-        type: String,
-        required: false
-    },
-    memberID: {
-        type: Schema.Types.ObjectId,ref: "member",
+    memberId: {
+        type: Schema.Types.ObjectId,ref: "Member",
         required:false
     },
-    life_cycle:{
+    lifeCycle:{
         type: String,
         required: true
     },
-    estimated_effort: {
+    estimatedEffort: {
         type: String,
         required: false
     },
-    estimated_time: {
+    estimatedTime: {
         type: String,
         required: false  
     },
-    experience_level_needed: {
+    experienceLevelNeeded: {
         type: String,
         required: false  
     },
-    required_skills_set: {
+    requiredSkillsSet: {
         type: [{ type: Schema.Types.String }],
         required: true ,
         default:[]
     },
-    final_draft: {
+    finalDraft: {
         type: String,
         required: false
     },
@@ -74,7 +62,7 @@ const ProjectSchema = new Schema({
         default:[]
 
     },
-    submitted_project_link:{
+    submittedProjectLink:{
         type:String,
         required:false
     }
