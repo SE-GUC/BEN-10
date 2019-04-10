@@ -8,6 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import {Redirect} from 'react-router-dom'
 
 const styles = {
   card: {
@@ -23,15 +24,24 @@ const styles = {
 class EachPartner extends React.Component {
   constructor(props) {
     super(props);
+    this.viewProfile=this.viewProfile.bind(this);
     this.state = {
      show: false
         
-    };
-    this.viewProfile=this.viewProfile.bind(this);
+    }
+    
+  }
+  viewProfile() {
+    this.setState({ show: true });
+    console.log("hello");
   }
   render() {
     const partner = this.props.partners;
     const { classes } = this.props;
+    if(this.state.show){
+      const path =`/myProfile/${partner._id}`
+      return <Redirect to={path}/>;
+    }else
     console.log(partner)
     return (
       <Card className={classes.card}>
