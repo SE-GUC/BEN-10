@@ -11,26 +11,97 @@ const validator = require("../../validations/memberValidations");
 const notificationValidator = require("../../validations/notificationsValidation");
 const project = require("../../models/Project");
 
+
+//----CRUDS-------
+
 // GET method to retrieve all members
 router.get("/", async (req, res) => {
   const members = await member.find();
   res.json({ data: members });
 });
 
-// as a member i want to view my projects
-
 // GET method to retirve a member by his id
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
-  try {
     if (id.match(/^[0-9a-fA-F]{24}$/)) {
       const mem = await member.findById(id);
-      res.json({ data: mem });
+      if(mem)
+      return res.json({ data: mem });
+      else
+      return res.json({ msg: "it doesn't exist" });
+
     }
-  } catch {
+    else 
     return res.status(400).send({ error: "the provided id is not valid one " });
   }
+);
+
+// post method to add member
+router.post("/", async (req, res) => {
+  try {
+    const isValidated = validator.createValidationMember(req.body);
+    if (isValidated.error)
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
+    const newMember = await member.create(req.body);
+    res.json({ msg: "member was created successfully", data: newMember });
+  } catch (error) {
+    return res.status(400).send({error: error});
+  }
 });
+
+// DELETE method to delete a member
+router.delete("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res
+        .status(400)
+        .send({ error: "the provided id is not valid one " });
+    }
+
+    //---
+    const deletedmember = await member.findByIdAndRemove(id);
+    if (!deletedmember)
+      return res.status(404).send({ error: "member is not found" });
+    res.json({ msg: "member was deleted successfully", data: deletedmember });
+  } catch (error) {
+    return res.status(400).send({error: error})
+  }
+});
+
+// PUT method to update a member
+router.put("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    if(id.match(/^[0-9a-fA-F]{24}$/)){
+      const isValidated = validator.updateValidationMember(req.body);
+      if (isValidated.error)
+      return res
+        .status(400)
+        .send({ error: isValidated.error.details[0].message });
+      const mem = await member.findByIdAndUpdate(
+        { _id: req.params.id },
+        req.body
+      );
+      console.log(mem)
+      if (!mem) return res.status(404).send({ error: "member is not found" });
+      res.json({ msg: "member updated successfully" });
+  
+    }
+    else{
+      return res
+        .status(400)
+        .send({ error: "the provided id is not valid one " });
+
+    }
+  } catch (error) {
+    console.log(error)
+    return res.status(400).send({error : error});
+  }
+});
+
 // --------------------------------------doooodie's evaluation world --------------------------------
 
 // as a candidate i want to submit the project to be finally reviewed
@@ -235,37 +306,7 @@ router.post("/:id1/projects/:id2/apply", async (req, res) => {
 // ------------------------- end of doodie's world ------------------------------------
 // ------------------------- hope u had fun:) -----------------------------------------
 // ------------------------- thank u for visiting -------------------------------------
-// PUT method to update a member
-router.put("/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    try {
-      id.match(/^[0-9a-fA-F]{24}$/);
-      const mem = await member.findById(id);
-      // res.json({data: mem})
-    } catch {
-      //console.log('Invalid Object id');
-      return res
-        .status(400)
-        .send({ error: "the provided id is not valid one " });
-    }
-    const mem = await member.findByIdAndUpdate(
-      { _id: req.params.id },
-      req.body
-    );
-    if (!mem) return res.status(404).send({ error: "member is not found" });
-    const isValidated = validator.updateValidation(req.body);
-    if (isValidated.error)
-      return res
-        .status(400)
-        .send({ error: isValidated.error.details[0].message });
 
-    res.json({ msg: "member updated successfully" });
-  } catch (error) {
-    // error is to be handled later
-    console.log(error);
-  }
-});
 
 //4.9 --As a candidate I want that the events I attended be added on my profile.
 router.put("/:id1/events/:id2", async (req, res) => {
@@ -283,41 +324,7 @@ router.put("/:id1/events/:id2", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
-  try {
-    const isValidated = validator.createValidation(req.body);
-    if (isValidated.error)
-      return res
-        .status(400)
-        .send({ error: isValidated.error.details[0].message });
-    const newMember = await member.create(req.body);
-    res.json({ msg: "member was created successfully", data: newMember });
-  } catch (error) {
-    // error is to be handled  later
-    console.log(error);
-  }
-});
 
-// DELETE method to delete a member
-router.delete("/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-      return res
-        .status(400)
-        .send({ error: "the provided id is not valid one " });
-    }
-
-    //---
-    const deletedmember = await member.findByIdAndRemove(id);
-    if (!deletedmember)
-      return res.status(404).send({ error: "member is not found" });
-    res.json({ msg: "member was deleted successfully", data: deletedmember });
-  } catch (error) {
-    // error is to be handled later
-    console.log(error);
-  }
-});
 //as a candidate i want to view tasks so that i can apply for them
 
 router.get("/:id/getProject", async (req, res) => {

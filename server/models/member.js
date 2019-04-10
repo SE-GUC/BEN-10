@@ -83,7 +83,7 @@ const memberSchema = new Schema({
         type: [{ type: Schema.Types.ObjectId, ref: "Project" }],
         default:[]
     },
-    skill_set:{
+    skillSet:{
         type: [{ type: Schema.Types.String}],
         required:false,
         default:[]
