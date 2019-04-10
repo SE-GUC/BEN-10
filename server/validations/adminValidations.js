@@ -3,20 +3,26 @@ const Joi = require('joi')
 module.exports = {
     createValidationAdmin: request => {
         const createSchema = {
-            name: Joi.string().max(500).required(),
-            gender: Joi.string().required(),
-            nationality: Joi.string().max(300).required(),
-            maritalStatus: Joi.string().max(300).required(),
-            militaryStatus: Joi.string().max(300).required(),
-            drivingLicense: Joi.string().max(300).required(),
-            country: Joi.string().max(300).required(),
-            city: Joi.string().max(300).required(),
-            area: Joi.string().max(300).required(),
-            postalCode: Joi.string().max(300).required(),
-            mobileNumber: Joi.string().max(300).required(),
-            email: Joi.string().required(),
-            password: Joi.string().max(300).required(),
-            birthdate: Joi.date().required()
+            //persinal info
+            firstName: Joi.string().required(),
+            lastName: Joi.string().required(),
+            SSN: Joi.number().required(),
+            birthDate: Joi.date().required(),
+            gender: Joi.boolean().required(),
+            nationality: Joi.string().min(3).max(100).required().regex(/^([^0-9]*)$/),
+            maritalStatus: Joi.string().required(),
+            militaryStatus: Joi.string().required(),
+            drivingLicense: Joi.boolean().required(),
+            //location info
+            country: Joi.string().max(100).required().regex(/^([^0-9]*)$/),
+            city: Joi.string().max(50).required().regex(/^([^0-9]*)$/),
+            area: Joi.string().max(50),
+            postalCode: Joi.number().max(200),
+            //
+            email: Joi.string().max(100).required().regex(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
+            password: Joi.string().min(8).max(50).required().regex(/^(?=.*\d).{4,20}$/),
+            mobileNumber:Joi.string().required(),
+            alternativeMobileNumber:Joi.string(),
         }
 
         return Joi.validate(request, createSchema)
@@ -24,20 +30,26 @@ module.exports = {
 
     updateValidationAdmin: request => {
         const updateSchema = {
-            name: Joi.string().max(500),
-            gender: Joi.string(),
-            nationality: Joi.string().max(300),
-            maritalStatus: Joi.string().max(300),
-            militaryStatus: Joi.string().max(300),
-            drivingLicense: Joi.string().max(3000),
-            country: Joi.string().max(300),
-            city: Joi.string().max(300),
-            area: Joi.string().max(300),
-            postalCode: Joi.string().max(3000),
-            mobileNumber: Joi.string().max(3000),
-            email: Joi.string(),
-            password: Joi.string().max(300),
-            birthdate: Joi.date()
+            firstName: Joi.string(),
+            lastName: Joi.string(),
+            SSN:Joi.string(),
+            birthDate: Joi.date(),
+            gender: Joi.boolean(),
+            nationality: Joi.string().min(3).max(100).regex(/^([^0-9]*)$/),
+            maritalStatus: Joi.string(),
+            militaryStatus: Joi.string(),
+            drivingLicense: Joi.boolean(),
+            //location info
+            country: Joi.string().max(100).regex(/^([^0-9]*)$/),
+            city: Joi.string().max(50).regex(/^([^0-9]*)$/),
+            area: Joi.string().max(50),
+            postalCode:Joi.number().max(200),
+            //
+
+            email: Joi.string().max(100).regex(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
+            password: Joi.string().min(8).max(50).regex(/^(?=.*\d).{4,20}$/),
+            mobileNumber:Joi.string(),
+            alternativeMobileNumber:Joi.string(),
         }
 
         return Joi.validate(request, updateSchema)
