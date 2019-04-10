@@ -3,6 +3,8 @@ const Schema = mongoose.Schema
 
 // Create the schema
 const AdminSchema = new Schema({
+
+ 
     firstName: {
         type: String,
         required: true
@@ -61,6 +63,8 @@ const AdminSchema = new Schema({
         type: String, 
         required: true
     },
+    birthDate: {
+        type: Date,
     password: {
         type: String, 
         required: true

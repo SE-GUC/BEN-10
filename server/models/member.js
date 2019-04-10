@@ -4,11 +4,19 @@ const Schema = mongoose.Schema
 // Create the schema
 const memberSchema = new Schema({
     //personal info
+<<<<<<< HEAD
+    fName: {
+        type: String,
+        required: true
+    },
+    lname: {
+=======
     firstName: {
         type: String,
         required: true
     },
     lastName: {
+>>>>>>> efdfbe05cb35aafe30cd2720518e66b284815122
         type: String,
         required: true
     },
@@ -16,7 +24,7 @@ const memberSchema = new Schema({
         type : String,
         required: true
     },
-    birthdate: {
+    birthDate: {
         type: Date,
         required: true
     },
@@ -33,11 +41,19 @@ const memberSchema = new Schema({
         required: true
     },
     militaryStatus: {
+<<<<<<< HEAD
+        type: String, 
+        required: true
+    },
+    drivingLicense: {
+        type: String, 
+=======
         type: String,
         required: true
     },
     drivingLicense: {
         type: String,
+>>>>>>> efdfbe05cb35aafe30cd2720518e66b284815122
         required: true
     },
     // location info
