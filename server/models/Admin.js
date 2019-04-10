@@ -3,7 +3,11 @@ const Schema = mongoose.Schema
 
 // Create the schema
 const AdminSchema = new Schema({
-    name: {
+    fName: {
+        type: String,
+        required: true
+    },
+    lName: {
         type: String,
         required: true
     },
@@ -51,7 +55,7 @@ const AdminSchema = new Schema({
         type: String,
         required: true
     },
-    birthdate: {
+    birthDate: {
         type: Date,
         required: true
     },

@@ -27,6 +27,23 @@ const PartnerSchema = new Schema({
         type: String,
         required: true  
     },
+     // location info
+     country: {
+        type: String, 
+        required: true
+    },
+    city: {
+        type: String, 
+        required: true
+    },
+    area: {
+        type: String, 
+        required: false
+    },
+    postalCode: {
+        type: Number, 
+        required: false
+    },
     events: {
         type: [{ type: Schema.Types.ObjectId, ref: "Event" }]
     },

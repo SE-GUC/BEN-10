@@ -4,11 +4,7 @@ const Schema = mongoose.Schema
 // Create the schema
 const memberSchema = new Schema({
     //personal info
-    fname: {
-        type: String,
-        required: true
-    },
-    mname: {
+    fName: {
         type: String,
         required: true
     },
@@ -20,44 +16,44 @@ const memberSchema = new Schema({
         type : String,
         required: true
     },
-    birthdate: {
+    birthDate: {
         type: Date,
         required: true
     },
-    Gender: {
+    gender: {
         type: Boolean,
         required: true
     },
-    Nationality: {
+    nationality: {
         type: String, 
         required: true
     },
-    Marital_status: {
+    maritalStatus: {
         type: String, 
         required: true
     },
-    Military_status: {
+    militaryStatus: {
         type: String, 
         required: true
     },
-    Driving_license: {
+    drivingLicense: {
         type: String, 
         required: true
     },
     // location info
-    Country: {
+    country: {
         type: String, 
         required: true
     },
-    City: {
+    city: {
         type: String, 
         required: true
     },
-    Area: {
+    area: {
         type: String, 
         required: false
     },
-    PostalCode: {
+    postalCode: {
         type: Number, 
         required: false
     },
@@ -71,7 +67,7 @@ const memberSchema = new Schema({
         required: true
     },
     // contact info
-    Mobile_number: {
+    mobileNumber: {
         type: String, 
         required: true
     },
