@@ -17,7 +17,7 @@ const NotificationSchema = new Schema({
     },
     seen: {
         type: Boolean,
-        required: true,
+        required: false,
         default:false
     },
     sentById:{
