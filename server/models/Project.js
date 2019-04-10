@@ -7,7 +7,7 @@ const ProjectSchema = new Schema({
         type: String,
         required: true
     },
-    companyID: {
+    companyId: {
         type: Schema.Types.ObjectId,ref: "Partner",
         required:false
     },
@@ -19,7 +19,7 @@ const ProjectSchema = new Schema({
         type: Boolean,
         required: true
     },
-    consultancyID: {
+    consultancyId: {
         type: Schema.Types.ObjectId,ref: "ConsultancyAgency",
         required:false
     },
@@ -33,19 +33,19 @@ const ProjectSchema = new Schema({
     },
     lifeCycle:{
         type: String,
-        required: true
+        required: false
     },
     estimatedEffort: {
         type: String,
-        required: false
+        required: true
     },
     estimatedTime: {
         type: String,
-        required: false  
+        required: true  
     },
     experienceLevelNeeded: {
         type: String,
-        required: false  
+        required: true  
     },
     requiredSkillsSet: {
         type: [{ type: Schema.Types.String }],
