@@ -65,6 +65,8 @@ const AdminSchema = new Schema({
     },
     birthDate: {
         type: Date,
+        required: true
+    },
     password: {
         type: String, 
         required: true
@@ -78,6 +80,7 @@ const AdminSchema = new Schema({
         type: String, 
         required: false
     }
+
 })
 
 module.exports = Admin = mongoose.model('admins', AdminSchema)
