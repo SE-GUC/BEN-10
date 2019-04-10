@@ -31,10 +31,6 @@ const PartnerSchema = new Schema({
         type: String, 
         required: true
     },
-    militaryStatus: {
-        type: String,
-        required: true
-    },
     drivingLicense: {
         type: Boolean,
         required: true

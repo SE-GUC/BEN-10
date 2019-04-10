@@ -21,7 +21,6 @@ class ATest extends AbstractTests {
       gender: null,
       nationality: null,
       maritalStatus: null,
-      militaryStatus: null,
       drivingLicense: null,
       country: null,
       city: null,
@@ -96,7 +95,6 @@ class ATest extends AbstractTests {
       gender: "false",
       nationality: "egyptian",
       maritalStatus: "single",
-      militaryStatus: "excempt",
       drivingLicense: "qwertyuio",
       country: "egypt",
       city: "cairo",
@@ -128,7 +126,6 @@ class ATest extends AbstractTests {
       expect(eRequest.gender).toEqual(requestBody.gender);
       expect(eRequest.nationality).toEqual(requestBody.nationality);
       expect(eRequest.maritalStatus).toEqual(requestBody.maritalStatus);
-      expect(eRequest.militaryStatus).toEqual(requestBody.militaryStatus);
       expect(eRequest.drivingLicense).toEqual(requestBody.drivingLicense);
       expect(eRequest.country).toEqual(requestBody.country);
       expect(eRequest.city).toEqual(requestBody.city);
@@ -144,7 +141,6 @@ class ATest extends AbstractTests {
       this.sharedState.gender = eRequest.gender;
       this.sharedState.nationality = eRequest.nationality;
       this.sharedState.maritalStatus = eRequest.maritalStatus;
-      this.sharedState.militaryStatus = eRequest.militaryStatus;
       this.sharedState.drivingLicense = eRequest.drivingLicense;
       this.sharedState.country = eRequest.country;
       this.sharedState.city = eRequest.city;
@@ -163,7 +159,6 @@ class ATest extends AbstractTests {
       gender: "false",
       nationality: "egyptian",
       maritalStatus: "single",
-      militaryStatus: "excempt",
       drivingLicense: "qwertyuio",
       country: "egypt",
       city: "cairo",
@@ -246,7 +241,6 @@ class ATest extends AbstractTests {
       gender: "false",
       nationality: "egyptian",
       maritalStatus: "single",
-      militaryStatus: "excempt",
       drivingLicense: "qwertyuio",
       country: "egypt",
       city: "cairo",
@@ -279,7 +273,6 @@ class ATest extends AbstractTests {
       expect(eRequest.gender).toEqual(requestBody.gender);
       expect(eRequest.nationality).toEqual(requestBody.nationality);
       expect(eRequest.maritalStatus).toEqual(requestBody.maritalStatus);
-      expect(eRequest.militaryStatus).toEqual(requestBody.militaryStatus);
       expect(eRequest.drivingLicense).toEqual(requestBody.drivingLicense);
       expect(eRequest.country).toEqual(requestBody.country);
       expect(eRequest.city).toEqual(requestBody.city);
@@ -295,7 +288,6 @@ class ATest extends AbstractTests {
       this.sharedState.gender = eRequest.gender;
       this.sharedState.nationality = eRequest.nationality;
       this.sharedState.maritalStatus = eRequest.maritalStatus;
-      this.sharedState.militaryStatus = eRequest.militaryStatus;
       this.sharedState.drivingLicense = eRequest.drivingLicense;
       this.sharedState.country = eRequest.country;
       this.sharedState.city = eRequest.city;
@@ -314,7 +306,6 @@ class ATest extends AbstractTests {
       gender: "false",
       nationality: "egyptian",
       maritalStatus: "single",
-      militaryStatus: "excempt",
       drivingLicense: "qwertyuio",
       country: "egypt",
       city: "cairo",
