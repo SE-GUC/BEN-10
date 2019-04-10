@@ -80,6 +80,7 @@ const AdminSchema = new Schema({
         type: String, 
         required: false
     }
+
 })
 
 module.exports = Admin = mongoose.model('admins', AdminSchema)

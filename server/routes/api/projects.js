@@ -37,6 +37,7 @@ router.post("/", async (req, res) => {
     const newProject = await Project.create(req.body);
     res.json({ msg: "Project was created successfully", data: newProject });
   } catch (error) {
+    console.log(error)
     return res.status(400).send({ error: "not a project id" });
   }
 });
@@ -61,7 +62,6 @@ router.put("/:id", async (req, res) => {
 
     }
   } catch {
-    console.log(error);
     return res.status(404).send({ error: "not a project id" });
   }
 });
@@ -82,7 +82,6 @@ router.delete("/:id", async (req, res) => {
       return res.status(404).send({ error: "not a project id" });
     }
   } catch (error) {
-    console.log(error);
     return res.status(400).send("not a project id");
   }
 });

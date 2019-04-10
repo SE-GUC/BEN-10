@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 // Create the schema
 const memberSchema = new Schema({
     //personal info
+
     firstName: {
         type: String,
         required: true
@@ -30,10 +31,6 @@ const memberSchema = new Schema({
     },
     maritalStatus: {
         type: String, 
-        required: true
-    },
-    militaryStatus: {
-        type: String,
         required: true
     },
     drivingLicense: {
