@@ -1,19 +1,14 @@
 import React, { Component } from "react";
-import MyEvent from "../components/myEvents/myEvents"
-import EventRequestForm from "../components/EventRequestForm";
+import MyEvent from "../components/Event/CAMyEvents"
 class MyEvents extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-          partnerID: props.partner_id,
-          reload: true
+            parId:this.props.partner_id
         };
     }
-
     render(){
-        return(<div> <MyEvent id={this.state.partnerID}/>
-               <EventRequestForm requestorId={this.props.partner_id} requestedBy={this.props.partner_name} />
-               </div>);
+        return(<div> <MyEvent id={this.state.parId} /> </div>);
     }
 }
 export default MyEvents;

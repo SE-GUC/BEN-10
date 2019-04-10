@@ -517,13 +517,45 @@ async function getTheProjects(memberid) {
     .then(res => res.json())
     .then(json => {
       const projects = json.data;
-      const hisProjects = projects.filter(m => m.memberId === memberid );
+      console.log(projects)
+      const hisProjects = projects.filter(m => m.memberID === memberid );
+      console.log()
       result =hisProjects;
       return hisProjects;
     })
-    .catch(err =>   {return res.status(404).send({ error: err })  })   ; 
+    .catch(err => {return { error: err }  })   ; 
 
   return result;
 }
+
+router.get("/:id/ShowMyEvents", async (req, res) => {
+  const id = req.params.id;
+
+  if (ObjectId.isValid(id)) {
+    const memb = await member.findById(id);
+    var found = false;
+    if (memb) {
+      var arr=[];
+      const e = await Event.find();
+      for(var m=0; m<e.length; m++){
+      found = false;
+      var mem = e[m].bookedMembers;
+      for (var i = 0; mem.length > i; i++) {
+          if (req.params.id== mem[i]) {
+            found = true;
+            arr.push(e[m]);
+            break;
+          }
+        }
+      }
+      return res.json({"data":arr})
+    } else {
+      return res.status(404).send({ msg: "Member not found" });
+    }
+  } else {
+    return res.status(404).send({ msg: "Member not found" });
+  }
+})
+
 //test 4.8
 module.exports = router;
