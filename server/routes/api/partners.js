@@ -760,11 +760,11 @@ async function declineFinalReview(pid) {
 
   return j;
 }
+//--------------------------- 
 
-//sprint3 => 5- as partner i want to cancel my project
+//as partner i want to cancel my project
 router.use("/:id/cancelproject/:pid", async (req, res) => {
   var error = true;
-  console.log("here1");
   if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
     const partner = await Partner.findById(req.params.id);
     const project = await Project.findById(req.params.pid);
@@ -829,11 +829,13 @@ router.use("/:id/cancelproject/:pid", async (req, res) => {
       } else
         return res
           .status(404)
-          .send({ error: "this project doesnot belong to you" });
+          .send({ error: "this project does not belong to you" });
     } else return res.status(404).send({ error: "invalid inputs" });
   } else return res.status(404).send({ error: "invalid inputs" });
   return res.json(k);
 });
+//---------------
+
 
 // as partner i want to send task orientation invitation
 router.post("/:id/sendOrientationInvitations/:pid/", async (req, res) => {
@@ -861,10 +863,8 @@ router.post("/:id/sendOrientationInvitations/:pid/", async (req, res) => {
             const m = await Member.findById(candidates[i].applicantId);
             const j = await Partnersendtask(
               candidates[i].applicantId,
-              `${m.fname} ${m.mname} ${m.lname}`,
               req.body.description,
               req.params.pid,
-              partner.name,
               date
             );
             arr[i] = j;
@@ -888,15 +888,12 @@ router.post("/:id/sendOrientationInvitations/:pid/", async (req, res) => {
   } else return res.status(404).send({ msg: "inavalid inputs" });
 });
 
-// 9 As a partner I want to send a task orientation invitation to applying candidates
-async function Partnersendtask(mid, mname, description, pid, pname, date) {
+async function Partnersendtask(mid, description, pid, date) {
   var error = true;
   const body = {
-    senttoID: mid,
-    sentto: mname,
+    sentToID: mid,
     description: `get to know the project better through this session ${description}`,
     sentByID: pid,
-    sentBy: pname,
     sentAt: date
   };
   var j;
@@ -921,15 +918,18 @@ async function Partnersendtask(mid, mname, description, pid, pname, date) {
 
   return j;
 }
+//----------------------------------------------------------------
+
+
 
 //as a partner i want to show my events
 router.get("/:id/ShowMyEvents", async (req, res) => {
   const id = req.params.id;
 
   if (ObjectId.isValid(id)) {
-    const partners = await Partner.findById(id);
+    const partner = await Partner.findById(id);
 
-    if (partners) {
+    if (partner) {
       const e = await event.find();
       const Myevents = e.filter(m => m.requestorId == id);
       if (Myevents.length === 0) {
