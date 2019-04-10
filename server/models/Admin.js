@@ -3,8 +3,6 @@ const Schema = mongoose.Schema
 
 // Create the schema
 const AdminSchema = new Schema({
-
- 
     firstName: {
         type: String,
         required: true

@@ -27,7 +27,7 @@ const ProjectSchema = new Schema({
         type: Date,
         required: false
     },
-    memberId: {
+    memberID: {
         type: Schema.Types.ObjectId,ref: "Member",
         required:false
     },

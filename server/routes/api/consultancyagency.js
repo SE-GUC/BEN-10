@@ -8,6 +8,7 @@ const server = require("../../config/config");
 mongoose.set("useFindAndModify", false);
 const event = require("../../models/Event");
 const Project = require("../../models/Project");
+const Member=require("../../models/member")
 const ConsultancyAgency = require("../../models/ConsultancyAgency");
 const validator = require("../../validations/consultancyagencyValidations");
 
@@ -62,15 +63,15 @@ router.put("/:id", async (req, res) => {
         return res
           .status(404)
           .send({ error: "Consultancy Agency does not exist" });
-      res.json({ msg: "Consultancy Agency updated successfully" });
+      res.json({ msg: "Consultancy Agency updated successfully"});
     } else {
       return res
         .status(404)
-        .send({ error: "Consultancy Agency does not exist" });
+        .send({ error: "Consultancy Agency Id is not valid" });
     }
   } catch {
     console.log(error);
-    return res.status(404).send({ error: "Consultancy Agency does not exist" });
+    return res.status(404).send({ error: "some error occurred in consultancy agency" });
   }
 });
 
@@ -92,13 +93,51 @@ router.delete("/:id", async (req, res) => {
     } else {
       return res
         .status(404)
-        .send({ error: "Consultancy Agency does not exist" });
+        .send({ error: "Consultancy Agency id is not valid" });
     }
   } catch (error) {
     console.log(error);
     return res.status(400).send("Error");
   }
 });
+
+async function CARequestEvent(
+  requestorId,
+  description,
+  eventType,
+  eventLocation,
+  eventDate
+) {
+  const body = {
+    requestorId: requestorId,
+    description: description,
+    eventType: eventType,
+    eventLocation: eventLocation,
+    eventDate: eventDate,
+    isAccepted: "false"
+  };
+  var error = true;
+  var j;
+  await fetch(`${server}/api/eventrequests/`, {
+    method: "post",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" }
+  })
+    .then(res => {
+      if (res.status === 200) {
+        error = false;
+      }
+      return res.json();
+    })
+    .then(json => {
+      if (!error) {
+        json = { msg: "Event is requested successfully" };
+      }
+      j = json;
+    })
+    .catch(err => console.log("Error", err));
+  return j;
+}
 
 //2.4 --As a consultancy agency I want to request to organize an event.
 router.post("/:id/eventrequests/", async (req, res) => {
@@ -113,7 +152,6 @@ router.post("/:id/eventrequests/", async (req, res) => {
       ) {
         const j = await CARequestEvent(
           req.params.id,
-          cid.name,
           req.body.description,
           req.body.eventType,
           req.body.eventLocation,
@@ -135,6 +173,10 @@ router.post("/:id/eventrequests/", async (req, res) => {
 
 //2.2 part1 View candidates applying for a project
 router.get("/:id/myProjects/:pid/applyingMembers", async (req, res) => {
+  if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid)){
+  const cid = await ConsultancyAgency.findById(req.params.id);
+  const pid= await Project.findById(req.params.pid);
+ if(cid!=null && pid!=null){
   var j = await getApplyingMembers(req.params.pid);
   var result = [];
   var i;
@@ -152,6 +194,16 @@ router.get("/:id/myProjects/:pid/applyingMembers", async (req, res) => {
   } else {
     res.json({ data: result });
   }
+}
+else{
+  res.status(404).send({error:"the ids requested doesnt exist"})
+}
+
+}else{
+  res.status(404).send({error:"error in the ids"})
+}
+
+
 });
 
 async function getApplyingMembers(pid) {
@@ -174,6 +226,11 @@ async function getApplyingMembers(pid) {
 router.put(
   "/:id/myProjects/:pid/applyingMembers/:mid/assign",
   async (req, res) => {
+    if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid)&&ObjectId.isValid(req.params.mid)){
+    const cid = await ConsultancyAgency.findById(req.params.id);
+    const pid= await Project.findById(req.params.pid);
+    const mid= await Member.findById(req.params.mid);
+    if(cid!=null && pid!=null && mid!=null){
     const members = await getApplyingMembers(req.params.pid);
     console.log(members);
     if (req.params.mid != null) {
@@ -192,6 +249,15 @@ router.put(
         .send({ error: "Candidate did not apply on this project" });
     }
   }
+  else{
+    res.status(404).send({error:"the ids requested doesnt exist"})
+
+  }
+}
+else{
+  res.status(404).send({error:"error in ids"})
+}
+}
 );
 
 router.delete("/:id", async (req, res) => {
@@ -256,9 +322,16 @@ async function assignCandidate(projectID, candidatID) {
 router.put("/:id/myprojects/:pid/finaldraft/approve/", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
+      const cid=ConsultancyAgency.findById(req.params.id);
+      const pid=Project.findById(req.params.pid);
+      if(cid!=null && pid!=null){
       const decision = "Approved";
-      const j = await ApproveProject(req.params.pid, decision);
+      const j = await DecideProject(req.params.pid, decision);
       res.status(200).send(j);
+      }
+      else{
+        res.status(404).send({error:"NOT found"})
+      }
     } else {
       return res.status(404).send({ error: "ID NOT FOUND" });
     }
@@ -271,13 +344,16 @@ router.put("/:id/myprojects/:pid/finaldraft/approve/", async (req, res) => {
 router.put("/:caid/decide/:pid/:flag",async (req,res)=> {
   const caid = req.params.caid;
   const pid = req.params.pid;
+  const CA=await ConsultancyAgency.findById(caid);
+  const project=await Project.findById(pid);
   const decision =  req.params.flag;
   if(ObjectId.isValid(caid)&&ObjectId.isValid(pid)){
-  const url = `${server}/api/projects/${caid}`;
+if(CA!=null && project!=null){
+  const url = `${server}/api/projects/${pid}`;
   var j;
   await fetch(url, {
     method: "put",
-    body: JSON.stringify({ life_cycle: decision }),
+    body: JSON.stringify({ lifeCycle: decision }),
     headers: { "Content-Type": "application/json" }
   })
     .then(res => {
@@ -290,6 +366,10 @@ router.put("/:caid/decide/:pid/:flag",async (req,res)=> {
     .catch(err => {
       console.log(err);
     });
+  }
+  else{
+    res.status(404).send({error:"NOt FOUND"})
+  }
   }else{
       res.status(404).send({msg : "inValid inputs"})
   }
@@ -299,9 +379,16 @@ router.put("/:caid/decide/:pid/:flag",async (req,res)=> {
 router.put("/:id/myprojects/:pid/finaldraft/disapprove", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
+      const cid=ConsultancyAgency.findById(req.params.id);
+      const pid=Project.findById(req.params.pid);
+      if(cid!=null&&pid!=null){
       const decision = "Negotiation";
-      const j = await disapproveProject(req.params.pid, decision);
+      const j = await DecideProject(req.params.pid, decision);
       res.status(200).send(j);
+      }
+      else{
+        res.status(404).send({error:"not found"})
+      }
     } else {
       return res.status(404).send({ error: "ID NOT FOUND" });
     }
@@ -310,27 +397,26 @@ router.put("/:id/myprojects/:pid/finaldraft/disapprove", async (req, res) => {
     return res.status(404).send({ error: "not a project id" });
   }
 });
-//async function disapproveProject(id, decision) {
- // var j;
- // const url = `${server}/api/projects/${id}`;
- // await fetch(url, {
-  //  method: "put",
-  //  body: JSON.stringify({ life_cycle: decision }),
-  //  headers: { "Content-Type": "application/json" }
-  //})
- //   .then(res => {
-  //    j = res.json();
-   //   return res.json();
-   // })
-  //  .then(json => {
-  //    console.log(json);
-  //  })
-  //  .catch(err => {
-  //    console.log(err);
-  //  });
-  //return j;
-//}
-module.exports = router;
+async function DecideProject(id, decision) {
+ var j;
+ const url = `${server}/api/projects/${id}`;
+ await fetch(url, {
+   method: "put",
+   body: JSON.stringify({ lifeCycle: decision }),
+   headers: { "Content-Type": "application/json" }
+  })
+   .then(res => {
+     j = res.json();
+     return res.json();
+   })
+   .then(json => {
+     console.log(json);
+   })
+   .catch(err => {
+     console.log(err);
+   });
+  return j;
+}
 
 // test approve
 //ApproveProject('5c955ea2ea7dd51a0c16c38e','Posted')
@@ -348,6 +434,10 @@ module.exports = router;
 router.get("/:caid/reviewprojects/:pid", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.caid)) {
+      const CA=await ConsultancyAgency.findById(req.params.caid);
+      const project=await Project.findById(req.params.pid);
+
+     if(CA!=null&&project!=null){
       const caid = req.params.caid;
       const pid = req.params.pid;
       const matchingProjects = await getProjectsInFinalReview(caid);
@@ -360,6 +450,10 @@ router.get("/:caid/reviewprojects/:pid", async (req, res) => {
       }
       return res.json({ data: r });
     }
+    else{
+      res.status(404).send({error:"NOT FOUND"})
+    }
+    }
   } catch (error) {
     console.log(error);
     return res.status(400).send("Error");
@@ -370,8 +464,14 @@ router.get("/:caid/reviewprojects", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.caid)) {
       const caid = req.params.caid;
+      const CA=await ConsultancyAgency.findById(caid);
+      if(CA!=null){
       const matchingProjects = await getProjectsInFinalReview(caid);
       res.json({ data: matchingProjects });
+      }
+      else{
+        res.status(404).send({error:"NOT FOUND"})
+      }
     }
     else{
       res.status(404).send({msg :" not valid id"})
@@ -387,8 +487,8 @@ async function getProjectsInFinalReview(caid) {
   var matchingProjects = [];
   for (var i in allprojects) {
     if (
-      allprojects[i].consultancyID == caid &&
-      allprojects[i].life_cycle == "Final Review"
+      allprojects[i].consultancyId == caid &&
+      allprojects[i].lifeCycle == "Final Review"
     ) {
       matchingProjects.push(allprojects[i]);
     }
@@ -409,45 +509,7 @@ async function getFinished(caProjects) {
 }
 
 //2.4 --As a consultancy agency I want to request to organize an event.
-async function CARequestEvent(
-  requestorId,
-  requestedBy,
-  description,
-  eventType,
-  eventLocation,
-  eventDate
-) {
-  const body = {
-    requestorId: requestorId,
-    requestedBy: requestedBy,
-    description: description,
-    eventType: eventType,
-    eventLocation: eventLocation,
-    eventDate: eventDate,
-    isAccepted: "false"
-  };
-  var error = true;
-  var j;
-  await fetch(`${server}/api/eventrequests/`, {
-    method: "post",
-    body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" }
-  })
-    .then(res => {
-      if (res.status === 200) {
-        error = false;
-      }
-      return res.json();
-    })
-    .then(json => {
-      if (!error) {
-        json = { msg: "Event is requested successfully" };
-      }
-      j = json;
-    })
-    .catch(err => console.log("Error", err));
-  return j;
-}
+
 
 // 2.1 As a consultancy agency i want to apply for task/project
 router.put("/:id/caApplyProject/:pid", async (req, res) => {
@@ -495,8 +557,8 @@ router.put("/:id1/finalreview/:id2/approve/", async (req, res) => {
     const ca = await ConsultancyAgency.findById(req.params.id1);
     const project = await Project.findById(req.params.id2);
     if (ca && project) {
-        if (project.consultancyID == req.params.id1){
-          if (project.life_cycle == "Final Review"){
+        if (project.consultancyId == req.params.id1){
+          if (project.lifeCycle == "Final Review"){
                   const j = await approvefinal(req.params.id2);
                   res.status(200).send(j);
               }else return res.status(404).send({ error: "project isn't in the Final Review stage" });
@@ -513,8 +575,8 @@ router.put("/:id1/finalreview/:id2/disapprove/", async (req, res) => {
     const ca = await ConsultancyAgency.findById(req.params.id1);
     const project = await Project.findById(req.params.id2);
     if (ca && project) {
-      if (project.consultancyID == req.params.id1){
-          if (project.life_cycle == "Final Review"){    
+      if (project.consultancyId == req.params.id1){
+          if (project.lifeCycle == "Final Review"){    
               const j = await disapprovefinal(req.params.id2);
               res.status(200).send(j);
           }else return res.status(404).send({ error: "project isn't in the Final Review stage" });
@@ -528,7 +590,7 @@ router.put("/:id1/finalreview/:id2/disapprove/", async (req, res) => {
 // 8 As a CA I wanto to approve the final review of a project
 async function approvefinal(pid) {
   var error = true;
-  const body = { life_cycle: "Finished" };
+  const body = { lifeCycle: "Finished" };
   var j;
   await fetch(`${server}/api/projects/${pid}`, {
     method: "put",
@@ -554,7 +616,7 @@ async function approvefinal(pid) {
 // 8 As a CA I wanto to disapprove the final review of a project
 async function disapprovefinal(pid) {
   var error = true;
-  const body = { life_cycle: "In Progress" };
+  const body = { lifeCycle: "In Progress" };
   var j;
   await fetch(`${server}/api/projects/${pid}`, {
     method: "put",
@@ -582,6 +644,8 @@ async function disapprovefinal(pid) {
 router.get("/:id/projects",async(req,res)=>{
   const id = req.params.id ; 
   if(ObjectId.isValid(id)){
+    const cid=await ConsultancyAgency.findById(id)
+    if(cid!=null){
     var error = true; 
     await fetch(`${server}/api/projects`,{
       method:"get",
@@ -596,11 +660,12 @@ router.get("/:id/projects",async(req,res)=>{
       .then(json =>{
         const myprojects = json.data ; 
         const consulted = myprojects.filter(
-          myprojects => myprojects.consultancyID === id
+          myprojects => myprojects.consultancyId === id
         );
         res.json({data: consulted}); 
       })
       .catch(err => console.log("Error",err));
+    }
   }
   else {
     return res.status(404).send({error:"Not a consultancy agency id"});
@@ -641,7 +706,7 @@ async function carequestrating(formLink, id, date) {
   var error = true;
   const body = {
     description: `Please rate thie event through this form ${formLink}`,
-    NotifiedPerson: id,
+    notifiedPerson: id,
     date: date,
     seen: "false"
   };
@@ -681,7 +746,8 @@ router.get("/:id/ShowMyEvents", async (req, res) => {
       const e =await event.find()
       const Myevents=e.filter(m=>m.requestorId==id);
       if(Myevents.length===0){
-        res.send({msg: "NO Events to show"});}
+        res.send({msg: "NO Events to show"});
+      }
         else{
            res.json({ data:Myevents });}
     } else {
