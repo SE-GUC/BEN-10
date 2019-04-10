@@ -35,7 +35,7 @@ const apTests = new ApTest(5000, '/applications')
 const prTests = new PRTest(5000, '/projects')
 const caTests = new CATest(5000, '/consultancyagency')
 const aTests = new ATest(5000, '/admins')
-const mTests = new MTest(5000, '/member')
+const mTests = new MTest(5000, '/members')
 const paTests = new PaTest(5000, '/partners')
 
 // Calling tests

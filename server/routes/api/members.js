@@ -6,7 +6,7 @@ const fetch = require("node-fetch");
 const server = require("../../config/config");
 
 const Event = require("../../models/Event");
-const member = require("../../models/member");
+const member = require("../../models/Member");
 const validator = require("../../validations/memberValidations");
 const notificationValidator = require("../../validations/notificationsValidation");
 const project = require("../../models/Project");
@@ -371,7 +371,7 @@ async function postevent(cid, events) {
   var error = true;
   const body = { events: events };
   var j;
-  await fetch(`${server}/api/member/${cid}`, {
+  await fetch(`${server}/api/members/${cid}`, {
     method: "put",
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" }

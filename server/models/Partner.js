@@ -36,7 +36,7 @@ const PartnerSchema = new Schema({
         required: true
     },
     drivingLicense: {
-        type: String,
+        type: Boolean,
         required: true
     },
     // location info
@@ -88,4 +88,4 @@ const PartnerSchema = new Schema({
     }
 })
 
-module.exports = PartnerInfo = mongoose.model('partners', PartnerSchema)
+module.exports = Partner = mongoose.model('partners', PartnerSchema)

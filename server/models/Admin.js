@@ -3,8 +3,6 @@ const Schema = mongoose.Schema
 
 // Create the schema
 const AdminSchema = new Schema({
-
- 
     firstName: {
         type: String,
         required: true
@@ -38,7 +36,7 @@ const AdminSchema = new Schema({
         required: true
     },
     drivingLicense: {
-        type: String,
+        type: Boolean,
         required: true
     },
     // location info

@@ -8,7 +8,7 @@ const server = require("../../config/config");
 mongoose.set("useFindAndModify", false);
 const event = require("../../models/Event");
 const Project = require("../../models/Project");
-const Member=require("../../models/member")
+const Member=require("../../models/Member")
 const ConsultancyAgency = require("../../models/ConsultancyAgency");
 const validator = require("../../validations/consultancyagencyValidations");
 
@@ -181,7 +181,7 @@ router.get("/:id/myProjects/:pid/applyingMembers", async (req, res) => {
   var result = [];
   var i;
   for (i = 0; i < j.length; i++) {
-    await fetch(`${server}/api/member/${j[i]}`)
+    await fetch(`${server}/api/members/${j[i]}`)
       .then(res => res.json())
       .then(json => {
         const member = json.data;

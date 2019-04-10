@@ -99,7 +99,7 @@ export default class DeleteProjectId extends Component{
   }
   if(MID!=null){
   
-    fetch('http://localhost:5000/api/member/'+MID)
+    fetch('http://localhost:5000/api/members/'+MID)
     .then(res=>{
       if(res.status===200)
       return res.json()
