@@ -76,10 +76,12 @@ const memberSchema = new Schema({
         required: false
     },
     events: {
-        type: [{ type: Schema.Types.ObjectId, ref: "Event" }]
+        type: [{ type: Schema.Types.ObjectId, ref: "Event" }],
+        default:[]
     },
     projects: {
-        type: [{ type: Schema.Types.ObjectId, ref: "Project" }]
+        type: [{ type: Schema.Types.ObjectId, ref: "Project" }],
+        default:[]
     },
     skill_set:{
         type: [{ type: Schema.Types.String}],

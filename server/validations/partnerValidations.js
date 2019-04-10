@@ -1,7 +1,7 @@
 const Joi = require('joi')
 
 module.exports = {
-    createValidationPartnerInfo: request => {
+    createValidationPartner: request => {
         const createSchema = {
             name: Joi.string().min(3).max(100).required(),
             age: Joi.number().max(100).required(),
@@ -17,7 +17,7 @@ module.exports = {
         return Joi.validate(request, createSchema)
     },
 
-    updateValidationPartnerInfo: request => {
+    updateValidationPartner: request => {
         const updateSchema = {
             name: Joi.string().min(3).max(100),
             age: Joi.number().max(100),

@@ -45,18 +45,19 @@ const EventSchema={
     },
     requestId:{
         type:Schema.Types.ObjectId,ref:'EventRequest',
-        required:false
+        required:true
     },
     eventDate:{
         type:Date,
         required:true
     },
     bookedMembers: {
-        type: [{ type: Schema.Types.ObjectId, ref: "Member" }]
+        type: [{ type: Schema.Types.ObjectId, ref: "Member" }],
+        default:[]
     },
     formLink:{
         type:String,
-        required:false
+        required:true
     }
     
 

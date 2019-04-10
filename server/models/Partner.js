@@ -75,13 +75,16 @@ const PartnerSchema = new Schema({
         required: false
     },
     events: {
-        type: [{ type: Schema.Types.ObjectId, ref: "Event" }]
+        type: [{ type: Schema.Types.ObjectId, ref: "Event" }],
+        default:[]
     },
     projects: {
-        type: [{ type: Schema.Types.ObjectId, ref: "Project" }]
+        type: [{ type: Schema.Types.ObjectId, ref: "Project" }],
+        default:[]
     },
     partners: {
-        type: [{ type: String }]
+        type: [{ type: String }],
+        default:[]
     }
 })
 
