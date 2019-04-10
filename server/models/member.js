@@ -33,14 +33,6 @@ const memberSchema = new Schema({
         type: String, 
         required: true
     },
-    militaryStatus: {
-        type: String, 
-        required: true
-    },
-    drivingLicense: {
-        type: String,
-        required: true
-    },
     drivingLicense: {
         type: String,
         required: true
