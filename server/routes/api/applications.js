@@ -12,11 +12,6 @@ router.get("/", async (req, res) => {
   res.json({ data: applications });
 });
 
-// router.get("/:id", async (req, res) => {
-//   const id = req.params.id;
-//   const applications = await Application.findById(id);
-//   res.json({ data: applications });
-// });
 
 router.get("/:id", async (req, res) => {
   if (ObjectId.isValid(req.params.id)) {
