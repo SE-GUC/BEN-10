@@ -5,7 +5,7 @@ const Application = require("../../models/Application");
 const Task_invitation = require("../../models/OrientationInvitation");
 const Admin = require("../../models/Admin"); //require your model
 const project = require("../../models/Project");
-const Member = require("../../models/member");
+const Member = require("../../models/Member");
 const Events = require("../../models/Event");
 const ObjectId = require("mongoose");
 const server = require("../../config/config");
@@ -1025,7 +1025,7 @@ class MTest extends AbstractTests {
       let requestBody = {
         skill_set: ["skill1", "skill2"]
       };
-      await fetch(`${server}/api/member/${myMember._id}`, {
+      await fetch(`${server}/api/members/${myMember._id}`, {
         method: "PUT",
         body: JSON.stringify(requestBody),
         headers: { "Content-Type": "application/json" }

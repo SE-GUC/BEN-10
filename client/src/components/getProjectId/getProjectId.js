@@ -42,7 +42,7 @@ class GetProjectId extends Component {
     if(this.state.memID!==null){
       
       this.setState({memFound:true})
-      await fetch('http://localhost:5000/api/member/'+this.state.memID).then(res=>res.json())
+      await fetch('http://localhost:5000/api/members/'+this.state.memID).then(res=>res.json())
        .then(proj=>this.setState({mem:proj.data}))
        
     }

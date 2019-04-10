@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 // Create the schema
 const ApplicationSchema = new Schema({
     applicantId: {
-        type: Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,ref:"member",
         required: true
     },
     applyingDate: {
@@ -13,7 +13,7 @@ const ApplicationSchema = new Schema({
     },
     projectId: {
         type: Schema.Types.ObjectId,ref:"Project",
-        required: false
+        required: true
     }
 })
 

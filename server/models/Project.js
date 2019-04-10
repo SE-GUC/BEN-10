@@ -9,7 +9,7 @@ const ProjectSchema = new Schema({
     },
     companyId: {
         type: Schema.Types.ObjectId,ref: "Partner",
-        required:false
+        required:true
     },
     category: {
         type: String,
@@ -25,7 +25,7 @@ const ProjectSchema = new Schema({
     },
     postedDate: {
         type: Date,
-        required: true
+        required: false
     },
     memberId: {
         type: Schema.Types.ObjectId,ref: "Member",

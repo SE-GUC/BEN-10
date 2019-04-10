@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const AbstractTests = require("./AbstractTests");
 const Notification = require("../../models/Notification"); //require your model
-const Member = require("../../models/member");
+const Member = require("../../models/Member");
 const ObjectId = require("mongoose");
 
 class NTest extends AbstractTests {

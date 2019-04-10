@@ -11,7 +11,7 @@ const admins = require('./routes/api/admins')
 
 const applications = require('./routes/api/applications')
 const consultancyagencys = require('./routes/api/consultancyagency')
-const member = require('./routes/api/member')
+const member = require('./routes/api/members')
 const notification = require('./routes/api/notifications')
 
 const cors = require("cors");
@@ -63,7 +63,7 @@ app.use('/api/partners', partners)
 app.use('/api/applications', applications)
  
 app.use('/api/consultancyagency',consultancyagencys)
-app.use('/api/member',member)
+app.use('/api/members',member)
 app.use('/api/notifications',notification)
 
 
