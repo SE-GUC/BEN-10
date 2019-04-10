@@ -117,15 +117,15 @@ router.put('/:id1/Myprojects/:id2/submit/:link',async(req,res)=>{
     const project_appliedfor = await project.findById(project_id);
     const member_applying= await member.findById(member_id);
     if(project_appliedfor!=null && member_applying!=null){
-      var life_cycle_project=project_appliedfor["life_cycle"];
+      var life_cycle_project=project_appliedfor["lifeCycle"];
       if(life_cycle_project==="In Progress"){
-        if(project_appliedfor["memberID"].toString()!=member_id.toString()){
+        if(project_appliedfor["memberId"].toString()!=member_id.toString()){
           return res.status(404).send({ error: "this projects is not assigned to you" });
         }
       var error=true;
       const body={
-        life_cycle:"Final Review",
-        submitted_project_link:link
+        lifeCycle:"Final Review",
+        submittedProjectLink:link
       }
       await fetch(`${server}/api/projects/${project_id}`, {
         method: "PUT",
@@ -182,7 +182,7 @@ router.get('/:id/task_orientation',async(req,res)=>{
       .then(json => {
         const mytasks_orientation = json.data;
         const task = mytasks_orientation.filter(
-          task1 => task1.senttoID === member_id
+          task1 => task1.sentToId === member_id
         );
         res.json({ data: task });
       })
@@ -239,47 +239,28 @@ router.get("/:id/notifications", async (req, res) => {
 
 // i want to be able to apply for a task or a project
 router.post("/:id1/projects/:id2/apply", async (req, res) => {
-  console.log("keraaaa");
   const project_id = req.params.id2;
   const member_id = req.params.id1;
   if (
     project_id.match(/^[0-9a-fA-F]{24}$/) &&
     member_id.match(/^[0-9a-fA-F]{24}$/)
   ) {
-    // console.log("hello1");
     const project_appliedfor = await project.findById(project_id);
     const member_applying= await member.findById(member_id);
-    console.log(project_appliedfor);
     if(member_applying!=null && project_appliedfor!=null){
-      // console.log("hello2");
     var found=true;
-    for(var i=0;project_appliedfor["required_skills_set"].length>i;i++){
-      if(!member_applying["skill_set"].includes(project_appliedfor["required_skills_set"][i])){
+    for(var i=0;project_appliedfor["requiredSkillsSet"].length>i;i++){
+      if(!member_applying["skillSet"].includes(project_appliedfor["requiredSkillsSet"][i])){
         found=false;
-        // console.log("hello3");
         break;
       }
     }
     if(!found){
-      // console.log("hello4");
-
       return res.status(404).send({ error: "this member doesnot have the required skills for this project" });
     }
-    var active_task = req.body.activeTasks;
-    if (typeof active_task === "undefined") active_task = 0;
-
     const application = {
       applicantId: member_id,
-      applicantName: req.body.applicantName,
-      gender: req.body.gender,
-      age: req.body.age,
-      email: req.body.email,
-      mobile: req.body.mobile,
-      applyingDate: req.body.applyingDate,
-      skills: req.body.skills,
-      yearsOfExp: req.body.yearsOfExp,
-      hasJob: req.body.hasJob,
-      activeTasks: active_task,
+      applyingDate: Date.now(),
       projectId: project_id
     };
     var error = true;
@@ -343,11 +324,12 @@ async function getProjects() {
     .then(res => res.json())
     .then(json => {
       const projects = json.data;
-      const hisProjects = projects.filter(m => m.life_cycle === "Posted");
+      const hisProjects = projects.filter(m => m.lifeCycle === "Posted");
       result = hisProjects;
       return hisProjects;
     })
-    .catch(err => console.log("Error", err));
+    .catch(err =>
+       res.status(400).send({error:err}));
   return result;
 }
 // as a candidate i want to view an events so that i can book a place in it
@@ -356,7 +338,6 @@ router.get("/:id/getEvent", async (req, res) => {
   if (ObjectId.isValid(id)) {
     const j = await getEvents(id);
     const mye = j.filter(m=>!( m.bookedMembers.includes(id)))
-    console.log(mye)
     res.json({ data: mye });
   } else {
     return res.status(404).send({ error: "ID NOT FOUND" });
@@ -379,7 +360,8 @@ async function getEvents() {
       result = hisEvents;
       return hisEvents;
     })
-    .catch(err => console.log("Error", err));
+    .catch(err => 
+      {return res.status(404).send({ error: err })  })   ; 
 
   return result;
 }
@@ -406,7 +388,8 @@ async function postevent(cid, events) {
       }
       j = json;
     })
-    .catch(err => console.log("Error", err));
+    .catch(err =>   {return res.status(404).send({ error: err })  })   ; 
+
   return j;
 }
 
@@ -426,18 +409,18 @@ router.get("/:id/recommendations", async (req, res) => {
 async function getAvailableProjects(id) {
   //---
   const myMember = await member.findById(id);
-  let skills = myMember.skill_set;
+  let skills = myMember.skillSet;
   let myProjects = await project.find();
   var i;
   let returnResult = [];
   for (i = 0; i < myProjects.length; i++) {
     var j;
     let flag = true;
-    for (j = 0; j < myProjects[i].required_skills_set.length; j++) {
+    for (j = 0; j < myProjects[i].requiredSkillsSet.length; j++) {
       var k;
       let Available = true;
       for (k = 0; k < skills.length; k++) {
-        if (skills[k] === myProjects[i].required_skills_set[j]) {
+        if (skills[k] === myProjects[i].requiredSkillsSet[j]) {
           Available = false;
           break;
         }
@@ -463,7 +446,7 @@ router.put("/:id1/bookEvent/:id2", async (req, res) => {
     const event = await Event.findById(eventId);
     if (mem && event) {
       const type = event.eventType;
-      var skills = mem.skill_set;
+      var skills = mem.skillSet;
       var allowed = skills.includes(type);
 
       if (allowed === true) {
@@ -501,7 +484,8 @@ async function bookEvent(eid, members) {
       }
       j = json;
     })
-    .catch(err => console.log("Error", err));
+    .catch(err =>   {return res.status(404).send({ error: err })  })   ; 
+
   return j;
 }
 //as a candidate i want to view my projects
@@ -533,11 +517,12 @@ async function getTheProjects(memberid) {
     .then(res => res.json())
     .then(json => {
       const projects = json.data;
-      const hisProjects = projects.filter(m => m.memberID === memberid );
+      const hisProjects = projects.filter(m => m.memberId === memberid );
       result =hisProjects;
       return hisProjects;
     })
-    .catch(err => console.log("Error", err));
+    .catch(err =>   {return res.status(404).send({ error: err })  })   ; 
+
   return result;
 }
 //test 4.8

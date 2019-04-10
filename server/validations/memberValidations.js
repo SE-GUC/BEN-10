@@ -13,7 +13,7 @@ module.exports = {
             nationality: Joi.string().min(3).max(100).required().regex(/^([^0-9]*)$/),
             maritalStatus: Joi.string().required(),
             militaryStatus: Joi.string().required(),
-            drivingLicense: Joi.string().required(),
+            drivingLicense: Joi.boolean().required(),
             //location info
             country: Joi.string().max(100).required().regex(/^([^0-9]*)$/),
             city: Joi.string().max(50).required().regex(/^([^0-9]*)$/),
@@ -38,7 +38,7 @@ module.exports = {
             firstName: Joi.string(),
             lastName: Joi.string(),
             SSN:Joi.string(),
-            birthDate: Joi.date().max(100).raw(),
+            birthDate: Joi.date(),
             gender: Joi.boolean(),
             nationality: Joi.string().min(3).max(100).regex(/^([^0-9]*)$/),
             maritalStatus: Joi.string(),
