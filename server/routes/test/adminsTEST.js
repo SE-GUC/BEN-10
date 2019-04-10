@@ -1073,10 +1073,10 @@ class ATest extends AbstractTests {
         allNotifications =>
           allNotifications.description === requestBody.feedBack.toString()
       );
-      expect(allNotifications[0].NotifiedPerson.toString()).toEqual(
+      expect(allNotifications[0].notifiedPerson.toString()).toEqual(
         m1._id.toString()
       );
-      expect(allNotifications[1].NotifiedPerson.toString()).toEqual(
+      expect(allNotifications[1].notifiedPerson.toString()).toEqual(
         m2._id.toString()
       );
       // delete created notifications
@@ -1210,7 +1210,7 @@ class ATest extends AbstractTests {
       let filteredNotifications = [];
       for (i = 0; i < allNotifications.length; i++) {
         if (
-          allNotifications[i].NotifiedPerson.toString() === m1._id.toString()
+          allNotifications[i].notifiedPerson.toString() === m1._id.toString()
         ) {
           filteredNotifications.push(allNotifications[i]);
         }
@@ -1229,7 +1229,7 @@ class ATest extends AbstractTests {
       filteredNotifications = [];
       for (i = 0; i < allNotifications.length; i++) {
         if (
-          allNotifications[i].NotifiedPerson.toString() === m2._id.toString()
+          allNotifications[i].notifiedPerson.toString() === m2._id.toString()
         ) {
           filteredNotifications.push(allNotifications[i]);
         }
@@ -1248,7 +1248,7 @@ class ATest extends AbstractTests {
       filteredNotifications = [];
       for (i = 0; i < allNotifications.length; i++) {
         if (
-          allNotifications[i].NotifiedPerson.toString() === m3._id.toString()
+          allNotifications[i].notifiedPerson.toString() === m3._id.toString()
         ) {
           filteredNotifications.push(allNotifications[i]);
         }

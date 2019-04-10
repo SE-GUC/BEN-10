@@ -17,7 +17,7 @@ module.exports = {
             registExpiryDate:Joi.date().required(),
             requestId: Joi.objectId().required(),
             eventDate: Joi.date().required(),
-            bookedMembers:Joi.array().items(Joi.string()),
+            bookedMembers:Joi.array().items(Joi.objectId()),
             formLink: Joi.string()
         
         }
@@ -39,7 +39,7 @@ module.exports = {
             registExpiryDate:Joi.date(),
             requestId: Joi.objectId(),
             eventDate: Joi.date(),
-            bookedMembers:Joi.array().items(Joi.string()),
+            bookedMembers:Joi.array().items(Joi.objectId()),
             formLink: Joi.string()
         }
 

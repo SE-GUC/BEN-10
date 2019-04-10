@@ -4,7 +4,6 @@ Joi.objectId = require('joi-objectid')(Joi);
 module.exports = {
     createValidationEventRequest: request => {
         const createSchema = {
-            requestedBy: Joi.string().max(500).required(),
             description: Joi.string().required(),
             eventType: Joi.string().max(300).required(),
             eventLocation: Joi.string().required(),
@@ -18,7 +17,6 @@ module.exports = {
 
     updateValidationEventRequest: request => {
         const updateSchema = {
-            requestedBy: Joi.string().max(500),
             description: Joi.string(),
             eventType: Joi.string().max(300),
             eventLocation: Joi.string(),
@@ -27,5 +25,5 @@ module.exports = {
         }
 
         return Joi.validate(request, updateSchema)
-    }, 
+    }
 }
