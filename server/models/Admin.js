@@ -65,6 +65,8 @@ const AdminSchema = new Schema({
     },
     birthDate: {
         type: Date,
+        required: true
+    },
     password: {
         type: String, 
         required: true
