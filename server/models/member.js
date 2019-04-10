@@ -4,11 +4,19 @@ const Schema = mongoose.Schema
 // Create the schema
 const memberSchema = new Schema({
     //personal info
+<<<<<<< HEAD
     fName: {
         type: String,
         required: true
     },
     lname: {
+=======
+    firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
+>>>>>>> efdfbe05cb35aafe30cd2720518e66b284815122
         type: String,
         required: true
     },
@@ -33,11 +41,19 @@ const memberSchema = new Schema({
         required: true
     },
     militaryStatus: {
+<<<<<<< HEAD
         type: String, 
         required: true
     },
     drivingLicense: {
         type: String, 
+=======
+        type: String,
+        required: true
+    },
+    drivingLicense: {
+        type: String,
+>>>>>>> efdfbe05cb35aafe30cd2720518e66b284815122
         required: true
     },
     // location info
@@ -71,15 +87,17 @@ const memberSchema = new Schema({
         type: String, 
         required: true
     },
-    Alternative_Mobile_number: {
+    alternativeMobileNumber: {
         type: String, 
         required: false
     },
     events: {
-        type: [{ type: Schema.Types.ObjectId, ref: "Event" }]
+        type: [{ type: Schema.Types.ObjectId, ref: "Event" }],
+        default:[]
     },
     projects: {
-        type: [{ type: Schema.Types.ObjectId, ref: "Project" }]
+        type: [{ type: Schema.Types.ObjectId, ref: "Project" }],
+        default:[]
     },
     skill_set:{
         type: [{ type: Schema.Types.String}],

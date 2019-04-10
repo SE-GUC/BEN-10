@@ -7,10 +7,6 @@ const EventSchema={
         type: Schema.Types.ObjectId,
         required: true
     },
-    requestedBy:{
-        type:String,
-        required:true
-    },
     eventType:{
         type:String,
         required:true
@@ -38,30 +34,30 @@ const EventSchema={
     speaker:{
         type:String,
         required:true
-    },feedback:{
-        type:[String],
-        required:false
-    },regist_start_date:{
+    },
+    registStartDate:{
         type: Date,
         required:true
-    },regist_expiry_date:{
+    },
+    registExpiryDate:{
         type:Date,
         required:true
     },
-    request_id:{
+    requestId:{
         type:Schema.Types.ObjectId,ref:'EventRequest',
-        required:false
+        required:true
     },
     eventDate:{
         type:Date,
         required:true
     },
     bookedMembers: {
-        type: [{ type: Schema.Types.ObjectId, ref: "member" }]
+        type: [{ type: Schema.Types.ObjectId, ref: "Member" }],
+        default:[]
     },
     formLink:{
         type:String,
-        required:false
+        required:true
     }
     
 
