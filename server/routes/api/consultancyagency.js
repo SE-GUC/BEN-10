@@ -8,7 +8,7 @@ const server = require("../../config/config");
 mongoose.set("useFindAndModify", false);
 const event = require("../../models/Event");
 const Project = require("../../models/Project");
-const Member=require("../../models/member")
+const Member=require("../../models/Member")
 const ConsultancyAgency = require("../../models/ConsultancyAgency");
 const validator = require("../../validations/consultancyagencyValidations");
 
