@@ -36,7 +36,7 @@ const PartnerSchema = new Schema({
         required: true
     },
     drivingLicense: {
-        type: String,
+        type: Boolean,
         required: true
     },
     // location info

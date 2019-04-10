@@ -36,7 +36,7 @@ const AdminSchema = new Schema({
         required: true
     },
     drivingLicense: {
-        type: String,
+        type: Boolean,
         required: true
     },
     // location info
