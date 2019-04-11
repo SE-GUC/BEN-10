@@ -59,7 +59,7 @@ class App extends Component {
   // }
 
   render() {
-    if (this.state.partner_id !== null) {
+    if (this.state.user_id !== null) {
       return (
         <BrowserRouter>
           <Route exact path="/MyProjects" render={(props) => <MyProjects {...props} user_id={this.state.user_id}/>}/> 
