@@ -144,7 +144,9 @@ componentDidMount() {
 
   render() {
     const { classes } = this.props;
-
+    if(this.state.firstName===null)
+    return <div>Loading...</div>;
+    else
     return (
       <form className={classes.container} noValidate autoComplete="off">
         <TextField

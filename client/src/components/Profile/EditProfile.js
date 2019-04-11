@@ -22,7 +22,7 @@ class EditProfile extends React.Component {
     this.state = {
       show: false
     };
-    this.onUpdate = this.onUpdate.bind(this);
+   // this.onUpdate = this.onUpdate.bind(this);
   }
 
   render() {
