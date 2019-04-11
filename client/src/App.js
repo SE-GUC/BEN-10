@@ -34,32 +34,32 @@ class App extends Component {
   //       })
   //     );
   // }
+  componentDidMount() {
+    axios 
+      .get("http://localhost:5000/api/partners")
+      .then(res => {
+        return res.data;  
+      })
+      .then(a =>
+        this.setState({
+          partner_id: a.data[0]._id,
+
+          partner_name: a.data[0].name
+        })
+      );
+  }
   // componentDidMount() {
   //   axios 
-  //     .get("http://localhost:5000/api/partners")
+  //     .get("http://localhost:5000/api/members")
   //     .then(res => {
   //       return res.data; 
   //     })
   //     .then(a =>
   //       this.setState({
-  //         partner_id: a.data[0]._id,
-
-  //         partner_name: a.data[0].name
+  //         partner:a.data[0]
   //       })
   //     );
   // }
-  componentDidMount() {
-    axios 
-      .get("http://localhost:5000/api/members")
-      .then(res => {
-        return res.data; 
-      })
-      .then(a =>
-        this.setState({
-          partner:a.data[0]
-        })
-      );
-  }
 
   render() {
     if (this.state.partner !== null) {
