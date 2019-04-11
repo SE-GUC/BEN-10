@@ -626,8 +626,8 @@ class MTest extends AbstractTests {
       const notifications = await Notification.find();
       var notified_member = null;
       for (var i = 0; notifications.length > i; i++) {
-        if (notifications[i]["NotifiedPerson"] != null) {
-          notified_member = notifications[i]["NotifiedPerson"];
+        if (notifications[i]["notifiedPerson"] != null) {
+          notified_member = notifications[i]["notifiedPerson"];
           break;
         }
       }
@@ -646,7 +646,7 @@ class MTest extends AbstractTests {
           );
           expect(Object.keys(jsonResponse)).not.toEqual([" error"]);
           for (var i = 0; jsonResponse.data.length > i; i++) {
-            expect(jsonResponse.data[i]["NotifiedPerson"].toString()).toEqual(
+            expect(jsonResponse.data[i]["notifiedPerson"].toString()).toEqual(
               notified_member.toString()
             );
           }

@@ -31,12 +31,8 @@ const AdminSchema = new Schema({
         type: String, 
         required: true
     },
-    militaryStatus: {
-        type: String,
-        required: true
-    },
     drivingLicense: {
-        type: String,
+        type: Boolean,
         required: true
     },
     // location info

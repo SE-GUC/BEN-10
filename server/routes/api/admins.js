@@ -124,14 +124,14 @@ router.post("/:aid/notifications/:id/", async (req, res) => {
 async function AdminNotifyAcceptedCandidate(
   sentBy,
   description,
-  NotifiedPerson,
+  notifiedPerson,
   date
 ) {
   const body = {
     sentById,
-    description: description,
-    NotifiedPerson: NotifiedPerson,
-    date: date,
+    description,
+    notifiedPerson,
+    date,
     seen: "false"
   };
   var error = true;
@@ -490,7 +490,7 @@ async function sendFeedBack(formLink, eventId,sentBy) {
     const body = {
       sentBy,
       description: formLink,
-      NotifiedPerson: attendingMembers[i],
+      notifiedPerson: attendingMembers[i],
       date: date,
       seen: "false"
     };
@@ -565,7 +565,7 @@ async function sendRejectionNotification(projectId,sentBy) {
         sentBy,
         description:
           "Sorry u were not accepted for project {" + project.description + "}",
-        NotifiedPerson: myProjectApplications[i],
+        notifiedPerson: myProjectApplications[i],
         date: date,
         seen: "false"
       };

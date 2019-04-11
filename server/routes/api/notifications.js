@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
   const myNotifications = await notification.find();
   if (req.query.Member_id != null) {
     const mynotifications = await notification.find({
-      NotifiedPerson: ObjectId(req.query.Member_id)
+      notifiedPerson: ObjectId(req.query.Member_id)
     });
     res.json({ data: mynotifications });
   } else {

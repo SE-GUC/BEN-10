@@ -224,7 +224,7 @@ router.get("/:id/notifications", async (req, res) => {
       .then(json => {
         const mynotification = json.data;
         const notif = mynotification.filter(
-          mynotification => mynotification.NotifiedPerson === id
+          mynotification => mynotification.notifiedPerson === id
         );
         res.json({ data: notif });
       })

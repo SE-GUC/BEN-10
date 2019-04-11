@@ -581,7 +581,7 @@ async function Partnerrequestrating(formLink, id, date) {
   var error = true;
   const body = {
     description: `please rate thie event through this form ${formLink}`,
-    NotifiedPerson: id,
+    notifiedPerson: id,
     date: date,
     seen: "false"
   };
