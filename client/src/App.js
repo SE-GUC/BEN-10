@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
 import MyEvents from "./pages/MyEvents";
-import MyProjects from "./components/Partner/ViewAllPArtners";
+//import MyProjects from "./components/Partner/ViewAllPArtners";
+import ViewAllPArtners from "./components/Partner/ViewAllPartners";
+import EditProfile from './components/Profile/EditProfile'
 import MyEventsId from "./pages/MyEventsId";
 import MyProjectsId from "./pages/MyProjectsId"
 import EditMyProject from "./pages/EditMyProject"
@@ -34,10 +36,10 @@ class App extends Component {
     if (this.state.partner_id !== null) {
       return (
         <BrowserRouter>
-          <Route exact path="/MyProjects" render={(props) => <MyProjects />}/> 
+          <Route exact path="/ViewAllPArtners" render={(props) => <ViewAllPArtners />}/> 
           <Route exact path="/MyProjects/:id" render={(props) => <MyProjectsId {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
-             <Route exact path="/MyProject/edit/:id" component={EditMyProject} /> 
-
+          <Route exact path="/EditProfile" id={this.partner_id} type={"partner"} /> 
+          <Route exact path="/EditProfile" render={(props) => <EditProfile />}/>
             <Route exact path="/myEvents/:id" render={(props) => <MyEventsId {...props} partner_id={this.state.partner_id} />} />
             <Route exact path="/myEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
             <Route exact path="/myProfile/:id"render={(props) => <MyProfile {...props} partner_id={this.state.partner_id} />} />
