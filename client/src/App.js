@@ -36,14 +36,16 @@ class App extends Component {
     if (this.state.partner_id !== null) {
       return (
         <BrowserRouter>
-          <Route exact path="/ViewAllPArtners" render={(props) => <ViewAllPArtners />}/> 
+          <Route exact path="/ViewAllPartners" render={(props) => <ViewAllPArtners />}/> 
           <Route exact path="/MyProjects/:id" render={(props) => <MyProjectsId {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
-          <Route exact path="/EditProfile" id={this.partner_id} type={"partner"} /> 
-          <Route exact path="/EditProfile" render={(props) => <EditProfile />}/>
+          {/* <Route exact path="/EditProfile" id={this.partner_id} type={"partner"} />  */}
+          <Route exact path="/EditProfile/:id" render={(props) => <EditProfile {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} type={"partner"} />}/>
+
+          {/* <Route exact path="/EditProfile" render={(props) => <EditProfile />}/> */}
             <Route exact path="/myEvents/:id" render={(props) => <MyEventsId {...props} partner_id={this.state.partner_id} />} />
             <Route exact path="/myEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
             <Route exact path="/myProfile/:id"render={(props) => <MyProfile {...props} partner_id={this.state.partner_id} />} />
-                <Route exact path="/postProject" render={(props) => <PostProject {...props} partner_id={this.state.partner_id} />}/>
+            <Route exact path="/postProject" render={(props) => <PostProject {...props} partner_id={this.state.partner_id} />}/>
         </BrowserRouter>
       );
     } else {

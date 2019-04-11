@@ -18,13 +18,15 @@ const styles = {
 class EditProfile extends React.Component {
   constructor(props) {
     super(props);
-    this.onUpdate = this.onUpdate.bind(this);
+    
     this.state = {
       show: false
     };
+    this.onUpdate = this.onUpdate.bind(this);
   }
 
   render() {
+    console.log(this.props.type)
     const { classes } = this.props;
     if (this.props.type === "member") {
       return <div className="App">{<EditMember id={this.props.id} />}</div>;
