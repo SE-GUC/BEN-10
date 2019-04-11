@@ -15,9 +15,8 @@ import MyProfile from "./pages/MyProfile";
 import { BrowserRouter, Route } from "react-router-dom";
 class App extends Component {
   state = {
-    partner_id:null,
-    partner_name:null,
-    partner:null
+    
+    user:null
 
   }
   // componentDidMount() {
@@ -28,9 +27,7 @@ class App extends Component {
   //     })
   //     .then(a =>
   //       this.setState({
-  //         partner_id: a.data[0]._id,
-
-  //         partner_name: a.data[0].name
+  //         user:a.data[0]
   //       })
   //     );
   // }
@@ -42,9 +39,7 @@ class App extends Component {
       })
       .then(a =>
         this.setState({
-          partner_id: a.data[0]._id,
-
-          partner_name: a.data[0].name
+          user:a.data[0]
         })
       );
   }
@@ -56,13 +51,13 @@ class App extends Component {
   //     })
   //     .then(a =>
   //       this.setState({
-  //         partner:a.data[0]
+  //         user:a.data[0]
   //       })
   //     );
   // }
 
   render() {
-    if (this.state.partner !== null) {
+    if (this.state.user !== null) {
       return (
         <BrowserRouter>
           <Route exact path="/ViewAllPartners" render={(props) => <ViewAllPArtners />}/> 
@@ -71,7 +66,7 @@ class App extends Component {
           <Route exact path="/MyProjects/:id" render={(props) => <MyProjectsId {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
           {/* <Route exact path="/EditProfile" id={this.partner_id} type={"partner"} />  */}
           {/* <Route exact path="/EditProfile/:id" render={(props) => <EditProfile {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} type={"partner"} />}/> */}
-          <Route exact path="/EditProfile" render={(props) => <EditProfile {...props}  type={"partner"} partner={this.state.partner} />}/>
+          <Route exact path="/EditProfile" render={(props) => <EditProfile {...props}  type={"partner"} partner={this.state.user} />}/>
 
           {/* <Route exact path="/EditProfile" render={(props) => <EditProfile />}/> */}
             <Route exact path="/myEvents/:id" render={(props) => <MyEventsId {...props} partner_id={this.state.partner_id} />} />
