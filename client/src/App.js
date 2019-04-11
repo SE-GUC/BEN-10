@@ -9,46 +9,42 @@ import PostProject from "./pages/PostProject";
 import axios from "axios";
 import MyProfile from "./pages/MyProfile";
 import { BrowserRouter, Route } from "react-router-dom";
+//import ViewAndAssign from "./components/ViewApplyingMemAndAssign";
+import ApproveFinalDraft from "./components/ApproveFinalDraft";
+import ApproveFinalWork from "./components/ApproveFinalWork";
+import SendFinalDraft from "./components/SendFinalDraft" ;
+
 class App extends Component {
   state = {
-    partner_id:null,
-    partner_name:null,
+    ca_id:null,
+    ca_name:null,
 
   }
   componentDidMount() {
     axios 
-      .get("http://localhost:5000/api/partners")
+      .get("http://localhost:5000/api/consultancyagency")
       .then(res => {
         return res.data; 
       })
       .then(a =>
         this.setState({
-          partner_id: a.data[0]._id,
+          ca_id: a.data[0]._id,
 
-          partner_name: a.data[0].name
+          ca_name: a.data[0].name
         })
       );
   }
 
   render() {
-    if (this.state.partner_id !== null) {
       return (
-        <BrowserRouter>
-                     <Route exact path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
-          <Route exact path="/MyProjects/:id" render={(props) => <MyProjectsId {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
-             <Route exact path="/MyProject/edit/:id" component={EditMyProject} /> 
-
-            <Route exact path="/myEvents/:id" render={(props) => <MyEventsId {...props} partner_id={this.state.partner_id} />} />
-            <Route exact path="/myEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
-            <Route exact path="/myProfile/:id"render={(props) => <MyProfile {...props} partner_id={this.state.partner_id} />} />
-                <Route exact path="/postProject" render={(props) => <PostProject {...props} partner_id={this.state.partner_id} />}/>
-        </BrowserRouter>
+        //<ApproveFinalWork type = {"partner"} pid = {"5cae21711c9d440000abe57b"} id = {"5cae54be1c9d440000abe582"}/>
+        //<ApproveFinalDraft type = {"partner"} pid = {"5cae21711c9d440000abe57b"} id = {"5cae54be1c9d440000abe582"}/>
+        <SendFinalDraft pid = {"5cae21711c9d440000abe57b"} id = {"5ca1111df1fa20462cfd3377"}/>
       );
-    } else {
-      return <div>Loading.... in app</div>;
+    
 
     }
- }
+ 
 }  
     export default App;
 

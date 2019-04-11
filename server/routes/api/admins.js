@@ -201,8 +201,8 @@ async function assignAttributes(pid, body) {
 router.put("/:id/myProjects/:pid/sendDraft", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
-      if (req.body.final_draft != null) {
-        const j = await sendFinalDraft(req.params.pid, req.body.final_draft);
+      if (req.body.finalDraft != null) {
+        const j = await sendFinalDraft(req.params.pid, req.body.finalDraft);
         res.status(200).send(j);
       } else {
         return res.status(400).send({ error: "Please insert the final draft" });
@@ -218,8 +218,8 @@ router.put("/:id/myProjects/:pid/sendDraft", async (req, res) => {
 
 async function sendFinalDraft(projectID, draft) {
   const body = {
-    life_cycle: "Final Draft",
-    final_draft: draft
+    lifeCycle: "Final Draft",
+    finalDraft: draft
   };
   var error = true;
   var j;
@@ -254,7 +254,7 @@ router.put("/:id/postProject/:pid", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
       const project = await Project.findById(req.params.pid);
-      if (project.life_cycle == "Approved") {
+      if (project.lifeCycle == "Approved") {
         const j = await postProject(req.params.pid);
         res.send(j);
       } else {
@@ -269,7 +269,7 @@ router.put("/:id/postProject/:pid", async (req, res) => {
   }
 });
 async function postProject(id) {
-  const body = { life_cycle: "Posted" };
+  const body = { lifeCycle: "Posted" };
   var error = true;
   var result;
 
