@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import MyEvents from "./pages/MyEvents";
 //import MyProjects from "./components/Partner/ViewAllPArtners";
-import ViewAllPArtners from "./components/Partner/ViewAllPartners";
+import ViewAllPArtners from "./components/Partner/ViewAllPArtners";
 import EditProfile from './components/Profile/EditProfile'
 import MyEventsId from "./pages/MyEventsId";
 import MyProjectsId from "./pages/MyProjectsId"
@@ -15,6 +15,7 @@ class App extends Component {
   state = {
     partner_id:null,
     partner_name:null,
+    partner:null
 
   }
   componentDidMount() {
@@ -25,22 +26,20 @@ class App extends Component {
       })
       .then(a =>
         this.setState({
-          partner_id: a.data[0]._id,
-
-          partner_name: a.data[0].name
+          partner:a.data[0]
         })
       );
   }
 
   render() {
-    if (this.state.partner_id !== null) {
+    if (this.state.partner !== null) {
       return (
         <BrowserRouter>
           <Route exact path="/ViewAllPartners" render={(props) => <ViewAllPArtners />}/> 
           <Route exact path="/MyProjects/:id" render={(props) => <MyProjectsId {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
           {/* <Route exact path="/EditProfile" id={this.partner_id} type={"partner"} />  */}
           {/* <Route exact path="/EditProfile/:id" render={(props) => <EditProfile {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} type={"partner"} />}/> */}
-          <Route exact path="/EditProfile" render={(props) => <EditProfile {...props} id={this.state.partner_id} partner_name={this.state.partner_name} type={"partner"} />}/>
+          <Route exact path="/EditProfile" render={(props) => <EditProfile {...props}  type={"partner"} partner={this.state.partner} />}/>
 
           {/* <Route exact path="/EditProfile" render={(props) => <EditProfile />}/> */}
             <Route exact path="/myEvents/:id" render={(props) => <MyEventsId {...props} partner_id={this.state.partner_id} />} />

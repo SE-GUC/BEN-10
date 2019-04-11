@@ -32,7 +32,7 @@ class EditProfile extends React.Component {
       return <div className="App">{<EditMember id={this.props.id} />}</div>;
     } else {
       if (this.props.type === "partner") {
-        return <div className="App">{<EditPartner id={this.props.id} />}</div>;
+        return <div className="App">{<EditPartner partner={this.props.partner} />}</div>;
       } else {
         if (this.props.type === "admin") {
           return <div className="App">{<EditAdmin id={this.props.id} />}</div>;

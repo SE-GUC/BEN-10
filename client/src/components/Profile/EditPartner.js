@@ -49,27 +49,28 @@ class OutlinedTextFields extends React.Component {
     this.onUpdate=this.onUpdate.bind(this);
 
   this.state = {
-  firstName:null ,
-  lastName: null,
-  SSN : null,
-  birthdate:null,    
-  gender:null,
-  nationality: null,
-  maritalStatus:null,
-  militaryStatus:null,
-  drivingLicense:null,
-  country:null,
-  city:null,
-  area:null,
-  postalCode:null,
-  email:null,
-  password:null,
-  mobileNumber:null,
-  alternativeMobileNumber:null,
-  events: null,
-  projects:null,
-  partners:null
+    firstName:this.props.partner.firstName,
+    lastName:this.props.partner.lastName,
+    SSN:this.props.partner.SSN,
+    birthdate:this.props.partner.birthdate,
+    gender:this.props.partner.gender,
+    nationality:this.props.partner.nationality,
+    maritalStatus:this.props.partner.maritalStatus,
+    militaryStatus:this.props.partner.militaryStatus,
+    drivingLicense:this.props.partner.drivingLicense,
+    country:this.props.partner.country,
+    city:this.props.partner.city,
+    area:this.props.partner.area,
+    postalCode:this.props.partner.postalCode,
+    email:this.props.partner.email,
+    password:this.props.partner.password,
+    mobileNumber:this.props.partner.mobileNumber,
+    alternativeMobileNumber:this.props.partner.alternativeMobileNumber,
+    events:this.props.partner.events,
+    projects:this.props.partner.projects,
+    partners:this.props.partner.partners
   }
+  console.log(this.props.partner)
 }
 
 onUpdate =()=>{
@@ -95,7 +96,7 @@ onUpdate =()=>{
     projects:this.state.projects,
     partners:this.state.partners
   }
-  axios.put(`http://localhost:5000/api/partners/${this.props.id}`,body)
+  axios.put(`http://localhost:5000/api/partners/${this.props.partner._id}`,body)
   .then(res=>{ 
     console.log(res.status);
    return res.data
@@ -106,36 +107,7 @@ window.location.reload();
 
 }
 
-componentDidMount() {
-  axios
-      .get(`http://localhost:5000/api/partners/`)
-      .then(res => {
-        return res.data;
-      })
-      .then(a => this.setState({ 
-        firstName: a.data.firstName,
-        lastName:a.data.lastName,
-        SSN : a.data.SSN,
-    birthdate:a.data.birthdate,    
-    gender:a.data.gender,
-    nationality: a.data.nationality,
-    maritalStatus:a.data.maritalStatus,
-    militaryStatus:a.data.militaryStatus,
-    drivingLicense:a.data.drivingLicense,
-    country:a.data.country,
-    city:a.data.city,
-    area:a.data.area,
-    postalCode:a.data.postalCode,
-    email:a.data.email,
-    password:a.data.password,
-    mobileNumber:a.data.mobileNumber,
-    alternativeMobileNumber:a.data.alternativeMobileNumber,
-    events:a.data.events,
-    projects:a.data.projects,
-    partners:a.data.partners
-  
-      }));
-  }
+
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
@@ -144,9 +116,7 @@ componentDidMount() {
 
   render() {
     const { classes } = this.props;
-    if(this.state.firstName===null)
-    return <div>Loading...</div>;
-    else
+        
     return (
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
