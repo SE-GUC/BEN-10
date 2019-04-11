@@ -20,7 +20,6 @@ class EventRequestMessage extends React.Component {
 
   submitRequest = () => {
     const body ={
-        requestedBy: this.props.requestedBy,
         description: this.props.description,
         eventType: this.props.type,
         eventLocation: this.props.location,

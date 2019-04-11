@@ -154,7 +154,7 @@ class EventRequestForm extends React.Component {
        
         <div>
           <EventRequestMessage className={classes.button} description={this.state.description} date={this.state.date}
-          type={this.state.type} location={this.state.location} requestorId={this.props.requestorId} requestedBy={this.props.requestedBy}
+          type={this.state.type} location={this.state.location} requestorId={this.props.requestorId} 
           clear={this.clear}/>
         </div>
       </div>
