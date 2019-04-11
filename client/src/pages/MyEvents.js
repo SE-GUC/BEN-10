@@ -1,14 +1,19 @@
 import React, { Component } from "react";
-import MyEvent from "../components/Event/CAMyEvents"
+import PMyEvent from "../components/Event/PartnerMyEvents"
+import MMyEvent from "../components/Event/MemberMyEvents"
+import CAMyEvent from "../components/Event/CAMyEvents"
 class MyEvents extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            parId:this.props.partner_id
+            parId:this.props.user_id
         };
     }
     render(){
-        return(<div> <MyEvent id={this.state.parId} /> </div>);
+        return(<div> <PMyEvent id={this.state.parId} /> 
+        {/* <MMyEvent id={this.state.parId} /> 
+        <CAMyEvent id={this.state.parId} />  */}
+        </div>);
     }
 }
 export default MyEvents;

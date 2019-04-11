@@ -1,16 +1,22 @@
 import React, { Component } from "react";
-import MyProject from "../components/Project/CAMyProjects"
+import PMyProject from "../components/Project/PartnerMyProjects"
+import MMyProject from "../components/Project/MemberMyProjects"
+import CAMyProject from "../components/Project/CAMyProjects"
+// import Myfilter from "../components/Project/FilterProj"
 class MyProjects extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            parId:this.props.partner_id
+            parId:this.props.user_id
         };
-        console.log(this.props.partner_id)
+        console.log(this.props.user_id)
     }
 
     render(){
-        return(<div> <MyProject id={this.state.parId} /> </div>);
+        return(<div> <PMyProject id={this.state.parId}/>
+        {/* <MMyProject id={this.state.parId}/>
+        <CAMyProject id={this.state.parId}/> */}
+        </div>);               
     }
 }
 
