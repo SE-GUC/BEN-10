@@ -70,23 +70,23 @@ class OutlinedTextFields extends React.Component {
     events:this.props.agency.events,
     showPassword: false
   }
-  console.log(this.props.agency)
+  console.log(this.props.partner)
 }
 
 onUpdate =()=>{
   const body={
     name:this.state.name,
     about:this.state.about,
-    telephoneNumber:this.state.telephoneNumber,
+     telephoneNumber:this.state.telephoneNumber,
     email:this.state.email,
-    password:this.state.password,
-    location:this.state.location,
-    yearsOfExperience:this.state.yearsOfExperience,
-    rating:this.state.rating,
-    reports:this.state.reports,
-    partners:this.state.partners,
-    projects:this.state.projects,
-    events:this.state.events 
+     password:this.state.password,
+     location:this.state.location,
+     yearsOfExperience:this.state.yearsOfExperience,
+    // rating:this.state.rating,
+     reports:this.state.reports,
+     partners:this.state.partners,
+     projects:this.state.projects,
+     events:this.state.events 
   }
   
   axios.put(`http://localhost:5000/api/consultancyagency/${this.props.agency._id}`,body)
@@ -225,12 +225,6 @@ window.location.reload();
           margin="normal"
           variant="outlined"
         />
-        
-       
-        
-        
-        
-        
 
       <UpdateButton onUpdate={this.onUpdate} />
       </form>
