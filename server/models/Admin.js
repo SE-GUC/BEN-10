@@ -15,10 +15,7 @@ const AdminSchema = new Schema({
         type : String,
         required: true
     },
-    birthdate: {
-        type: Date,
-        required: true
-    }, 
+     
     gender: {
         type: Boolean,
         required: true

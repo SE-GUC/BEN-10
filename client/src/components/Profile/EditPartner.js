@@ -248,33 +248,25 @@ window.location.reload();
           variant="outlined"
         />
         <TextField
-          id="email"
-          label="email"
+          id="outlined-email-input"
+          label="Email"
           className={classes.textField}
-          value={this.state.email}
-          onChange={this.handleChange('email')}
+          type="email"
+          name="email"
+          autoComplete="email"
           margin="normal"
           variant="outlined"
         />
-        <FormControl className={classNames(classes.margin, classes.textField)}>
-          <InputLabel htmlFor="adornment-password">Password</InputLabel>
-          <Input
-            id="adornment-password"
-            type={this.state.showPassword ? 'text' : 'password'}
-            value={this.state.password}
-            onChange={this.handleChange('password')}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="Toggle password visibility"
-                  onClick={this.handleClickShowPassword}
-                >
-                  {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
+
+       <TextField
+          id="outlined-password-input"
+          label="Password"
+          className={classes.textField}
+          type="password"
+          autoComplete="current-password"
+          margin="normal"
+          variant="outlined"
+        />
         <TextField
           id="mobileNumber"
           label="mobileNumber"

@@ -19,23 +19,11 @@ class App extends Component {
     user:null
 
   }
-  // componentDidMount() {
-  //   axios 
-  //     .get("http://localhost:5000/api/consultancyagency")
-  //     .then(res => {
-  //       return res.data; 
-  //     })
-  //     .then(a =>
-  //       this.setState({
-  //         user:a.data[0]
-  //       })
-  //     );
-  // }
   componentDidMount() {
     axios 
-      .get("http://localhost:5000/api/partners")
+      .get("http://localhost:5000/api/consultancyagency")
       .then(res => {
-        return res.data;  
+        return res.data; 
       })
       .then(a =>
         this.setState({
@@ -45,7 +33,31 @@ class App extends Component {
   }
   // componentDidMount() {
   //   axios 
+  //     .get("http://localhost:5000/api/partners")
+  //     .then(res => {
+  //       return res.data;  
+  //     })
+  //     .then(a =>
+  //       this.setState({
+  //         user:a.data[0]
+  //       })
+  //     );
+  // }
+  // componentDidMount() {
+  //   axios 
   //     .get("http://localhost:5000/api/members")
+  //     .then(res => {
+  //       return res.data; 
+  //     })
+  //     .then(a =>
+  //       this.setState({
+  //         user:a.data[0]
+  //       })
+  //     );
+  // }
+  // componentDidMount() {
+  //   axios 
+  //     .get("http://localhost:5000/api/admins")
   //     .then(res => {
   //       return res.data; 
   //     })
@@ -66,8 +78,8 @@ class App extends Component {
           <Route exact path="/MyProjects/:id" render={(props) => <MyProjectsId {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
           {/* <Route exact path="/EditProfile" id={this.partner_id} type={"partner"} />  */}
           {/* <Route exact path="/EditProfile/:id" render={(props) => <EditProfile {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} type={"partner"} />}/> */}
-          <Route exact path="/EditProfile" render={(props) => <EditProfile {...props}  type={"partner"} partner={this.state.user} />}/>
-
+          <Route exact path="/EditProfile" render={(props) => <EditProfile {...props}  type={"consultancyAgnecy"}  partner={this.state.user} />}/>
+        
           {/* <Route exact path="/EditProfile" render={(props) => <EditProfile />}/> */}
             <Route exact path="/myEvents/:id" render={(props) => <MyEventsId {...props} partner_id={this.state.partner_id} />} />
             <Route exact path="/myEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
