@@ -11,6 +11,7 @@ const member = require("../../models/Member");
 const Event = require("../../models/Event");
 const Application = require("../../models/Application");
 const Project = require("../../models/Project");
+const CA = require("../../models/ConsultancyAgency");
 
 const validator = require("../../validations/adminValidations");
 const notificationValidator = require("../../validations/memberValidations");
@@ -122,7 +123,7 @@ router.post("/:aid/notifications/:id/", async (req, res) => {
   } else return res.status(404).send({ error: "Member does not exist" });
 });
 async function AdminNotifyAcceptedCandidate(
-  sentBy,
+  sentById,
   description,
   notifiedPerson,
   date
@@ -201,8 +202,8 @@ async function assignAttributes(pid, body) {
 router.put("/:id/myProjects/:pid/sendDraft", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
-      if (req.body.final_draft != null) {
-        const j = await sendFinalDraft(req.params.pid, req.body.final_draft);
+      if (req.body.finalDraft != null) {
+        const j = await sendFinalDraft(req.params.pid, req.body.finalDraft);
         res.status(200).send(j);
       } else {
         return res.status(400).send({ error: "Please insert the final draft" });
@@ -218,8 +219,8 @@ router.put("/:id/myProjects/:pid/sendDraft", async (req, res) => {
 
 async function sendFinalDraft(projectID, draft) {
   const body = {
-    life_cycle: "Final Draft",
-    final_draft: draft
+    lifeCycle: "Final Draft",
+    finalDraft: draft
   };
   var error = true;
   var j;
@@ -254,7 +255,7 @@ router.put("/:id/postProject/:pid", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
       const project = await Project.findById(req.params.pid);
-      if (project.life_cycle == "Approved") {
+      if (project.lifeCycle == "Approved") {
         const j = await postProject(req.params.pid);
         res.send(j);
       } else {
@@ -269,7 +270,7 @@ router.put("/:id/postProject/:pid", async (req, res) => {
   }
 });
 async function postProject(id) {
-  const body = { life_cycle: "Posted" };
+  const body = { lifeCycle: "Posted" };
   var error = true;
   var result;
 
@@ -534,7 +535,7 @@ router.post("/:id/projects/:id2/sendRejection", async (req, res) => {
         res.send({ error: "Not a project id" });
       } else {
         return res.send({
-          data: await sendRejectionNotification(req.params.id2,sentBy)
+          data: await sendRejectionNotification(req.params.id2,req.params.id)
         });
       }
     }
@@ -542,7 +543,7 @@ router.post("/:id/projects/:id2/sendRejection", async (req, res) => {
     return res.status(400).send("Error");
   }
 });
-async function sendRejectionNotification(projectId,sentBy) {
+async function sendRejectionNotification(projectId,sentById) {
   const project = await Project.findById(projectId);
   if (!project) {
     return { msg: "there is no Such project" };
@@ -562,7 +563,7 @@ async function sendRejectionNotification(projectId,sentBy) {
   for (i = 0; i < myProjectApplications.length; i++) {
     if (project.memberID.toString() !== myProjectApplications[i].toString()) {
       const body = {
-        sentBy,
+        sentById,
         description:
           "Sorry u were not accepted for project {" + project.description + "}",
         notifiedPerson: myProjectApplications[i],
@@ -739,5 +740,147 @@ router.get("/:id/projects", async (req, res) => {
     return res.status(404).send({ error: "ID not found" });
   }
 });
+// as an admin i want to assign one of the CAs who applied for the task/project
+router.put("/:aid/assignCA/:pid/to/:cid", async (req, res) => {
+  try {
+    if (
+      ObjectId.isValid(req.params.aid) &&
+      ObjectId.isValid(req.params.pid) &&
+      ObjectId.isValid(req.params.cid)
+    ) {
+      const admin = await Admin.findById(req.params.aid);
+      const project = await Project.findById(req.params.pid) 
+      const ca = await CA.findById(req.params.cid) 
+      if(admin && project && ca){
+        var cas = project.applyingCA;
+        cas = cas.map(m=>m.toString())
+        if (project.wantConsultancy == true){
+          if (project.consultancyId === null){
+          if (cas.includes(req.params.cid.toString()) ){
+            const url = `${server}/api/projects/${req.params.pid}`;
+            fetch(url, {
+              method: "put",
+              body: JSON.stringify({ consultancyId: req.params.cid,
+              lifeCycle:"Negotiation" }),
+              headers: { "Content-Type": "application/json" }
+            })
+              .then(res => {
+                return res.json();
+              })
+              .then(json => {
+                console.log(json);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+            return res.status(200).send({ msg: "Consultancy Agency has been assigned" });
+          } else return res.status(404).send({ msg: "Consultancy Agency did not apply" });
+        } else return res.status(404).send({ msg: "a Consultancy Agency is already assigned" });
+      } else return res.status(404).send({ msg: "a Consultancy Agency is not required" });
+    }else return res.status(404).send({error:"not a valid id"});
+   } else {
+      return res.status(404).send({ msg: "invalid inputs" });
+    }
+  } catch(error) {
+    res.status(404).send({ error: "error"});
+  }
+});
+//----------------------------------
+// as an admin i want to view the applying members of a project
+router.get("/:id/myProjects/:pid/applyingMembers", async (req, res) => {
+  if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid)){
+  const aid = await Admin.findById(req.params.id);
+  const pid= await Project.findById(req.params.pid);
+ if(aid!=null && pid!=null){
+  var j = await getApplyingMembers(req.params.pid);
+  var result = [];
+  var i;
+  for (i = 0; i < j.length; i++) {
+    await fetch(`${server}/api/members/${j[i]}`)
+      .then(res => res.json())
+      .then(json => {
+        const member = json.data;
+        result.push(member);
+      })
+      .catch(err => console.log("Error", err));
+  }
+  if (result.length === 0) {
+    res.status(404).send({error: "No members applied for this project"})
+  } else {
+    res.json({ data: result });
+  }
+}
+else{
+  res.status(404).send({error:"the ids requested doesnt exist"})
+}
+
+}else{
+  res.status(404).send({error:"error in the ids"})
+}
+
+
+});
+
+async function getApplyingMembers(pid) {
+  var result = [];
+  await fetch(`${server}/api/applications`)
+    .then(res => res.json())
+    .then(json => {
+      const members = json.data;
+      const appliedmembers = members.filter(m => m.projectId == pid);
+      appliedmembers.forEach(m => {
+        result.push(m.applicantId);
+      });
+      return result;
+    })
+    .catch(err => console.log("Error", err));
+  return result;
+}
+//------------------------------------------
+// admin assign member to a project
+router.put(
+  "/:id/myProjects/:pid/applyingMembers/:mid/assign",
+  async (req, res) => {
+    if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid)&&ObjectId.isValid(req.params.mid)){
+    const cid = await Admin.findById(req.params.id);
+    const pid= await Project.findById(req.params.pid);
+    const mid= await Member.findById(req.params.mid);
+    if(cid!=null && pid!=null && mid!=null){
+    const members = await getApplyingMembers(req.params.pid);
+    console.log(members);
+    if (req.params.mid != null) {
+      candidatID = req.params.mid;
+    } else {
+      return res.status(400).send({ error: "Please enter Memeber ID" });
+    }
+    const canBeAssigned = members.includes(candidatID);
+    var j;
+    if (canBeAssigned) {
+      j = await assignCandidate(req.params.pid, candidatID);
+      var projects = mid.projects;
+      projects.push(req.params.pid);
+      const body = {projects}
+      await fetch(`${server}/api/members/${candidatID}`, {
+        method: "put",
+        body: JSON.stringify(body),
+        headers: { "Content-Type": "application/json" }
+      })
+      res.send(j);
+    } else {
+      res
+        .status(400)
+        .send({ error: "Candidate did not apply on this project" });
+    }
+}
+else{
+    res.status(404).send({error:"the ids requested doesnt exist"})
+
+  }
+}
+else{
+  res.status(404).send({error:"error in ids"})
+}
+}
+);
 
 module.exports = router;

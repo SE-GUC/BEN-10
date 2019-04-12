@@ -38,9 +38,7 @@ router.post("/", async (req, res) => {
     const newProject = await Project.create(req.body);
     return res.json({ msg: "Project was created successfully", data: newProject });
   } catch (error) {
-    console.log(error)
-    console.log("hi")
-    return res.status(400).send({ error: "not a project id" });
+    return res.status(400).send({ error: error });
   }
 });
 
