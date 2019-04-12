@@ -21,7 +21,8 @@ const ProjectSchema = new Schema({
     },
     consultancyId: {
         type: Schema.Types.ObjectId,ref: "ConsultancyAgency",
-        required:false
+        required:false,
+        default:null
     },
     postedDate: {
         type: Date,
@@ -33,28 +34,32 @@ const ProjectSchema = new Schema({
     },
     lifeCycle:{
         type: String,
-        required: false
+        required: false,
     },
     estimatedEffort: {
         type: String,
-        required: true
+        required: false,
+        default:null
     },
     estimatedTime: {
         type: String,
-        required: true  
+        required: false,
+        default:null 
     },
     experienceLevelNeeded: {
         type: String,
-        required: true  
+        required: false,
+        default:null
     },
     requiredSkillsSet: {
         type: [{ type: Schema.Types.String }],
-        required: true ,
+        required: false ,
         default:[]
     },
     finalDraft: {
         type: String,
-        required: false
+        required: false,
+        default:null
     },
     applyingCA :{
         type: [{ type: Schema.Types.ObjectId, ref: "ConsultancyAgency" }],
@@ -64,7 +69,8 @@ const ProjectSchema = new Schema({
     },
     submittedProjectLink:{
         type:String,
-        required:false
+        required:false,
+        default:null
     }
 })
 

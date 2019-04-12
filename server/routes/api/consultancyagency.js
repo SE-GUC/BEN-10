@@ -231,6 +231,7 @@ router.put(
     const pid= await Project.findById(req.params.pid);
     const mid= await Member.findById(req.params.mid);
     if(cid!=null && pid!=null && mid!=null){
+      if(req.params.id.toString()===pid.consultancyId.toString()){
     const members = await getApplyingMembers(req.params.pid);
     console.log(members);
     if (req.params.mid != null) {
@@ -242,14 +243,25 @@ router.put(
     var j;
     if (canBeAssigned) {
       j = await assignCandidate(req.params.pid, candidatID);
+      var projects = mid.projects;
+      projects.push(req.params.pid);
+      const body = {projects}
+      await fetch(`${server}/api/members/${candidatID}`, {
+        method: "put",
+        body: JSON.stringify(body),
+        headers: { "Content-Type": "application/json" }
+      })
       res.send(j);
     } else {
       res
         .status(400)
         .send({ error: "Candidate did not apply on this project" });
     }
+  }else{
+    res.status(400).send({error:"not your project"})
   }
-  else{
+}
+else{
     res.status(404).send({error:"the ids requested doesnt exist"})
 
   }
@@ -315,6 +327,7 @@ async function assignCandidate(projectID, candidatID) {
       console.log("Error", err);
       j = { msg: "Error" };
     });
+    
 
   return j;
 }
@@ -501,7 +514,7 @@ async function getFinished(caProjects) {
   var finished = [];
   for (var i = 0; i < caProjects.length; i++) {
     const p = await Project.findById(caProjects[i]);
-    if (p.life_cycle === "Finished") {
+    if (p.lifeCycle === "Finished") {
       finished.push(p);
     }
   }
@@ -518,9 +531,13 @@ router.put("/:id/caApplyProject/:pid", async (req, res) => {
     const project = await Project.findById(req.params.pid);
     if (ca && project) {
       const applying = project.applyingCA;
+      if(applying.includes(ca)){
       applying.push(req.params.id);
       const j = await caApplyProject(req.params.pid, applying);
       res.status(200).send(j);
+    }else{
+      return res.status(400).send({error:"You Applied Before"})
+    }
     } else return res.status(404).send({ error: "invalid inputs" });
   } else {
     return res.status(404).send({ error: "invalid inputs" });
@@ -613,7 +630,7 @@ async function approvefinal(pid) {
   return j;
 }
 
-// 8 As a CA I wanto to disapprove the final review of a project
+// 8 As a CA I want to to disapprove the final review of a project
 async function disapprovefinal(pid) {
   var error = true;
   const body = { lifeCycle: "In Progress" };
@@ -757,5 +774,72 @@ router.get("/:id/ShowMyEvents", async (req, res) => {
     return res.status(404).send({ error: "Consultancy Agency not found" });
   }
 });
+// view all projects
+router.get("/:id/viewAllProjects",async (req,res)=>{
+  const ca = await ConsultancyAgency.findById(req.params.id);
+  if(ca){
+    var projects = await Project.find();
+    arr=["Posted","In Progress","Final Review","Finished","Waiting for consultancy Agency"]
+    projects = projects.filter(p => arr.includes(p.lifeCycle))
+    res.json({data:projects})
+  }else{
+    return res.status(404).send({error:"not a member id"})
+  }
+})
+
+// View candidates applying for a project
+router.get("/:id/myProjects/:pid/applyingMembers", async (req, res) => {
+  if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid)){
+  const cid = await ConsultancyAgency.findById(req.params.id);
+  const pid= await Project.findById(req.params.pid);
+ if(cid!=null && pid!=null){
+   if (pid.applicantId == req.params.id){
+  var j = await getApplyingMembers(req.params.pid);
+  var result = [];
+  var i;
+  for (i = 0; i < j.length; i++) {
+    await fetch(`${server}/api/members/${j[i]}`)
+      .then(res => res.json())
+      .then(json => {
+        const member = json.data;
+        result.push(member);
+      })
+      .catch(err => console.log("Error", err));
+  }
+  if (result.length === 0) {
+    res.status(404).send({error: "No members applied for this project"})
+  } else {
+    res.json({ data: result });
+  }
+}
+else res.status(404).send({error:"this project isnt assigned to you"})
+}
+else{
+  res.status(404).send({error:"the ids requested doesnt exist"})
+}
+
+}else{
+  res.status(404).send({error:"error in the ids"})
+}
+
+
+});
+
+async function getApplyingMembers(pid) {
+  var result = [];
+  await fetch(`${server}/api/applications`)
+    .then(res => res.json())
+    .then(json => {
+      const members = json.data;
+      const appliedmembers = members.filter(m => m.projectId == pid);
+      appliedmembers.forEach(m => {
+        result.push(m.applicantId);
+      });
+      return result;
+    })
+    .catch(err => console.log("Error", err));
+  return result;
+}
+//---------------------------------------------
 
 module.exports = router;
