@@ -63,7 +63,7 @@ module.exports = {
                 'Hard',
                 'Extreme',),
             estimatedTime:Joi.string(),
-            experienceLevelNeeded:Joi.string().required( 'Fundamental Awareness',
+            experienceLevelNeeded:Joi.string().valid( 'Fundamental Awareness',
                 'Novice',
                 'Intermediate',
                 'Advanced',

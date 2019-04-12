@@ -57,7 +57,7 @@ const EventSchema={
     },
     formLink:{
         type:String,
-        required:true
+        required:false
     }
     
 
