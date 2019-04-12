@@ -50,54 +50,54 @@ class MyProfile extends Component {
   //     partners: partner.data.partners
   //   })})
   // }
-  // componentDidMount(){
-  //   fetch(`http://localhost:5000/api/consultancyagency/${this.state.id}`).then(res=>{
-  //     return res.json()
-  //   })
-  //   .then(ca=>{this.setState({
-  //     name: ca.data.name,
-  //     about: ca.data.about,
-  //     telephoneNumber: ca.data.telephoneNumber,
-  //     email: ca.data.email,
-  //     password: ca.data.password,
-  //     location: ca.data.location,
-  //     yearsOfExperience: ca.data.yearsOfExperience,
-  //     rating: ca.data.rating,
-  //     reports: ca.data.reports,
-  //     partners: ca.data.partners,
-  //     projects: ca.data.projects,
-  //     events: ca.data.events
-  //   })})
-  // }
-
   componentDidMount(){
-    console.log(this.state.id)
-    fetch(`http://localhost:5000/api/members/${this.state.id}`).then(res=>{
+    fetch(`http://localhost:5000/api/consultancyagency/${this.state.id}`).then(res=>{
       return res.json()
     })
-    .then(member=>{this.setState({
-      firstName: member.data.firstName,
-      name:member.data.firstName,
-      lastName: member.data.lastName,
-      SSN: member.data.SSN,
-      birthDate: member.data.birthDate,
-      gender: member.data.gender,
-      nationality: member.data.nationality,
-      maritalStatus: member.data.maritalStatus,
-      drivingLicense: member.data.drivingLicense,
-      country: member.data.country,
-      city: member.data.city,
-      area: member.data.area,
-      postalCode: member.data.postalCode,
-      email: member.data.email,
-      password: member.data.password,
-      mobileNumber: member.data.mobileNumber,
-      alternativeMobileNumber: member.data.alternativeMobileNumber,
-      events: member.data.events,
-      projects: member.data.projects,
-      skillSet: member.data.skillSet
+    .then(ca=>{this.setState({
+      name: ca.data.name,
+      about: ca.data.about,
+      telephoneNumber: ca.data.telephoneNumber,
+      email: ca.data.email,
+      password: ca.data.password,
+      location: ca.data.location,
+      yearsOfExperience: ca.data.yearsOfExperience,
+      rating: ca.data.rating,
+      reports: ca.data.reports,
+      partners: ca.data.partners,
+      projects: ca.data.projects,
+      events: ca.data.events
     })})
   }
+
+  // componentDidMount(){
+  //   console.log(this.state.id)
+  //   fetch(`http://localhost:5000/api/members/${this.state.id}`).then(res=>{
+  //     return res.json()
+  //   })
+  //   .then(member=>{this.setState({
+  //     firstName: member.data.firstName,
+  //     name:member.data.firstName,
+  //     lastName: member.data.lastName,
+  //     SSN: member.data.SSN,
+  //     birthDate: member.data.birthDate,
+  //     gender: member.data.gender,
+  //     nationality: member.data.nationality,
+  //     maritalStatus: member.data.maritalStatus,
+  //     drivingLicense: member.data.drivingLicense,
+  //     country: member.data.country,
+  //     city: member.data.city,
+  //     area: member.data.area,
+  //     postalCode: member.data.postalCode,
+  //     email: member.data.email,
+  //     password: member.data.password,
+  //     mobileNumber: member.data.mobileNumber,
+  //     alternativeMobileNumber: member.data.alternativeMobileNumber,
+  //     events: member.data.events,
+  //     projects: member.data.projects,
+  //     skillSet: member.data.skillSet
+  //   })})
+  // }
   render(){
     if (this.state.name === null) {
       return (

@@ -19,18 +19,18 @@ class App extends Component {
     user:null
 
   }
-  // componentDidMount() {
-  //   axios 
-  //     .get("http://localhost:5000/api/consultancyagency")
-  //     .then(res => {
-  //       return res.data; 
-  //     })
-  //     .then(a =>
-  //       this.setState({
-  //         user:a.data[0]
-  //       })
-  //     );
-  // }
+  componentDidMount() {
+    axios 
+      .get("http://localhost:5000/api/consultancyagency")
+      .then(res => {
+        return res.data; 
+      })
+      .then(a =>
+        this.setState({
+          user:a.data[0]
+        })
+      );
+  }
   // componentDidMount() {
   //   axios 
   //     .get("http://localhost:5000/api/partners")
@@ -43,18 +43,18 @@ class App extends Component {
   //       })
   //     );
   // }
-  componentDidMount() {
-    axios 
-      .get("http://localhost:5000/api/members")
-      .then(res => {
-        return res.data; 
-      })
-      .then(a =>
-        this.setState({
-          user:a.data[0]
-        })
-      );
-  }
+  // componentDidMount() {
+  //   axios 
+  //     .get("http://localhost:5000/api/members")
+  //     .then(res => {
+  //       return res.data; 
+  //     })
+  //     .then(a =>
+  //       this.setState({
+  //         user:a.data[0]
+  //       })
+  //     );
+  // }
   // componentDidMount() {
   //   axios 
   //     .get("http://localhost:5000/api/admins")
