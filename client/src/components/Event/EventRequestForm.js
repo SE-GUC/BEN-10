@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
-import PostProjectMessage from "./PostProjectMessage"
+import EventRequestMessage from "./EventRequestMessage"
 
 
 const styles = theme => ({
@@ -23,18 +23,26 @@ const styles = theme => ({
   }
 });
 
-const states = [
+const locations = [
   {
-    value: "true",
-    label: "Yes"
+    value: "Lirten Office",
+    label: "Lirten Office"
   },
   {
-    value: "false",
-    label: "No"
+    value: "GUC",
+    label: "GUC"
+  },
+  {
+    value: "AUC",
+    label: "AUC"
+  },
+  {
+    value: "New Cairo",
+    label: "New Cairo"
   }
 ];
 
-class PostProjectForm extends React.Component {
+class EventRequestForm extends React.Component {
   
   constructor(props) {
     super(props);
@@ -43,8 +51,9 @@ class PostProjectForm extends React.Component {
 
     this.state = {
       description:"",
-      category:"",
-      want_consultancy:false,
+      location: "Lirten Office",
+      date:"2019-01-01",
+      type:"",
       response:null
     };
   }
@@ -52,7 +61,7 @@ class PostProjectForm extends React.Component {
   clear() {
     this.setState({
       description: "",
-      category:"",
+      type:""
     })
   }
   
@@ -71,11 +80,6 @@ class PostProjectForm extends React.Component {
     return (
       <div>
         <div>
-          <label>
-            Request a project
-          </label>
-          </div>
-        <div>
           <TextField
             id="description"
             label="Description"
@@ -91,11 +95,11 @@ class PostProjectForm extends React.Component {
         </div>
         <div>
           <TextField
-            id="projectCategory"
-            label="Project Category"
+            id="eventType"
+            label="Event Type"
             className={classes.textField}
-            value={this.state.category}
-            onChange={this.handleChange("category")}
+            value={this.state.type}
+            onChange={this.handleChange("type")}
             margin="normal"
             variant="outlined"
           />
@@ -103,16 +107,21 @@ class PostProjectForm extends React.Component {
         </div>
         <div>
           <TextField
-            id="want_consultancy"
+            id="eventLocation"
             select
-            label="Select Consultancy"
+            label="Select Location"
             className={classes.textField}
-            value={this.state.want_consultancy}
-            onChange={this.handleChange("want_consultancy")}
+            value={this.state.location}
+            onChange={this.handleChange("location")}
+            // SelectProps={{
+            //   MenuProps: {
+            //     className: classes.menu
+            //   }
+            // }}
             margin="normal"
             variant="outlined"
           >
-            {states.map(option => (
+            {locations.map(option => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}
               </MenuItem>
@@ -120,10 +129,28 @@ class PostProjectForm extends React.Component {
           </TextField>
           <br />
         </div>
+
+        <div>
+          <TextField
+            id="eventDate"
+            label="Event Date"
+            type="date"
+            className={classes.textField}
+            onChange={this.handleChange("date")}
+            margin="normal"
+            variant="outlined"
+            defaultValue={this.state.date}
+            InputLabelProps={{
+              shrink: true
+            }}
+          />
+          <br />
+        </div>
        
         <div>
-          <PostProjectMessage className={classes.button} description={this.state.description} category={this.state.category}
-          want_consultancy={this.state.want_consultancy} companyID={this.props.companyID} clear={this.clear}/>
+          <EventRequestMessage className={classes.button} description={this.state.description} date={this.state.date}
+          type={this.state.type} location={this.state.location} requestorId={this.props.requestorId} 
+          clear={this.clear}/>
         </div>
       </div>
   );
@@ -133,8 +160,8 @@ class PostProjectForm extends React.Component {
 }
 
 
-PostProjectForm.propTypes = {
+EventRequestForm.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(PostProjectForm);
+export default withStyles(styles)(EventRequestForm);

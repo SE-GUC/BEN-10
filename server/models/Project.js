@@ -37,15 +37,15 @@ const ProjectSchema = new Schema({
     },
     estimatedEffort: {
         type: String,
-        required: true
+        required: false
     },
     estimatedTime: {
         type: String,
-        required: true  
+        required: false  
     },
     experienceLevelNeeded: {
         type: String,
-        required: true  
+        required: false  
     },
     requiredSkillsSet: {
         type: [{ type: Schema.Types.String }],

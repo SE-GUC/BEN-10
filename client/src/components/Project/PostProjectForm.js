@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
-import EventRequestMessage from "./EventRequestMessage"
+import PostProjectMessage from "./PostProjectMessage"
 
 
 const styles = theme => ({
@@ -23,26 +23,18 @@ const styles = theme => ({
   }
 });
 
-const locations = [
+const states = [
   {
-    value: "Lirten Office",
-    label: "Lirten Office"
+    value: "true",
+    label: "Yes"
   },
   {
-    value: "GUC",
-    label: "GUC"
-  },
-  {
-    value: "AUC",
-    label: "AUC"
-  },
-  {
-    value: "New Cairo",
-    label: "New Cairo"
+    value: "false",
+    label: "No"
   }
 ];
 
-class EventRequestForm extends React.Component {
+class PostProjectForm extends React.Component {
   
   constructor(props) {
     super(props);
@@ -51,9 +43,8 @@ class EventRequestForm extends React.Component {
 
     this.state = {
       description:"",
-      location: "Lirten Office",
-      date:"2019-01-01",
-      type:"",
+      category:"",
+      wantConsultancy:false,
       response:null
     };
   }
@@ -61,10 +52,9 @@ class EventRequestForm extends React.Component {
   clear() {
     this.setState({
       description: "",
-      type:""
+      category:"",
     })
   }
-  
   
   handleChange = name => event => {
     this.setState({
@@ -72,18 +62,13 @@ class EventRequestForm extends React.Component {
     });
   };
 
-  
 
   render() {
     const { classes } = this.props;
     
     return (
       <div>
-        <div>
-          <label>
-            Request an event
-          </label>
-          </div>
+        
         <div>
           <TextField
             id="description"
@@ -100,11 +85,11 @@ class EventRequestForm extends React.Component {
         </div>
         <div>
           <TextField
-            id="eventType"
-            label="Event Type"
+            id="projectCategory"
+            label="Project Category"
             className={classes.textField}
-            value={this.state.type}
-            onChange={this.handleChange("type")}
+            value={this.state.category}
+            onChange={this.handleChange("category")}
             margin="normal"
             variant="outlined"
           />
@@ -112,21 +97,16 @@ class EventRequestForm extends React.Component {
         </div>
         <div>
           <TextField
-            id="eventLocation"
+            id="want_consultancy"
             select
-            label="Select Location"
+            label="Need Consultancy"
             className={classes.textField}
-            value={this.state.location}
-            onChange={this.handleChange("location")}
-            // SelectProps={{
-            //   MenuProps: {
-            //     className: classes.menu
-            //   }
-            // }}
+            value={this.state.wantConsultancy}
+            onChange={this.handleChange("wantConsultancy")}
             margin="normal"
             variant="outlined"
           >
-            {locations.map(option => (
+            {states.map(option => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}
               </MenuItem>
@@ -134,28 +114,10 @@ class EventRequestForm extends React.Component {
           </TextField>
           <br />
         </div>
-
-        <div>
-          <TextField
-            id="eventDate"
-            label="Event Date"
-            type="date"
-            className={classes.textField}
-            onChange={this.handleChange("date")}
-            margin="normal"
-            variant="outlined"
-            defaultValue={this.state.date}
-            InputLabelProps={{
-              shrink: true
-            }}
-          />
-          <br />
-        </div>
        
         <div>
-          <EventRequestMessage className={classes.button} description={this.state.description} date={this.state.date}
-          type={this.state.type} location={this.state.location} requestorId={this.props.requestorId} 
-          clear={this.clear}/>
+          <PostProjectMessage className={classes.button} description={this.state.description} category={this.state.category}
+          wantConsultancy={this.state.wantConsultancy} companyID={this.props.companyID} clear={this.clear}/>
         </div>
       </div>
   );
@@ -165,8 +127,8 @@ class EventRequestForm extends React.Component {
 }
 
 
-EventRequestForm.propTypes = {
+PostProjectForm.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(EventRequestForm);
+export default withStyles(styles)(PostProjectForm);

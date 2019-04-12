@@ -106,12 +106,12 @@ router.post("/:id/addProject", async (req, res) => {
         if (
           req.body.description != null &&
           req.body.category != null &&
-          req.body.want_consultancy != null
+          req.body.wantConsultancy != null
         ) {
           const company_id = req.params.id;
           var life;
           var date = Date.now();
-          if (req.body.want_consultancy == true) {
+          if (req.body.wantConsultancy == true) {
             life = "Waiting for consultancy";
           } else {
             life = "Negotiation";
@@ -120,11 +120,11 @@ router.post("/:id/addProject", async (req, res) => {
           var error = true;
           const Project = {
             description: req.body.description,
-            companyID: company_id,
+            companyId: company_id,
             category: req.body.category,
-            want_consultancy: req.body.want_consultancy,
-            posted_date: date,
-            life_cycle: life
+            wantConsultancy: req.body.wantConsultancy,
+            postedDate: date,
+            lifeCycle: life
           };
           await fetch(`${server}/api/projects/`, {
             method: "post",
@@ -144,7 +144,7 @@ router.post("/:id/addProject", async (req, res) => {
             })
             .then(json => {
               if (!error) {
-                json = { msg: `created successfully` };
+                json = { msg: `Project submitted successfully` };
               }
               result = json;
               console.log(json);
@@ -387,7 +387,7 @@ router.put("/:id3/project/:id1/AssignCAtoProject/:id2", async (req, res) => {
             break;
           }
         }
-        var need = project.want_consultancy;
+        var need = project.wantConsultancy;
         if (need === true) {
           if (found === true) {
             const j = await assigning(caId, projID);
@@ -838,27 +838,23 @@ router.use("/:id/cancelproject/:pid", async (req, res) => {
 
 
 // as partner i want to send task orientation invitation
+//edited by abdelrahman
 router.post("/:id/sendOrientationInvitations/:pid/", async (req, res) => {
   if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
     const partner = await Partner.findById(req.params.id);
     const project = await Project.findById(req.params.pid);
     if (partner && project) {
-      if (project.companyID == req.params.id) {
-        if (project.life_cycle == "Posted") {
+      
+      if (project.companyId == req.params.id) {
+        if (project.lifeCycle === "Posted") {
           var i;
           var success = true;
-          var today = new Date();
-          var date =
-            today.getFullYear() +
-            "-" +
-            (today.getMonth() + 1) +
-            "-" +
-            today.getDate();
+          var date = Date.now();
           const Applications = await Application.find();
           const candidates = Applications.filter(
             c => c.projectId == req.params.pid
           );
-          var arr = new Array(candidates.length);
+          var arr =[];
           for (i = 0; i < candidates.length; i++) {
             const m = await Member.findById(candidates[i].applicantId);
             const j = await Partnersendtask(
@@ -867,33 +863,33 @@ router.post("/:id/sendOrientationInvitations/:pid/", async (req, res) => {
               req.params.pid,
               date
             );
-            arr[i] = j;
+            arr.push(j);
           }
-          for (i = 0; i < candidates.length; i++) {
+          for (i = 0; i < arr.length; i++) {
+            console.log(arr[i].msg)
             if (arr[i].msg != "task is sent successfully") success = false;
           }
           if (success)
             res
               .status(200)
-              .send({ msg: "Task Orientations are sent successfully" });
-          else res.status(404).send({ msg: "Error occured" });
+              .json({ msg: "Task Orientations are sent successfully" });
+          else res.json({ msg: "Error occured" });
         } else
-          return res.status(404).send({ msg: "Project has already started" });
+          return res.json({ msg: "Project has already started" });
       } else {
         return res
-          .status(404)
-          .send({ msg: "This project does not belong to you" });
+          .json({ msg: "This project does not belong to you" });
       }
-    } else return res.status(404).send({ msg: "inavalid inputs" });
-  } else return res.status(404).send({ msg: "inavalid inputs" });
+    } else return res.json({ msg: "inavalid inputs" });
+  } else return res.json({ msg: "inavalid inputs" });
 });
 
 async function Partnersendtask(mid, description, pid, date) {
   var error = true;
   const body = {
-    sentToID: mid,
+    sentToId: mid,
     description: `get to know the project better through this session ${description}`,
-    sentByID: pid,
+    sentById: pid,
     sentAt: date
   };
   var j;
@@ -918,6 +914,7 @@ async function Partnersendtask(mid, description, pid, date) {
 
   return j;
 }
+//end editing
 //----------------------------------------------------------------
 
 
