@@ -24,7 +24,7 @@ class App extends Component {
         })
       );
       await axios 
-      .get("http://localhost:5000/api/projects/5caf27d8cd0abb05d910fbf6")
+      .get("http://localhost:5000/api/projects/5cae5dbe9ef1de2600e06890")
       .then(res => {
         return res.data; 
       })
@@ -44,7 +44,7 @@ class App extends Component {
         })
       );
       await axios 
-      .get("http://localhost:5000/api/consultancyagency/5caf2959cd0abb05d910fbf7")
+      .get("http://localhost:5000/api/consultancyagency/5cae3045a972db1e007da3ec")
       .then(res => {
         return res.data; 
       })
