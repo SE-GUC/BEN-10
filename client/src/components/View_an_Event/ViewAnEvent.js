@@ -8,18 +8,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-class viewAnEvent extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-        eventId : this.props.id ,
-        event : [] , 
-        isLoaded : false
-    };
-}
-
-
-
 const styles = {
   card: {
     minWidth: 275,
@@ -37,7 +25,16 @@ const styles = {
   },
 };
 
-function SimpleCard(props) {
+class SimpleCard(props) extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+    eventId : this.props.id ,
+    event : [] , 
+    isLoaded : false
+    };
+  }
+  render(){ 
   const { classes } = props;
   const bull = <span className={classes.bullet}>•</span>;
 
@@ -68,12 +65,12 @@ function SimpleCard(props) {
       </CardActions>
     </Card>
   );
+  SimpleCard.propTypes = {
+    classes: PropTypes.object.isRequired,
+  };
+  
+  export default withStyles(styles)(SimpleCard);
+  }
+
 }
 
-SimpleCard.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(SimpleCard);
-
-}
