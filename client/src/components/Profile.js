@@ -1,6 +1,13 @@
 import React, { Component } from "react";
-import { Card } from "react-bootstrap";
-import { Button } from "react-bootstrap";
+import {Card} from '@material-ui/core/Card';
+import {Button} from '@material-ui/core/Button';
+//import PropTypes from 'prop-types';
+//import { withStyles } from '@material-ui/core/styles';
+//import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+//import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import { BrowserRouter as Router , Route , withRouter } from "react-router-dom";
 
 class Profile extends React.Component {
@@ -13,9 +20,7 @@ class Profile extends React.Component {
       e_mail: props.e_mail,
       experience_level: props.experience_level,
       phone_number: props.phone_number,
-      events: props.events,
-      projects: props.projects,
-      partners: props.partners
+      
 
 
     };
@@ -33,31 +38,49 @@ class Profile extends React.Component {
         pathname : path
       });
     }
+    class SimpleCard(props) {
+      const { classes } = props;
   
   render() {
+
+    const { classes } = this.props;
     return (
-      <div>
-        <Card border="success" style={{ width: "18rem" }}>
-          <Card.Body>
-            <Card.Title>{this.state.name}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">{this.state.e_mail}</Card.Subtitle>
+      
+        <Card className="mb-2 text-muted">
+      <CardContent>
+        <Typography className="mb-2 text-muted" color="textSecondary" gutterBottom>
+          Name: {this.state.name}
+        </Typography>
+
+        <Typography variant="h5" component="h2">
+          Age: {this.state.age} <br />
+          Experience level: {this.state.experience_level} <br /> 
+          Phone number: {this.state.phone_number} <br /> 
+          </Typography>
+
+          </CardContent>
+          <CardActions>
+          <Button size="small">View Events
+          onClick={this.viewEvents}</Button>
+          <Button size="small">View Projects
+          onClick={this.viewEvents}</Button>
+          </CardActions>
+          </Card>
+            /* <Card.Subtitle className="mb-2 text-muted">e-mail: {this.state.e_mail}</Card.Subtitle>
             
-            <Card.Text><div>{this.state.age} <br />
-             {this.state.gender} <br /> 
-             {this.state.experience_level} <br /> 
-             {this.state.phone_number} <br /> 
-             {this.state.events} <br /> 
-             {this.state.projects} <br /> 
-             {this.state.partners} </div> </Card.Text>
-             <Button variant="primary"
+            <Card.Text><div>Age: {this.state.age} <br />
+             
+             Experience level: {this.state.experience_level} <br /> 
+             Phone number: {this.state.phone_number} <br /> 
+              </div> </Card.Text>
+             <Button variant="contained"
              onClick={this.viewEvents}>View Events</Button>
-             <Button variant="primary"
-             onClick={this.viewProjects} >View Projects</Button>
-          </Card.Body>
-        </Card>
-        <br />
-      </div>
-    );
-  }
+             <Button variant="contained"
+             onClick={this.viewProjects} >View Projects</Button> */
+         
+        
+      
+    )}
+    }
 }
 export default withRouter(Profile);
