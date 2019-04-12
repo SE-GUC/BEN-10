@@ -8,11 +8,14 @@ import Button from '@material-ui/core/Button';
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
-    backgroundColor:"#e53935"
+    backgroundColor:"#757575"
   },
   input: {
     display: 'none',
   },
+  text:{
+    color:"#eeeeee"
+  }
 });
 
 class DisapproveRequest extends Component{
@@ -45,7 +48,7 @@ class DisapproveRequest extends Component{
   const { classes } = this.props;
   return (
       <Button variant="contained" className={classes.button} onClick={this.Disapprove}>
-        Delete
+       <h6 className={classes.text}>Delete</h6> 
       </Button>
 
   );

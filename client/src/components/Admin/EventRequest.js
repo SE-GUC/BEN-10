@@ -1,9 +1,36 @@
 // DOOOOODIE'S WORLD
-
-import Component from "react"
+import React,{ Component } from "react";
 import Approve from "./ApproveRequest"
 import Disapprove from "./DisapproveRequest"
- export default class EventRequest extends Component{
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+const styles = {
+    card: {
+      minWidth: 275,
+      marginLeft:500,
+      marginRight:600,
+      marginTop:20,
+      backgroundColor:"#e8eaf6"
+      
+    },
+   
+    
+    title: {
+      fontSize: 10,
+      color:"#283593"
+    },
+    pos: {
+      marginBottom: 10,
+      color:"#303f9f",
+      fontSize:16
+    },
+  };
+class EventRequest extends Component{
     constructor(props){
         super(props);
         this.state={
@@ -16,62 +43,112 @@ import Disapprove from "./DisapproveRequest"
         fetch(`http://localhost:5000/api/consultancyagency/${this.state.body.requestorId}`)
     .then(res=>{return res.json()}).then(
        result=>{
-        this.setState({
+         if(result.error!==undefined){
+           this.setState({
+             requestorName:null
+           })
+
+         }
+         else{
+              this.setState({
             requestorName:result.data.name
         })
+
+         }
        }
     )
+    if(this.state.requestorName==null){
     fetch(`http://localhost:5000/api/partners/${this.state.body.requestorId}`)
     .then(res=>{return res.json()}).then(
        result=>{
-        this.setState({
-            requestorName:result.data.name
-        })
+        if(result.msg!==undefined){
+          this.setState({
+            requestorName:null
+          })
+
+        }
+        else{
+             this.setState({
+           requestorName:result.data.name
+       })
+
+        }
+         
        }
     )
+
+    }
         
 
-    }    
+    }
+        
     render(){
+        const { classes } = this.props;
+        let day=""
+        let month=""
+        if(new Date(this.state.body.eventDate).getDate()<10)
+           day="0"+new Date(this.state.body.eventDate).getDate()
+        if((new Date(this.state.body.eventDate).getMonth()+1)<10)
+           month="0"+(new Date(this.state.body.eventDate).getMonth()+1)
+        if(new Date(this.state.body.eventDate).getMonth()===12)
+           month="01"
+           if(this.state.requestorName!=null){
+             if(this.state.body.isAccepted!=null){
         return(
             <div>
-                <Card style={{ width: '18rem' }}>
-                <Card.Body>
-                <Card.Title>{this.state.requestorName} sends an event request</Card.Title>
-                <Card.Text>
-                    <h1>Descrption</h1>
-                    {
-                        this.state.body.description
-                    }
-                </Card.Text>
-                <Card.Text>
-                    <h1>Type Of Event</h1>
-                    {
-                        this.state.body.eventType
-                    }
-                </Card.Text>
-                <Card.Text>
-                    <h1>Location</h1>
-                    {
-                        this.state.body.eventLocation
-                    }
-                </Card.Text>
-                <Card.Text>
-                    <h1>Date</h1>
-                    {
-                        this.state.body.eventDate
-                    }
-                </Card.Text>
-                <Approve/>
-                <Disapprove/>
-                
-                
-                </Card.Body>
-                </Card>;
+                <Card className={classes.card}>
+      <CardContent>
+        <Typography className={classes.title}  gutterBottom>
+         <h5> {this.state.requestorName} sends you an event request</h5>
+        </Typography>
+        
+        <Typography className={classes.pos} color="textSecondary">
+          Description<br/>
+          {this.state.body.description}
+        </Typography>
+        <Typography className={classes.pos} color="textSecondary">
+          Event Type<br/>
+          {this.state.body.eventType}
+        </Typography>
+        <Typography className={classes.pos} color="textSecondary">
+          Event Location<br/>
+          {this.state.body.eventLocation}
+        </Typography>
+        <Typography className={classes.pos} color="textSecondary">
+          Date<br/>
+          {day+"-"+month+"-"+new Date(this.state.body.eventDate).getFullYear()}
+        </Typography>
+        
+      </CardContent>
+      <CardActions>
+          <Approve/>
+          <Disapprove />
+      </CardActions>
+    </Card>
             </div>
+           
+
         )
+           }
+           else{
+             return(
+             <div>
+             </div>
+             )
+           }
+           }
+           else{
+               return (
+                   <div></div>
+               )
+           }
         
     }
 
 
 }
+EventRequest.propTypes = {
+    classes: PropTypes.object.isRequired,
+  };
+  
+  export default withStyles(styles)(EventRequest);

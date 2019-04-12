@@ -13,31 +13,33 @@ import { BrowserRouter, Route } from "react-router-dom";
 // import Submit from "./components/Member/SubmitWork/FormDialogue"
 // import ApplyCa from "./components/CA/ApplyOnProject"
 import Event from "./components/Admin/CreateEvent"
-import Approve from "./components/Admin/ApproveRequest"
+// import Approve from "./components/Admin/ApproveRequest"
+import Request from "./components/Admin/ViewAllEventRequests"
 class App extends Component {
   state = {
     partner_id:null,
     partner_name:null,
     requestId:this.props.requestId,
-    requestorId:this.props.requestorId
+    requestorId:this.props.requestorId,
+    body:null
   }
   componentDidMount() {
     axios 
-      .get("http://localhost:5000/api/partners")
+      .get("http://localhost:5000/api/admins")
       .then(res => {
         return res.data; 
       })
       .then(a =>
         this.setState({
-          partner_id: a.data[0]._id,
-
-          partner_name: a.data[0].name
+          partner_id:a.data[0]._id
+          // body:a.data[0]
         })
       );
   }
 
   render() {
     if (this.state.partner_id !== null) {
+      console.log(this.state.partner_id)
       return (
         // <div>
         //   <h1>HELLO</h1>
@@ -46,7 +48,8 @@ class App extends Component {
         //   {/* <Apply/> */}
         // </div>
         <BrowserRouter>
-            <Route exact path="/" render={(props) => <Approve/> }/>  
+            {/* <Route exact path="/" render={(props) => <Approve/> }/>   */}
+            <Route exact path="/" render={(props) => <Request admin_id={this.state.partner_id}/> }/>
             <Route exact path="/MyProjects/:id" render={(props) => <MyProjectsId {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/> 
               <Route exact path="/MyProject/edit/:id" component={EditMyProject} />  
 

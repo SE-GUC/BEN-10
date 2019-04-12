@@ -1,7 +1,8 @@
 // DOOOOODIE'S WORLD
 
-import Component from "react"
-
+import React,{Component} from "react"
+import EventRequest from "./EventRequest"
+import Loading from "../Global/loading"
 export default class ViewAllEventRequests extends Component{
     constructor(props){
         super(props);
@@ -22,12 +23,40 @@ export default class ViewAllEventRequests extends Component{
     )
     }
     render(){
+        if(this.state.eventRequests!=null){
         return(
-            eventRequests.filter(e=>{
-                console.log(e);
-            })
+            
+                 <div >
+
+                 
+                 {
+            this.state.eventRequests.map(e=>(
+                <EventRequest body={e}/>
+                
+            ))
+            }
+            </div>
+            
 
         )
+        }
+        else{
+            return (
+                <Loading/>
+            )
+
+        }
+        // return(
+            
+        //     <div>{
+        //     this.state.eventRequests.map(e=>(
+        //         <EventRequest body={e.data}/>
+                
+        //     ))
+        //     }
+        //     </div>
+
+        // )
         
     }
 

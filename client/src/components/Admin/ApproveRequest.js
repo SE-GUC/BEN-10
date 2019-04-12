@@ -10,11 +10,15 @@ import  { Redirect } from 'react-router-dom'
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
-    backgroundColor:"#388e3c"
+    marginLeft:80,
+    backgroundColor:"#0d47a1"
   },
   input: {
     display: 'none',
   },
+  text:{
+    color:"#eeeeee"
+  }
 });
 
 class DisapproveRequest extends Component{
@@ -55,7 +59,7 @@ class DisapproveRequest extends Component{
   if(this.state.event==false){
   return (
       <Button variant="contained" className={classes.button} onClick={this.Approve}>
-        Accept
+       <h6 className={classes.text}>Accept</h6> 
       </Button>
 
   );
