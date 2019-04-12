@@ -22,33 +22,34 @@ class MyProfile extends Component {
 
     }
   }
-  componentDidMount(){
-    fetch(`http://localhost:5000/api/partners/${this.state.id}`).then(res=>{
-      return res.json()
-    })
-    .then(partner=>{this.setState({
-      firstName: partner.data.firstName,
-      lastName: partner.data.lastName,
-      SSN: partner.data.SSN,
-      birthdate: partner.data.birthdate,
-      gender: partner.data.gender,
-      nationality: partner.data.nationality,
-      maritalStatus: partner.data.maritalStatus,
-      militaryStatus: partner.data.militaryStatus,
-      drivingLicense: partner.data.drivingLicense,
-      country: partner.data.country,
-      city: partner.data.city,
-      area: partner.data.area,
-      postalCode: partner.data.postalCode,
-      email: partner.data.email,
-      password: partner.data.password,
-      mobileNumber: partner.data.mobileNumber,
-      alternativeMobileNumber: partner.data.alternativeMobileNumber,
-      events: partner.data.events,
-      projects: partner.data.projects,
-      partners: partner.data.partners
-    })})
-  }
+  // componentDidMount(){
+  //   fetch(`http://localhost:5000/api/partners/${this.state.id}`).then(res=>{
+  //     return res.json()
+  //   })
+  //   .then(partner=>{this.setState({
+  //     firstName: partner.data.firstName,
+  //     name:partner.data.firstName,
+  //     lastName: partner.data.lastName,
+  //     SSN: partner.data.SSN,
+  //     birthdate: partner.data.birthdate,
+  //     gender: partner.data.gender,
+  //     nationality: partner.data.nationality,
+  //     maritalStatus: partner.data.maritalStatus,
+  //     militaryStatus: partner.data.militaryStatus,
+  //     drivingLicense: partner.data.drivingLicense,
+  //     country: partner.data.country,
+  //     city: partner.data.city,
+  //     area: partner.data.area,
+  //     postalCode: partner.data.postalCode,
+  //     email: partner.data.email,
+  //     password: partner.data.password,
+  //     mobileNumber: partner.data.mobileNumber,
+  //     alternativeMobileNumber: partner.data.alternativeMobileNumber,
+  //     events: partner.data.events,
+  //     projects: partner.data.projects,
+  //     partners: partner.data.partners
+  //   })})
+  // }
   // componentDidMount(){
   //   fetch(`http://localhost:5000/api/consultancyagency/${this.state.id}`).then(res=>{
   //     return res.json()
@@ -69,33 +70,34 @@ class MyProfile extends Component {
   //   })})
   // }
 
-  // componentDidMount(){
-  //   console.log(this.state.id)
-  //   fetch(`http://localhost:5000/api/members/${this.state.id}`).then(res=>{
-  //     return res.json()
-  //   })
-  //   .then(member=>{this.setState({
-  //     firstName: member.data.firstName,
-  //     lastName: member.data.lastName,
-  //     SSN: member.data.SSN,
-  //     birthDate: member.data.birthDate,
-  //     gender: member.data.gender,
-  //     nationality: member.data.nationality,
-  //     maritalStatus: member.data.maritalStatus,
-  //     drivingLicense: member.data.drivingLicense,
-  //     country: member.data.country,
-  //     city: member.data.city,
-  //     area: member.data.area,
-  //     postalCode: member.data.postalCode,
-  //     email: member.data.email,
-  //     password: member.data.password,
-  //     mobileNumber: member.data.mobileNumber,
-  //     alternativeMobileNumber: member.data.alternativeMobileNumber,
-  //     events: member.data.events,
-  //     projects: member.data.projects,
-  //     skillSet: member.data.skillSet
-  //   })})
-  // }
+  componentDidMount(){
+    console.log(this.state.id)
+    fetch(`http://localhost:5000/api/members/${this.state.id}`).then(res=>{
+      return res.json()
+    })
+    .then(member=>{this.setState({
+      firstName: member.data.firstName,
+      name:member.data.firstName,
+      lastName: member.data.lastName,
+      SSN: member.data.SSN,
+      birthDate: member.data.birthDate,
+      gender: member.data.gender,
+      nationality: member.data.nationality,
+      maritalStatus: member.data.maritalStatus,
+      drivingLicense: member.data.drivingLicense,
+      country: member.data.country,
+      city: member.data.city,
+      area: member.data.area,
+      postalCode: member.data.postalCode,
+      email: member.data.email,
+      password: member.data.password,
+      mobileNumber: member.data.mobileNumber,
+      alternativeMobileNumber: member.data.alternativeMobileNumber,
+      events: member.data.events,
+      projects: member.data.projects,
+      skillSet: member.data.skillSet
+    })})
+  }
   render(){
     if (this.state.name === null) {
       return (
