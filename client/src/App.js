@@ -6,7 +6,12 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { blue } from '@material-ui/core/colors';
+import { blue } from '@material-ui/core/colors/blue';
+import purple from '@material-ui/core/colors/purple';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import { unstable_Box as Box } from '@material-ui/core/Box';
+import { display } from '@material-ui/system';
 
 const styles = {
   card: {
@@ -23,11 +28,18 @@ const styles = {
   },
   title: {
     fontSize: 25,
-    background :blue,
+    primary :purple,
 
   },
   pos: {
     marginBottom: 12,
+  },
+  gridList: {
+    width: 300,
+    height: 100,
+  },
+  griditem: {
+    text:'10px',
   },
 };
 
@@ -45,11 +57,12 @@ class SimpleCard  extends React.Component {
     CA:null,
     partner:null,
     admin:null,
-    type:[]
+    type:[],
+    show:false
     };
   }
   async componentDidMount(){
-    await fetch('http://localhost:5000/api/events/'+'5c93e86e61fb9b030dc88b9e').then(res=>res.json())
+    await fetch('http://localhost:5000/api/events/5c93e86e61fb9b030dc88b9e').then(res=>res.json())
     .then(proj=>this.setState({event:proj.data,bookedmemID:proj.data.bookedMembers,ID:proj.data.requestorId}))
     
     if(this.state.bookedmemID.length!==0){
@@ -73,6 +86,7 @@ class SimpleCard  extends React.Component {
     this.setState({type:'partner'})}
    if(this.state.CA){
     this.setState({type:'CA'}) }
+    console.log(this.state.members)
 
 
 
@@ -81,7 +95,6 @@ class SimpleCard  extends React.Component {
 
   render(){
     const { classes } = this.props;
-    const bull = <span className={classes.bullet}>•</span>;
     var name =null
     if(this.state.admin){
       name=this.state.admin.firstName}    
@@ -89,26 +102,57 @@ class SimpleCard  extends React.Component {
     name=this.state.partner.firstName}
    if(this.state.CA){
     name=this.state.CA.name }
+    const event=this.state.event;
 
   return (
-    <Card className={classes.card} bg= "dark" >
+    <Card className={classes.card}>
       <CardContent>
         <Typography className={classes.title}   gutterBottom>
          Event Info
         </Typography>
-        <Typography variant="h5" component="h2">Requested By :</Typography>{name}
-        Requested By : <Typography className={classes.pos} color="textSecondary" >{name}</Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          adjective
+        <Typography className={classes.pos}  >
+        Requested By : {name}
+        <br></br>
+        Description : {(event.description)?event.description:"None"}
+        <br></br>
+        <Box component="span" display="block">block</Box>
+        <div >
+        Event Location : {(event.eventLocation)?event.eventLocation:"None"}
+        <br></br>
+        Registeration Price : {(event.registPrice)?event.registPrice:"None"}
+        < br></br>
+        Remaining Places : {(event.remainingPlace)?event.remainingPlace:"None"}
+        <br></br>
+        Event Topics : {(event.topics)?event.topics.toString():"None"}
+        < br></br>
+        Speaker: {(event.speaker)?event.speaker:"None"}
+        <br></br>
+        Feedback : {(event.feedback)?event.feedback.toString():"None"}
+        <br></br>
+        Registeration Start Date : {(event.regist_start_date)?(new Date(event.regist_start_date)).getDate()+"/"+((new Date(event.regist_start_date)).getMonth()+1)+"/"+(new Date(event.regist_start_date)).getFullYear():"None"}
+        <br></br>
+        Registeration End Date: {(event.regist_expiry_date)?(new Date(event.regist_expiry_date)).getDate()+"/"+((new Date(event.regist_expiry_date)).getMonth()+1)+"/"+(new Date(event.regist_start_date)).getFullYear():"None"}
+        <br></br>
+        Event Date : {(event.eventDate)?(new Date(event.eventDate)).getDate()+"/"+((new Date(event.eventDate)).getMonth()+1)+"/"+(new Date(event.regist_start_date)).getFullYear():"None"}
+        <br></br>
+        Form Link: {(event.formLink)?event.formLink:"None"}
+        <br></br>
+        <br></br>
+        bookedMembers :
+        <GridList cellHeight={50} className={classes.gridList} cols={2}>
+        {this.state.members.map(mem => (
+          <GridListTile key={mem._id} className={classes.griditem}>
+            <Button text="10px"> {mem.fname}  {mem.mname} </Button>
+          </GridListTile>
+          ))}
+         </GridList>
+         </div>
+         
         </Typography>
-        <Typography component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
+        
       </CardContent>
       <CardActions>
-        <Button size="small">Show More</Button>
+        <Button className={classes.root} size="small">Show More</Button>
       </CardActions>
     </Card>
   );}
