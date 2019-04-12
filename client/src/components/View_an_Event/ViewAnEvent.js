@@ -1,5 +1,4 @@
-
-import React,{ Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -25,7 +24,8 @@ const styles = {
   },
 };
 
-class SimpleCard(props) extends Component{
+class SimpleCard  extends React.Component {
+
   constructor(props){
     super(props);
     this.state = {
@@ -34,10 +34,10 @@ class SimpleCard(props) extends Component{
     isLoaded : false
     };
   }
-  render(){ 
-  const { classes } = props;
-  const bull = <span className={classes.bullet}>•</span>;
 
+  render(){
+    const { classes } = props;
+    const bull = <span className={classes.bullet}>•</span>;
   return (
     <Card className={classes.card}>
       <CardContent>
@@ -64,13 +64,11 @@ class SimpleCard(props) extends Component{
         <Button size="small">Learn More</Button>
       </CardActions>
     </Card>
-  );
-  SimpleCard.propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
-  
-  export default withStyles(styles)(SimpleCard);
-  }
-
+  );}
 }
 
+SimpleCard.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(SimpleCard);
