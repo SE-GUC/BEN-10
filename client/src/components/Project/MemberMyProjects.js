@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MyProjectCard from './MyProjectCard'
 // const axios = require('axios');
+import TestBar from "./testBar"
 
 class MemberMyProjects extends Component {
 
@@ -8,7 +9,8 @@ class MemberMyProjects extends Component {
     super(props);
     this.state = {
       Project: null,
-      memId:this.props.id
+      memId:this.props.id,
+      filter :"all"
     }
   }
   componentDidMount(){
@@ -28,8 +30,7 @@ class MemberMyProjects extends Component {
     else{
     return (
       <div className="App">
-      <h1>My Projects </h1>
-      {this.state.Project.map((Project,i)=><MyProjectCard key={i} project={Project} />)}
+       <TestBar projects={this.state.Project}/>
       </div>
     );
   

@@ -10,9 +10,10 @@ class MyEvents extends React.Component{
         };
     }
     render(){
-        return(<div> <PMyEvent id={this.state.parId} /> 
-        {/* <MMyEvent id={this.state.parId} /> 
-        <CAMyEvent id={this.state.parId} />  */}
+        return(<div> 
+        <PMyEvent id={this.state.parId} />
+        {/* <MMyEvent id={this.state.parId} />  */}
+        {/* <CAMyEvent id={this.state.parId} />  */}
         </div>);
     }
 }

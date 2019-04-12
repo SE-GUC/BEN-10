@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MyEventCard from './MyEventCard'
 import myEvents from '../myEvents/myEvents';
 // const axios = require('axios');
+import TestBar from "./testBar"
 
 class MyEvents extends Component {
 
@@ -9,8 +10,10 @@ class MyEvents extends Component {
     super(props);
     this.state = {
       Event: null,
-      caId:this.props.id
+      caId:this.props.id,
+      
     }
+    console.log(this.state.caId)
   }
   componentDidMount(){
     fetch(`http://localhost:5000/api/consultancyagency/${this.state.caId}/ShowMyEvents`).then(res=>res.json())
@@ -28,8 +31,7 @@ class MyEvents extends Component {
     else{
     return (
       <div className="App">
-      <h1>My Events</h1>
-      {this.state.Event.map((Event,i)=><MyEventCard key={i} event={Event} />)}
+      <TestBar events={this.state.Event}/>
       </div>
     );
   

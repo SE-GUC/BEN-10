@@ -27,8 +27,8 @@ class MemberMyProjects extends Component {
     else{
     return (
       <div className="App">
-      <h1>My Projects </h1>
-      {this.state.Project.map((Project,i)=><MyProjectCard key={i} project={Project} />)}
+      <h1>My Projects </h1> 
+       {this.state.Project.map((Project,i)=><MyProjectCard key={i} project={Project} />)} 
       </div>
     );
   

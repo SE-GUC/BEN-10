@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MyEventCard from './MyEventCard'
 import myEvents from '../myEvents/myEvents';
 // const axios = require('axios');
+import TestBar from "./testBar"
 
 class MyEvents extends Component {
 
@@ -28,8 +29,9 @@ class MyEvents extends Component {
     else{
     return (
       <div className="App">
-      <h1>My Events</h1>
-      {this.state.Event.map((Event,i)=><MyEventCard key={i} event={Event} />)}
+     {/* <h1>My Events </h1> 
+       {this.state.Event.map((Event,i)=><MyEventCard key={i} event={Event} />)}  */}
+        <TestBar events={this.state.Event}/>
       </div>
     );
   

@@ -744,12 +744,8 @@ router.get("/:id/ShowMyEvents", async (req, res) => {
 
     if (consultancyagencys) {
       const e =await event.find()
-      const Myevents=e.filter(m=>m.requestorId==id);
-      if(Myevents.length===0){
-        res.send({msg: "NO Events to show"});
-      }
-        else{
-           res.json({ data:Myevents });}
+      const Myevents=e.filter(m=>m.requestorId===id);
+           res.json({ data:Myevents });
     } else {
       return res.status(404).send({ error: "Consultancy Agency not found" });
     }
