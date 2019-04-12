@@ -100,9 +100,9 @@ onUpdate =()=>{
     password:this.state.password,
     mobileNumber:this.state.mobileNumber,
     alternativeMobileNumber:this.state.alternativeMobileNumber,
-    events:this.state.events,
-    projects:this.state.projects,
-    partners:this.state.partners
+    // events:this.state.events,
+    // projects:this.state.projects,
+    // partners:this.state.partners
   }
   axios.put(`http://localhost:5000/api/partners/${this.props.partner._id}`,body)
   .then(res=>{ 
