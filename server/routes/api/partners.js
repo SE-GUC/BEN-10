@@ -144,7 +144,7 @@ router.post("/:id/addProject", async (req, res) => {
             })
             .then(json => {
               if (!error) {
-                json = { msg: `created successfully` };
+                json = { msg: `Project Submitted Successfully` };
               }
               result = json;
               console.log(json);
