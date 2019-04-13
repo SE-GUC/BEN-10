@@ -1,110 +1,50 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Spinner,
-  Card
-} from "react-bootstrap";
+import "./App.css";
+import MyEvents from "./pages/MyEvents";
+import MyProjects from "./pages/MyProjects";
+import MyEventsId from "./pages/MyEventsId";
+import MyProjectsId from "./pages/MyProjectsId"
+import EditMyProject from "./pages/EditMyProject"
+import PostProject from "./pages/PostProject";
 import axios from "axios";
-//import {withRouter} from "react-router-dom";
-
-class feedBackSending extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoaded: false,
-      items: null,
-      owner: null,
-      submitClicked: false,
-      showMessage:null,
-      eventId:this.props.id
-    };
-  }
-  async sendClicked() {
-    await axios
-      .post(
-        `http://localhost:5000/api/partners/${this.state.Owner._id}/rating/${
-          this.state.items._id
-        }`
-      )
-      .then(res => {
-        console.log(res);
-        return res.data;
-      })
-      .then(json =>
-        this.setState({
-          showMessage: json.data
-        })
-      );
-        alert("Attendees are notified");
-
+import MyProfile from "./pages/MyProfile";
+import MyEvent from"./components/View_an_Event/ViewAnEvent"
+import { BrowserRouter, Route } from "react-router-dom";
+import Snack from './components/View_an_Event/snackBox'
+class App extends Component {
+  state = {
+    partner_id:null,
+    partner_name:null,
 
   }
+  componentDidMount() {
+    axios 
+      .get("http://localhost:5000/api/partners")
+      .then(res => {
+        return res.data; 
+      })
+      .then(a =>
+        this.setState({
+          partner_id: a.data[0]._id,
 
-  async componentDidMount() {
-    await axios
-      .get(`http://localhost:5000/api/events/5c93e86e61fb9b030dc88b9e`)
-      .then(res => {
-        console.log(res);
-        return res.data;
-      })
-      .then(json =>
-        this.setState({
-          items: json.data
-        })
-      );
-    await axios
-      .get(`http://localhost:5000/api/partners/${this.state.items.requestorId}`)
-      .then(res => {
-        console.log(res.data);
-        return res.data;
-      })
-      .then(json =>
-        this.setState({
-          Owner: json.data,
-          isLoaded: true
+          partner_name: a.data[0].name
         })
       );
   }
-  returnClicked  = ()=>{
-    let path = `/myProfile/${this.state.Owner._id}`;
-    this.props.history.push({
-      pathname : path
-    });
-  }
+
   render() {
-    if (this.state.isLoaded) {
+    // if (this.state.partner_id !== null) {
       return (
-        <div>
-          <Card className={"text-center"} style={{ width: "18rem" }}>
-            <Card.Body>
-              <Card.Title>Requested By: {this.state.Owner.name}</Card.Title>
-              <Card.Text>Type: {this.state.items.eventType}</Card.Text>
-              <Card.Text>Description: {this.state.items.description}</Card.Text>
-              <Card.Text>Speaker: {this.state.items.speaker}</Card.Text>
-              <Card.Text>Date: {this.state.items.eventDate}</Card.Text>
-              <Button onClick={this.sendClicked.bind(this)} variant="primary">
-                Send FeedBack
-              </Button>
-              <Button onClick={this.returnClicked.bind(this)} variant="danger">
-                return to My Profile
-              </Button>
-            </Card.Body>
-          </Card>
-        </div>
+        <BrowserRouter>
+                     <Route exact path="/Myevent" render={(props) => <MyEvent {...props} type="admin" eventId="5c93e86e61fb9b030dc88b9e"  ownerId="5ca1111df1fa20462cfd3377"/>}/> 
+        {/* <Route path="/" render={(props) =><Snack />}/> */}
+        </BrowserRouter>
       );
-    } else {
-      return (
-        <div>
-          <Card className={"text-center"} style={{ width: "32rem" }}>
-            <Card.Body>
-              <Spinner animation="border" role="status">
-                <span className="sr-only">Loading...</span>
-              </Spinner>
-            </Card.Body>
-          </Card>
-        </div>
-      );
+    // } else {
+    //   return <div>Loading.... in app</div>;
+
     }
-  }
-}
-export default (feedBackSending);
+ 
+}  
+    export default App;
+
