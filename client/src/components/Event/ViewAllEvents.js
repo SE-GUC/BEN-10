@@ -10,6 +10,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { BrowserRouter as Router , Route , withRouter } from "react-router-dom";
 import classes from'classnames' ;
+import axios from "axios";
+import AllEventsCard from './AllEventsCard';
 
 const styles = {
   card: {
@@ -19,66 +21,43 @@ const styles = {
     height: 140,
   },
 };
-``
+
 
 class ViewAllEvents extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      eventType: props.eventType,
-      eventLocation: props.eventLocation,
-      description: props.description,
-      registPrice: props.registPrice,
-      remainingPlace: props.remainingPlace,
-      topics: props.topics,
-      speaker: props.speaker,
-      registStartDate: props.registStartDate,
-      registExpiryDate: props.registExpiryDate,
-      eventDate: props.eventDate,
-      bookedMembers: props.bookedMembers,
-      formLink: props.formLink
+      events:null,
+     
     };
   }
-
-  render(){
-  //const { classes } = this.props;
-  return (
-    this.state.events.map(e=> (<Card className={classes.card}>
-        <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            title="Events"
-          />
-          <CardContent>
-          Type: {e.eventType} <br />
-          Location: {e.eventLocation} <br />
-          Description: {e.description} <br /> 
-          Registration Price: {e.registPrice} <br /> 
-          Remaining Place: {e.remainingPlace} <br /> 
-          Topics: {e.topics} <br /> 
-          Speaker: {e.speaker} <br />
-          Registration Start Date: {e.registStartDate} <br /> 
-          Registration Expiry Date: {e.registExpiryDate} <br /> 
-          Event Date: {e.eventDate} <br />
-          Booked Members: {e.bookedMembers} <br /> 
-          Form Link: {e.formLink} <br />
-        
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary"
-          onClick={this.viewEvents}>View Events
-          </Button>
-          <Button size="small" color="primary"
-          onClick={this.viewProjects}>View Projects
-          </Button>
-        </CardActions>
-      </Card>)));
-    
+  componentDidMount(){
+    axios 
+    .get("http://localhost:5000/api/events")
+    .then(res => res.data)
+    .then(a =>{
+      console.log(a)
+      this.setState({
+       events:a.data
+      })
+    }
+    );
   }
-}
-Profile.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default (withRouter(Profile));
+  render(){
+    const { classes } = this.props;
+    if(this.state.events){
+      console.log("yessss")
+    return (
+      this.state.events.map((p,i)=> <AllEventsCard key={i} p={p} /> ));
+    }else{
+      return(
+        <div>loooding</div>
+      )
+    }
+    }
+  }
+  ViewAllEvents.propTypes = {
+    classes: PropTypes.object.isRequired,
+  };
+  
+  export default (withRouter(ViewAllEvents));
