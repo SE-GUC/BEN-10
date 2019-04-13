@@ -17,10 +17,12 @@ const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    width:300,
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
+    width:450
   },
   dense: {
     marginTop: 16,
@@ -127,7 +129,7 @@ window.location.reload();
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
           id="firstName"
-          label="firstName"
+          label="First Name"
           className={classes.textField}
           value={this.state.firstName}
           onChange={this.handleChange('firstName')}
@@ -136,7 +138,7 @@ window.location.reload();
         />  
         <TextField
           id="lastName"
-          label="lastName"
+          label="Last Name"
           className={classes.textField}
           value={this.state.lastName}
           onChange={this.handleChange('lastName')}
@@ -154,7 +156,7 @@ window.location.reload();
         />
         <TextField
           id="birthDate"
-          label="birthDate"
+          label="Birth Date"
           className={classes.textField}
           value={this.state.birthDate}
           onChange={this.handleChange('birthDate')}
@@ -163,7 +165,7 @@ window.location.reload();
         />
         <TextField
           id="gender"
-          label="gender"
+          label="Gender"
           className={classes.textField}
           value={this.state.gender}
           onChange={this.handleChange('gender')}
@@ -172,7 +174,7 @@ window.location.reload();
         />
         <TextField
           id="nationality"
-          label="nationality"
+          label="Nationality"
           className={classes.textField}
           value={this.state.nationality}
           onChange={this.handleChange('nationality')}
@@ -181,7 +183,7 @@ window.location.reload();
         />
         <TextField
           id="maritalStatus"
-          label="maritalStatus"
+          label="Mrital Status"
           className={classes.textField}
           value={this.state.maritalStatus}
           onChange={this.handleChange('maritalStatus')}
@@ -190,7 +192,7 @@ window.location.reload();
         />
         <TextField
           id="militaryStatus"
-          label="militaryStatus"
+          label="Military Status"
           className={classes.textField}
           value={this.state.militaryStatus}
           onChange={this.handleChange('militaryStatus')}
@@ -199,7 +201,7 @@ window.location.reload();
         />
         <TextField
           id="drivingLicense"
-          label="drivingLicense"
+          label="Driving License"
           className={classes.textField}
           value={this.state.drivingLicense}
           onChange={this.handleChange('drivingLicense')}
@@ -208,7 +210,7 @@ window.location.reload();
         />
         <TextField
           id="country"
-          label="country"
+          label="Country"
           className={classes.textField}
           value={this.state.country}
           onChange={this.handleChange('country')}
@@ -217,7 +219,7 @@ window.location.reload();
         />
         <TextField
           id="city"
-          label="city"
+          label="City"
           className={classes.textField}
           value={this.state.city}
           onChange={this.handleChange('city')}
@@ -226,7 +228,7 @@ window.location.reload();
         />
         <TextField
           id="outlined-name"
-          label="area"
+          label="Area"
           className={classes.textField}
           value={this.state.area}
           onChange={this.handleChange('area')}
@@ -235,7 +237,7 @@ window.location.reload();
         />
         <TextField
           id="postalCode"
-          label="postalCode"
+          label="Postal Code"
           className={classes.textField}
           value={this.state.postalCode}
           onChange={this.handleChange('postalCode')}
@@ -246,6 +248,7 @@ window.location.reload();
           id="outlined-email-input"
           label="Email"
           className={classes.textField}
+          value={this.state.email}
           type="email"
           name="email"
           autoComplete="email"
@@ -253,18 +256,30 @@ window.location.reload();
           variant="outlined"
         />
 
-       <TextField
-          id="outlined-password-input"
-          label="Password"
-          className={classes.textField}
-          type="password"
-          autoComplete="current-password"
-          margin="normal"
+<TextField
+          id="outlined-adornment-password"
+          className={classNames(classes.margin, classes.textField)}
           variant="outlined"
+          type={this.state.showPassword ? 'text' : 'password'}
+          label="Password"
+          value={this.state.password}
+          onChange={this.handleChange('password')}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="Toggle password visibility"
+                  onClick={this.handleClickShowPassword}
+                >
+                  {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
         <TextField
           id="mobileNumber"
-          label="mobileNumber"
+          label="Mobile Number"
           className={classes.textField}
           value={this.state.mobileNumber}
           onChange={this.handleChange('mobileNumber')}
@@ -273,7 +288,7 @@ window.location.reload();
         />
         <TextField
           id="alternativeMobileNumber"
-          label="alternativeMobileNumber"
+          label="Alternative MobileNumber"
           className={classes.textField}
           value={this.state.alternativeMobileNumber}
           onChange={this.handleChange('alternativeMobileNumber')}

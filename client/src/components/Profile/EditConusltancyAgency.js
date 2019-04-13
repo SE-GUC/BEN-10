@@ -17,10 +17,12 @@ const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    width:300,
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
+    width:450
   },
   dense: {
     marginTop: 16,
@@ -116,7 +118,7 @@ window.location.reload();
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
           id="name"
-          label="name"
+          label="Name"
           className={classes.textField}
           value={this.state.name}
           onChange={this.handleChange('name')}
@@ -125,7 +127,7 @@ window.location.reload();
         />  
         <TextField
           id="about"
-          label="about"
+          label="About"
           className={classes.textField}
           value={this.state.about}
           onChange={this.handleChange('about')}
@@ -134,7 +136,7 @@ window.location.reload();
         /> 
         <TextField
           id="telephoneNumber"
-          label="telephoneNumber"
+          label="Telephone Number"
           className={classes.textField}
           value={this.state.telephoneNumber}
           onChange={this.handleChange('telephoneNumber')}
@@ -143,8 +145,9 @@ window.location.reload();
         />
          <TextField
           id="outlined-email-input"
-          label="email"
+          label="Email"
           className={classes.textField}
+          value={this.state.email}
           type="email"
           name="email"
           autoComplete="email"
@@ -152,19 +155,32 @@ window.location.reload();
           variant="outlined"
         />
 
-       <TextField
-          id="outlined-password-input"
-          label="Password"
-          className={classes.textField}
-          type="password"
-          autoComplete="current-password"
-          margin="normal"
+       
+<TextField
+          id="outlined-adornment-password"
+          className={classNames(classes.margin, classes.textField)}
           variant="outlined"
+          type={this.state.showPassword ? 'text' : 'password'}
+          label="Password"
+          value={this.state.password}
+          onChange={this.handleChange('password')}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="Toggle password visibility"
+                  onClick={this.handleClickShowPassword}
+                >
+                  {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
       
         <TextField
           id="location"
-          label="locationlocation"
+          label="Location"
           className={classes.textField}
           value={this.state.location}
           onChange={this.handleChange('location')}
@@ -172,7 +188,7 @@ window.location.reload();
           variant="outlined"
         />
         <TextField
-          id="yearsOfExperience"
+          id="years Of Experience"
           label="yearsOfExperience"
           className={classes.textField}
           value={this.state.yearsOfExperience}
@@ -182,7 +198,7 @@ window.location.reload();
         />
         <TextField
           id="rating"
-          label="rating"
+          label="Rating"
           className={classes.textField}
           value={this.state.rating}
           onChange={this.handleChange('rating')}
@@ -191,41 +207,43 @@ window.location.reload();
         />
         <TextField
           id="reports"
-          label="reports"
+          label="Reports"
           className={classes.textField}
           value={this.state.reports}
           onChange={this.handleChange('reports')}
           margin="normal"
           variant="outlined"
         />
-        <TextField
-          id="partners"
-          label="partners"
-          className={classes.textField}
-          value={this.state.partners}
-          onChange={this.handleChange('partners')}
-          margin="normal"
-          variant="outlined"
-        />
-        <TextField
-          id="projects"
-          label="projects"
-          className={classes.textField}
-          value={this.state.projects}
-          onChange={this.handleChange('projects')}
-          margin="normal"
-          variant="outlined"
-        />
-        <TextField
-          id="events"
-          label="events"
-          className={classes.textField}
-          value={this.state.events}
-          onChange={this.handleChange('events')}
-          margin="normal"
-          variant="outlined"
-        />
-
+        {
+        // <TextField
+        //   id="partners"
+        //   label="Partners"
+        //   className={classes.textField}
+        //   value={this.state.partners}
+        //   onChange={this.handleChange('partners')}
+        //   margin="normal"
+        //   variant="outlined"
+        // />
+        // <TextField
+        //   id="projects"
+        //   label="Projects"
+        //   className={classes.textField}
+        //   value={this.state.projects}
+        //   onChange={this.handleChange('projects')}
+        //   margin="normal"
+        //   variant="outlined"
+        // />
+        
+        // <TextField
+        //   id="events"
+        //   label="Events"
+        //   className={classes.textField}
+        //   value={this.state.events}
+        //   onChange={this.handleChange('events')}
+        //   margin="normal"
+        //   variant="outlined"
+        // />
+        }
       <UpdateButton onUpdate={this.onUpdate} />
       </form>
     );
