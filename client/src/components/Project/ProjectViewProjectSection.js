@@ -55,59 +55,11 @@ export default class EditableView extends React.Component {
         caAbout:null,
         caEmail:null,
         caTelephoneNumber:null,
-        //other variables
-        skillVariable:null
 
     
     }
     }
- 
-
-     addSkill =event=>{
-      event.preventDefault();
-       const arr = this.state.requiredSkillsSet
-       arr.push(this.state.skillVariable)
-         this.setState({requiredSkillsSet:arr})
-     }
-    handleDelete = data => (event) => {
-      event.preventDefault();
-      const arr = this.state.requiredSkillsSet
-      arr.splice( arr.indexOf(data), 1 );
-      this.setState({requiredSkillsSet:arr})
-
-      }
-
-
-    handleChange = name => event => {
-      event.preventDefault();
-      this.setState({
-        [name]: event.target.value,
-      });
-    };
-    
-    saveChanges =async ()=>{
-      console.log("save chang")
-      await axios({url : `http://localhost:5000/api/projects/${this.state.projectID}`, method:'put',
-    data:{
-        description : this.state.description,
-        category : this.state.category,
-        lifeCycle : this.state.life_cycle,
-        estimatedEffort : this.state.estimatedEffort,
-        estimatedTime : this.state.estimatedTime,
-        experienceLevelNeeded : this.state.experienceLevelNeeded,
-        requiredSkillsSet : this.state.requiredSkillsSet,
-
-    }
-      
-    }).then(res=>{ 
-        console.log(res.status);
-       return res.data
-    })
-    .then(json => this.setState({project : json}))
-
-    };
-    
-    render() {
+      render() {
       console.log("skills : "+this.state.skillVariable)
       console.log(this.state.requiredSkillsSet)
       console.log(this.state.category)
@@ -148,7 +100,6 @@ export default class EditableView extends React.Component {
 
                   <TextField class="allInputs"
                     id="outlined-select-currency"
-                    select
                     label="Project Life Cycle"
                     className={classNames.lifeCycle}
                     value={this.state.currency}
@@ -162,11 +113,9 @@ export default class EditableView extends React.Component {
 
                  <TextField class="allInputs"
                     id="outlined-select-currency"
-                    select
                     label="Native select"
                     className={classNames.textField}
                     value={this.state.estimatedEffort}
-                    onChange={this.handleChange('estimatedEffort')}
                     InputProps={{
                         readOnly: true,
                         }}
@@ -178,7 +127,6 @@ export default class EditableView extends React.Component {
 
                   <TextField class="allInputs"
                     id="outlined-select-currency"
-                    select
                     label="Exprience Level Needed"
                     className={classNames.textField}
                     value={this.state.experienceLevelNeeded}
@@ -219,9 +167,6 @@ export default class EditableView extends React.Component {
                 </Card>
                 </div>
                 </div>
-               <Button onClick={this.saveChanges}>Save</Button>
-                <SaveButton  onClick={this.saveChanges}></SaveButton>
-
 
 
                 </Card>

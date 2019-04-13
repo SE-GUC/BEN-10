@@ -9,9 +9,9 @@ import ReactDOM from 'react-dom';
 import HAHA from '../components/Project/Haha'
 import ProjectEditableViewCASection from '../components/Project/ProjectEditableProjectCASection';
 import ProjectEditableCandidateSection from '../components/Project/ProjectEditableCandidateSection';
-//import EditableView from '../components/Project/ProjectEditableViewProjectSection';
+import NonEditableView from '../components/Project/ProjectViewProjectSection';
 
-export default class EditMyProject extends Component {
+export default class ViewProject extends Component {
   constructor(props){
     super(props); 
   this.state={
@@ -42,28 +42,9 @@ export default class EditMyProject extends Component {
     });
   };
 
-  cancelProject= async()=>{
-    console.log("delete method")
-    const requestOptions = {
-      method: 'DELETE'
-    };
-    await fetch(`http://localhost:5000/api/partners/${this.state.partner_id}/deleteProject/${this.state.id}` , requestOptions).then((response) => {
-      return response.json();
-    }).then((result) => {
-      console.log(result)
-      if(result.status===404)
-      alert(result.error)
-      if(result.status===200){
-      alert(result.msg);
-      }
-      if(result.status===400)
-      alert(result)
-      else
-      alert(result.msg)
-    });
-  }
+
   viewSection1= (e)=>{
-    ReactDOM.render(<EditableView project={this.state.project}/>
+    ReactDOM.render(<NonEditableView project={this.state.project}/>
 ,document.getElementById('container'));
    }
 
@@ -102,9 +83,7 @@ export default class EditMyProject extends Component {
             </div>
         </div>
         <div id="container">
-          <EditableView project={this.state.project} id={this.state.id} ></EditableView>
-          <Button onClick={this.viewHaha}>View HAHA</Button>
-          <Button variant="primary" onClick={this.cancelProject}>Cancel project</Button>
+          <NonEditableView project={this.state.project} id={this.state.id} ></NonEditableView>
        </div>  
       </div>
     )
