@@ -1,0 +1,52 @@
+.mainConainter{
+    margin: 20;
+    padding: 20;
+    box-sizing: border-box;
+}
+
+.leftCol{
+    margin: 20;
+    padding: 20;
+    box-sizing: border-box;
+}
+
+.contentArea{
+    margin: 20;
+  padding: 20;
+  box-sizing: border-box;
+}
+.allInputs {
+    font-size: 1em;
+    border-radius:10px;
+    display:block;
+    width: 280px;
+    position: relative;
+    margin:10px 10px;
+    outline: medium none;
+    float: right;
+}
+
+.menu-item{
+    border-bottom: 1px solid #e1e4e8;
+    display: block;
+    padding: 8px 10px;
+    position: relative;
+    margin:10px 10px;
+    outline: medium none;
+    transition: box-shadow .3s;
+}
+
+.SkillCard {
+    padding: 10px;
+}
+.addSkill {
+    float: left;
+}
+.addedSkills {
+    margin-left: 15%;
+}
+.skillChip{
+}
+.menu{
+
+}

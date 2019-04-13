@@ -8,6 +8,8 @@ import EditMyProject from "./pages/EditMyProject"
 import PostProject from "./pages/PostProject";
 import axios from "axios";
 import MyProfile from "./pages/MyProfile";
+import ViewProject from './pages/ViewProject';
+
 import { BrowserRouter, Route } from "react-router-dom";
 class App extends Component {
   state = {
@@ -35,8 +37,8 @@ class App extends Component {
       return (
         <BrowserRouter>
                      <Route exact path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
-          <Route exact path="/MyProjects/:id" render={(props) => <MyProjectsId {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
-             <Route exact path="/MyProject/edit/:id" component={EditMyProject} /> 
+          <Route exact path="/MyProjects/:id" render={(props) => <ViewProject {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
+             <Route exact path="/MyProject/edit/:id" render={(props) => <EditMyProject {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
 
             <Route exact path="/myEvents/:id" render={(props) => <MyEventsId {...props} partner_id={this.state.partner_id} />} />
             <Route exact path="/myEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
