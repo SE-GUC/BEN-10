@@ -38,9 +38,9 @@ class App extends Component {
 
   render() {
       return (
-        //<ApproveFinalWork type = {"partner"} pid = {"5cae21711c9d440000abe57b"} id = {"5cae54be1c9d440000abe582"}/>
-        <ApproveFinalDraft type = {"consultancyagency"} pid = {"5ca0ced29396d31e4854cac6"} id = {"5c79283c92334b03f4b6244f"}/>
-        //<SendFinalDraft pid = {"5cae21711c9d440000abe57b"} aid = {"5ca1111df1fa20462cfd3377"}/>
+        //<ApproveFinalWork type = {"consultancyagency"} pid = {"5ca0ced29396d31e4854cac6"} id = {"5c79283c92334b03f4b6244f"}/>
+        //<ApproveFinalDraft type = {"partner"} pid = {"5cae21711c9d440000abe57b"} id = {"5cae54be1c9d440000abe582"}/>
+        <SendFinalDraft pid = {"5cae21711c9d440000abe57b"} aid = {"5ca1111df1fa20462cfd3377"}/>
        // <NotifyMember aid = {"5ca1111df1fa20462cfd3377"} memid = {"5cae23f81c9d440000abe57c"} pid={"5c954696e37f532ac08ecba4"}/>
       );
     
