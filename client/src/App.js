@@ -36,7 +36,7 @@ class App extends Component {
         <BrowserRouter>
                      <Route exact path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
           <Route exact path="/MyProjects/:id" render={(props) => <MyProjectsId {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
-             <Route exact path="/MyProject/edit/:id" component={EditMyProject} /> 
+             <Route exact path="/MyProject/edit/:id" render={(props) => <EditMyProject {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
 
             <Route exact path="/myEvents/:id" render={(props) => <MyEventsId {...props} partner_id={this.state.partner_id} />} />
             <Route exact path="/myEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>

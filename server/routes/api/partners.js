@@ -243,7 +243,7 @@ router.delete("/:id/deleteProject/:pid/", async (req, res) => {
     console.log(j);
     return res.json(j);
   } else {
-    res.json({ msg: "error" });
+    res.json({ msg: "error , this is not your project :(" });
   }
 });
 async function deleteProject(id) {
