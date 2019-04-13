@@ -102,7 +102,6 @@ export default class EditProject extends Component {
         </div>
         <div id="container">
           <EditableView project={this.state.project} id={this.state.id} ></EditableView>
-          <Button onClick={this.viewHaha}>View HAHA</Button>
           <Button variant="primary" onClick={this.cancelProject}>Cancel project</Button>
        </div>  
       </div>
