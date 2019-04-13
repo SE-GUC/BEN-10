@@ -59,7 +59,7 @@ const styles = theme => ({
 });
 
 
-class OutlinedTextFields extends React.Component {
+class CreateEvent extends React.Component {
   state = {
     multiline: 'Controlled',
     requestorId:"5ca1111df1fa20462cfd3377",
@@ -420,8 +420,8 @@ class OutlinedTextFields extends React.Component {
 
 }
 
-OutlinedTextFields.propTypes = {
+CreateEvent.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(OutlinedTextFields);
+export default withStyles(styles)(CreateEvent);

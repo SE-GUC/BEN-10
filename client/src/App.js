@@ -10,7 +10,7 @@ import axios from "axios";
 import MyProfile from "./pages/MyProfile";
 import { BrowserRouter, Route } from "react-router-dom";
 // import Apply from "./components/Member/ApplyProject/ApplyOnProject"
-// import Submit from "./components/Member/SubmitWork/FormDialogue"
+import Submit from "./components/Member/SubmitWork/FormDialogue"
 // import ApplyCa from "./components/CA/ApplyOnProject"
 import Event from "./components/Admin/CreateEvent"
 // import Approve from "./components/Admin/ApproveRequest"
@@ -49,7 +49,7 @@ class App extends Component {
         // </div>
         <BrowserRouter>
             {/* <Route exact path="/" render={(props) => <Approve/> }/>   */}
-            <Route exact path="/" render={(props) => <Request admin_id={this.state.partner_id}/> }/>
+            <Route exact path="/" render={(props) => <Submit member_id={"5caf263ccd0abb05d910fbf5"} project_id={"5caf27d8cd0abb05d910fbf6"}/> }/>
             <Route exact path="/MyProjects/:id" render={(props) => <MyProjectsId {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/> 
               <Route exact path="/MyProject/edit/:id" component={EditMyProject} />  
 
