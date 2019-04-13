@@ -6,6 +6,8 @@ import GridListTile from "@material-ui/core/GridListTile";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import PartnerApplyingMemberCard from "./PartnerApplyingMemberCard";
 import axios from "axios";
+import SendTaskOrientation from './SendTaskOrientation'
+
 // import tileData from './tileData';
 
 const styles = theme => ({
@@ -77,6 +79,8 @@ class PartnerApplyingMembersOnProject extends Component {
             </GridListTile>
           ))}
         </GridList>
+        <SendTaskOrientation Id={this.props.partner._id} projectId={this.state.project._id}/>
+
       </div>
     );
   } else {

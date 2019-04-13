@@ -26,7 +26,7 @@ class App extends Component {
     })
     .then(a =>
       this.setState({
-        user : a.data[0],
+        user : a.data[2],
         type:"partner"
       })
     );
