@@ -90,7 +90,7 @@ export default class EditableView extends React.Component {
     data:{
         description : this.state.description,
         category : this.state.category,
-        lifeCycle : this.state.life_cycle,
+        lifeCycle : this.state.lifeCycle,
         estimatedEffort : this.state.estimatedEffort,
         estimatedTime : this.state.estimatedTime,
         experienceLevelNeeded : this.state.experienceLevelNeeded,

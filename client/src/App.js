@@ -1,23 +1,16 @@
 import React, { Component } from "react";
 import "./App.css";
-import MyEvents from "./pages/MyEvents";
 //import MyProjects from "./components/Partner/ViewAllPArtners";
 import ViewAllPArtners from "./components/Partner/ViewAllPartners";
 import ViewAllCAs from "./components/CA/ViewAllCAs";
 import ViewAllMembers from "./components/Member/ViewAllMembers";
 import EditProfile from "./components/Profile/EditProfile";
-import MyEventsId from "./pages/MyEventsId";
-import MyProjectsId from "./pages/MyProjectsId";
-import EditMyProject from "./pages/EditMyProject";
-import PostProject from "./pages/PostProject";
 import Events from "./pages/Events";
 import axios from "axios";
 import MyProjects from "./pages/MyProjects";
 import EditProject from "./pages/EditProject";
 import ViewProject from "./pages/ViewProject";
-
 import { BrowserRouter, Route } from "react-router-dom";
-import { Button } from "@material-ui/core";
 import RedirectButton from "./components/Global/RedirectButton";
 import Projects from "./pages/Projects";
 import ProjectId from "./pages/ProjectId";
@@ -107,56 +100,9 @@ class App extends Component {
             render={props => (
               <EditProfile
                 {...props}
-                type={"consultancyAgnecy"}
-                partner={this.state.user}
+                type={this.state.type}
+                user={this.state.user}
               />
-            )}
-          />
-
-          <Route
-            exact
-            path="/myEvents/:id"
-            render={props => (
-              <MyEventsId {...props} partner_id={this.state.partner_id} />
-            )}
-          />
-          <Route
-            exact
-            path="/myEvents"
-            render={props => (
-              <MyEvents
-                {...props}
-                partner_id={this.state.partner_id}
-                partner_name={this.state.partner_name}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/myProfile/:id"
-            render={props => (
-              <MyProfile {...props} partner_id={this.state.user._id} />
-            )}
-          />
-          <Route
-            exact
-            path="/postProject"
-            render={props => (
-              <PostProject {...props} partner_id={this.state.partner_id} />
-            )}
-          />
-          <Route
-            exact
-            path="/myProfile/:id"
-            render={props => (
-              <MyProfile {...props} partner_id={this.state.partner_id} />
-            )}
-          />
-          <Route
-            exact
-            path="/postProject"
-            render={props => (
-              <PostProject {...props} partner_id={this.state.partner_id} />
             )}
           />
           <Route

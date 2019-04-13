@@ -490,7 +490,7 @@ async function getFinished(caProjects) {
   var finished = [];
   for (var i = 0; i < caProjects.length; i++) {
     const p = await Project.findById(caProjects[i]);
-    if (p.life_cycle === "Finished") {
+    if (p.lifeCycle === "Finished") {
       finished.push(p);
     }
   }

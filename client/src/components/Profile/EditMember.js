@@ -67,7 +67,6 @@ class OutlinedTextFields extends React.Component {
     gender:this.props.member.gender,
     nationality:this.props.member.nationality,
     maritalStatus:this.props.member.maritalStatus,
-    militaryStatus:this.props.member.militaryStatus,
     drivingLicense:this.props.member.drivingLicense,
     country:this.props.member.country,
     city:this.props.member.city,
@@ -94,7 +93,6 @@ onUpdate =()=>{
     gender:this.state.gender,
     nationality:this.state.nationality,
     maritalStatus:this.state.maritalStatus,
-    militaryStatus:this.state.militaryStatus,
     drivingLicense:this.state.drivingLicense,
     country:this.state.country,
     city:this.state.city,
@@ -131,6 +129,13 @@ window.location.reload();
 
   render() {
     const { classes } = this.props;
+    let month="";
+    if((new Date(this.state.birthDate).getMonth()+1)===12)
+        month="01"
+    else if((new Date(this.state.birthDate).getMonth()+1)<10)
+       month="0"+(new Date(this.state.birthDate).getMonth()+1)
+    else
+       month=new Date(this.state.birthDate).getMonth()+1
         
     return (
       <form className={classes.container} noValidate autoComplete="off">
@@ -165,7 +170,7 @@ window.location.reload();
         id="birthDate"
         label="Birth Date"
         type="date"
-        defaultValue={this.state.birthDate}
+        defaultValue={new Date(this.state.birthDate).getFullYear()+"-"+month+"-"+new Date(this.state.birthDate).getDate()}
         className={classes.textField}
         onChange={this.handleChange('birthDate')}
         margin="normal"
@@ -198,15 +203,6 @@ window.location.reload();
           className={classes.textField}
           value={this.state.maritalStatus}
           onChange={this.handleChange('maritalStatus')}
-          margin="normal"
-          variant="outlined"
-        />
-        <TextField
-          id="militaryStatus"
-          label="Military Status"
-          className={classes.textField}
-          value={this.state.militaryStatus}
-          onChange={this.handleChange('militaryStatus')}
           margin="normal"
           variant="outlined"
         />

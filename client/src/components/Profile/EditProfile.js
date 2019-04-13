@@ -29,18 +29,18 @@ class EditProfile extends React.Component {
     console.log(this.props.type)
     const { classes } = this.props;
     if (this.props.type === "member") {
-      return <div className="App">{<EditMember member={this.props.partner} />}</div>;
+      return <div className="App">{<EditMember member={this.props.user} />}</div>;
     } else {
       if (this.props.type === "partner") {
-        return <div className="App">{<EditPartner partner={this.props.partner} />}</div>;
+        return <div className="App">{<EditPartner partner={this.props.user} />}</div>;
       } else {
         if (this.props.type === "admin") {
-          return <div className="App">{<EditAdmin admin={this.props.partner} />}</div>;
+          return <div className="App">{<EditAdmin admin={this.props.user} />}</div>;
         } else {
-          if (this.props.type === "consultancyAgnecy") {
+          if (this.props.type === "consultancyagency") {
             return (
               <div className="App">
-                {<EditConsultancyAgency agency={this.props.partner} />}
+                {<EditConsultancyAgency agency={this.props.user} />}
               </div>
             );
           }

@@ -102,7 +102,7 @@ export default class EditableView extends React.Component {
                     id="outlined-select-currency"
                     label="Project Life Cycle"
                     className={classNames.lifeCycle}
-                    value={this.state.currency}
+                    value={this.state.lifeCycle}
                     InputProps={{
                         readOnly: true,
                         }}

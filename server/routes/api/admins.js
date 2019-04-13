@@ -218,7 +218,7 @@ router.put("/:id/myProjects/:pid/sendDraft", async (req, res) => {
 
 async function sendFinalDraft(projectID, draft) {
   const body = {
-    life_cycle: "Final Draft",
+    lifeCycle: "Final Draft",
     final_draft: draft
   };
   var error = true;
@@ -254,7 +254,7 @@ router.put("/:id/postProject/:pid", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
       const project = await Project.findById(req.params.pid);
-      if (project.life_cycle == "Approved") {
+      if (project.lifeCycle == "Approved") {
         const j = await postProject(req.params.pid);
         res.send(j);
       } else {
@@ -269,7 +269,7 @@ router.put("/:id/postProject/:pid", async (req, res) => {
   }
 });
 async function postProject(id) {
-  const body = { life_cycle: "Posted" };
+  const body = { lifeCycle: "Posted" };
   var error = true;
   var result;
 

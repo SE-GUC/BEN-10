@@ -27,7 +27,7 @@ class PartnerCanEditInProject extends React.Component {
             <Card.Title>{this.state.project.company}</Card.Title>
          description:   <Card.Text>{this.state.project.description}</Card.Text>
           Category  <Card.Text>{this.state.project.category}</Card.Text>
-          life_cycle  <Card.Text>{this.state.project.life_cycle}</Card.Text>
+          life_cycle  <Card.Text>{this.state.project.lifeCycle}</Card.Text>
           estimated_effort  <Card.Text>{this.state.project.estimated_effort}</Card.Text>
           estimated_time  <Card.Text>{this.state.project.estimated_time}</Card.Text>
           experience_level_needed  <Card.Text>{this.state.project.experience_level_needed}</Card.Text>

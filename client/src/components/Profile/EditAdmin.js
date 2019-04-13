@@ -65,7 +65,6 @@ class OutlinedTextFields extends React.Component {
     gender:this.props.admin.gender,
     nationality:this.props.admin.nationality,
     maritalStatus:this.props.admin.maritalStatus,
-    militaryStatus:this.props.admin.militaryStatus,
     drivingLicense:this.props.admin.drivingLicense,
     country:this.props.admin.country,
     city:this.props.admin.city,
@@ -89,7 +88,6 @@ onUpdate =()=>{
     gender:this.state.gender,
     nationality:this.state.nationality,
     maritalStatus:this.state.maritalStatus,
-    militaryStatus:this.state.militaryStatus,
     drivingLicense:this.state.drivingLicense,
     country:this.state.country,
     city:this.state.city,
@@ -190,15 +188,7 @@ window.location.reload();
           margin="normal"
           variant="outlined"
         />
-        <TextField
-          id="militaryStatus"
-          label="Military Status"
-          className={classes.textField}
-          value={this.state.militaryStatus}
-          onChange={this.handleChange('militaryStatus')}
-          margin="normal"
-          variant="outlined"
-        />
+        
         <TextField
           id="drivingLicense"
           label="Driving License"
