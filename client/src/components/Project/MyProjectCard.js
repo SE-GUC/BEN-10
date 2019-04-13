@@ -17,7 +17,7 @@ const styles = {
     width: 300,
     backgroundColor:"#006064",
     marginBottom:10,
-    marginLeft:500
+    marginLeft:530
   },
   media: {
     // ⚠️ object-fit is not supported by IE 11.

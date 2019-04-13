@@ -408,23 +408,31 @@ router.get("/:id/recommendations", async (req, res) => {
 
 async function getAvailableProjects(id) {
   //---
-  const myMember = await member.findById(id);
+  let myMember = await member.findById(id);
+  // myMember=JSON.parse(JSON.stringify(myMember))
   let skills = null
   skills = myMember.skillSet;
+  console.log(skills)
   let myProjects = await project.find();
   var i;
   let returnResult = [];
   for (i = 0; i < myProjects.length; i++) {
     var j;
     let flag = true;
+    
     for (j = 0; j < myProjects[i].requiredSkillsSet.length; j++) {
+      // console.log(myProjects[i].requiredSkillsSet)
       var k;
       let Available = true;
+      if(skills.length>0){
+        // console.log(myProjects[i])
+      }
       for (k = 0; k < skills.length; k++) {
-        if (skills[k] === myProjects[i].requiredSkillsSet[j]) {
+        if (skills[k].toString() === myProjects[i].requiredSkillsSet[j].toString()) {
           Available = false;
           break;
-        } if (Available) {
+        }
+       } if (Available) {
         flag = false;
         break;
       }
@@ -432,7 +440,7 @@ async function getAvailableProjects(id) {
       if (flag && myProjects[i].lifeCycle.toString() ==="Posted") {
       returnResult.push(myProjects[i]);
     }
-      }
+      
 
     } 
   }
