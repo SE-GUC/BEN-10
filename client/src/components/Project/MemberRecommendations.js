@@ -13,11 +13,9 @@ class MemberMyProjects extends Component {
   }
   componentDidMount(){
     fetch(`http://localhost:5000/api/members/${this.state.partnerId}/recommendations`).then(res=>res.json())
-    .then(projects=>{
-      console.log(projects)
+    .then(projects=>this.setState({Project:projects.data}))
     }
-    )
-  }
+
   render() {
     if(this.state.Project===null){
         return (
@@ -29,7 +27,7 @@ class MemberMyProjects extends Component {
     else{
     return (
       <div className="App">
-      <h1>My Projects </h1> 
+      <h1>Recommendations</h1> 
        {this.state.Project.map((Project,i)=><MyProjectCard key={i} project={Project} />)} 
       </div>
     );
