@@ -52,7 +52,7 @@ class Profile extends React.Component {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          title="Contemplative Reptile"
+          title="Profile"
         />
         <CardContent>
         Name: {this.state.name} <br />

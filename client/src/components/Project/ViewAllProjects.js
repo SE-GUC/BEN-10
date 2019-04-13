@@ -38,33 +38,33 @@ class ViewAllProjects extends React.Component {
   render(){
   //const { classes } = this.props;
   return (
-    <Card className={classes.card}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-        Description: {this.state.description} <br />
-        Category: {this.state.category} <br />
-        Want Consultancy: {this.state.wantConsultancy} <br /> 
-        Estimated Effort: {this.state.estimatedEffort} <br /> 
-        Estimated Time: {this.state.estimatedTime} <br /> 
-        Experience Level Required: {this.state.experienceLevelNeeded} <br /> 
-        Skills Required: {this.state.requiredSkillsSet} <br />
-          
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary"
-        onClick={this.viewEvents}>View Events
-        </Button>
-        <Button size="small" color="primary"
-        onClick={this.viewProjects}>View Projects
-        </Button>
-      </CardActions>
-    </Card>
-    );
+    this.state.projects.map(p=> (<Card className={classes.card}>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            title="Projects"
+          />
+          <CardContent>
+          Description: {p.description} <br />
+          Category: {p.category} <br />
+          Want Consultancy: {p.wantConsultancy} <br /> 
+          Estimated Effort: {p.estimatedEffort} <br /> 
+          Estimated Time: {p.estimatedTime} <br /> 
+          Experience Level Required: {p.experienceLevelNeeded} <br /> 
+          Skills Required: {p.requiredSkillsSet} <br />
+            
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
+          <Button size="small" color="primary"
+          onClick={this.viewEvents}>View Events
+          </Button>
+          <Button size="small" color="primary"
+          onClick={this.viewProjects}>View Projects
+          </Button>
+        </CardActions>
+      </Card>)));
+    
   }
 }
 Profile.propTypes = {
