@@ -270,15 +270,15 @@ router.use("/:cid/assign/:pid/to/:mid", async (req, res) => {
                 .catch(err => {
                   console.log(err);
                 });
-              return res.status(200).send({ msg: "Member has been assigned" });
-            } else return res.status(400).send({ msg: "a Member is already assigned" });
-          } else return res.status(404).send({ msg: "no application found" });
-        }else return res.status(404).send({error:"this project isnt assigned to you"});
-      }else return res.status(404).send({error:"IDs arent found"});
-    }else return res.status(404).send({ msg: "invalid inputs" });
+              return res.send({ msg: "Member has been assigned" });
+            } else return res.send({ msg: "a Member is already assigned" });
+          } else return res.send({ msg: "no application found" });
+        }else return res.send({error:"this project isnt assigned to you"});
+      }else return res.send({error:"IDs arent found"});
+    }else return res.send({ msg: "invalid inputs" });
   } catch {
     console.log("error happened");
-    res.status(404).send({ msg: "Error in catch block" });
+    res.send({ msg: "Error in catch block" });
   }
 });
 

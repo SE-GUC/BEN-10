@@ -39,7 +39,7 @@ class ApplyingCAButton extends Component {
         `http://localhost:5000/api/admins/${this.state.admin._id}/assignCA/${this.state.project._id}/to/${this.state.ca}`,body
       )
       .then(function(response) {
-        console.log(response.status);
+        console.log(response);
         return response.data;
       })
       .then(res => {

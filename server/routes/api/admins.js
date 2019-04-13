@@ -495,16 +495,16 @@ router.use("/:aid/assign/:pid/to/:mid", async (req, res) => {
             .catch(err => {
               console.log(err);
             });
-          return res.status(200).send({ msg: "Member has been assigned" });
-       } else return res.status(400).send({ msg: "a Member is already assigned" });
-      } else return res.status(404).send({ msg: "no application found" });
-    }else return res.status(404).send({error:"IDs arent found"});
+          return res.send({ msg: "Member has been assigned" });
+       } else return res.send({ msg: "a Member is already assigned" });
+      } else return res.send({ msg: "no application found" });
+    }else return res.send({error:"IDs arent found"});
    } else {
-      return res.status(404).send({ msg: "invalid inputs" });
+      return res.send({ msg: "invalid inputs" });
     }
   } catch {
     console.log("error happened");
-    res.status(404).send({ msg: "Error in catch block" });
+    res.send({ msg: "Error in catch block" });
   }
 });
 
@@ -528,12 +528,12 @@ router.use("/:aid/assignCA/:pid/to/:cid", async (req, res) => {
             if (isin(cas,req.params.cid)) {
               const j = await assignCA(req.params.pid,req.params.cid)
               res.send(j);
-            } else return res.status(400).send({ msg: "Consultancy Agency did not apply" });
-          } else return res.status(400).send({ msg: "Consultancy Agency isnt required" });
-        } else return res.status(400).send({ msg: "a Consultancy Agency is already assigned" });
-      } else return res.status(400).send({ msg: "a Consultancy Agency is not required" });
-    }else return res.status(4000).send({error:"not a valid id"});
-   } else return res.status(404).send({ msg: "invalid inputs" });
+            } else return res.send({ msg: "Consultancy Agency did not apply" });
+          } else return res.send({ msg: "Consultancy Agency isnt required" });
+        } else return res.send({ msg: "a Consultancy Agency is already assigned" });
+      } else return res.send({ msg: "a Consultancy Agency is not required" });
+    }else return res.send({error:"not a valid id"});
+   } else return res.send({ msg: "invalid inputs" });
 });
 
 async function assignCA(pid,cid){
