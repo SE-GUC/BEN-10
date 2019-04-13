@@ -479,7 +479,7 @@ router.use("/:aid/assign/:pid/to/:mid", async (req, res) => {
         }
       }
       if (found) {
-        if(project.memberID === null){
+        if(project.memberID == null){
           const url = `${server}/api/projects/${req.params.pid}`;
           fetch(url, {
             method: "put",
@@ -523,7 +523,7 @@ router.use("/:aid/assignCA/:pid/to/:cid", async (req, res) => {
       if(admin && project && ca){
       const cas = project.applyingCA;
       if (project.wantConsultancy === true){
-        if (project.consultancyId === null){
+        if (project.consultancyId == null){
           if (project.lifeCycle == "Waiting for consultancy"){
             if (isin(cas,req.params.cid)) {
               const j = await assignCA(req.params.pid,req.params.cid)

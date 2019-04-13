@@ -96,7 +96,7 @@ class App extends Component {
                 <Route exact path="/postProject" render={(props) => <PostProject {...props} partner_id={this.state.partner_id} />}/> */}
 
                      <Route exact path="/MyProjects" render={(props) => <MyProjects {...props} type= {this.state.type} user={this.state.user._id}/>}/> 
-          <Route exact path="/MyProjects/:id" render={(props) => <ViewProject {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
+          <Route exact path="/MyProjects/:id" render={(props) => <ViewProject {...props} type= {this.state.type}   user={this.state.user} />}/>
              <Route exact path="/MyProject/edit/:id" render={(props) => <EditProject {...props} type= {this.state.type}   user={this.state.user}/>}/>
            
                 </BrowserRouter>

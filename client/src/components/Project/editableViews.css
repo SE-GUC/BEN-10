@@ -35,6 +35,9 @@
     outline: medium none;
     transition: box-shadow .3s;
 }
+.container {
+ position: relative; 
+}
 
 .SkillCard {
     padding: 10px;

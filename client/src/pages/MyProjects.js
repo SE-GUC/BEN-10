@@ -53,7 +53,7 @@ routeChange() {
     if(redirect){
       return <Redirect to='/postProject'/>;
     }else{
-    if (this.state.projects === null) {
+    if (this.state.projects == null) {
       return (
         <div className="App">
           <label>Loading....</label>

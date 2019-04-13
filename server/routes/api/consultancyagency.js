@@ -253,7 +253,7 @@ router.use("/:cid/assign/:pid/to/:mid", async (req, res) => {
             }
           }
           if (found) {
-            if(project.memberID === null){
+            if(project.memberID == null){
               const url = `${server}/api/projects/${req.params.pid}`;
               fetch(url, {
                 method: "put",

@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
-import CircularProgress from '../Global/CircularIndeterminate';
 import axios from "axios";
 import { TextField } from '@material-ui/core';
 import classNames from 'classnames';
 import { Card } from "react-bootstrap";
-import styles from './editableViews.css';
-import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
-import Chip from '@material-ui/core/Chip';
-import SaveButton from '../Global/SaveButton';
-import ApplyingCAsOnProject from './ApplyingCAsOnProject';
-import PartnerApplyingCAsOnProject from './PartnerApplyingCAsOnProject';
+import ListSubheader from "@material-ui/core/ListSubheader";
 
 const effort = ['Low','Normal','Hard','Extreme']
 const cycle=['Waiting for consultancy Agency' , 'Negotiation',
@@ -43,9 +36,8 @@ export default class EditableView extends React.Component {
     }
 
     componentDidMount=async ()=>{
-       console.log(this.state.wantConsultancy)
-       console.log(this.state.caId)
-        if(this.state.wantConsultancy){
+       
+        if(this.state.project.wantConsultancy == true){
             await  axios
             .get(`http://localhost:5000/api/consultancyagency/${this.state.caId}`)
             .then(res => {
@@ -69,6 +61,7 @@ export default class EditableView extends React.Component {
     }
 
     render(){
+        const {classes} = this.props
         console.log(this.state.consultancyAgency)
         if(this.state.consultancyAgency !==null){
            return( 
@@ -157,37 +150,16 @@ export default class EditableView extends React.Component {
             
  
             ); }
-        else{
-
-            if(this.props.type == "admin"){
-            return(
-                
-                <div class="mainContainer">    
-                <div id="ProjectAttributes">
-                    <div class="headerArea" > <h1> consultancy Agency Info</h1>
-                  <ApplyingCAsOnProject project={this.state.project} admin={this.state.user}></ApplyingCAsOnProject>
-                </div>
-                </div></div>
-            );
-        }if(this.props.type == "partner"){
-            return(
-                
-                <div class="mainContainer">    
-                <div id="ProjectAttributes">
-                    <div class="headerArea" > <h1> consultancy Agency Info</h1>
-                  <PartnerApplyingCAsOnProject project={this.state.project} partner={this.state.user}></PartnerApplyingCAsOnProject>
-                </div>
-                </div></div>
-            );
-        }
-        else {
-            return(
-                <div>
-                <h1>Hello</h1>
-                </div>
+            else {
+                return (
+                  <div >
+                  <ListSubheader component="div">
+                  No Consultancy Agency assigned yet
+                </ListSubheader>
+                    </div>
                 );
-        }
-    }
+              }
+            }
 
-    }
+    
 }

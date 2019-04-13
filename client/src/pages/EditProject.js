@@ -95,8 +95,7 @@ export default class EditProject extends Component {
                 Consultancy Agency</Button><br/>
                 <Button class="js-selected-navigation-item menu-item" onClick={this.viewSection3}>
                 Candidate</Button><br/>
-                <a class="js-selected-navigation-item menu-item" data-selected-links=" /settings/notifications" href="/settings/notifications">
-                Other</a><br/>
+                
 
               </nav>
             </div>

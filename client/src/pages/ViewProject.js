@@ -6,23 +6,24 @@ import PartnerCanEditInProject from '../components/PartnerCanEditInProject';
 import EditableView from '../components/Project/ProjectEditableViewProjectSection';
 import CircularProgress from '../components/Global/CircularIndeterminate';
 import ReactDOM from 'react-dom';
-import ProjectEditableViewCASection from '../components/Project/ProjectEditableProjectCASection';
-import ProjectEditableCandidateSection from '../components/Project/ProjectEditableCandidateSection';
+import NonProjectEditableViewCASection from '../components/Project/NonProjectEditableProjectCASection';
+import NonProjectEditableCandidateSection from '../components/Project/NonProjectEditableCandidateSection';
 import NonEditableView from '../components/Project/ProjectViewProjectSection';
 
 export default class ViewProject extends Component {
   constructor(props){
     super(props); 
   this.state={
-        id : this.props.match.params.id,
-        partner_id:props.partner_id,
-        project : null,
+        projectID : this.props.match.params.id,
+        userID : this.props.user._id,
+        user : this.props.user,
+        project:null,
 
     }   
   }
   async  componentDidMount(){
     await  axios
-      .get(`http://localhost:5000/api/projects/${this.state.id}`)
+      .get(`http://localhost:5000/api/projects/${this.state.projectID}`)
       .then(res => {
         
         return  res.data;
@@ -48,19 +49,19 @@ export default class ViewProject extends Component {
    }
 
   viewSection2= (e)=>{
-   ReactDOM.render(<ProjectEditableViewCASection project={this.state.project}
-    project_id={this.state.id} partner_id={this.state.partner_id}
-    ></ProjectEditableViewCASection>,document.getElementById('container'));
+   ReactDOM.render(<NonProjectEditableViewCASection project={this.state.project}
+    user={this.state.user}
+    ></NonProjectEditableViewCASection>,document.getElementById('container'));
   }
   viewSection3=(e)=>{
-    ReactDOM.render(<ProjectEditableCandidateSection project={this.state.project}
-      project_id={this.state.id} partner_id={this.state.partner_id}
-      ></ProjectEditableCandidateSection>,document.getElementById('container'));
+    ReactDOM.render(<NonProjectEditableCandidateSection project={this.state.project}
+      user={this.state.user}
+      ></NonProjectEditableCandidateSection>,document.getElementById('container'));
     }
   
 
   render() {
-    if(this.state.project!== null){  
+    if(this.state.project){  
     return (
       <div >
         <div class = "leftCol">
@@ -75,14 +76,13 @@ export default class ViewProject extends Component {
                 Consultancy Agency</Button><br/>
                 <Button class="js-selected-navigation-item menu-item" onClick={this.viewSection3}>
                 Candidate</Button><br/>
-                <a class="js-selected-navigation-item menu-item" data-selected-links=" /settings/notifications" href="/settings/notifications">
-                Other</a><br/>
+                
 
               </nav>
             </div>
         </div>
         <div id="container">
-          <NonEditableView project={this.state.project} id={this.state.id} ></NonEditableView>
+          <NonEditableView project={this.state.project} projectID={this.state.projectID} ></NonEditableView>
        </div>  
       </div>
     )
