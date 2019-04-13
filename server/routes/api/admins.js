@@ -122,15 +122,15 @@ router.post("/:aid/notifications/:id/", async (req, res) => {
   } else return res.status(404).send({ error: "Member does not exist" });
 });
 async function AdminNotifyAcceptedCandidate(
-  sentBy,
+  sentById,
   description,
-  NotifiedPerson,
+  notifiedPerson,
   date
 ) {
   const body = {
-    sentById,
+    sentById : sentById,
     description: description,
-    NotifiedPerson: NotifiedPerson,
+    notifiedPerson: notifiedPerson,
     date: date,
     seen: "false"
   };
@@ -477,7 +477,7 @@ router.post("/:id/events/:id2/sendFeedBackForm", async (req, res) => {
   }
 });
 
-async function sendFeedBack(formLink, eventId,sentBy) {
+async function sendFeedBack(formLink, eventId,sentById) {
   var error = true;
   var result;
   let myEvent = await Event.findById(eventId);
@@ -488,9 +488,9 @@ async function sendFeedBack(formLink, eventId,sentBy) {
     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
   for (i = 0; i < attendingMembers.length; i++) {
     const body = {
-      sentBy,
+      sentById,
       description: formLink,
-      NotifiedPerson: attendingMembers[i],
+      notifiedPerson: attendingMembers[i],
       date: date,
       seen: "false"
     };
@@ -534,7 +534,7 @@ router.post("/:id/projects/:id2/sendRejection", async (req, res) => {
         res.send({ error: "Not a project id" });
       } else {
         return res.send({
-          data: await sendRejectionNotification(req.params.id2,sentBy)
+          data: await sendRejectionNotification(req.params.id2,sentById)
         });
       }
     }
@@ -542,7 +542,7 @@ router.post("/:id/projects/:id2/sendRejection", async (req, res) => {
     return res.status(400).send("Error");
   }
 });
-async function sendRejectionNotification(projectId,sentBy) {
+async function sendRejectionNotification(projectId,sentById) {
   const project = await Project.findById(projectId);
   if (!project) {
     return { msg: "there is no Such project" };
@@ -562,10 +562,10 @@ async function sendRejectionNotification(projectId,sentBy) {
   for (i = 0; i < myProjectApplications.length; i++) {
     if (project.memberID.toString() !== myProjectApplications[i].toString()) {
       const body = {
-        sentBy,
+        sentById,
         description:
           "Sorry u were not accepted for project {" + project.description + "}",
-        NotifiedPerson: myProjectApplications[i],
+        notifiedPerson: myProjectApplications[i],
         date: date,
         seen: "false"
       };

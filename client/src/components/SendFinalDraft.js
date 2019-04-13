@@ -14,7 +14,7 @@ class SendFinalDraft extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            adminID : this.props.id ,
+            adminID : this.props.aid ,
             pID : this.props.pid ,
             draft : null  ,
             open : false 
@@ -45,6 +45,7 @@ class SendFinalDraft extends React.Component {
             .put(
                 `http://localhost:5000/api/admins/${this.state.adminID}/myProjects/${this.state.pID}/sendDraft`,body
             )
+        this.setState({open:false})
         
     }
 
@@ -52,14 +53,6 @@ class SendFinalDraft extends React.Component {
         
         return (
             <div>
-                {/* <TextField
-                    id="final-draft-textfield"
-                    label="Final Draft"
-                    value={this.state.draft}
-                    onChange={this.handleChange('draft')}
-                    margin="normal"
-                />
-                <br></br> */}
                 <Button onClick = {this.handleClickOpen}  variant = "outlined" color = "primary" >
                     Send Final Draft
                 </Button>
