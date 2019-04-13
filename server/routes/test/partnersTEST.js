@@ -451,7 +451,7 @@ class PaTest extends AbstractTests {
       const proj = projs[0];
       await fetch(`${this.projects_url}/${proj.id}/`, {
         method: "put",
-        body: JSON.stringify({ life_cycle: "Final Draft" }),
+        body: JSON.stringify({ lifeCycle: "Final Draft" }),
         headers: { "Content-Type": "application/json" }
       });
       const projid = proj.id;
@@ -544,7 +544,7 @@ class PaTest extends AbstractTests {
       const proj = projs[0];
       await fetch(`${this.projects_url}/${proj.id}/`, {
         method: "put",
-        body: JSON.stringify({ life_cycle: "Final Draft" }),
+        body: JSON.stringify({ lifeCycle: "Final Draft" }),
         headers: { "Content-Type": "application/json" }
       });
       const projid = proj.id;
@@ -829,7 +829,7 @@ class PaTest extends AbstractTests {
       const pr = prs[0];
       await fetch(`${this.projects_url}/${pr.id}/`, {
         method: "put",
-        body: JSON.stringify({ life_cycle: "Final Review" }),
+        body: JSON.stringify({ lifeCycle: "Final Review" }),
         headers: { "Content-Type": "application/json" }
       });
 
@@ -862,7 +862,7 @@ class PaTest extends AbstractTests {
       const pr = prs[0];
       await fetch(`${this.projects_url}/${pr.id}/`, {
         method: "put",
-        body: JSON.stringify({ life_cycle: "Final Review" }),
+        body: JSON.stringify({ lifeCycle: "Final Review" }),
         headers: { "Content-Type": "application/json" }
       });
 
@@ -895,7 +895,7 @@ class PaTest extends AbstractTests {
       const pr = prs[0];
       await fetch(`${this.projects_url}/${pr.id}/`, {
         method: "put",
-        body: JSON.stringify({ life_cycle: "In Progress" }),
+        body: JSON.stringify({ lifeCycle: "In Progress" }),
         headers: { "Content-Type": "application/json" }
       });
 
@@ -928,7 +928,7 @@ class PaTest extends AbstractTests {
       const pr = prs[0];
       await fetch(`${this.projects_url}/${pr.id}/`, {
         method: "put",
-        body: JSON.stringify({ life_cycle: "In Progress" }),
+        body: JSON.stringify({ lifeCycle: "In Progress" }),
         headers: { "Content-Type": "application/json" }
       });
 
@@ -963,7 +963,7 @@ class PaTest extends AbstractTests {
         category: "Education",
         want_consultancy: true,
         posted_date: "1998-02-09T22:00:00.000Z",
-        life_cycle: "Negotiation",
+        lifeCycle: "Negotiation",
         memberID: "5c9300a7676da108728b0df0",
         final_draft: "TESTDARFT",
         consultancyID: "5c79283c92334b03f4b6244f"
@@ -1006,7 +1006,7 @@ class PaTest extends AbstractTests {
         category: "Education",
         want_consultancy: true,
         posted_date: "1998-02-09T22:00:00.000Z",
-        life_cycle: "Negotiation",
+        lifeCycle: "Negotiation",
         memberID: "5c9300a7676da108728b0df0",
         final_draft: "TESTDARFT",
         consultancyID: "5c79283c92334b03f4b6244f"

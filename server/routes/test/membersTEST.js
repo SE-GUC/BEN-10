@@ -137,7 +137,7 @@ class MTest extends AbstractTests {
       let index = null;
       for (var i = 0; projects.length > i; i++) {
         if (
-          projects[i].life_cycle !== "In Progress" &&
+          projects[i].lifeCycle !== "In Progress" &&
           projects[i].memberID != null
         ) {
           index = i;
@@ -180,7 +180,7 @@ class MTest extends AbstractTests {
       // ------------------------------------------------------------------------ \\
       if (project_id != null) {
         const body = {
-          life_cycle: "In Progress",
+          lifeCycle: "In Progress",
           memberID: member_id
         };
         const response1 = await fetch(`${server}/api/projects/${project_id}`, {
@@ -311,8 +311,7 @@ class MTest extends AbstractTests {
       var member_id = null;
       const projects = await project.find();
       for (var i = 0; projects.length > i; i++) {
-        //console.lo(projects[i]["life_cycle"]);
-        if (projects[i]["life_cycle"] === "In Progress") {
+        if (projects[i]["lifeCycle"] === "In Progress") {
           project_id = projects[i]["_id"];
           member_id = projects[i]["memberID"];
           if (project_id != null && member_id != null) {
@@ -1034,9 +1033,9 @@ class MTest extends AbstractTests {
         description: "Test description1",
         company: "Test Company",
         category: "Test Category",
-        want_consultancy: false,
+        wantConsultancy: false,
         posted_date: date,
-        life_cycle: "InProgress",
+        lifeCycle: "InProgress",
         required_skills_set: ["skill1"]
       };
       await fetch(`${server}/api/projects/`, {
@@ -1049,9 +1048,9 @@ class MTest extends AbstractTests {
         description: "Test description2",
         company: "Test Company",
         category: "Test Category",
-        want_consultancy: false,
+        wantConsultancy: false,
         posted_date: date,
-        life_cycle: "InProgress",
+        lifeCycle: "InProgress",
         required_skills_set: ["skill1", "skill2"]
       };
       await fetch(`${server}/api/projects/`, {
@@ -1064,9 +1063,9 @@ class MTest extends AbstractTests {
         description: "Test description3",
         company: "Test Company",
         category: "Test Category",
-        want_consultancy: false,
+        wantConsultancy: false,
         posted_date: date,
-        life_cycle: "InProgress",
+        lifeCycle: "InProgress",
         required_skills_set: ["skill1", "skill2", "skill3"]
       };
       await fetch(`${server}/api/projects/`, {

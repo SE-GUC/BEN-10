@@ -13,7 +13,7 @@ class PrTEST extends AbstractTests {
       category: null,
       want_consultancy: null,
       posted_date: null,
-      life_cycle: null,
+      lifeCycle: null,
       required_skills_set: null
     };
   }

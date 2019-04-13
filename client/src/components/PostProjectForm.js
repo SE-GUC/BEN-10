@@ -44,7 +44,7 @@ class PostProjectForm extends React.Component {
     this.state = {
       description:"",
       category:"",
-      want_consultancy:false,
+      wantConsultancy:false,
       response:null
     };
   }
@@ -123,7 +123,7 @@ class PostProjectForm extends React.Component {
        
         <div>
           <PostProjectMessage className={classes.button} description={this.state.description} category={this.state.category}
-          want_consultancy={this.state.want_consultancy} companyID={this.props.companyID} clear={this.clear}/>
+          wantConsultancy={this.state.want_consultancy} companyID={this.props.companyID} clear={this.clear}/>
         </div>
       </div>
   );
