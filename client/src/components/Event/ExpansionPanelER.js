@@ -15,6 +15,8 @@ const styles = theme => ({
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
+    marginLeft:10,
+    color:"#00695c",
   },
 });
 
