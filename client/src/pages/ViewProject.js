@@ -6,17 +6,18 @@ import PartnerCanEditInProject from '../components/PartnerCanEditInProject';
 import EditableView from '../components/Project/ProjectEditableViewProjectSection';
 import CircularProgress from '../components/Global/CircularIndeterminate';
 import ReactDOM from 'react-dom';
-import ProjectEditableViewCASection from '../components/Project/ProjectEditableProjectCASection';
-import ProjectEditableCandidateSection from '../components/Project/ProjectEditableCandidateSection';
+import NonProjectEditableViewCASection from '../components/Project/NonProjectEditableProjectCASection';
+import NonProjectEditableCandidateSection from '../components/Project/NonProjectEditableCandidateSection';
+import NonEditableView from '../components/Project/ProjectViewProjectSection';
 
-export default class EditProject extends Component {
+export default class ViewProject extends Component {
   constructor(props){
     super(props); 
   this.state={
         projectID : this.props.match.params.id,
-        userID:props.user._id,
-        project : null,
-        user : props.user,
+        userID : this.props.user._id,
+        user : this.props.user,
+        project:null,
 
     }   
   }
@@ -31,8 +32,6 @@ export default class EditProject extends Component {
       .then(a => {
            this.setState({ project: a.data  })
         });
-        console.log(
-          "from edit project = "+this.state.project._id)
       } 
 
 
@@ -43,44 +42,26 @@ export default class EditProject extends Component {
     });
   };
 
-  cancelProject= async()=>{
-    console.log("delete method")
-    const requestOptions = {
-      method: 'DELETE'
-    };
-    await fetch(`http://localhost:5000/api/partners/${this.state.userID}/deleteProject/${this.state.projectID}` , requestOptions).then((response) => {
-      return response.json();
-    }).then((result) => {
-      console.log(result)
-      if(result.status===404)
-      alert(result.error)
-      if(result.status===200){
-      alert(result.msg);
-      }
-      if(result.status===400)
-      alert(result)
-      else
-      alert(result.msg)
-    });
-  }
+
   viewSection1= (e)=>{
-    ReactDOM.render(<EditableView project={this.state.project}/>
+    ReactDOM.render(<NonEditableView project={this.state.project}/>
 ,document.getElementById('container'));
    }
 
   viewSection2= (e)=>{
-   ReactDOM.render(<ProjectEditableViewCASection user={this.state.user} type= {this.props.type} project={this.state.project}
-    ></ProjectEditableViewCASection>,document.getElementById('container'));
+   ReactDOM.render(<NonProjectEditableViewCASection project={this.state.project}
+    user={this.state.user}
+    ></NonProjectEditableViewCASection>,document.getElementById('container'));
   }
   viewSection3=(e)=>{
-    ReactDOM.render(<ProjectEditableCandidateSection user={this.state.user} type= {this.props.type} project={this.state.project}
-      ></ProjectEditableCandidateSection>,document.getElementById('container'));
+    ReactDOM.render(<NonProjectEditableCandidateSection project={this.state.project}
+      user={this.state.user}
+      ></NonProjectEditableCandidateSection>,document.getElementById('container'));
     }
   
 
   render() {
-    if(this.state.project!== null){  
-      console.log(this.state.projectID +" "+this.state.userID)
+    if(this.state.project){  
     return (
       <div >
         <div class = "leftCol">
@@ -101,8 +82,7 @@ export default class EditProject extends Component {
             </div>
         </div>
         <div id="container">
-          <EditableView project={this.state.project}></EditableView>
-          <Button variant="primary" onClick={this.cancelProject}>Cancel project</Button>
+          <NonEditableView project={this.state.project} projectID={this.state.projectID} ></NonEditableView>
        </div>  
       </div>
     )

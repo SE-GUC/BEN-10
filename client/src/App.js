@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import "./App.css";
 import Events from "./pages/Events";
 import axios from "axios";
+import MyProjects from "./pages/MyProjects";
+import EditProject from "./pages/EditProject"
+import ViewProject from './pages/ViewProject';
+
 import { BrowserRouter, Route } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import RedirectButton from "./components/Global/RedirectButton";
@@ -18,16 +22,18 @@ class App extends Component {
     axios
       .get("http://localhost:5000/api/partners")
       .then(res => {
-        return res.data;
+      return res.data; 
+    })
+    .then(a =>
+      this.setState({
+        user : a.data[0],
+        type:"partner"
       })
-      .then(a => {
-        this.setState({
-          user: a.data[0],
-          type: "partner"
-        });
-        console.log(a.data[0]._id);
-      });
-  };
+    );
+  }
+
+
+    
   asCA = () => {
     axios
       .get("http://localhost:5000/api/consultancyagency")
@@ -72,13 +78,9 @@ class App extends Component {
   };
 
   render() {
-    if (this.state.user !== null) {
+    if (this.state.user) {
       return (
-        <>
-          <BrowserRouter>
-            {/* <Route exact path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
-          <Route exact path="/MyProjects/:id" render={(props) => <MyProjectsId {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
-          <Route exact path="/MyProject/edit/:id" component={EditMyProject} />  */}
+        <BrowserRouter>
             <Route
               exact
               path="/Events/"
@@ -103,7 +105,7 @@ class App extends Component {
             />
             <Route
               exact
-              path="/ProjectId/"
+              path="/ProjectId/:id"
               render={props => (
                 <ProjectId
                   {...props}
@@ -112,9 +114,14 @@ class App extends Component {
                 />
               )}
             />
-           </BrowserRouter>
+           
 
-        </>
+
+                     <Route exact path="/MyProjects" render={(props) => <MyProjects {...props} type= {this.state.type} user={this.state.user._id}/>}/> 
+          <Route exact path="/MyProjects/:id" render={(props) => <ViewProject {...props} type= {this.state.type}   user={this.state.user} />}/>
+             <Route exact path="/MyProject/edit/:id" render={(props) => <EditProject {...props} type= {this.state.type}   user={this.state.user}/>}/>
+           
+                </BrowserRouter>
       );
     } else {
       return (
@@ -129,4 +136,5 @@ class App extends Component {
     }
   }
 }
+
 export default App;

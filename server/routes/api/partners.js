@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-
+const CAs = require("../../models/ConsultancyAgency");
 const Project = require("../../models/Project");
 const event = require("../../models/Event");
 const Partner = require("../../models/Partner");
@@ -96,6 +96,185 @@ router.delete("/:id", async (req, res) => {
 });
 
 //------------------------------------------------------
+
+// as a partner i want to assign one of the CAs who applied for the task/project
+router.use("/:aid/assignCA/:pid/to/:cid", async (req, res) => {
+  if (
+    ObjectId.isValid(req.params.aid) &&
+    ObjectId.isValid(req.params.pid) &&
+    ObjectId.isValid(req.params.cid)
+  ) {
+    const partner = await Partner.findById(req.params.aid);
+    const project = await Project.findById(req.params.pid) 
+    const ca = CAs.findById(req.params.cid) 
+    if(partner && project && ca){
+    const cas = project.applyingCA;
+    if (project.companyId == req.params.aid){
+      if (project.wantConsultancy === true){
+        if (project.consultancyId == null){
+          if (project.lifeCycle == "Waiting for consultancy"){
+            if (isin(cas,req.params.cid)) {
+              const j = await assignCA(req.params.pid,req.params.cid)
+              res.send(j);
+            } else return res.send({ msg: "Consultancy Agency did not apply" });
+          } else return res.send({ msg: "Consultancy Agency isnt required" });
+        } else return res.send({ msg: "a Consultancy Agency is already assigned" });
+      } else return res.send({ msg: "a Consultancy Agency is not required" });
+    } else return res.send({ msg: "this project is not yours" });
+  }else return res.send({error:"not a valid id"});
+ } else return res.send({ msg: "invalid inputs" });
+});
+
+async function assignCA(pid,cid){
+var error=true
+var j
+await fetch(`${server}/api/projects/${pid}`, {
+  method: "put",
+  body: JSON.stringify({ consultancyId: cid, lifeCycle: "Negotiation" }),
+  headers: { "Content-Type": "application/json" }
+})
+  .then(res => {
+    console.log(res.status)
+    if(res.status===200)
+      error=false
+    return res.json();
+  })
+  .then(json => {
+    if(!error)
+    res.json = { msg: "Consultancy Agency has been assigned" }
+    console.log(json);
+    j = json;
+  })
+  .catch(err => {
+    console.log("Error",err);
+  });
+return j
+}
+
+function isin(list,id){
+var i
+for(i=0;i<list.length;i++){
+  if(id==list[i])
+  return true
+}
+return false
+}
+
+//------------------------------
+
+// --As a partner I want to assign one of the candidates who applied for the task/project.
+
+// part1 View candidates applying for a project
+router.get("/:id/myProjects/:pid/applyingMembers", async (req, res) => {
+  if(ObjectId.isValid(req.params.id)&&ObjectId.isValid(req.params.pid)){
+  const cid = await Partner.findById(req.params.id);
+  const pid= await Project.findById(req.params.pid);
+ if(cid!=null && pid!=null){
+   if (pid.companyId == req.params.id){
+  var j = await getApplyingMembers(req.params.pid);
+  var result = [];
+  var i;
+  for (i = 0; i < j.length; i++) {
+    await fetch(`${server}/api/members/${j[i]}`)
+      .then(res => res.json())
+      .then(json => {
+        const member = json.data;
+        result.push(member);
+      })
+      .catch(err => console.log("Error", err));
+  }
+  if (result.length === 0) {
+    res.send({error: "No members applied for this project"})
+  } else {
+    res.json({ data: result });
+  }
+}
+else res.send({error:"this project isnt assigned to you"})
+}
+else{
+  res.send({error:"the ids requested doesnt exist"})
+}
+
+}else{
+  res.send({error:"error in the ids"})
+}
+
+
+});
+
+async function getApplyingMembers(pid) {
+  var result = [];
+  await fetch(`${server}/api/applications`)
+    .then(res => res.json())
+    .then(json => {
+      const members = json.data;
+      const appliedmembers = members.filter(m => m.projectId == pid);
+      appliedmembers.forEach(m => {
+        result.push(m.applicantId);
+      });
+      return result;
+    })
+    .catch(err => console.log("Error", err));
+  return result;
+}
+
+//2.2 part2 assign a candidate to a project
+router.use("/:cid/assign/:pid/to/:mid", async (req, res) => {
+  try {
+    if (
+      ObjectId.isValid(req.params.cid) &&
+      ObjectId.isValid(req.params.pid) &&
+      ObjectId.isValid(req.params.mid)
+    ) {
+      const ca = Partner.findById(req.params.cid);
+      const project = await Project.findById(req.params.pid) 
+      const mem = member.findById(req.params.mid) 
+      if(ca && project && mem){
+        if(project.companyId == req.params.cid){
+          const applications = await Application.find();
+
+          var found = false;
+          //loop through json and find the desired application
+
+          for (var i in applications) {
+            let application = applications[i];
+            if (
+              application["applicantId"] == req.params.mid &&
+              application["projectId"] == req.params.pid
+            ) {
+              found = true;
+              break;
+            }
+          }
+          if (found) {
+            if(project.memberID == null){
+              const url = `${server}/api/projects/${req.params.pid}`;
+              fetch(url, {
+                method: "put",
+                body: JSON.stringify({ memberID: req.params.mid, lifeCycle: "Negotiation" }),
+                headers: { "Content-Type": "application/json" }
+              })
+                .then(res => {
+                  return res.json();
+                })
+                .then(json => {
+                  console.log(json);
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+              return res.send({ msg: "Member has been assigned" });
+            } else return res.send({ msg: "a Member is already assigned" });
+          } else return res.send({ msg: "no application found" });
+        }else return res.send({error:"this project isnt assigned to you"});
+      }else return res.send({error:"IDs arent found"});
+    }else return res.send({ msg: "invalid inputs" });
+  } catch {
+    console.log("error happened");
+    res.send({ msg: "Error in catch block" });
+  }
+});
+
 
 //1.0 as a partner i want to submit a description of a task/project
 router.post("/:id/addProject", async (req, res) => {
@@ -243,7 +422,7 @@ router.delete("/:id/deleteProject/:pid/", async (req, res) => {
     console.log(j);
     return res.json(j);
   } else {
-    res.json({ msg: "error" });
+    res.json({ msg: "error , this is not your project :(" });
   }
 });
 async function deleteProject(id) {
@@ -630,7 +809,7 @@ router.get("/:id/myProjects", async (req, res) => {
         .then(json => {
           const myprojects = json.data;
           const proj = myprojects.filter(
-            myprojects => myprojects.companyId === id
+            myprojects => myprojects.companyId == id
           );
           res.json({ data: proj });
         })
