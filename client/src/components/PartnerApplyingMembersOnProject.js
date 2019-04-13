@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import CAApplyingMemberCard from "../components/CAApplyingMemberCard";
+import PartnerApplyingMemberCard from "../components/PartnerApplyingMemberCard";
 import axios from "axios";
 // import tileData from './tileData';
 
@@ -30,7 +30,7 @@ const styles = theme => ({
     marginRight: theme.spacing.unit
   }
 });
-class CAApplyingMembersOnProject extends Component {
+class PartnerApplyingMembersOnProject extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,7 +41,7 @@ class CAApplyingMembersOnProject extends Component {
   }
 
   async componentDidMount(){
-    await axios(`http://localhost:5000/api/consultancyagency/${this.props.ca._id}/myProjects/${this.props.project._id}/applyingMembers`)
+    await axios(`http://localhost:5000/api/partners/${this.props.partner._id}/myProjects/${this.props.project._id}/applyingMembers`)
     .then(res=>{
       if(res.status===200)
         return res.data
@@ -61,7 +61,7 @@ class CAApplyingMembersOnProject extends Component {
     
     const { classes } = this.props;
 
-    if( this.state.applyingMembers){
+    if( this.state.applyingMembers !== null){
     return (
       <div className={classes.root}>
         <GridList cellHeight={180} className={classes.gridList}>
@@ -73,7 +73,7 @@ class CAApplyingMembersOnProject extends Component {
           
           {this.state.applyingMembers.map(i => (
             <GridListTile key={i}>
-              <CAApplyingMemberCard project={this.props.project} ca={this.props.ca} mem={i._id} />
+              <PartnerApplyingMemberCard project={this.props.project} partner={this.props.partner} mem={i._id} />
             </GridListTile>
           ))}
         </GridList>
@@ -89,8 +89,8 @@ class CAApplyingMembersOnProject extends Component {
   }
 }
 
-CAApplyingMembersOnProject.propTypes = {
+PartnerApplyingMembersOnProject.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(CAApplyingMembersOnProject);
+export default withStyles(styles)(PartnerApplyingMembersOnProject);

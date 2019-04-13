@@ -159,17 +159,16 @@ router.post("/:id/eventrequests/", async (req, res) => {
         );
         res.send(j);
       } else {
-        return res.status(400).send({ error: "body is missing attrubites" });
+        return res.send({ error: "body is missing attrubites" });
       }
     } else
       return res
-        .status(404)
         .send({ error: "Consultancy Agency does not exist" });
   } else
-    return res.status(404).send({ error: "Consultancy Agency does not exist" });
+    return res.send({ error: "Consultancy Agency does not exist" });
 });
 
-//2.2 --As a consultancy agency I want to assign one of the candidates who applied for the task/project.
+//2.2 --Ask a consultancy agency I want to assign one of the candidates who applied for the task/project.
 
 //2.2 part1 View candidates applying for a project
 router.get("/:id/myProjects/:pid/applyingMembers", async (req, res) => {
@@ -191,19 +190,19 @@ router.get("/:id/myProjects/:pid/applyingMembers", async (req, res) => {
       .catch(err => console.log("Error", err));
   }
   if (result.length === 0) {
-    res.status(404).send({error: "No members applied for this project"})
+    res.send({error: "No members applied for this project"})
   } else {
     res.json({ data: result });
   }
 }
-else res.status(404).send({error:"this project isnt assigned to you"})
+else res.send({error:"this project isnt assigned to you"})
 }
 else{
-  res.status(404).send({error:"the ids requested doesnt exist"})
+  res.send({error:"the ids requested doesnt exist"})
 }
 
 }else{
-  res.status(404).send({error:"error in the ids"})
+  res.send({error:"error in the ids"})
 }
 
 
