@@ -6,7 +6,6 @@ import PartnerCanEditInProject from '../components/PartnerCanEditInProject';
 import EditableView from '../components/Project/ProjectEditableViewProjectSection';
 import CircularProgress from '../components/Global/CircularIndeterminate';
 import ReactDOM from 'react-dom';
-import HAHA from '../components/Project/Haha'
 import ProjectEditableViewCASection from '../components/Project/ProjectEditableProjectCASection';
 import ProjectEditableCandidateSection from '../components/Project/ProjectEditableCandidateSection';
 import NonEditableView from '../components/Project/ProjectViewProjectSection';
