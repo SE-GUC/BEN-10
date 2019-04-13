@@ -6,6 +6,11 @@ import ApplyingMembers from "./pages/ApplyingMembers";
 import CAApplyingMembers from "./pages/CAApplyingMembers";
 import PartnerApplyingMembers from "./pages/PartnerApplyingMembers";
 import axios from "axios";
+import MyProjects from "./pages/MyProjects";
+import EditProject from "./pages/EditProject"
+import axios from "axios";
+import ViewProject from './pages/ViewProject';
+
 import { BrowserRouter, Route } from "react-router-dom";
 class App extends Component {
   state = {
@@ -85,7 +90,12 @@ class App extends Component {
                 <Route exact path="/CAapplyingMembers" render={(props) => <CAApplyingMembers {...props} project={this.state.project1} ca={this.state.ca} />}/>
                 <Route exact path="/applyingMembers" render={(props) => <ApplyingMembers {...props} project={this.state.project1} admin={this.state.admin} />}/>
                 <Route exact path="/PartnerapplyingMembers" render={(props) => <PartnerApplyingMembers {...props} project={this.state.project1} partner={this.state.partner1} />}/>
-</BrowserRouter>
+
+                     <Route exact path="/MyProjects" render={(props) => <MyProjects {...props} partner_id={this.state.partner_id}/>}/> 
+          <Route exact path="/MyProjects/:id" render={(props) => <ViewProject {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
+             <Route exact path="/MyProject/edit/:id" render={(props) => <EditProject {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/>
+           
+                </BrowserRouter>
       );
     } else {
       return <div>Loading.... in app</div>;
