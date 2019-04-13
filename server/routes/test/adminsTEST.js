@@ -21,7 +21,6 @@ class ATest extends AbstractTests {
       gender: null,
       nationality: null,
       maritalStatus: null,
-      militaryStatus: null,
       drivingLicense: null,
       country: null,
       city: null,
@@ -96,7 +95,6 @@ class ATest extends AbstractTests {
       gender: "false",
       nationality: "egyptian",
       maritalStatus: "single",
-      militaryStatus: "excempt",
       drivingLicense: "qwertyuio",
       country: "egypt",
       city: "cairo",
@@ -128,7 +126,6 @@ class ATest extends AbstractTests {
       expect(eRequest.gender).toEqual(requestBody.gender);
       expect(eRequest.nationality).toEqual(requestBody.nationality);
       expect(eRequest.maritalStatus).toEqual(requestBody.maritalStatus);
-      expect(eRequest.militaryStatus).toEqual(requestBody.militaryStatus);
       expect(eRequest.drivingLicense).toEqual(requestBody.drivingLicense);
       expect(eRequest.country).toEqual(requestBody.country);
       expect(eRequest.city).toEqual(requestBody.city);
@@ -144,7 +141,6 @@ class ATest extends AbstractTests {
       this.sharedState.gender = eRequest.gender;
       this.sharedState.nationality = eRequest.nationality;
       this.sharedState.maritalStatus = eRequest.maritalStatus;
-      this.sharedState.militaryStatus = eRequest.militaryStatus;
       this.sharedState.drivingLicense = eRequest.drivingLicense;
       this.sharedState.country = eRequest.country;
       this.sharedState.city = eRequest.city;
@@ -163,7 +159,6 @@ class ATest extends AbstractTests {
       gender: "false",
       nationality: "egyptian",
       maritalStatus: "single",
-      militaryStatus: "excempt",
       drivingLicense: "qwertyuio",
       country: "egypt",
       city: "cairo",
@@ -246,7 +241,6 @@ class ATest extends AbstractTests {
       gender: "false",
       nationality: "egyptian",
       maritalStatus: "single",
-      militaryStatus: "excempt",
       drivingLicense: "qwertyuio",
       country: "egypt",
       city: "cairo",
@@ -279,7 +273,6 @@ class ATest extends AbstractTests {
       expect(eRequest.gender).toEqual(requestBody.gender);
       expect(eRequest.nationality).toEqual(requestBody.nationality);
       expect(eRequest.maritalStatus).toEqual(requestBody.maritalStatus);
-      expect(eRequest.militaryStatus).toEqual(requestBody.militaryStatus);
       expect(eRequest.drivingLicense).toEqual(requestBody.drivingLicense);
       expect(eRequest.country).toEqual(requestBody.country);
       expect(eRequest.city).toEqual(requestBody.city);
@@ -295,7 +288,6 @@ class ATest extends AbstractTests {
       this.sharedState.gender = eRequest.gender;
       this.sharedState.nationality = eRequest.nationality;
       this.sharedState.maritalStatus = eRequest.maritalStatus;
-      this.sharedState.militaryStatus = eRequest.militaryStatus;
       this.sharedState.drivingLicense = eRequest.drivingLicense;
       this.sharedState.country = eRequest.country;
       this.sharedState.city = eRequest.city;
@@ -314,7 +306,6 @@ class ATest extends AbstractTests {
       gender: "false",
       nationality: "egyptian",
       maritalStatus: "single",
-      militaryStatus: "excempt",
       drivingLicense: "qwertyuio",
       country: "egypt",
       city: "cairo",
@@ -1073,10 +1064,10 @@ class ATest extends AbstractTests {
         allNotifications =>
           allNotifications.description === requestBody.feedBack.toString()
       );
-      expect(allNotifications[0].NotifiedPerson.toString()).toEqual(
+      expect(allNotifications[0].notifiedPerson.toString()).toEqual(
         m1._id.toString()
       );
-      expect(allNotifications[1].NotifiedPerson.toString()).toEqual(
+      expect(allNotifications[1].notifiedPerson.toString()).toEqual(
         m2._id.toString()
       );
       // delete created notifications
@@ -1107,10 +1098,10 @@ class ATest extends AbstractTests {
         description: "Test description",
         company: "Test Company",
         category: "Test Category",
-        want_consultancy: false,
+        wantConsultancy: false,
         posted_date: date,
         memberID: m1._id,
-        life_cycle: "InProgress",
+        lifeCycle: "InProgress",
         required_skills_set: ["testSkillSet1", "testSkillSet2"]
       };
       let allProjects = await Project.find();
@@ -1210,7 +1201,7 @@ class ATest extends AbstractTests {
       let filteredNotifications = [];
       for (i = 0; i < allNotifications.length; i++) {
         if (
-          allNotifications[i].NotifiedPerson.toString() === m1._id.toString()
+          allNotifications[i].notifiedPerson.toString() === m1._id.toString()
         ) {
           filteredNotifications.push(allNotifications[i]);
         }
@@ -1229,7 +1220,7 @@ class ATest extends AbstractTests {
       filteredNotifications = [];
       for (i = 0; i < allNotifications.length; i++) {
         if (
-          allNotifications[i].NotifiedPerson.toString() === m2._id.toString()
+          allNotifications[i].notifiedPerson.toString() === m2._id.toString()
         ) {
           filteredNotifications.push(allNotifications[i]);
         }
@@ -1248,7 +1239,7 @@ class ATest extends AbstractTests {
       filteredNotifications = [];
       for (i = 0; i < allNotifications.length; i++) {
         if (
-          allNotifications[i].NotifiedPerson.toString() === m3._id.toString()
+          allNotifications[i].notifiedPerson.toString() === m3._id.toString()
         ) {
           filteredNotifications.push(allNotifications[i]);
         }
@@ -1313,7 +1304,7 @@ class ATest extends AbstractTests {
 
   sendFinalDraft() {
     const requestBody = {
-      final_draft: "TESTDARFT"
+      finalDraft: "TESTDARFT"
     };
     test(`Admin Send Final Draft ${
       this.base_url

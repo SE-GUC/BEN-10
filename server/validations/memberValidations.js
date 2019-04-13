@@ -12,7 +12,6 @@ module.exports = {
             gender: Joi.boolean().required(),
             nationality: Joi.string().min(3).max(100).required().regex(/^([^0-9]*)$/),
             maritalStatus: Joi.string().required(),
-            militaryStatus: Joi.string().required(),
             drivingLicense: Joi.boolean().required(),
             //location info
             country: Joi.string().max(100).required().regex(/^([^0-9]*)$/),
@@ -42,7 +41,6 @@ module.exports = {
             gender: Joi.boolean(),
             nationality: Joi.string().min(3).max(100).regex(/^([^0-9]*)$/),
             maritalStatus: Joi.string(),
-            militaryStatus: Joi.string(),
             drivingLicense: Joi.boolean(),
             //location info
             country: Joi.string().max(100).regex(/^([^0-9]*)$/),
