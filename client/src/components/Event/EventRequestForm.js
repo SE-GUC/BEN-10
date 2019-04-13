@@ -13,7 +13,8 @@ const styles = theme => ({
   },
   textField: {
     marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
+    marginRight: theme.spacing.unit,
+    width:240
   },
   dense: {
     marginTop: 16
@@ -79,11 +80,6 @@ class EventRequestForm extends React.Component {
     
     return (
       <div>
-        <div>
-          <label>
-            Request an event
-          </label>
-          </div>
         <div>
           <TextField
             id="description"

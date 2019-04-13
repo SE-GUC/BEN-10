@@ -13,7 +13,8 @@ const styles = theme => ({
   },
   textField: {
     marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
+    marginRight: theme.spacing.unit,
+    width:240
   },
   dense: {
     marginTop: 16
@@ -56,25 +57,19 @@ class PostProjectForm extends React.Component {
     })
   }
   
-  
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value
     });
   };
 
-  
 
   render() {
     const { classes } = this.props;
     
     return (
       <div>
-        <div>
-          <label>
-            Request a project
-          </label>
-          </div>
+        
         <div>
           <TextField
             id="description"
@@ -105,10 +100,10 @@ class PostProjectForm extends React.Component {
           <TextField
             id="want_consultancy"
             select
-            label="Select Consultancy"
+            label="Need Consultancy"
             className={classes.textField}
-            value={this.state.want_consultancy}
-            onChange={this.handleChange("want_consultancy")}
+            value={this.state.wantConsultancy}
+            onChange={this.handleChange("wantConsultancy")}
             margin="normal"
             variant="outlined"
           >
@@ -123,7 +118,7 @@ class PostProjectForm extends React.Component {
        
         <div>
           <PostProjectMessage className={classes.button} description={this.state.description} category={this.state.category}
-          wantConsultancy={this.state.want_consultancy} companyID={this.props.companyID} clear={this.clear}/>
+          wantConsultancy={this.state.wantConsultancy} companyID={this.props.companyID} clear={this.clear}/>
         </div>
       </div>
   );

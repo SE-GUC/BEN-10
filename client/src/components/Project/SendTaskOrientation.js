@@ -4,7 +4,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import axios from "axios";
 
 
-class PostProjectMessage extends React.Component {
+class SendTaskOrientation extends React.Component {
   state = {
     open: false,
     vertical: 'top',
@@ -14,23 +14,21 @@ class PostProjectMessage extends React.Component {
 
   handleClick = state => () => {
     this.setState({ open: true, ...state });
-    this.submitRequest()
+    this.sendInvitation()
 
   };
 
-  submitRequest = () => {
-    const body ={
-        description: this.props.description,
-        category: this.props.category,
-        want_consultancy: this.props.want_consultancy
-    }
+  sendInvitation = () => {
+    
 
-    axios.post(`http://localhost:5000/api/partners/${this.props.companyID}/addProject/`, body)
+    axios.post(`http://localhost:5000/api/partners/${this.props.Id}/sendOrientationInvitations/${this.props.projectId}/`)
     .then(function (response) {
       console.log(response.status)
       return response.data;
     })
     .then(res => {
+        console.log(res)
+        console.log(this.props.Id)
       if(res.error){
       this.setState({
         result:res.error
@@ -39,11 +37,13 @@ class PostProjectMessage extends React.Component {
         this.setState({
           result:res.msg
         })
-        this.props.clear()
+        
       }
     })
     .catch(function (error) {
       console.log(error);
+      
+      
     });
 
   };
@@ -55,8 +55,8 @@ class PostProjectMessage extends React.Component {
     const { vertical, horizontal, open } = this.state;
     return (
       <div>
-        <Button onClick={this.handleClick({ vertical: 'bottom', horizontal: 'left' })} variant="contained" className={this.props.className}>
-            Submit Request
+        <Button onClick={this.handleClick({ vertical: 'bottom', horizontal: 'left' })} color="secondary" variant="contained" className={this.props.className}>
+        Send Task Orientation Invitation
         </Button>
         
         <Snackbar
@@ -73,4 +73,4 @@ class PostProjectMessage extends React.Component {
   }
 }
 
-export default PostProjectMessage;
+export default SendTaskOrientation;

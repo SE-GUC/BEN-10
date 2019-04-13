@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Project from "../components/Project/project";
 import axios from "axios";
-import PostProjectButton from "../components/PostProjectButton";
 import {Redirect} from 'react-router-dom'
 import  PropTypes from 'prop-types'; 
 import { BrowserRouter as Router , Route } from "react-router-dom";
@@ -72,7 +71,6 @@ routeChange() {
                 )) }
             </Grid>
           
-        <PostProjectButton name={"Request a Project"} routeChange={this.routeChange}/>
         </div>
       );
     }

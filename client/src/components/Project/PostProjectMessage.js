@@ -4,7 +4,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import axios from "axios";
 
 
-class EventRequestMessage extends React.Component {
+class PostProjectMessage extends React.Component {
   state = {
     open: false,
     vertical: 'top',
@@ -21,14 +21,11 @@ class EventRequestMessage extends React.Component {
   submitRequest = () => {
     const body ={
         description: this.props.description,
-        eventType: this.props.type,
-        eventLocation: this.props.location,
-        eventDate: this.props.date,
-        isAccepted: "false",
-        requestorId: this.props.requestorId
+        category: this.props.category,
+        wantConsultancy: this.props.wantConsultancy
     }
 
-    axios.post(`http://localhost:5000/api/partners/${this.props.requestorId}/eventrequests/`, body)
+    axios.post(`http://localhost:5000/api/partners/${this.props.companyID}/addProject/`, body)
     .then(function (response) {
       console.log(response.status)
       return response.data;
@@ -58,10 +55,12 @@ class EventRequestMessage extends React.Component {
     const { vertical, horizontal, open } = this.state;
     return (
       <div>
-        <Button onClick={this.handleClick({ vertical: 'bottom', horizontal: 'left' })} variant="contained" className={this.props.className}>
+        <Button style={{
+        borderRadius: 35,
+        backgroundColor: "#21b6ae"
+    }} onClick={this.handleClick({ vertical: 'bottom', horizontal: 'left' })} variant="contained" className={this.props.className}>
             Submit Request
         </Button>
-        
         <Snackbar
           anchorOrigin={{ vertical, horizontal }}
           open={open}
@@ -76,4 +75,4 @@ class EventRequestMessage extends React.Component {
   }
 }
 
-export default EventRequestMessage;
+export default PostProjectMessage;
