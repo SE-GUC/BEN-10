@@ -14,12 +14,18 @@ import {Redirect} from 'react-router-dom'
 
 const styles = {
   card: {
-    maxWidth: 345,
+    width: 300,
+    backgroundColor:"#006064",
+    marginBottom:10,
+    marginLeft:500
   },
   media: {
     // ⚠️ object-fit is not supported by IE 11.
     objectFit: 'cover',
   },
+  text:{
+    color:"#ffc107"
+  }
 };
 
 class MyProjectCard extends Component{
@@ -45,9 +51,9 @@ return (
     <Card className={classes.card}>
       <CardActionArea onClick = {this.viewProject}>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography  gutterBottom variant="h5" component="h2">
           </Typography>
-          <Typography component="p">
+          <Typography className={classes.text} component="p">
           Company name:{this.props.project.company}<br></br>
           description: {this.props.project.description}<br></br>
           life_cycle:{this.props.project.life_cycle}<br></br>

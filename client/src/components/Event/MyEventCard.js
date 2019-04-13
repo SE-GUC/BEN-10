@@ -14,12 +14,18 @@ import {Redirect} from 'react-router-dom'
 
 const styles = {
   card: {
-    maxWidth: 345,
+    width: 300,
+    backgroundColor:"#006064",
+    marginBottom:10,
+    marginLeft:500
   },
   media: {
     // ⚠️ object-fit is not supported by IE 11.
     objectFit: 'cover',
   },
+  text:{
+    color:"#ffc107"
+  }
 };
 
 class MyEventCard extends Component{
@@ -47,7 +53,7 @@ return (
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
           </Typography>
-          <Typography component="p">
+          <Typography className={classes.text} component="p">
           topics: {this.props.event.topics} <br></br>
           eventType:{this.props.event.eventLocation}<br></br>
           description: {this.props.event.description}<br></br>

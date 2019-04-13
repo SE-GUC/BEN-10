@@ -24,9 +24,14 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   }
+  
   ,
   Tab:{
-      width:1680
+      width:1680,
+      backgroundColor:"#006064"
+  },
+  label:{
+    color:"#ffc107"
   }
 });
 
@@ -53,16 +58,16 @@ class SimpleTabs extends React.Component {
       <div className={classes.root}>
         <AppBar className={classes.Tab} position="static">
           <Tabs value={value}  onChange={this.handleChange}>
-            <Tab label="All" />
-            <Tab label="Waiting For Consultancy Agency" />
-            <Tab label="Negotiation" />
-            <Tab label="Final Draft" />
-            <Tab  label="Approved" />
-            <Tab  label="Canceled" />
-            <Tab label="Posted" />
-            <Tab  label="In Progress" />
-            <Tab label="Final Review" />
-            <Tab label="Finished" />
+            <Tab className={classes.label} label="All" />
+            <Tab className={classes.label}  label="Waiting For Consultancy Agency" />
+            <Tab className={classes.label}  label="Negotiation" />
+            <Tab className={classes.label}  label="Final Draft" />
+            <Tab  className={classes.label}  label="Approved" />
+            <Tab  className={classes.label}  label="Canceled" />
+            <Tab className={classes.label}  label="Posted" />
+            <Tab  className={classes.label} label="In Progress" />
+            <Tab className={classes.label}  label="Final Review" />
+            <Tab className={classes.label}  label="Finished" />
           </Tabs>
         </AppBar>
         {value === 0 && <TabContainer>{this.state.projects.map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}

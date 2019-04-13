@@ -13,8 +13,10 @@ class MemberMyProjects extends Component {
   }
   componentDidMount(){
     fetch(`http://localhost:5000/api/members/${this.state.partnerId}/recommendations`).then(res=>res.json())
-    .then(projects=>this.setState({Project:projects.data}))
-    
+    .then(projects=>{
+      console.log(projects)
+    }
+    )
   }
   render() {
     if(this.state.Project===null){

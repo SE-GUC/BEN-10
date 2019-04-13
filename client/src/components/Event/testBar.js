@@ -26,7 +26,11 @@ const styles = theme => ({
   }
   ,
   Tab:{
-      width:1680
+      width:1680,
+      backgroundColor:"#006064"
+  },
+  label:{
+    color:"#ffc107"
   }
 });
 
@@ -53,7 +57,7 @@ class SimpleTabs extends React.Component {
       <div className={classes.root}>
         <AppBar className={classes.Tab} position="static">
           <Tabs value={value}  onChange={this.handleChange}>
-            <Tab label="All" />
+            <Tab className={classes.label} label="All" />
             {/* <Tab label="Waiting For Consultancy Agency" />
             <Tab label="Negotiation" />
             <Tab label="Final Draft" />

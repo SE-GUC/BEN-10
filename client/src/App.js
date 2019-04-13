@@ -15,23 +15,9 @@ class App extends Component {
     user_name:null,
 
   }
-  componentDidMount() {
-    axios 
-      .get("http://localhost:5000/api/partners")
-      .then(res => {
-        return res.data; 
-      })
-      .then(a =>
-        this.setState({
-          user_id: a.data[0]._id,
-
-          user_name: a.data[0].name
-        })
-      );
-  }
   // componentDidMount() {
   //   axios 
-  //     .get("http://localhost:5000/api/members")
+  //     .get("http://localhost:5000/api/partners")
   //     .then(res => {
   //       return res.data; 
   //     })
@@ -43,6 +29,20 @@ class App extends Component {
   //       })
   //     );
   // }
+  componentDidMount() {
+    axios 
+      .get("http://localhost:5000/api/members")
+      .then(res => {
+        return res.data; 
+      })
+      .then(a =>
+        this.setState({
+          user_id: a.data[0]._id,
+
+          user_name: a.data[0].name
+        })
+      );
+  }
   // componentDidMount() {
   //   axios 
   //     .get("http://localhost:5000/api/consultancyagency")
