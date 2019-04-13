@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import PartnerApplyingMemberCard from "../components/PartnerApplyingMemberCard";
+import CAApplyingMemberCard from "./CAApplyingMemberCard";
 import axios from "axios";
 // import tileData from './tileData';
 
@@ -30,7 +30,7 @@ const styles = theme => ({
     marginRight: theme.spacing.unit
   }
 });
-class PartnerApplyingMembersOnProject extends Component {
+class CAApplyingMembersOnProject extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,7 +41,7 @@ class PartnerApplyingMembersOnProject extends Component {
   }
 
   async componentDidMount(){
-    await axios(`http://localhost:5000/api/partners/${this.props.partner._id}/myProjects/${this.props.project._id}/applyingMembers`)
+    await axios(`http://localhost:5000/api/consultancyagency/${this.props.ca._id}/myProjects/${this.props.project._id}/applyingMembers`)
     .then(res=>{
       if(res.status===200)
         return res.data
@@ -61,11 +61,11 @@ class PartnerApplyingMembersOnProject extends Component {
     
     const { classes } = this.props;
 
-    if( this.state.applyingMembers !== null){
+    if( this.state.applyingMembers){
     return (
       <div className={classes.root}>
         <GridList cellHeight={180} className={classes.gridList}>
-          <GridListTile key="Subheader" cols={2} style={{ height: "auto" }}>
+          <GridListTile key="Subheader" cols={1} style={{ height: "auto" }}>
             <ListSubheader component="div">
               Applying Members On this Project
             </ListSubheader>
@@ -73,7 +73,7 @@ class PartnerApplyingMembersOnProject extends Component {
           
           {this.state.applyingMembers.map(i => (
             <GridListTile key={i}>
-              <PartnerApplyingMemberCard project={this.props.project} partner={this.props.partner} mem={i._id} />
+              <CAApplyingMemberCard project={this.props.project} ca={this.props.ca} mem={i._id} />
             </GridListTile>
           ))}
         </GridList>
@@ -82,15 +82,17 @@ class PartnerApplyingMembersOnProject extends Component {
   } else {
     return (
       <div className={classes.root}>
-          <label>no Applying Members on this project</label>
+      <ListSubheader component="div">
+      No applying Members On this Project
+    </ListSubheader>
         </div>
     );
   }
   }
 }
 
-PartnerApplyingMembersOnProject.propTypes = {
+CAApplyingMembersOnProject.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(PartnerApplyingMembersOnProject);
+export default withStyles(styles)(CAApplyingMembersOnProject);

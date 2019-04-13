@@ -809,7 +809,7 @@ router.get("/:id/myProjects", async (req, res) => {
         .then(json => {
           const myprojects = json.data;
           const proj = myprojects.filter(
-            myprojects => myprojects.companyId === id
+            myprojects => myprojects.companyId == id
           );
           res.json({ data: proj });
         })

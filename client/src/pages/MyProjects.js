@@ -28,15 +28,19 @@ class MyProjects extends Component {
     this.routeChange = this.routeChange.bind(this)
     this.state = {
     projects: null,
-    partner_id:props.partner_id,
+    partner_id:props.user,
       redirect: false
   };
 }
-  componentDidMount(){
-    fetch(`http://localhost:5000/api/partners/${this.state.partner_id}/myProjects`).then(res=>res.json())
-    .then(projects=>{
+  async componentDidMount(){
+    await axios.get(`http://localhost:5000/api/partners/${this.state.partner_id}/myProjects`)
+    .then(res => {
+      return res.data; 
+    })
+  .then(projects=>{
       this.setState({projects:projects.data})
   })
+  console.log(this.state.projects)
 }
 routeChange() {
     this.setState({redirect:true})
@@ -62,7 +66,7 @@ routeChange() {
         <Grid container spacing={24} style={{padding: 24}}>
             {this.state.projects.map(i => (    
               <Grid item xs={12} sm={6} lg={4} xl={3} style={{backgroundColor:"white"}}>
-                <Project project={i} key={i._id} />
+                <Project type= {this.state.type} user={this.state.user} project={i} key={i._id} />
                 </Grid> 
                 
                 )) }

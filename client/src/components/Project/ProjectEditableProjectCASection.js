@@ -9,6 +9,8 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Chip from '@material-ui/core/Chip';
 import SaveButton from '../Global/SaveButton';
+import ApplyingCAsOnProject from './ApplyingCAsOnProject';
+import PartnerApplyingCAsOnProject from './PartnerApplyingCAsOnProject';
 
 const effort = ['Low','Normal','Hard','Extreme']
 const cycle=['Waiting for consultancy Agency' , 'Negotiation',
@@ -22,8 +24,9 @@ export default class EditableView extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            project_id :props.project_id,
-            partner_id:props.partner_id,
+            project_id :props.project._id,
+            user:props.user,
+            userID:props.user._id,
             project : props.project,
             wantConsultancy:props.project.wantConsultancy,
             caId:props.project.consultancyID,
@@ -34,7 +37,7 @@ export default class EditableView extends React.Component {
             caEmail:null,
             caTelephoneNumber:null,
             caLocation:null,
-            caYearsOfExp:null
+            caYearsOfExp:null,
 
         }
     }
@@ -154,13 +157,36 @@ export default class EditableView extends React.Component {
  
             ); }
         else{
-            return(
 
-                <div>
-                 <p>No Consultancy assigned</p>
+            if(this.props.type == "admin"){
+            return(
+                
+                <div class="mainContainer">    
+                <div id="ProjectAttributes">
+                    <div class="headerArea" > <h1> consultancy Agency Info</h1>
+                  <ApplyingCAsOnProject project={this.state.project} admin={this.state.user}></ApplyingCAsOnProject>
                 </div>
+                </div></div>
+            );
+        }if(this.props.type == "partner"){
+            return(
+                
+                <div class="mainContainer">    
+                <div id="ProjectAttributes">
+                    <div class="headerArea" > <h1> consultancy Agency Info</h1>
+                  <PartnerApplyingCAsOnProject project={this.state.project} partner={this.state.user}></PartnerApplyingCAsOnProject>
+                </div>
+                </div></div>
             );
         }
+        else {
+            return(
+                <div>
+                <h1>Hello</h1>
+                </div>
+                );
+        }
+    }
 
     }
 }

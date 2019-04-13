@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import PartnerApplyingCAsCard from "../components/PartnerApplyingCAsCard";
+import ApplyingCAsCard from "./ApplyingCAsCard";
 // import tileData from './tileData';
 
 const styles = theme => ({
@@ -29,7 +29,7 @@ const styles = theme => ({
     marginRight: theme.spacing.unit
   }
 });
-class PartnerApplyingCAsOnProject extends Component {
+class ApplyingCAsOnProject extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,14 +44,14 @@ class PartnerApplyingCAsOnProject extends Component {
     return (
       <div className={classes.root}>
         <GridList cellHeight={180} className={classes.gridList}>
-          <GridListTile key="Subheader" cols={2} style={{ height: "auto" }}>
+          <GridListTile key="Subheader" cols={1} style={{ height: "auto" }}>
             <ListSubheader component="div">
               Applying Consultancy Agencys On this Project
             </ListSubheader>
           </GridListTile>
           {this.props.project.applyingCA.map(i => (
             <GridListTile key={i}>
-              <PartnerApplyingCAsCard project={this.props.project} partner={this.props.partner} ca={i} />
+              <ApplyingCAsCard project={this.props.project} admin={this.props.admin} ca={i} />
             </GridListTile>
           ))}
         </GridList>
@@ -60,8 +60,8 @@ class PartnerApplyingCAsOnProject extends Component {
   }
 }
 
-PartnerApplyingCAsOnProject.propTypes = {
+ApplyingCAsOnProject.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(PartnerApplyingCAsOnProject);
+export default withStyles(styles)(ApplyingCAsOnProject);

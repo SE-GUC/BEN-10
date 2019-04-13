@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import ApplyingMemberButton from "../components/ApplyingMemberButton";
+import ApplyingCAButton from "./ApplyingCAButton";
 const styles = theme => ({
   card: {
     minWidth: 275,
@@ -28,33 +28,33 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
   },
 });
-class ApplyingMemberCard extends Component {
+class ApplyingCAsCard extends Component {
   constructor(props){
     super(props)
     this.state = {
-      ID: this.props.mem,
+      ID: this.props.ca,
       name: null,
-      email : null,
-      skillSet : null,
-      country: null
+      about : null,
+      yearsOfExperience : null,
+      location: null
     };
   }
 
   async componentDidMount(){
-    await axios(`http://localhost:5000/api/members/${this.state.ID}/`)
+    await axios(`http://localhost:5000/api/consultancyagency/${this.state.ID}/`)
     .then(res=>{
       if(res.status===200)
         return res.data
       else
        return null;
     })
-    .then(mem=>{  
-      if(mem!=null){
+    .then(ca=>{  
+      if(ca!=null){
         this.setState({
-          name:mem.data.firstName+ ' '+mem.data.lastName,
-          email:mem.data.email,
-          skillSet:mem.data.skillSet,
-          country:mem.data.country
+          name:ca.data.name,
+          about:ca.data.about,
+          yearsOfExperience:ca.data.yearsOfExperience,
+          location:ca.data.location
         })
       }
     });
@@ -71,15 +71,16 @@ class ApplyingMemberCard extends Component {
              name: {this.state.name}
             </Typography>
             <Typography variant="h5" component="h2">
-            email: {this.state.email}
+             location: {this.state.location}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
-            country: {this.state.country}
+            years of experience: {this.state.yearsOfExperience}
             </Typography>
             <Typography component="p">
-            set of skills: {this.state.skillSet}
+             about: {this.state.about}
             </Typography>
-            <ApplyingMemberButton project={this.props.project} admin={this.props.admin} mem={this.props.mem} />
+            {console.log(this.props.project)}
+            <ApplyingCAButton project={this.props.project} admin={this.props.admin} ca={this.props.ca} />
         </CardContent>
         
       </Card>
@@ -94,8 +95,8 @@ class ApplyingMemberCard extends Component {
 }
 
 
-ApplyingMemberCard.propTypes = {
+ApplyingCAsCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ApplyingMemberCard);
+export default withStyles(styles)(ApplyingCAsCard);

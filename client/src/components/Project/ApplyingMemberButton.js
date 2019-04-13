@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
-import ApplyingCAsFab from '../components/ApplyingCAsFab'
+import ApplyingMemberFab from './ApplyingMemberFab'
 import axios from 'axios'
 
 const styles = theme => ({
@@ -12,17 +11,16 @@ const styles = theme => ({
   },
 });
 
-class ApplyingCAButton extends Component {
+class ApplyingMemberButton extends Component {
     constructor(props){
         super(props)
         this.state = {
           open: false,
           project:this.props.project,
           admin:this.props.admin,
-          ca:this.props.ca,
+          mem:this.props.mem,
           result:"Loading..."
         };
-        console.log(this.props.ca)
     }
 
   handleClick = () => {
@@ -32,14 +30,14 @@ class ApplyingCAButton extends Component {
 
   assign = () => {
     const body = {
-      applyingCA: this.state.ca
+      memberID: this.state.mem
     };
     axios
       .put(
-        `http://localhost:5000/api/admins/${this.state.admin._id}/assignCA/${this.state.project._id}/to/${this.state.ca}`,body
+        `http://localhost:5000/api/admins/${this.state.admin._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body
       )
       .then(function(response) {
-        console.log(response);
+        console.log(response.status);
         return response.data;
       })
       .then(res => {
@@ -67,7 +65,7 @@ class ApplyingCAButton extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <ApplyingCAsFab onClick={this.handleClick}></ApplyingCAsFab>
+        <ApplyingMemberFab onClick={this.handleClick}></ApplyingMemberFab>
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
@@ -87,8 +85,8 @@ class ApplyingCAButton extends Component {
   }
 }
 
-ApplyingCAButton.propTypes = {
+ApplyingMemberButton.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ApplyingCAButton);
+export default withStyles(styles)(ApplyingMemberButton);

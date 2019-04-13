@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
-import PartnerApplyingMemberFab from '../components/PartnerApplyingMemberFab'
+import PartnerApplyingMemberFab from './PartnerApplyingMemberFab'
 import axios from 'axios'
 
 const styles = theme => ({

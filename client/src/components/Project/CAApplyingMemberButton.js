@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
-import ApplyingMemberFab from '../components/ApplyingMemberFab'
+import CAApplyingMemberFab from './CAApplyingMemberFab'
 import axios from 'axios'
 
 const styles = theme => ({
@@ -11,13 +11,13 @@ const styles = theme => ({
   },
 });
 
-class ApplyingMemberButton extends Component {
+class CAApplyingMemberButton extends Component {
     constructor(props){
         super(props)
         this.state = {
           open: false,
           project:this.props.project,
-          admin:this.props.admin,
+          ca:this.props.ca,
           mem:this.props.mem,
           result:"Loading..."
         };
@@ -34,7 +34,7 @@ class ApplyingMemberButton extends Component {
     };
     axios
       .put(
-        `http://localhost:5000/api/admins/${this.state.admin._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body
+        `http://localhost:5000/api/consultancyagency/${this.state.ca._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body
       )
       .then(function(response) {
         console.log(response.status);
@@ -65,7 +65,7 @@ class ApplyingMemberButton extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <ApplyingMemberFab onClick={this.handleClick}></ApplyingMemberFab>
+        <CAApplyingMemberFab onClick={this.handleClick}></CAApplyingMemberFab>
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
@@ -85,8 +85,8 @@ class ApplyingMemberButton extends Component {
   }
 }
 
-ApplyingMemberButton.propTypes = {
+CAApplyingMemberButton.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ApplyingMemberButton);
+export default withStyles(styles)(CAApplyingMemberButton);

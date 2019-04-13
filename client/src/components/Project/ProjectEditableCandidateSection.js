@@ -9,6 +9,9 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Chip from '@material-ui/core/Chip';
 import SaveButton from '../Global/SaveButton';
+import PartnerApplyingMembersOnProject from './PartnerApplyingMembersOnProject';
+import ApplyingMembersOnProject from './ApplyingMembersOnProject';
+import CAApplyingMembersOnProject from './CAApplyingMembersOnProject';
 
 const effort = ['Low','Normal','Hard','Extreme']
 const cycle=['Waiting for consultancy Agency' , 'Negotiation',
@@ -22,8 +25,9 @@ export default class EditableView extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            project_id :props.project_id,
-            partner_id:props.partner_id,
+            projectID :props.project._id,
+            userID:props.user._id,
+            user:props.user,
             project : props.project,
             memberID:props.project.memberID,
             // member needed attributes
@@ -124,12 +128,43 @@ export default class EditableView extends React.Component {
 
         }
         else{
-            return(
-                <div>
-                  <p>no member assigned</p>
-                </div>
-            );
-
+            if(this.props.type == "partner"){
+                return(
+                    <div class="mainContainer">    
+                    <div id="ProjectAttributes">
+                        <div class="headerArea" > <h1> consultancy Agency Info</h1>
+                      <PartnerApplyingMembersOnProject project={this.state.project} partner={this.state.user}></PartnerApplyingMembersOnProject>
+                    </div>
+                    </div></div>
+                );
+            }
+            if(this.props.type == "consultancy agency"){
+                return(
+                    <div class="mainContainer">    
+                    <div id="ProjectAttributes">
+                        <div class="headerArea" > <h1> consultancy Agency Info</h1>
+                      <CAApplyingMembersOnProject project={this.state.project} ca={this.state.user}></CAApplyingMembersOnProject>
+                    </div>
+                    </div></div>
+                );
+            }
+            if(this.props.type == "admin"){
+                return(
+                    <div class="mainContainer">    
+                    <div id="ProjectAttributes">
+                        <div class="headerArea" > <h1> consultancy Agency Info</h1>
+                      <ApplyingMembersOnProject project={this.state.project} admin={this.state.user}></ApplyingMembersOnProject>
+                    </div>
+                    </div></div>
+                );
+            }
+            else {
+                return(
+                    <div>
+                    <h1>You're not allowed to see this page</h1>
+                    </div>
+                    );
+            }
         }
     }
 

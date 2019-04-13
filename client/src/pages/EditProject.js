@@ -8,21 +8,21 @@ import CircularProgress from '../components/Global/CircularIndeterminate';
 import ReactDOM from 'react-dom';
 import ProjectEditableViewCASection from '../components/Project/ProjectEditableProjectCASection';
 import ProjectEditableCandidateSection from '../components/Project/ProjectEditableCandidateSection';
-//import EditableView from '../components/Project/ProjectEditableViewProjectSection';
 
 export default class EditProject extends Component {
   constructor(props){
     super(props); 
   this.state={
-        id : this.props.match.params.id,
-        partner_id:props.partner_id,
+        projectID : this.props.match.params.id,
+        userID:props.user._id,
         project : null,
+        user : props.user,
 
     }   
   }
   async  componentDidMount(){
     await  axios
-      .get(`http://localhost:5000/api/projects/${this.state.id}`)
+      .get(`http://localhost:5000/api/projects/${this.state.projectID}`)
       .then(res => {
         
         return  res.data;
@@ -31,6 +31,8 @@ export default class EditProject extends Component {
       .then(a => {
            this.setState({ project: a.data  })
         });
+        console.log(
+          "from edit project = "+this.state.project._id)
       } 
 
 
@@ -46,7 +48,7 @@ export default class EditProject extends Component {
     const requestOptions = {
       method: 'DELETE'
     };
-    await fetch(`http://localhost:5000/api/partners/${this.state.partner_id}/deleteProject/${this.state.id}` , requestOptions).then((response) => {
+    await fetch(`http://localhost:5000/api/partners/${this.state.userID}/deleteProject/${this.state.projectID}` , requestOptions).then((response) => {
       return response.json();
     }).then((result) => {
       console.log(result)
@@ -67,19 +69,18 @@ export default class EditProject extends Component {
    }
 
   viewSection2= (e)=>{
-   ReactDOM.render(<ProjectEditableViewCASection project={this.state.project}
-    project_id={this.state.id} partner_id={this.state.partner_id}
+   ReactDOM.render(<ProjectEditableViewCASection user={this.state.user} type= {this.props.type} project={this.state.project}
     ></ProjectEditableViewCASection>,document.getElementById('container'));
   }
   viewSection3=(e)=>{
-    ReactDOM.render(<ProjectEditableCandidateSection project={this.state.project}
-      project_id={this.state.id} partner_id={this.state.partner_id}
+    ReactDOM.render(<ProjectEditableCandidateSection user={this.state.user} type= {this.props.type} project={this.state.project}
       ></ProjectEditableCandidateSection>,document.getElementById('container'));
     }
   
 
   render() {
     if(this.state.project!== null){  
+      console.log(this.state.projectID +" "+this.state.userID)
     return (
       <div >
         <div class = "leftCol">
@@ -101,7 +102,7 @@ export default class EditProject extends Component {
             </div>
         </div>
         <div id="container">
-          <EditableView project={this.state.project} id={this.state.id} ></EditableView>
+          <EditableView project={this.state.project}></EditableView>
           <Button variant="primary" onClick={this.cancelProject}>Cancel project</Button>
        </div>  
       </div>

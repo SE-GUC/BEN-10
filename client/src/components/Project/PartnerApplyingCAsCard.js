@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import ApplyingCAButton from "../components/ApplyingCAButton";
+import PartnerApplyingCAButton from "./PartnerApplyingCAButton";
 const styles = theme => ({
   card: {
     minWidth: 275,
@@ -28,7 +28,7 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
   },
 });
-class ApplyingCAsCard extends Component {
+class PartnerApplyingCAsCard extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -80,7 +80,7 @@ class ApplyingCAsCard extends Component {
              about: {this.state.about}
             </Typography>
             {console.log(this.props.project)}
-            <ApplyingCAButton project={this.props.project} admin={this.props.admin} ca={this.props.ca} />
+            <PartnerApplyingCAButton project={this.props.project} partner={this.props.partner} ca={this.props.ca} />
         </CardContent>
         
       </Card>
@@ -88,15 +88,16 @@ class ApplyingCAsCard extends Component {
     );}
     else{
       return(
-      <div className={classes.root}></div>
+      <div className={classes.root}>
+      </div>
       )
     }
   }
 }
 
 
-ApplyingCAsCard.propTypes = {
+PartnerApplyingCAsCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ApplyingCAsCard);
+export default withStyles(styles)(PartnerApplyingCAsCard);

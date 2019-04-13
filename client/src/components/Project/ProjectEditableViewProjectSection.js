@@ -22,7 +22,7 @@ export default class EditableView extends React.Component {
     constructor(props){
         super(props);
         this.state={
-        projectID:this.props.id,
+        projectID:this.props.project._id,
         //entities
         project : this.props.project,
         CA:null,
@@ -86,7 +86,6 @@ export default class EditableView extends React.Component {
     };
     
     saveChanges =async ()=>{
-      console.log("save chang")
       await axios({url : `http://localhost:5000/api/projects/${this.state.projectID}`, method:'put',
     data:{
         description : this.state.description,
