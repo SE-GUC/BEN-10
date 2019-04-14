@@ -34,13 +34,13 @@ class App extends Component {
   };
   asPartner = () => {
     axios
-      .get("http://localhost:5000/api/partners/5cae3044a972db1e007da3e7")
+      .get("http://localhost:5000/api/partners")
       .then(res => {
         return res.data;
       })
       .then(a =>
         this.setState({
-          user: a.data,
+          user: a.data[0],
           type: "partner"
         })
       );
