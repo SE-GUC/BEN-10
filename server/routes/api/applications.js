@@ -12,11 +12,6 @@ router.get("/", async (req, res) => {
   res.json({ data: applications });
 });
 
-// router.get("/:id", async (req, res) => {
-//   const id = req.params.id;
-//   const applications = await Application.findById(id);
-//   res.json({ data: applications });
-// });
 
 router.get("/:id", async (req, res) => {
   if (ObjectId.isValid(req.params.id)) {
@@ -33,7 +28,7 @@ router.get("/:id", async (req, res) => {
 // Create an application
 router.post("/", async (req, res) => {
   try {
-    const isValidated = validator.createValidation(req.body);
+    const isValidated = validator.createValidationApplication(req.body);
     if (isValidated.error)
       return res
         .status(400)

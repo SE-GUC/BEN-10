@@ -34,8 +34,9 @@ router.post("/", async (req, res) => {
         .status(400)
         .send({ error: isValidated.error.details[0].message });
     }
+    console.log('bye')
     const newProject = await Project.create(req.body);
-    res.json({ msg: "Project was created successfully", data: newProject });
+    return res.json({ msg: "Project was created successfully", data: newProject });
   } catch (error) {
     return res.status(400).send({ error: "not a project id" });
   }
@@ -48,20 +49,19 @@ router.put("/:id", async (req, res) => {
       const isValidated = validator.updateValidation(req.body);
       if (isValidated.error){
         return res
-          .status(400)
           .send({ error: isValidated.error.details[0].message });
       }
       const updatedProject = await Project.findOneAndUpdate({ _id: req.params.id },req.body);
 
       if (!updatedProject)
-        return res.status(404).send({ msg: "Project does not exist" });
-      res.json({ msg: "Project updated successfully" });
+        return res.send({ msg: "Project does not exist" });
+      res.status(200).json({ msg: "Project updated successfully" });
     } else {
-      return res.status(404).send({ msg: "not a project id" });
+      return res.send({ msg: "not a project id" });
 
     }
   } catch {
-    return res.status(404).send({ error: "not a project id" });
+    return res.status(400).send({ error: "not a project id" });
   }
 });
 

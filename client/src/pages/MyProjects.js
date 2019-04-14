@@ -1,61 +1,26 @@
 import React, { Component } from "react";
-import Project from "../components/Project";
-import axios from "axios";
-import PostProjectButton from "../components/PostProjectButton";
-import {Redirect} from 'react-router-dom'
-import  PropTypes from 'prop-types'; 
-import { BrowserRouter as Router , Route } from "react-router-dom";
-import MyProjectId from './MyProjectsId';
-
-
-
-class MyProjects extends Component {
-  constructor(props){
-    super(props)
-    this.routeChange = this.routeChange.bind(this)
-    this.state = {
-    projects: null,
-    partner_id:props.partner_id,
-      redirect: false
-  };
-}
-  componentDidMount(){
-    fetch(`http://localhost:5000/api/partners/${this.state.partner_id}/myProjects`).then(res=>res.json())
-    .then(projects=>{
-      this.setState({projects:projects.data})
-  })
-}
-routeChange() {
-    this.setState({redirect:true})
-
-  }
- 
-  render() {
-    const { redirect  } = this.state;
-
-    if(redirect){
-      return <Redirect to='/postProject'/>;
-    }else{
-    if (this.state.projects === null) {
-      return (
-        <div className="App">
-          <label>Loading....</label>
-        </div>
-      );
-    } else {
-      return (
-        <div className="App">
-            {this.state.projects.map(i => (
-        
-           <Project project={i} key={i._id} />         
-             
-            ))}
-      <PostProjectButton name={"Request a Project"} routeChange={this.routeChange}/>
-        </div>
-      );
+import PMyProject from "../components/Project/PartnerMyProjects"
+import MMyProject from "../components/Project/MemberMyProjects"
+import CAMyProject from "../components/Project/CAMyProjects"
+import MMyRec from "../components/Project/MemberRecommendations"
+// import Myfilter from "../components/Project/FilterProj"
+class MyProjects extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            parId:this.props.user_id
+        };
+        console.log(this.props.user_id)
     }
-  }
-}
+
+    render(){
+        return(<div> 
+        <PMyProject id={this.state.parId}/>
+        <MMyProject id={this.state.parId}/>
+        <MMyRec id={this.state.parId}/>
+        {/* <CAMyProject id={this.state.parId}/> */}
+        </div>);               
+    }
 }
 
 export default MyProjects;

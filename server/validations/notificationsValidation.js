@@ -8,7 +8,7 @@ module.exports = {
             notifiedPerson: Joi.objectId().required(),
             date: Joi.date().required(),
             seen: Joi.boolean().required(),
-            sentById : Joi.objectId().required()
+            sentById:Joi.objectId().required()
         }
 
         return Joi.validate(request, createSchema)
