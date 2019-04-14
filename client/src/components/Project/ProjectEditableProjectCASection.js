@@ -5,10 +5,7 @@ import { TextField } from '@material-ui/core';
 import classNames from 'classnames';
 import { Card } from "react-bootstrap";
 import styles from './editableViews.css';
-import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
-import Chip from '@material-ui/core/Chip';
-import SaveButton from '../Global/SaveButton';
+import ListSubheader from "@material-ui/core/ListSubheader";
 import ApplyingCAsOnProject from './ApplyingCAsOnProject';
 import PartnerApplyingCAsOnProject from './PartnerApplyingCAsOnProject';
 
@@ -74,7 +71,9 @@ export default class EditableView extends React.Component {
            return( 
             <div class="mainContainer">    
                 <div id="ProjectAttributes">
-                    <div class="headerArea"> <h1> consultancy Agency Info</h1>
+                    <div class="headerArea"> <ListSubheader component="div">
+                    Consultancy Agency Info
+    </ListSubheader> 
                         <div class="col-9 float-left">
                             <Card>
                             <TextField
@@ -164,7 +163,9 @@ export default class EditableView extends React.Component {
                 
                 <div class="mainContainer">    
                 <div id="ProjectAttributes">
-                    <div class="headerArea" > <h1> consultancy Agency Info</h1>
+                    <div class="headerArea" > <ListSubheader component="div">
+                    Consultancy Agency Info
+    </ListSubheader> 
                   <ApplyingCAsOnProject project={this.state.project} admin={this.state.user}></ApplyingCAsOnProject>
                 </div>
                 </div></div>
@@ -174,7 +175,9 @@ export default class EditableView extends React.Component {
                 
                 <div class="mainContainer">    
                 <div id="ProjectAttributes">
-                    <div class="headerArea" > <h1> consultancy Agency Info</h1>
+                    <div class="headerArea" > <ListSubheader component="div">
+                    Consultancy Agency Info
+    </ListSubheader> 
                   <PartnerApplyingCAsOnProject project={this.state.project} partner={this.state.user}></PartnerApplyingCAsOnProject>
                 </div>
                 </div></div>

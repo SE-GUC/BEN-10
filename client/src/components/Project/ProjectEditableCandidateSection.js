@@ -8,7 +8,7 @@ import styles from './editableViews.css';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Chip from '@material-ui/core/Chip';
-import SaveButton from '../Global/SaveButton';
+import ListSubheader from "@material-ui/core/ListSubheader";
 import PartnerApplyingMembersOnProject from './PartnerApplyingMembersOnProject';
 import ApplyingMembersOnProject from './ApplyingMembersOnProject';
 import CAApplyingMembersOnProject from './CAApplyingMembersOnProject';
@@ -67,7 +67,9 @@ export default class EditableView extends React.Component {
             return(
                 <div class="mainContainer">    
                 <div id="ProjectAttributes">
-                    <div class="headerArea"> <h1> consultancy Agency Info</h1>
+                    <div class="headerArea"> <ListSubheader component="div">
+                    Member Info
+    </ListSubheader>
                         <div class="col-9 float-left">
                             <Card>
                             <TextField
@@ -131,8 +133,10 @@ export default class EditableView extends React.Component {
                 return(
                     <div class="mainContainer">    
                     <div id="ProjectAttributes">
-                        <div class="headerArea" > <h1> consultancy Agency Info</h1>
-                      <PartnerApplyingMembersOnProject project={this.state.project} partner={this.state.user}></PartnerApplyingMembersOnProject>
+                        <div class="headerArea" > <ListSubheader component="div">
+                    Member Info
+    </ListSubheader>
+                      <PartnerApplyingMembersOnProject project={this.state.project} partner={this.state.user}/>
                     </div>
                     </div></div>
                 );
@@ -141,7 +145,9 @@ export default class EditableView extends React.Component {
                 return(
                     <div class="mainContainer">    
                     <div id="ProjectAttributes">
-                        <div class="headerArea" > <h1> consultancy Agency Info</h1>
+                        <div class="headerArea" > <ListSubheader component="div">
+                    Member Info
+    </ListSubheader>
                       <CAApplyingMembersOnProject project={this.state.project} ca={this.state.user}></CAApplyingMembersOnProject>
                     </div>
                     </div></div>
@@ -151,7 +157,9 @@ export default class EditableView extends React.Component {
                 return(
                     <div class="mainContainer">    
                     <div id="ProjectAttributes">
-                        <div class="headerArea" > <h1> consultancy Agency Info</h1>
+                        <div class="headerArea" > <ListSubheader component="div">
+                    Member Info
+    </ListSubheader>
                       <ApplyingMembersOnProject project={this.state.project} admin={this.state.user}></ApplyingMembersOnProject>
                     </div>
                     </div></div>

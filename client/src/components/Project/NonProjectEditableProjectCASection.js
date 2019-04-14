@@ -67,7 +67,9 @@ export default class EditableView extends React.Component {
            return( 
             <div class="mainContainer">    
                 <div id="ProjectAttributes">
-                    <div class="headerArea"> <h1> consultancy Agency Info</h1>
+                    <div class="headerArea"> <ListSubheader component="div">
+                    Consultancy Agency Info
+    </ListSubheader> 
                         <div class="col-9 float-left">
                             <Card>
                             <TextField

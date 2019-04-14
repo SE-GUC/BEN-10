@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Project from '../components/Project';
+import ListSubheader from "@material-ui/core/ListSubheader";
 import axios from "axios";
 import { Button } from 'react-bootstrap';
 import PartnerCanEditInProject from '../components/PartnerCanEditInProject';
@@ -74,7 +74,7 @@ export default class EditProject extends Component {
   }
   viewSection3=(e)=>{
     ReactDOM.render(<ProjectEditableCandidateSection user={this.state.user} type= {this.props.type} project={this.state.project}
-      ></ProjectEditableCandidateSection>,document.getElementById('container'));
+      />,document.getElementById('container'));
     }
   
 
@@ -86,7 +86,9 @@ export default class EditProject extends Component {
         <div class = "leftCol">
             <div class="col-3 float-left pr-4">
               <nav class="menu" aria-label="Project settings" data-pjax="">
-                <h3 class="menu-heading">Project settings
+                <h3 class="menu-heading"><ListSubheader component="div">
+              project attributes
+    </ListSubheader>
                 </h3>
 
                 <Button class="js-selected-navigation-item selected menu-item" onClick={this.viewSection1}>

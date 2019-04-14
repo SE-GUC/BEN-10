@@ -630,11 +630,11 @@ async function disapprovefinal(pid) {
 
 
 // 3- As a CA i want to view my projects 
-router.get("/:id/projects",async(req,res)=>{
+router.get("/:id/myProjects",async(req,res)=>{
   const id = req.params.id ; 
   if(ObjectId.isValid(id)){
     const cid=await ConsultancyAgency.findById(id)
-    if(cid!=null){
+    if(cid){
     var error = true; 
     await fetch(`${server}/api/projects`,{
       method:"get",
@@ -649,11 +649,13 @@ router.get("/:id/projects",async(req,res)=>{
       .then(json =>{
         const myprojects = json.data ; 
         const consulted = myprojects.filter(
-          myprojects => myprojects.consultancyId === id
+          myprojects => myprojects.consultancyId == id
         );
         res.json({data: consulted}); 
       })
       .catch(err => console.log("Error",err));
+    } else {
+      return res.send({ error: "ca not found" });
     }
   }
   else {

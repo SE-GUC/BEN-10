@@ -500,7 +500,7 @@ async function bookEvent(eid, members,remainingPlace) {
   return j;
 }
 //as a candidate i want to view my projects
-router.get("/:id/ShowMyProjects", async (req, res) => {
+router.get("/:id/myProjects", async (req, res) => {
   const id = req.params.id;
 
   if(ObjectId.isValid(id))

@@ -815,10 +815,10 @@ router.get("/:id/myProjects", async (req, res) => {
         })
         .catch(err => console.log("Error", err));
     } else {
-      return res.status(404).send({ error: "Partner not found" });
+      return res.send({ error: "Partner not found" });
     }
   } else {
-    return res.status(404).send({ error: "ID not found" });
+    return res.send({ error: "ID not found" });
   }
 });
 //---------------------------------------------------

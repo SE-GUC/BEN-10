@@ -67,7 +67,7 @@ class ApplyingMembersOnProject extends Component {
         <GridList cellHeight={180} className={classes.gridList}>
           <GridListTile key="Subheader" cols={1} style={{ height: "auto" }}>
             <ListSubheader component="div">
-              Applying Members On this Project
+            Applying Members On this Project
             </ListSubheader>
           </GridListTile>
           

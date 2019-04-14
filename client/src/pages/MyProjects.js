@@ -24,34 +24,49 @@ import { blue } from "@material-ui/core/colors";
 class MyProjects extends Component {
   constructor(props){
     super(props)
-    this.routeChange = this.routeChange.bind(this)
     this.state = {
     projects: null,
     partner_id:props.user,
-      redirect: false
   };
 }
   async componentDidMount(){
+    if(this.props.type === "partner"){
     await axios.get(`http://localhost:5000/api/partners/${this.state.partner_id}/myProjects`)
     .then(res => {
       return res.data; 
     })
   .then(projects=>{
       this.setState({projects:projects.data})
-  })
+  })}
+  if(this.props.type === "consultancyagency"){
+    await axios.get(`http://localhost:5000/api/consultancyagency/${this.props.user._id}/myProjects`)
+    .then(res => {
+      return res.data; 
+    })
+  .then(projects=>{
+      this.setState({projects:projects.data})
+  })}
+  if(this.props.type === "admin"){
+    await axios.get(`http://localhost:5000/api/projects/`)
+    .then(res => {
+      return res.data; 
+    })
+  .then(projects=>{
+      this.setState({projects:projects.data})
+  })}
+  if(this.props.type === "member"){
+    await axios.get(`http://localhost:5000/api/members/${this.props.user._id}/myProjects`)
+    .then(res => {
+      return res.data; 
+    })
+  .then(projects=>{
+      this.setState({projects:projects.data})
+  })}
   console.log(this.state.projects)
 }
-routeChange() {
-    this.setState({redirect:true})
-
-  }
  
   render() {
-    const { redirect  } = this.state;
-
-    if(redirect){
-      return <Redirect to='/postProject'/>;
-    }else{
+    
     if (this.state.projects == null) {
       return (
         <div className="App">
@@ -65,7 +80,7 @@ routeChange() {
         <Grid container spacing={24} style={{padding: 24}}>
             {this.state.projects.map(i => (    
               <Grid item xs={12} sm={6} lg={4} xl={3} style={{backgroundColor:"white"}}>
-                <Project type= {this.state.type} user={this.state.user} project={i} key={i._id} />
+                <Project type= {this.props.type} user={this.props.user} project={i} key={i._id} />
                 </Grid> 
                 
                 )) }
@@ -74,7 +89,7 @@ routeChange() {
         </div>
       );
     }
-  }
+  
 }
 }
 

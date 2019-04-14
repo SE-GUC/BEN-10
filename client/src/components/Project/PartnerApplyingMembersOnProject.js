@@ -68,8 +68,7 @@ class PartnerApplyingMembersOnProject extends Component {
       <div className={classes.root}>
         <GridList cellHeight={180} className={classes.gridList}>
           <GridListTile key="Subheader" cols={1} style={{ height: "auto" }}>
-            <ListSubheader component="div">
-              Applying Members On this Project
+            <ListSubheader component="div">Applying Members On this Project
             </ListSubheader>
           </GridListTile>
           
@@ -79,7 +78,7 @@ class PartnerApplyingMembersOnProject extends Component {
             </GridListTile>
           ))}
         </GridList>
-        <SendTaskOrientation Id={this.props.partner._id} projectId={this.state.project._id}/>
+        <SendTaskOrientation Id={this.props.partner._id} projectId={this.props.project._id}/>
 
       </div>
     );

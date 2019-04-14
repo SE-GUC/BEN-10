@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { Card } from "react-bootstrap";
 import styles from './editableViews.css';
 import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
+import ListSubheader from "@material-ui/core/ListSubheader";
 import Chip from '@material-ui/core/Chip';
 import SaveButton from '../Global/SaveButton';
 
@@ -116,7 +116,9 @@ export default class EditableView extends React.Component {
         return (
         <div class="mainContainer">    
              <div id="ProjectAttributes">
-              <div class="headerArea"> <h1> project attributes</h1>
+              <div class="headerArea"> <ListSubheader component="div">
+              project attributes
+    </ListSubheader>
               <div class="col-9 float-left">
                 <Card>         
                   <TextField class="allInputs"

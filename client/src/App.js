@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 //import MyProjects from "./components/Partner/ViewAllPArtners";
-import ViewAllPArtners from "./components/Partner/ViewAllPartners";
+import ViewAllPartners from "./components/Partner/ViewAllPArtners";
 import ViewAllCAs from "./components/CA/ViewAllCAs";
 import ViewAllMembers from "./components/Member/ViewAllMembers";
 import EditProfile from "./components/Profile/EditProfile";
@@ -29,7 +29,7 @@ class App extends Component {
       })
       .then(a =>
         this.setState({
-          user: a.data[2],
+          user: a.data[0],
           type: "partner"
         })
       );
@@ -86,7 +86,7 @@ class App extends Component {
           <Route
             exact
             path="/ViewAllPartners"
-            render={props => <ViewAllPArtners />}
+            render={props => <ViewAllPartners />}
           />
           <Route exact path="/ViewAllCAs" render={props => <ViewAllCAs />} />
           <Route
