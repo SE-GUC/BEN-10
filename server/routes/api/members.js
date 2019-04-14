@@ -502,40 +502,35 @@ async function bookEvent(eid, members,remainingPlace) {
 //as a candidate i want to view my projects
 router.get("/:id/myProjects", async (req, res) => {
   const id = req.params.id;
-
-  if(ObjectId.isValid(id))
-  {       
-      const Member= await member.findById(id);
-  
-      if(Member){
-
-      const j = await getTheProjects(id);
-      res.json({data:j});}
-  
-       else{
-          return res.status(404).send({ error: "member not found" })
-        }
-      }
-      else {
-       return res.status(404).send({ error: "ID not found" })
-       } 
-
+  if (ObjectId.isValid(id)) {
+    const mem = await member.findById(id);
+    if (mem) {
+      var error = true;
+      await fetch(`${server}/api/projects`, {
+        method: "get",
+        headers: { "Content-Type": "application/json" }
+      })
+        .then(res => {
+          if (res.status === 200) {
+            error = false;
+          }
+          return res.json();
+        })
+        .then(json => {
+          const myprojects = json.data;
+          const proj = myprojects.filter(
+            myprojects => myprojects.memberId == id
+          );
+          res.json({ data: proj });
+        })
+        .catch(err => console.log("Error", err));
+    } else {
+      return res.send({ error: "Member not found" });
+    }
+  } else {
+    return res.send({ error: "ID not found" });
+  }
 });
-
-async function getTheProjects(memberid) {
-  var result = [];
-  await fetch(`${server}/api/projects`)
-    .then(res => res.json())
-    .then(json => {
-      const projects = json.data;
-      const hisProjects = projects.filter(m => m.memberId === memberid );
-      result =hisProjects;
-      return hisProjects;
-    })
-    .catch(err =>   {return res.status(404).send({ error: err })  })   ; 
-
-  return result;
-}
 router.get("/:id/viewAllProjects",async (req,res)=>{
   const mem = await member.findById(req.params.id);
   if(mem){
