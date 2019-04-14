@@ -1,0 +1,12 @@
+.container{
+    background-color: white ;
+}
+
+
+.Grid{
+    grid-column-gap: 50px;
+
+}
+.GridItem{
+    background-color: beige;
+}
