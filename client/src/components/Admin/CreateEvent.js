@@ -62,7 +62,7 @@ const styles = theme => ({
 class CreateEvent extends React.Component {
   state = {
     multiline: 'Controlled',
-    requestorId:"5ca1111df1fa20462cfd3377",
+    requestorId:this.props.location.state.requestorId,
     eventType:"",
     eventLocation:"",
     description:"",
@@ -72,12 +72,13 @@ class CreateEvent extends React.Component {
     speaker:"",
     registStartDate:"",
     registExpiryDate:"",
-    requestId:"5ca1111df1fa20462cfd3377",
+    requestId:this.props.location.state.requestId,
     eventDate:"",
     event:null,
     text:"",
     back:false
   };
+  
   handleClick2 = () =>{
      this.setState({
          back:true
@@ -91,7 +92,7 @@ class CreateEvent extends React.Component {
   };
   handleClick = () =>{
     const  body={
-        requestorId:"5ca1111df1fa20462cfd3377",
+        requestorId:this.state.requestorId,
         eventType:this.state.eventType,
         eventLocation:this.state.eventLocation,
         description:this.state.description,
@@ -101,7 +102,7 @@ class CreateEvent extends React.Component {
         speaker:this.state.speaker,
         registStartDate:this.state.registStartDate,
         registExpiryDate:this.state.registExpiryDate,
-        requestId:"5ca1111df1fa20462cfd3377",
+        requestId:this.state.requestId,
         eventDate:this.state.eventDate
 
     }
@@ -111,7 +112,7 @@ class CreateEvent extends React.Component {
         headers: { "Content-Type": "application/json" }
        
       };
-      fetch(`http://localhost:5000/api/admins/5ca1111df1fa20462cfd3377/addEvent/` , requestOptions).then((response) => {
+      fetch(`http://localhost:5000/api/admins/${this.props.user._id}/addEvent/` , requestOptions).then((response) => {
         return response.json();
       }).then((result) => {
           if(result.msg=="Event is posted successfully"){

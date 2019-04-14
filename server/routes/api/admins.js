@@ -356,6 +356,8 @@ async function addEvent(body) {
 // 3.7 As an admin i want to decide (Accept / reject) an event request
 router.use("/:id/EventRequest/:Eid/:decision", async (req, res) => {
   try {
+    console.log(req.params.id)
+    console.log(req.params.Eid)
     if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.Eid)) {
       admin = await Admin.findById(req.params.id);
       if (admin) {

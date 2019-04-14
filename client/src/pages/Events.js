@@ -4,6 +4,7 @@ import ViewAllEvents from '../components/Event/ViewAllEvents'
 import PMyEvent from "../components/Event/PartnerMyEvents"
 import MMyEvent from "../components/Event/MemberMyEvents"
 import CAMyEvent from "../components/Event/CAMyEvents"
+import ViewAllEventRequests from "../components/Admin/ViewAllEventRequests"
 class Events extends React.Component{
     constructor(props){
         super(props);
@@ -16,8 +17,10 @@ class Events extends React.Component{
         
     render(){
         if(this.props.type==="admin"){
+            console.log("hi")
             return(
                 <div> 
+                    <ViewAllEventRequests admin_id={this.props.user._id}/>
                     <ViewAllEvents />
                 </div>);   
         }

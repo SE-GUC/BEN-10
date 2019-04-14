@@ -21,15 +21,15 @@ const styles = theme => ({
   }
 });
 
-class DisapproveRequest extends Component{
+class ApproveRequest extends Component{
     constructor(props){
         super(props);
         this.state={
             id:this.props.admin_id,
             // eid:this.props.event_id,
             // requestorId:this.props.requestor,
-            eid:"5ca1111df1fa20462cfd3377",
-            requestorId:"5ca1111df1fa20462cfd338",
+            eid:this.props.eid,
+            requestorId:this.props.requestorId,
             event:false
 
         }
@@ -38,9 +38,10 @@ class DisapproveRequest extends Component{
         const requestOptions = {
             method: 'PUT'
           };
-          fetch(`http://localhost:5000/api/admins/5ca1111df1fa20462cfd3377/EventRequest/5c7a447dd51f1409a01fd320/true` , requestOptions).then((response) => {
+          fetch(`http://localhost:5000/api/admins/${this.props.admin_id}/EventRequest/${this.state.eid}/true` , requestOptions).then((response) => {
             return response.json();
           }).then((result) => {
+            console.log(result)
               if(result.msg=="Event Request updated successfully"){
                   this.setState({
                       event:true
@@ -64,7 +65,7 @@ class DisapproveRequest extends Component{
 
   );
   }else{
-    return <Redirect to="/createEvent" requestId={this.state.eid} requestorId={this.state.requestorId}  />
+    return <Redirect to={{ pathname:"/createEvent" ,state:{requestId:this.state.eid, requestorId:this.state.requestorId}}}  />
 
   }
 }
@@ -72,8 +73,8 @@ class DisapproveRequest extends Component{
 
 }
 
-DisapproveRequest.propTypes = {
+ApproveRequest.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(DisapproveRequest);
+export default withStyles(styles)(ApproveRequest);

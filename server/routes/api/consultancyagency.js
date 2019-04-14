@@ -22,10 +22,10 @@ router.get("/:id", async (req, res) => {
     const id = req.params.id;
     const consultancyagencys = await ConsultancyAgency.findById(id);
     if (!consultancyagencys)
-      return res.status(404).send({ error: "Consultancy Agency not exist" });
+      return res.send({ error: "Consultancy Agency not exist" });
     res.json({ data: consultancyagencys });
   } else {
-    return res.status(404).send({ error: "Consultancy Agency does not exist" });
+    return res.send({ error: "Consultancy Agency does not exist" });
   }
 });
 

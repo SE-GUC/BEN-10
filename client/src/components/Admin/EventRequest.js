@@ -69,7 +69,7 @@ class EventRequest extends Component{
         }
         else{
              this.setState({
-           requestorName:result.data.name
+           requestorName:result.data.firstName+" "+result.data.lastName
        })
 
         }
@@ -92,7 +92,7 @@ class EventRequest extends Component{
            month="0"+(new Date(this.state.body.eventDate).getMonth()+1)
         if(new Date(this.state.body.eventDate).getMonth()===12)
            month="01"
-           if(this.state.requestorName!=null){
+           if(true){
              if(this.state.body.isAccepted!=null){
         return(
             <div>
@@ -121,8 +121,9 @@ class EventRequest extends Component{
         
       </CardContent>
       <CardActions>
-          <Approve/>
-          <Disapprove />
+          <Approve admin_id={this.props.admin_id} eid={this.state.body._id} requestorId={this.state.body.requestorId}/>
+          {console.log(this.state.body)}
+          <Disapprove admin_id={this.props.admin_id} eid={this.state.body._id} requestorId={this.state.body.requestorId}/>
       </CardActions>
     </Card>
             </div>
@@ -133,13 +134,14 @@ class EventRequest extends Component{
            else{
              return(
              <div>
+               bye
              </div>
              )
            }
            }
            else{
                return (
-                   <div></div>
+                   <div>hi</div>
                )
            }
         

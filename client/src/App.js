@@ -23,6 +23,7 @@ import ProjectId from "./pages/ProjectId";
 import EventId from "./pages/EventId";
 
 import Loading from "./components/Global/Loading";
+import CreateEvent from "./components/Admin/CreateEvent";
 class App extends Component {
   state = {
     user: null,
@@ -158,6 +159,18 @@ class App extends Component {
               />
             )}
           />
+          <Route
+            exact
+            path="/createEvent"
+            render={props => (
+              <CreateEvent
+                {...props}
+                type={this.state.type}
+                user={this.state.user}
+              />
+            )}
+          />
+          
 
           <Route
             exact
@@ -182,6 +195,7 @@ class App extends Component {
               />
             )}
           />
+          
         </BrowserRouter>
       );
     } else {
