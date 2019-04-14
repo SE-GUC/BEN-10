@@ -28,7 +28,7 @@ router.get("/:id", async (req, res) => {
 // Create an application
 router.post("/", async (req, res) => {
   try {
-    const isValidated = validator.createValidation(req.body);
+    const isValidated = validator.createValidationApplication(req.body);
     if (isValidated.error)
       return res
         .status(400)
