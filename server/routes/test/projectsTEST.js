@@ -13,7 +13,7 @@ class PrTEST extends AbstractTests {
       category: null,
       want_consultancy: null,
       posted_date: null,
-      life_cycle: null,
+      lifeCycle: null,
       required_skills_set: null
     };
   }
@@ -51,7 +51,7 @@ class PrTEST extends AbstractTests {
       category: "no category",
       want_consultancy: false,
       posted_date: "1/1/2019",
-      life_cycle: "posted",
+      lifeCycle: "posted",
       required_skills_set: "[]"
     };
 

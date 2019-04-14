@@ -38,7 +38,8 @@ const ConsultancyAgencySchema = new Schema({
     },
     reports: {
         type: Array,
-        required: false
+        required: false,
+        default:[]
     },
     partners: {
         type: [{ type: Schema.Types.ObjectId, ref: "Partner" }],

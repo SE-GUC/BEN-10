@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const ObjectId = require("mongodb").ObjectID;
 const fetch = require("node-fetch");
 const server = require("../../config/config");
+const Application = require("../../models/Application");
 
 const Event = require("../../models/Event");
 const member = require("../../models/Member");
@@ -117,8 +118,8 @@ router.put('/:id1/Myprojects/:id2/submit/:link',async(req,res)=>{
     const project_appliedfor = await project.findById(project_id);
     const member_applying= await member.findById(member_id);
     if(project_appliedfor!=null && member_applying!=null){
-      var life_cycle_project=project_appliedfor["lifeCycle"];
-      if(life_cycle_project==="In Progress"){
+      var lifeCycle=project_appliedfor["lifeCycle"];
+      if(lifeCycle==="In Progress"){
         if(project_appliedfor["memberId"].toString()!=member_id.toString()){
           return res.status(404).send({ error: "this projects is not assigned to you" });
         }
@@ -145,7 +146,7 @@ router.put('/:id1/Myprojects/:id2/submit/:link',async(req,res)=>{
         .catch(err => console.log("Error", err));
       }
       else{
-        return res.status(404).send({ error: `this project is in phase"${life_cycle_project}` });
+        return res.status(404).send({ error: `this project is in phase"${lifeCycle_project}` });
       }
     }
     else{
@@ -224,7 +225,7 @@ router.get("/:id/notifications", async (req, res) => {
       .then(json => {
         const mynotification = json.data;
         const notif = mynotification.filter(
-          mynotification => mynotification.NotifiedPerson === id
+          mynotification => mynotification.notifiedPerson === id
         );
         res.json({ data: notif });
       })
@@ -249,21 +250,27 @@ router.post("/:id1/projects/:id2/apply", async (req, res) => {
     const member_applying= await member.findById(member_id);
     if(member_applying!=null && project_appliedfor!=null){
     var found=true;
+    console.log(member_applying["firstName"])
+    console.log(member_applying["skillSet"]);
     for(var i=0;project_appliedfor["requiredSkillsSet"].length>i;i++){
+      console.log(project_appliedfor["requiredSkillsSet"][i])
       if(!member_applying["skillSet"].includes(project_appliedfor["requiredSkillsSet"][i])){
         found=false;
         break;
       }
     }
     if(!found){
-      return res.status(404).send({ error: "this member doesnot have the required skills for this project" });
+      return res.status(404).send({ error: "this member does not have the required skills for this project" });
     }
     const application = {
       applicantId: member_id,
       applyingDate: Date.now(),
       projectId: project_id
     };
+    var allApplications = await Application.find();
+    allApplications = allApplications.filter(a =>((a.applicantId.toString()===member_id.toString())&&(a.projectId.toString()===project_id.toString())))
     var error = true;
+    if(allApplications.length===0){
     await fetch(`${server}/api/applications`, {
       method: "post",
       body: JSON.stringify(application),
@@ -274,7 +281,10 @@ router.post("/:id1/projects/:id2/apply", async (req, res) => {
       .catch(err => console.log("Error", err));
 
 
+  }else{
+    return res.status(400).send({error:"You already applied before"})
   }
+}
   else{
     return res.status(404).send({ error: "there no such data with these ids" });
   }
@@ -369,6 +379,7 @@ async function getEvents() {
 //4.9 --As a candidate I want that the events I attended be added on my profile.
 async function postevent(cid, events) {
   var error = true;
+  events = events.filter(e =>e.bookedMembers.includes(cid));
   const body = { events: events };
   var j;
   await fetch(`${server}/api/members/${cid}`, {
@@ -459,10 +470,10 @@ router.put("/:id1/bookEvent/:id2", async (req, res) => {
       var skills = mem.skillSet;
       var allowed = skills.includes(type);
 
-      if (allowed === true) {
+      if (allowed === true&&event.remainingPlace!=0) {
         const members = event.bookedMembers;
         members.push(canId);
-        const j = await bookEvent(eventId, members);
+        const j = await bookEvent(eventId, members,event.remainingPlace-1);
         res.status(200).send(j);
       } else {
         res.send({ msg: "You can't book this event" });
@@ -473,9 +484,9 @@ router.put("/:id1/bookEvent/:id2", async (req, res) => {
   }
 });
 
-async function bookEvent(eid, members) {
+async function bookEvent(eid, members,remainingPlace) {
   var error = true;
-  const body = { bookedMembers: members };
+  const body = { bookedMembers: members,remainingPlace };
   var j;
   await fetch(`${server}/api/events/${eid}`, {
     method: "put",
@@ -499,26 +510,36 @@ async function bookEvent(eid, members) {
   return j;
 }
 //as a candidate i want to view my projects
-router.get("/:id/ShowMyProjects", async (req, res) => {
+router.get("/:id/myProjects", async (req, res) => {
   const id = req.params.id;
-
-  if(ObjectId.isValid(id))
-  {       
-      const Member= await member.findById(id);
-  
-      if(Member){
-
-      const j = await getTheProjects(id);
-      res.json({data:j});}
-  
-       else{
-          return res.status(404).send({ error: "member not found" })
-        }
-      }
-      else {
-       return res.status(404).send({ error: "ID not found" })
-       } 
-
+  if (ObjectId.isValid(id)) {
+    const mem = await member.findById(id);
+    if (mem) {
+      var error = true;
+      await fetch(`${server}/api/projects`, {
+        method: "get",
+        headers: { "Content-Type": "application/json" }
+      })
+        .then(res => {
+          if (res.status === 200) {
+            error = false;
+          }
+          return res.json();
+        })
+        .then(json => {
+          const myprojects = json.data;
+          const proj = myprojects.filter(
+            myprojects => myprojects.memberId == id
+          );
+          res.json({ data: proj });
+        })
+        .catch(err => console.log("Error", err));
+    } else {
+      return res.send({ error: "Member not found" });
+    }
+  } else {
+    return res.send({ error: "ID not found" });
+  }
 });
 
 async function getTheProjects(memberid) {
@@ -568,4 +589,15 @@ router.get("/:id/ShowMyEvents", async (req, res) => {
 })
 
 //test 4.8
+router.get("/:id/viewAllProjects",async (req,res)=>{
+  const mem = await member.findById(req.params.id);
+  if(mem){
+    var projects = await project.find();
+    arr=["Posted","In Progress","Final Review","Finished"]
+    projects = projects.filter(p => arr.includes(p.lifeCycle))
+    res.json({data:projects})
+  }else{
+    return res.status(404).send({error:"not a member id"})
+  }
+})
 module.exports = router;
