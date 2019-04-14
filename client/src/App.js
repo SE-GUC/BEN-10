@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import "./App.css";
-import MyEvents from "./pages/MyEvents";
-import MyProjects from "./pages/MyProjects";
-import MyEventsId from "./pages/MyEventsId";
-import MyProjectsId from "./pages/MyProjectsId"
-import EditMyProject from "./pages/EditMyProject"
-import PostProject from "./pages/PostProject";
+
+import Profile from "./components/Global/Profile";
+import ViewAllPartners from "./components/Partner/ViewAllPartners";
+import ViewAllCAs from "./components/CA/ViewAllCAs";
+import ViewAllMembers from "./components/Member/ViewAllMembers";
+import EditProfile from "./components/Profile/EditProfile";
+import Events from "./pages/Events";
 import axios from "axios";
-import MyProfile from "./pages/MyProfile";
+import EditProject from "./pages/EditProject";
+import ViewProject from "./pages/ViewProject";
 import { BrowserRouter, Route } from "react-router-dom";
 // import Apply from "./components/Member/ApplyProject/ApplyOnProject"
 import Submit from "./components/Member/SubmitWork/FormDialogue"
@@ -15,56 +17,185 @@ import Submit from "./components/Member/SubmitWork/FormDialogue"
 import Event from "./components/Admin/CreateEvent"
 // import Approve from "./components/Admin/ApproveRequest"
 import Request from "./components/Admin/ViewAllEventRequests"
+import RedirectButton from "./components/Global/RedirectButton";
+import Projects from "./pages/Projects";
+import ProjectId from "./pages/ProjectId";
+import EventId from "./pages/EventId";
+
+import Loading from "./components/Global/Loading";
 class App extends Component {
   state = {
-    partner_id:null,
-    partner_name:null,
-    requestId:this.props.requestId,
-    requestorId:this.props.requestorId,
-    body:null
-  }
-  componentDidMount() {
-    axios 
-      .get("http://localhost:5000/api/admins")
+    user: null,
+    type: null
+  };
+  asPartner = () => {
+    axios
+      .get("http://localhost:5000/api/partners/5cae3044a972db1e007da3e7")
       .then(res => {
-        return res.data; 
+        return res.data;
       })
       .then(a =>
         this.setState({
-          partner_id:a.data[0]._id
-          // body:a.data[0]
+          user: a.data,
+          type: "partner"
         })
       );
-  }
+  };
+
+  asMember = () => {
+    axios
+      .get("http://localhost:5000/api/members")
+      .then(res => {
+        return res.data;
+      })
+      .then(a =>
+        this.setState({
+          user: a.data[0],
+          type: "member"
+        })
+      );
+  };
+
+  asAdmin = () => {
+    console.log("admin");
+    axios
+      .get("http://localhost:5000/api/admins")
+      .then(res => {
+        return res.data;
+      })
+      .then(a => {
+        this.setState({
+          user: a.data[0],
+          type: "admin"
+        });
+        console.log(a.data[0]._id);
+      });
+  };
+
+  asCA = () => {
+    axios
+      .get("http://localhost:5000/api/consultancyagency")
+      .then(res => {
+        return res.data;
+      })
+      .then(a =>
+        this.setState({
+          user: a.data[0],
+          type: "consultancyagency"
+        })
+      );
+  };
 
   render() {
-    if (this.state.partner_id !== null) {
-      console.log(this.state.partner_id)
+    if (this.state.user) {
       return (
-        // <div>
-        //   <h1>HELLO</h1>
-        //   {/* <ApplyCa CA_id={"5caf2959cd0abb05d910fbb7"} project_id={"5caf27d8cd0abb05d910fbf6"}/> */}
-        //   {/* <Submit member_id={"5caf263ccd0abb05d910fbf5"} project_id={"5caf27d8cd0abb05d910fbf6"}/> */}
-        //   {/* <Apply/> */}
-        // </div>
+        
         <BrowserRouter>
-            {/* <Route exact path="/" render={(props) => <Approve/> }/>   */}
-            <Route exact path="/" render={(props) => <Submit member_id={"5caf263ccd0abb05d910fbf5"} project_id={"5caf27d8cd0abb05d910fbf6"}/> }/>
-            <Route exact path="/MyProjects/:id" render={(props) => <MyProjectsId {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/> 
-              <Route exact path="/MyProject/edit/:id" component={EditMyProject} />  
+          <Route
+            exact
+            path="/profile"
+            render={props => (
+              <Profile
+                {...props}
+                user={this.state.user}
+                type={this.state.type}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/Projects"
+            render={props => (
+              <Projects
+                {...props}
+                user={this.state.user}
+                type={this.state.type}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/Events"
+            render={props => (
+              <Events
+                {...props}
+                user={this.state.user}
+                type={this.state.type}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/Events/:id"
+            render={props => (
+              <EventId
+                {...props}
+                user={this.state.user}
+                type={this.state.type}
+              />
+            )}
+          />
 
-             <Route exact path="/myEvents/:id" render={(props) => <MyEventsId {...props} partner_id={this.state.partner_id} />} /> 
-              <Route exact path="/myEvents" render={(props) => <MyEvents {...props} partner_id={this.state.partner_id} partner_name={this.state.partner_name} />}/> 
-              <Route exact path="/myProfile/:id"render={(props) => <MyProfile {...props} partner_id={this.state.partner_id} />} /> 
-                 <Route exact path="/postProject" render={(props) => <PostProject {...props} partner_id={this.state.partner_id} />}/> 
-                 <Route exact path="/createEvent" render={(props) => <Event />}/>
-          </BrowserRouter> 
+          <Route
+            exact
+            path="/ViewAllPartners"
+            render={props => <ViewAllPartners />}
+          />
+          <Route exact path="/ViewAllCAs" render={props => <ViewAllCAs />} />
+          <Route
+            exact
+            path="/ViewAllMembers"
+            render={props => <ViewAllMembers />}
+          />
+          <Route
+            exact
+            path="/EditProfile"
+            render={props => (
+              <EditProfile
+                {...props}
+                type={this.state.type}
+                user={this.state.user}
+              />
+            )}
+          />
+
+          <Route
+            exact
+            path="/Projects/:id"
+            render={props => (
+              <ViewProject
+                {...props}
+                user={this.state.user}
+                type={this.state.type}
+              />
+            )}
+          />
+
+          <Route
+            exact
+            path="/MyProject/edit/:id"
+            render={props => (
+              <EditProject
+                {...props}
+                type={this.state.type}
+                user={this.state.user}
+              />
+            )}
+          />
+        </BrowserRouter>
       );
     } else {
-      return <div>Loading.... in app</div>;
-
+      return (
+        <>
+          <Loading />
+          <RedirectButton onClick={this.asAdmin} as={"Login as Admin"} />
+          <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
+          <RedirectButton onClick={this.asMember} as={"Login as Member"} />
+          <RedirectButton onClick={this.asCA} as={"Login as CA"} />
+        </>
+      );
     }
- }
-}  
-    export default App;
+  }
+}
 
+export default App;

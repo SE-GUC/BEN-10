@@ -1098,10 +1098,10 @@ class ATest extends AbstractTests {
         description: "Test description",
         company: "Test Company",
         category: "Test Category",
-        want_consultancy: false,
+        wantConsultancy: false,
         posted_date: date,
         memberID: m1._id,
-        life_cycle: "InProgress",
+        lifeCycle: "InProgress",
         required_skills_set: ["testSkillSet1", "testSkillSet2"]
       };
       let allProjects = await Project.find();
@@ -1304,7 +1304,7 @@ class ATest extends AbstractTests {
 
   sendFinalDraft() {
     const requestBody = {
-      final_draft: "TESTDARFT"
+      finalDraft: "TESTDARFT"
     };
     test(`Admin Send Final Draft ${
       this.base_url
