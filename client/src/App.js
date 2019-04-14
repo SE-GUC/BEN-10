@@ -23,7 +23,7 @@ import Request from "./components/Admin/ViewAllEventRequests";
 import RedirectButton from "./components/Global/RedirectButton";
 import Projects from "./pages/Projects";
 import ProjectId from "./pages/ProjectId";
-import EventId from "./pages/EventId";
+import EventId from "./components/Event/MyEventCard";
 
 import Loading from "./components/Global/Loading";
 import CreateEvent from "./components/Admin/CreateEvent";
