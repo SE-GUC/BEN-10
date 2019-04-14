@@ -71,15 +71,15 @@ class SimpleTabs extends React.Component {
           </Tabs>
         </AppBar>
         {value === 0 && <TabContainer>{this.state.projects.map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
-        {value === 1 && <TabContainer>{(this.state.projects.filter(m => m.life_cycle === "Waiting for consultancy")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
-        {value === 2 && <TabContainer>{(this.state.projects.filter(m => m.life_cycle === "Negotiation")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
-        {value === 3 && <TabContainer>{(this.state.projects.filter(m => m.life_cycle === "Final Draft")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
-        {value === 4 && <TabContainer>{(this.state.projects.filter(m => m.life_cycle === "Approved")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
-        {value === 5 && <TabContainer>{(this.state.projects.filter(m => m.life_cycle === "Canceled")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
-        {value === 6 && <TabContainer>{(this.state.projects.filter(m => m.life_cycle === "Posted")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
-        {value === 7 && <TabContainer>{(this.state.projects.filter(m => m.life_cycle === "In Progress")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
-        {value === 8 && <TabContainer>{(this.state.projects.filter(m => m.life_cycle === "Final Review")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
-        {value === 9 && <TabContainer>{(this.state.projects.filter(m => m.life_cycle === "Finished")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
+        {value === 1 && <TabContainer>{(this.state.projects.filter(m => m.lifeCycle === "Waiting for consultancy Agency")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
+        {value === 2 && <TabContainer>{(this.state.projects.filter(m => m.lifeCycle === "Negotiation")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
+        {value === 3 && <TabContainer>{(this.state.projects.filter(m => m.lifeCycle === "Final Draft")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
+        {value === 4 && <TabContainer>{(this.state.projects.filter(m => m.lifeCycle === "Approved")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
+        {value === 5 && <TabContainer>{(this.state.projects.filter(m => m.lifeCycle === "Canceled")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
+        {value === 6 && <TabContainer>{(this.state.projects.filter(m => m.lifeCycle === "Posted")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
+        {value === 7 && <TabContainer>{(this.state.projects.filter(m => m.lifeCycle === "In Progress")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
+        {value === 8 && <TabContainer>{(this.state.projects.filter(m => m.lifeCycle === "Final Review")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
+        {value === 9 && <TabContainer>{(this.state.projects.filter(m => m.lifeCycle === "Finished")).map(((Project,i)=><MyProjectCard key={i} project={Project} />))}</TabContainer>}
       </div>
     );
   }

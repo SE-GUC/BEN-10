@@ -10,6 +10,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Route , withRouter} from 'react-router-dom';
 import {Redirect} from 'react-router-dom'
+import axios from "axios";
+
 
 
 const styles = {
@@ -33,11 +35,25 @@ class MyProjectCard extends Component{
         super(props)
         this.viewProject = this.viewProject.bind(this);
         this.state = {
-          redirect:false
+          redirect:false,
+          company:null
       }
     }
     viewProject() {
       this.setState({redirect:true})
+    }
+    componentDidMount(){
+      axios 
+      .get(`http://localhost:5000/api/partners/${this.props.project.companyId}`)
+      .then(res => {
+        return res.data; 
+      })
+      .then(a =>
+        this.setState({
+
+          company: a.data.firstName +" "+a.data.lastName
+        })
+      );
     }
 
     
@@ -47,6 +63,7 @@ render(){
       const path = `/MyProject/${this.props.project._id}`
       return <Redirect to={path}/>;
     }else{
+      if(this.state.company){
 return (
     <Card className={classes.card}>
       <CardActionArea onClick = {this.viewProject}>
@@ -54,9 +71,9 @@ return (
           <Typography  gutterBottom variant="h5" component="h2">
           </Typography>
           <Typography className={classes.text} component="p">
-          Company name:{this.props.project.company}<br></br>
-          description: {this.props.project.description}<br></br>
-          life_cycle:{this.props.project.life_cycle}<br></br>
+          Company Name:{this.state.company}<br></br>
+          Description: {this.props.project.description}<br></br>
+          Life Cycle:{this.props.project.lifeCycle}<br></br>
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -64,6 +81,10 @@ return (
       </CardActions>
     </Card>
   );
+}else{return(
+  <div> </div>
+)
+}
 }
 }
 }
