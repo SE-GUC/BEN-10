@@ -257,7 +257,7 @@ router.use("/:cid/assign/:pid/to/:mid", async (req, res) => {
               const url = `${server}/api/projects/${req.params.pid}`;
               fetch(url, {
                 method: "put",
-                body: JSON.stringify({ memberID: req.params.mid, lifeCycle: "Negotiation" }),
+                body: JSON.stringify({ memberID: req.params.mid, lifeCycle: "In Progress" }),
                 headers: { "Content-Type": "application/json" }
               })
                 .then(res => {
@@ -335,7 +335,10 @@ router.put("/:caid/decide/:pid/:flag",async (req,res)=> {
   const pid = req.params.pid;
   const CA=await ConsultancyAgency.findById(caid);
   const project=await Project.findById(pid);
-  const decision =  req.params.flag;
+  var decision ;
+  if(req.params.flag == "approve")
+  decision =  "Finished";
+  else  decision = "In Progress" ;
   if(ObjectId.isValid(caid)&&ObjectId.isValid(pid)){
 if(CA!=null && project!=null){
   const url = `${server}/api/projects/${pid}`;

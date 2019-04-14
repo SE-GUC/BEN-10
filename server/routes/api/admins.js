@@ -122,16 +122,16 @@ router.post("/:aid/notifications/:id/", async (req, res) => {
   } else return res.status(404).send({ error: "Member does not exist" });
 });
 async function AdminNotifyAcceptedCandidate(
-  sentBy,
+  sentById,
   description,
   notifiedPerson,
   date
 ) {
   const body = {
-    sentById,
-    description,
-    notifiedPerson,
-    date,
+    sentById : sentById,
+    description: description,
+    notifiedPerson: notifiedPerson,
+    date: date,
     seen: "false"
   };
   var error = true;
@@ -201,8 +201,8 @@ async function assignAttributes(pid, body) {
 router.put("/:id/myProjects/:pid/sendDraft", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
-      if (req.body.final_draft != null) {
-        const j = await sendFinalDraft(req.params.pid, req.body.final_draft);
+      if (req.body.finalDraft != null) {
+        const j = await sendFinalDraft(req.params.pid, req.body.finalDraft);
         res.status(200).send(j);
       } else {
         return res.status(400).send({ error: "Please insert the final draft" });
@@ -220,7 +220,7 @@ router.put("/:id/myProjects/:pid/sendDraft", async (req, res) => {
 async function sendFinalDraft(projectID, draft) {
   const body = {
     lifeCycle: "Final Draft",
-    final_draft: draft
+    finalDraft: draft
   };
   var error = true;
   var j;
@@ -490,7 +490,7 @@ router.use("/:aid/assign/:pid/to/:mid", async (req, res) => {
           const url = `${server}/api/projects/${req.params.pid}`;
           fetch(url, {
             method: "put",
-            body: JSON.stringify({ memberID: req.params.mid, lifeCycle: "Negotiation" }),
+            body: JSON.stringify({ memberID: req.params.mid, lifeCycle: "In Progress" }),
             headers: { "Content-Type": "application/json" }
           })
             .then(res => {
@@ -601,7 +601,7 @@ router.post("/:id/events/:id2/sendFeedBackForm", async (req, res) => {
   }
 });
 
-async function sendFeedBack(formLink, eventId,sentBy) {
+async function sendFeedBack(formLink, eventId,sentById) {
   var error = true;
   var result;
   let myEvent = await Event.findById(eventId);
@@ -612,7 +612,7 @@ async function sendFeedBack(formLink, eventId,sentBy) {
     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
   for (i = 0; i < attendingMembers.length; i++) {
     const body = {
-      sentBy,
+      sentById,
       description: formLink,
       notifiedPerson: attendingMembers[i],
       date: date,
@@ -658,15 +658,16 @@ router.post("/:id/projects/:id2/sendRejection", async (req, res) => {
         res.send({ error: "Not a project id" });
       } else {
         return res.send({
-          data: await sendRejectionNotification(req.params.id2,sentBy)
+          data: await sendRejectionNotification(req.params.id2,req.params.id)
         });
       }
     }
   } catch (error) {
-    return res.status(400).send("Error");
+    console.log(error)
+    return res.send("Error");
   }
 });
-async function sendRejectionNotification(projectId,sentBy) {
+async function sendRejectionNotification(projectId,sentById) {
   const project = await Project.findById(projectId);
   if (!project) {
     return { msg: "there is no Such project" };
@@ -684,9 +685,10 @@ async function sendRejectionNotification(projectId,sentBy) {
     }
   }
   for (i = 0; i < myProjectApplications.length; i++) {
+    console.log(project.memberID)
     if (project.memberID.toString() !== myProjectApplications[i].toString()) {
       const body = {
-        sentBy,
+        sentById,
         description:
           "Sorry u were not accepted for project {" + project.description + "}",
         notifiedPerson: myProjectApplications[i],

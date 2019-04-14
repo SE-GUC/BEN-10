@@ -11,12 +11,15 @@ import axios from "axios";
 import EditProject from "./pages/EditProject";
 import ViewProject from "./pages/ViewProject";
 import { BrowserRouter, Route } from "react-router-dom";
+//import ViewAndAssign from "./components/ViewApplyingMemAndAssign";
+
+import SendFinalDraft from "./components/SendFinalDraft";
 // import Apply from "./components/Member/ApplyProject/ApplyOnProject"
-import Submit from "./components/Member/SubmitWork/FormDialogue"
+import Submit from "./components/Member/SubmitWork/FormDialogue";
 // import ApplyCa from "./components/CA/ApplyOnProject"
-import Event from "./components/Admin/CreateEvent"
+import Event from "./components/Admin/CreateEvent";
 // import Approve from "./components/Admin/ApproveRequest"
-import Request from "./components/Admin/ViewAllEventRequests"
+import Request from "./components/Admin/ViewAllEventRequests";
 import RedirectButton from "./components/Global/RedirectButton";
 import Projects from "./pages/Projects";
 import ProjectId from "./pages/ProjectId";
@@ -90,8 +93,10 @@ class App extends Component {
   render() {
     if (this.state.user) {
       return (
-        
         <BrowserRouter>
+          
+          
+          
           <Route
             exact
             path="/profile"
@@ -136,7 +141,6 @@ class App extends Component {
               />
             )}
           />
-
           <Route
             exact
             path="/ViewAllPartners"
@@ -170,8 +174,6 @@ class App extends Component {
               />
             )}
           />
-          
-
           <Route
             exact
             path="/Projects/:id"
@@ -183,7 +185,6 @@ class App extends Component {
               />
             )}
           />
-
           <Route
             exact
             path="/MyProject/edit/:id"
@@ -195,7 +196,6 @@ class App extends Component {
               />
             )}
           />
-          
         </BrowserRouter>
       );
     } else {

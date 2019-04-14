@@ -621,12 +621,13 @@ router.put("/:id1/myprojects/:id2/finaldraft/approve", async (req, res) => {
   if (ObjectId.isValid(part) && ObjectId.isValid(proj)) {
     const partner = await Partner.findById(part);
     const project = await Project.findById(proj);
-    console.log(partner);
-    console.log(project);
+    console.log(part);
+    console.log(partner._id);
+    console.log(project.companyId);
 
     if (partner && project) {
 
-      if(partner._id.toString()==project.companyId.toString()){
+      if(partner._id.toString()===project.companyId.toString()){
       var app = project.lifeCycle;
         if (app == "Final Draft") {
           const decision = "Approved";
@@ -677,7 +678,7 @@ router.put("/:id/myprojects/:pid/finaldraft/disapprove", async (req, res) => {
     const partner = await Partner.findById(part);
     const project = await Project.findById(proj);
     if (partner && project) {
-      if(partner._id.toString()==project.companyId.toString()){
+      if(partner._id.toString()===project.companyId.toString()){
       var dis = project.lifeCycle;
         if (dis == "Final Draft") {
           const decision = "Negotiation";
@@ -838,20 +839,20 @@ router.put("/:id/myprojects/:pid/finalreview/approve", async (req, res) => {
           res.send(j);
         } else {
           //not final review
-          res.status(400).send({
+          res.send({
             error: "The project is not submitted to be finally reviewed"
           });
         }
       } else {
         //not your project
-        res.status(400).send({ error: "You can not access this project" });
+        res.send({ error: "You can not access this project" });
       }
     } else {
       //id error
-      res.status(400).send({ error: "ERROR: Project not found" });
+      res.send({ error: "ERROR: Project not found" });
     }
   } catch (error) {
-    res.status(404).send({ error: "Error" });
+    res.send({ error: "Error" });
   }
 });
 
@@ -887,7 +888,7 @@ router.put("/:id/myprojects/:pid/finalreview/decline", async (req, res) => {
     const par = await Partner.findById(req.params.id);
     const proj = await Project.findById(req.params.pid);
     if (par && proj) {
-      if (proj.companyId == req.params.id) {
+      if (proj.companyId.toString()== req.params.id.toString()) {
         if (proj.lifeCycle === "Final Review") {
           const j = await declineFinalReview(req.params.pid);
           res.json(j);
@@ -1161,6 +1162,21 @@ router.put(
         headers: { "Content-Type": "application/json" }
       })
       res.send(j);
+      const url = `${server}/api/projects/${req.params.pid}`;
+          await fetch(url, {
+            method: "put",
+            body: JSON.stringify({ memberID: req.params.mid, lifeCycle: "In Progress" }),
+            headers: { "Content-Type": "application/json" }
+          })
+            .then(res => {
+              return res.json();
+            })
+            .then(json => {
+              console.log(json);
+            })
+            .catch(err => {
+              console.log(err);
+            });
     } else {
       res
         .status(400)
