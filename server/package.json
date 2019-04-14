@@ -1,0 +1,39 @@
+{
+  "name": "ben-10",
+  "version": "1.0.0",
+  "description": "LirtenHub",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bootstrap": "^4.3.1",
+    "config": "^3.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "jest": "^24.5.0",
+    "joi": "^14.3.1",
+    "joi-mongodb-objectid": "^0.1.0",
+    "joi-objectid": "^2.0.0",
+    "mongoose": "^5.4.16",
+    "moongoose": "0.0.5",
+    "node-fetch": "^2.3.0",
+    "nodemon": "^1.18.11",
+    "react-bootstrap": "^1.0.0-beta.6",
+    "request": "^2.88.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SE-GUC/BEN-10.git"
+  },
+  "author": "BEN 10",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SE-GUC/BEN-10/issues"
+  },
+  "homepage": "https://github.com/SE-GUC/BEN-10#readme"
+}
