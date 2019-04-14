@@ -11,12 +11,19 @@ import axios from "axios";
 import EditProject from "./pages/EditProject";
 import ViewProject from "./pages/ViewProject";
 import { BrowserRouter, Route } from "react-router-dom";
+// import Apply from "./components/Member/ApplyProject/ApplyOnProject"
+import Submit from "./components/Member/SubmitWork/FormDialogue"
+// import ApplyCa from "./components/CA/ApplyOnProject"
+import Event from "./components/Admin/CreateEvent"
+// import Approve from "./components/Admin/ApproveRequest"
+import Request from "./components/Admin/ViewAllEventRequests"
 import RedirectButton from "./components/Global/RedirectButton";
 import Projects from "./pages/Projects";
 import ProjectId from "./pages/ProjectId";
 import EventId from "./pages/EventId";
 
 import Loading from "./components/Global/Loading";
+import CreateEvent from "./components/Admin/CreateEvent";
 class App extends Component {
   state = {
     user: null,
@@ -83,6 +90,7 @@ class App extends Component {
   render() {
     if (this.state.user) {
       return (
+        
         <BrowserRouter>
           <Route
             exact
@@ -151,6 +159,18 @@ class App extends Component {
               />
             )}
           />
+          <Route
+            exact
+            path="/createEvent"
+            render={props => (
+              <CreateEvent
+                {...props}
+                type={this.state.type}
+                user={this.state.user}
+              />
+            )}
+          />
+          
 
           <Route
             exact
@@ -175,6 +195,7 @@ class App extends Component {
               />
             )}
           />
+          
         </BrowserRouter>
       );
     } else {

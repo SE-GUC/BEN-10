@@ -9,11 +9,11 @@ const ApplicationSchema = new Schema({
     },
     applyingDate: {
         type: Date,
-        required: true
+        required: false
     },
     projectId: {
         type: Schema.Types.ObjectId,ref:"Project",
-        required: true
+        required: false
     }
 })
 

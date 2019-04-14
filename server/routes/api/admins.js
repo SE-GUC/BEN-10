@@ -356,14 +356,17 @@ async function addEvent(body) {
 // 3.7 As an admin i want to decide (Accept / reject) an event request
 router.use("/:id/EventRequest/:Eid/:decision", async (req, res) => {
   try {
+    console.log(req.params.id)
+    console.log(req.params.Eid)
     if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.Eid)) {
       admin = await Admin.findById(req.params.id);
       if (admin) {
         if (
-          req.params.decision == "Approve" ||
-          req.params.decision == "DisApprove"
+          req.params.decision == "true" ||
+          req.params.decision == "false"
         ) {
-          await decideEventRequest(req.params.Eid, req.params.decision);
+           const j=await decideEventRequest(req.params.Eid, req.params.decision);
+           return res.status(200).send(j)
         }else{
           return res.status(404).send({error:"your decision must be Approve or DisApprove"})
         }
@@ -380,6 +383,7 @@ router.use("/:id/EventRequest/:Eid/:decision", async (req, res) => {
 
 async function decideEventRequest(id, decision) {
   const url = `${server}/api/eventrequests/${id}`;
+  let j=null
   await fetch(url, {
     method: "put",
     body: JSON.stringify({ isAccepted: decision }),
@@ -391,10 +395,12 @@ async function decideEventRequest(id, decision) {
     })
     .then(json => {
       console.log(json);
+      j=json
     })
     .catch(err => {
       console.log(err);
     });
+    return j;
 }
 
 //-----------

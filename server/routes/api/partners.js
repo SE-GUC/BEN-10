@@ -32,7 +32,7 @@ router.get("/:id", async (req, res) => {
       return res.json({ msg: "it doesn't exist" });
     }
   } else {
-    return res.status(400).json({ msg: `a partner  with id ${id} not found` });
+    return res.json({ msg: `a partner  with id ${id} not found` });
   }
 });
 

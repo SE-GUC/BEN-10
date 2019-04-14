@@ -9,6 +9,8 @@ import ReactDOM from 'react-dom';
 import NonProjectEditableViewCASection from '../components/Project/NonProjectEditableProjectCASection';
 import NonProjectEditableCandidateSection from '../components/Project/NonProjectEditableCandidateSection';
 import NonEditableView from '../components/Project/ProjectViewProjectSection';
+import ApplyButton from '../components/Member/ApplyProject/ApplyButton'
+import FormDialog from '../components/Member/SubmitWork/FormDialogue';
 
 export default class ViewProject extends Component {
   constructor(props){
@@ -78,6 +80,9 @@ export default class ViewProject extends Component {
                 Consultancy Agency</Button><br/>
                 <Button class="js-selected-navigation-item menu-item" onClick={this.viewSection3}>
                 Candidate</Button><br/>
+                {(this.state.project.lifeCycle==="Posted")?<ApplyButton member_id={this.props.user._id} project_id={this.state.projectID} />:""}
+                {(this.state.project.lifeCycle==="In Progress")?<FormDialog member_id={this.props.user._id} project_id={this.state.projectID} />:""}
+
                 
 
               </nav>
