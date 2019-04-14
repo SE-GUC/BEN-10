@@ -18,7 +18,8 @@ export default class EditProject extends Component {
         project : null,
         user : props.user,
 
-    }   
+    }  
+    console.log(this.state.projectID) 
   }
   async  componentDidMount(){
     await  axios
@@ -44,7 +45,27 @@ export default class EditProject extends Component {
   };
 
   cancelProject= async()=>{
-    console.log("delete method")
+    if(this.props.type === "admin"){
+      console.log("delete method")
+    const requestOptions = {
+      method: 'DELETE'
+    };
+    await fetch(`http://localhost:5000/api/projects/${this.state.projectID}` , requestOptions).then((response) => {
+      return response.json();
+    }).then((result) => {
+      console.log(result)
+      if(result.status===404)
+      alert(result.error)
+      if(result.status===200){
+      alert(result.msg);
+      }
+      if(result.status===400)
+      alert(result)
+      else
+      alert(result.msg)
+    });
+    }else{
+      console.log("delete method")
     const requestOptions = {
       method: 'DELETE'
     };
@@ -62,19 +83,20 @@ export default class EditProject extends Component {
       else
       alert(result.msg)
     });
+    }
   }
   viewSection1= (e)=>{
-    ReactDOM.render(<EditableView project={this.state.project}/>
-,document.getElementById('container'));
+    ReactDOM.render(<div><EditableView project={this.state.project}/> <Button variant="primary" onClick={this.cancelProject}>Cancel project</Button>
+</div>,document.getElementById('container'));
    }
 
   viewSection2= (e)=>{
-   ReactDOM.render(<ProjectEditableViewCASection user={this.state.user} type= {this.props.type} project={this.state.project}
-    ></ProjectEditableViewCASection>,document.getElementById('container'));
+   ReactDOM.render(<div><ProjectEditableViewCASection user={this.state.user} type= {this.props.type} project={this.state.project}
+    ></ProjectEditableViewCASection> <Button variant="primary" onClick={this.cancelProject}>Cancel project</Button></div>,document.getElementById('container'));
   }
   viewSection3=(e)=>{
-    ReactDOM.render(<ProjectEditableCandidateSection user={this.state.user} type= {this.props.type} project={this.state.project}
-      />,document.getElementById('container'));
+    ReactDOM.render(<div><ProjectEditableCandidateSection user={this.state.user} type= {this.props.type} project={this.state.project}
+      /><Button variant="primary" onClick={this.cancelProject}>Cancel project</Button></div>,document.getElementById('container'));
     }
   
 
@@ -104,7 +126,7 @@ export default class EditProject extends Component {
         </div>
         <div id="container">
           <EditableView project={this.state.project}></EditableView>
-          <Button variant="primary" onClick={this.cancelProject}>Cancel project</Button>
+          <Button variant="primary" onClick={this.cancelProject}>Delete project</Button>
        </div>  
       </div>
     )

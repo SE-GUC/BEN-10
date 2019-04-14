@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
 
-
 import Profile from "./components/Global/Profile";
 import ViewAllPartners from "./components/Partner/ViewAllPartners";
 import ViewAllCAs from "./components/CA/ViewAllCAs";
@@ -15,6 +14,8 @@ import { BrowserRouter, Route } from "react-router-dom";
 import RedirectButton from "./components/Global/RedirectButton";
 import Projects from "./pages/Projects";
 import ProjectId from "./pages/ProjectId";
+import EventId from "./pages/EventId";
+
 import Loading from "./components/Global/Loading";
 class App extends Component {
   state = {
@@ -23,13 +24,13 @@ class App extends Component {
   };
   asPartner = () => {
     axios
-      .get("http://localhost:5000/api/partners")
+      .get("http://localhost:5000/api/partners/5cae3044a972db1e007da3e7")
       .then(res => {
         return res.data;
       })
       .then(a =>
         this.setState({
-          user: a.data[0],
+          user: a.data,
           type: "partner"
         })
       );
@@ -116,6 +117,17 @@ class App extends Component {
               />
             )}
           />
+          <Route
+            exact
+            path="/Events/:id"
+            render={props => (
+              <EventId
+                {...props}
+                user={this.state.user}
+                type={this.state.type}
+              />
+            )}
+          />
 
           <Route
             exact
@@ -139,8 +151,7 @@ class App extends Component {
               />
             )}
           />
-         
-          
+
           <Route
             exact
             path="/Projects/:id"
@@ -153,8 +164,6 @@ class App extends Component {
             )}
           />
 
-          
-          
           <Route
             exact
             path="/MyProject/edit/:id"

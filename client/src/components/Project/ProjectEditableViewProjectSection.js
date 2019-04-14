@@ -10,7 +10,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import Chip from '@material-ui/core/Chip';
 import SaveButton from '../Global/SaveButton';
 
-const effort = ['Low','Normal','Hard','Extreme']
+const effort = ['Easy','Normal','Hard','Extreme']
 const cycle=['Waiting for consultancy Agency' , 'Negotiation',
   'Final Draft' , 'Approved' , 'Canceled' , 'Posted' , 'In Progress' , 'Final Review' , 'Finished']
 const expLevel = ['Fundamental Awareness','Novice','Intermediate','Advanced','Expert']
@@ -21,6 +21,7 @@ export default class EditableView extends React.Component {
 
     constructor(props){
         super(props);
+        console.log(this.props.project)
         this.state={
         projectID:this.props.project._id,
         //entities
@@ -83,6 +84,7 @@ export default class EditableView extends React.Component {
       this.setState({
         [name]: event.target.value,
       });
+      console.log("hhhhhaaadadahdakdh" + this.state.estimatedEffort)
     };
     
     saveChanges =async ()=>{
@@ -91,9 +93,9 @@ export default class EditableView extends React.Component {
         description : this.state.description,
         category : this.state.category,
         lifeCycle : this.state.lifeCycle,
-        estimatedEffort : this.state.estimatedEffort,
-        estimatedTime : this.state.estimatedTime,
-        experienceLevelNeeded : this.state.experienceLevelNeeded,
+        estimatedEffort : this.state.estimatedEffort?this.state.estimatedEffort:" ",
+        estimatedTime : this.state.estimatedTime?this.state.estimatedTime:" ",
+        experienceLevelNeeded : this.state.experienceLevelNeeded?this.state.experienceLevelNeeded:" ",
         requiredSkillsSet : this.state.requiredSkillsSet,
 
     }
@@ -148,7 +150,7 @@ export default class EditableView extends React.Component {
                     select
                     label="Project Life Cycle"
                     className={classNames.lifeCycle}
-                    value={this.state.currency}
+                    value={this.state.lifeCycle}
                     onChange={this.handleChange('lifeCycle')}
                     SelectProps={{
                       native: true,
@@ -169,7 +171,7 @@ export default class EditableView extends React.Component {
                  <TextField class="allInputs"
                     id="outlined-select-currency"
                     select
-                    label="Native select"
+                    label="Estimated Effort"
                     className={classNames.textField}
                     value={this.state.estimatedEffort}
                     onChange={this.handleChange('estimatedEffort')}

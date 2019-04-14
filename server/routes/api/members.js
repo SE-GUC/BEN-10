@@ -419,31 +419,41 @@ router.get("/:id/recommendations", async (req, res) => {
 
 async function getAvailableProjects(id) {
   //---
-  const myMember = await member.findById(id);
-  let skills = myMember.skillSet;
+  let myMember = await member.findById(id);
+  // myMember=JSON.parse(JSON.stringify(myMember))
+  let skills = null
+  skills = myMember.skillSet;
+  console.log(skills)
   let myProjects = await project.find();
   var i;
   let returnResult = [];
   for (i = 0; i < myProjects.length; i++) {
     var j;
     let flag = true;
+    
     for (j = 0; j < myProjects[i].requiredSkillsSet.length; j++) {
+      // console.log(myProjects[i].requiredSkillsSet)
       var k;
       let Available = true;
+      if(skills.length>0){
+        // console.log(myProjects[i])
+      }
       for (k = 0; k < skills.length; k++) {
-        if (skills[k] === myProjects[i].requiredSkillsSet[j]) {
+        if (skills[k].toString() === myProjects[i].requiredSkillsSet[j].toString()) {
           Available = false;
           break;
         }
-      }
-      if (Available) {
+       } if (Available) {
         flag = false;
         break;
       }
-    }
-    if (flag) {
+      console.log(myProjects[i].lifeCycle.toString())
+      if (flag && myProjects[i].lifeCycle.toString() ==="Posted") {
       returnResult.push(myProjects[i]);
     }
+      
+
+    } 
   }
   return returnResult;
 }
@@ -531,6 +541,54 @@ router.get("/:id/myProjects", async (req, res) => {
     return res.send({ error: "ID not found" });
   }
 });
+
+async function getTheProjects(memberid) {
+  var result = [];
+  await fetch(`${server}/api/projects`)
+    .then(res => res.json())
+    .then(json => {
+      const projects = json.data;
+      console.log(projects)
+      const hisProjects = projects.filter(m => m.memberID === memberid );
+      console.log()
+      result =hisProjects;
+      return hisProjects;
+    })
+    .catch(err => {return { error: err }  })   ; 
+
+  return result;
+}
+
+router.get("/:id/ShowMyEvents", async (req, res) => {
+  const id = req.params.id;
+
+  if (ObjectId.isValid(id)) {
+    const memb = await member.findById(id);
+    var found = false;
+    if (memb) {
+      var arr=[];
+      const e = await Event.find();
+      for(var m=0; m<e.length; m++){
+      found = false;
+      var mem = e[m].bookedMembers;
+      for (var i = 0; mem.length > i; i++) {
+          if (req.params.id== mem[i]) {
+            found = true;
+            arr.push(e[m]);
+            break;
+          }
+        }
+      }
+      return res.json({"data":arr})
+    } else {
+      return res.status(404).send({ msg: "Member not found" });
+    }
+  } else {
+    return res.status(404).send({ msg: "Member not found" });
+  }
+})
+
+//test 4.8
 router.get("/:id/viewAllProjects",async (req,res)=>{
   const mem = await member.findById(req.params.id);
   if(mem){
