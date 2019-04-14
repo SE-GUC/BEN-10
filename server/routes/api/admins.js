@@ -490,7 +490,7 @@ router.use("/:aid/assign/:pid/to/:mid", async (req, res) => {
           const url = `${server}/api/projects/${req.params.pid}`;
           fetch(url, {
             method: "put",
-            body: JSON.stringify({ memberID: req.params.mid, lifeCycle: "Negotiation" }),
+            body: JSON.stringify({ memberID: req.params.mid, lifeCycle: "In Progress" }),
             headers: { "Content-Type": "application/json" }
           })
             .then(res => {
@@ -658,12 +658,13 @@ router.post("/:id/projects/:id2/sendRejection", async (req, res) => {
         res.send({ error: "Not a project id" });
       } else {
         return res.send({
-          data: await sendRejectionNotification(req.params.id2,sentById)
+          data: await sendRejectionNotification(req.params.id2,req.params.id)
         });
       }
     }
   } catch (error) {
-    return res.status(400).send("Error");
+    console.log(error)
+    return res.send("Error");
   }
 });
 async function sendRejectionNotification(projectId,sentById) {
@@ -684,6 +685,7 @@ async function sendRejectionNotification(projectId,sentById) {
     }
   }
   for (i = 0; i < myProjectApplications.length; i++) {
+    console.log(project.memberID)
     if (project.memberID.toString() !== myProjectApplications[i].toString()) {
       const body = {
         sentById,

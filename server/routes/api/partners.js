@@ -839,20 +839,20 @@ router.put("/:id/myprojects/:pid/finalreview/approve", async (req, res) => {
           res.send(j);
         } else {
           //not final review
-          res.status(400).send({
+          res.send({
             error: "The project is not submitted to be finally reviewed"
           });
         }
       } else {
         //not your project
-        res.status(400).send({ error: "You can not access this project" });
+        res.send({ error: "You can not access this project" });
       }
     } else {
       //id error
-      res.status(400).send({ error: "ERROR: Project not found" });
+      res.send({ error: "ERROR: Project not found" });
     }
   } catch (error) {
-    res.status(404).send({ error: "Error" });
+    res.send({ error: "Error" });
   }
 });
 
@@ -1162,6 +1162,21 @@ router.put(
         headers: { "Content-Type": "application/json" }
       })
       res.send(j);
+      const url = `${server}/api/projects/${req.params.pid}`;
+          await fetch(url, {
+            method: "put",
+            body: JSON.stringify({ memberID: req.params.mid, lifeCycle: "In Progress" }),
+            headers: { "Content-Type": "application/json" }
+          })
+            .then(res => {
+              return res.json();
+            })
+            .then(json => {
+              console.log(json);
+            })
+            .catch(err => {
+              console.log(err);
+            });
     } else {
       res
         .status(400)

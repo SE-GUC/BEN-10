@@ -257,7 +257,7 @@ router.use("/:cid/assign/:pid/to/:mid", async (req, res) => {
               const url = `${server}/api/projects/${req.params.pid}`;
               fetch(url, {
                 method: "put",
-                body: JSON.stringify({ memberID: req.params.mid, lifeCycle: "Negotiation" }),
+                body: JSON.stringify({ memberID: req.params.mid, lifeCycle: "In Progress" }),
                 headers: { "Content-Type": "application/json" }
               })
                 .then(res => {
