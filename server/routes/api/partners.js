@@ -1108,7 +1108,8 @@ router.get("/:id/ShowMyEvents", async (req, res) => {
 
     if (partner) {
       const e = await event.find();
-      const Myevents = e.filter(m => m.requestorId == id);
+      
+      const Myevents = e.filter(m => m.requestorId.toString() === id.toString());
       if (Myevents.length === 0) {
         res.send({ msg: "NO Events to show" });
       } else {
