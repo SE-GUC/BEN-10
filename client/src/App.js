@@ -1,20 +1,20 @@
 import React, { Component } from "react";
 import "./App.css";
-//import MyProjects from "./components/Partner/ViewAllPArtners";
-import ViewAllPartners from "./components/Partner/ViewAllPArtners";
+
+
+import Profile from "./components/Global/Profile";
+import ViewAllPartners from "./components/Partner/ViewAllPartners";
 import ViewAllCAs from "./components/CA/ViewAllCAs";
 import ViewAllMembers from "./components/Member/ViewAllMembers";
 import EditProfile from "./components/Profile/EditProfile";
 import Events from "./pages/Events";
 import axios from "axios";
-import MyProjects from "./pages/MyProjects";
 import EditProject from "./pages/EditProject";
 import ViewProject from "./pages/ViewProject";
 import { BrowserRouter, Route } from "react-router-dom";
 import RedirectButton from "./components/Global/RedirectButton";
 import Projects from "./pages/Projects";
 import ProjectId from "./pages/ProjectId";
-
 import Loading from "./components/Global/Loading";
 class App extends Component {
   state = {
@@ -85,6 +85,40 @@ class App extends Component {
         <BrowserRouter>
           <Route
             exact
+            path="/profile"
+            render={props => (
+              <Profile
+                {...props}
+                user={this.state.user}
+                type={this.state.type}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/Projects"
+            render={props => (
+              <Projects
+                {...props}
+                user={this.state.user}
+                type={this.state.type}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/Events"
+            render={props => (
+              <Events
+                {...props}
+                user={this.state.user}
+                type={this.state.type}
+              />
+            )}
+          />
+
+          <Route
+            exact
             path="/ViewAllPartners"
             render={props => <ViewAllPartners />}
           />
@@ -105,33 +139,13 @@ class App extends Component {
               />
             )}
           />
+         
+          
           <Route
             exact
-            path="/Events/"
+            path="/Projects/:id"
             render={props => (
-              <Events
-                {...props}
-                user={this.state.user}
-                type={this.state.type}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/Projects/"
-            render={props => (
-              <Projects
-                {...props}
-                user={this.state.user}
-                type={this.state.type}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/ProjectId/:id"
-            render={props => (
-              <ProjectId
+              <ViewProject
                 {...props}
                 user={this.state.user}
                 type={this.state.type}
@@ -139,28 +153,8 @@ class App extends Component {
             )}
           />
 
-          <Route
-            exact
-            path="/MyProjects"
-            render={props => (
-              <MyProjects
-                {...props}
-                type={this.state.type}
-                user={this.state.user._id}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/MyProjects/:id"
-            render={props => (
-              <ViewProject
-                {...props}
-                type={this.state.type}
-                user={this.state.user}
-              />
-            )}
-          />
+          
+          
           <Route
             exact
             path="/MyProject/edit/:id"

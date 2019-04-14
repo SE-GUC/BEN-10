@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ExpansionPanelER from "../components/Event/ExpansionPanelER";
+import ViewAllEvents from '../components/Event/ViewAllEvents'
 class Events extends React.Component{
     constructor(props){
         super(props);
@@ -11,21 +12,29 @@ class Events extends React.Component{
 
     render(){
         if(this.props.type==="admin"){
-
+            return(
+                <div> 
+                    <ViewAllEvents />
+                </div>);   
         }
         else if(this.props.type==="partner"){
             return(
             <div> 
                 <ExpansionPanelER requestorId={this.props.user._id} requestedBy={this.props.user.name} />
+                <ViewAllEvents />
             </div>);            
         }
         else if(this.props.type==="member"){
-            
+            return(
+                <div> 
+                    <ViewAllEvents />
+                </div>);   
         }
         else if(this.props.type==="consultancyagency"){
             return(
             <div>
                 <ExpansionPanelER requestorId={this.props.user._id} requestedBy={this.props.user.name} />
+                <ViewAllEvents />
             </div>
             )
         }
