@@ -60,7 +60,7 @@ class MyProjectCard extends Component{
 render(){    
     const { classes } = this.props;
     if(this.state.redirect){
-      const path = `/MyProject/${this.props.project._id}`
+      const path = `/Projects/${this.props.project._id}`
       return <Redirect to={path}/>;
     }else{
       if(this.state.company){
