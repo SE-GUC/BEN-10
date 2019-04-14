@@ -94,9 +94,9 @@ class SimpleCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      eventId: this.props.eventId,
+      eventId: this.props.match.params.id,
       types:this.props.type,
-      ownerId:this.props.ownerId,
+      ownerId:null,
       event: [],
       isLoaded: false,
       bookedmemID: [],
@@ -122,7 +122,8 @@ class SimpleCard extends React.Component {
           event: proj.data,
           bookedmemID: proj.data.bookedMembers,
           ID: proj.data.requestorId,
-          isLoaded:true
+          isLoaded:true,
+          ownerId:proj.data.requestorId
         })
       );
 
@@ -138,28 +139,6 @@ class SimpleCard extends React.Component {
       }
     }
 
-    await fetch("http://localhost:5000/api/consultancyagency/" + this.state.ID)
-      .then(res => res.json())
-      .then(proj => this.setState({ CA: proj.data }))
-      .catch(this.setState({ CA: null }));
-
-    await fetch("http://localhost:5000/api/partners/" + this.state.ID)
-      .then(res => res.json())
-      .then(proj => this.setState({ partner: proj.data }));
-
-    await fetch("http://localhost:5000/api/admins/" + this.state.ID)
-      .then(res => res.json())
-      .then(proj => this.setState({ admin: proj.data }));
-
-    if (this.state.admin) {
-      this.setState({ type: "admin" });
-    }
-    if (this.state.partner) {
-      this.setState({ type: "partner" });
-    }
-    if (this.state.CA) {
-      this.setState({ type: "CA" });
-    }
   }
 
   returnClicked  = ()=>{
@@ -170,10 +149,6 @@ class SimpleCard extends React.Component {
   }
 
   handleClicksz(x) {
-    //   let path = `/MyProjects/`;
-    // this.props.history.push({
-    //   pathname : path,
-    // });
     return <Redirect to="/HI" />;
   }
   show() {
@@ -348,8 +323,8 @@ class SimpleCard extends React.Component {
           {console.log(this.state.types)}
           {console.log(this.state.ID)}
           {console.log(this.state.show)}
-          <Feedback eventId={this.state.eventId} ownerId={this.state.ownerId} type={this.state.types} reqId={this.state.ID}></Feedback>
-          <BookEvent eventId={this.state.eventId }type={this.state.types}  member={this.state.ownerId} theme={theme} > </BookEvent>
+          {this.props.user._id.toString()===this.state.ownerId.toString()? <Feedback eventId={this.state.eventId} ownerId={this.state.ownerId} type={this.state.types} reqId={this.state.ID}></Feedback>:""}
+          <BookEvent eventId={this.state.eventId }type={this.props.type}  member={this.props.user._id} theme={theme} > </BookEvent>
           <MuiThemeProvider theme={theme}> <Button className={classes.button} onClick={this.returnClicked} >
                 Back
               </Button></MuiThemeProvider>
