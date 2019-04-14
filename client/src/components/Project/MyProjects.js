@@ -6,16 +6,7 @@ import  PropTypes from 'prop-types';
 import { BrowserRouter as Router , Route } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import classes from 'classnames';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import CameraIcon from '@material-ui/icons/PhotoCamera';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import ListSubheader from "@material-ui/core/ListSubheader";
 import color from "@material-ui/core/colors/blueGrey";
 import style from './MyProjects.css'
 import { blue } from "@material-ui/core/colors";
@@ -70,7 +61,9 @@ class MyProjects extends Component {
     if (this.state.projects == null) {
       return (
         <div className="App">
-          <label>Loading....</label>
+          <ListSubheader component="div">
+                    You don't have any projects
+    </ListSubheader>
         </div>
       );
     } else {
