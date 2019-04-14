@@ -51,8 +51,7 @@ export default class EditableView extends React.Component {
             })
             .then(a => {
                 this.setState({ member: a.data,
-                    memberFirstName:a.data.fname +""+a.data.lname,
-                    memberLastName:a.data.lname,
+                    memberFirstName:a.data.firstName +" "+a.data.lastName,
                     memberNationality:a.data.nationality,
                     memberEmail:a.data.email,
                     memberMobileNumber:a.data.MobileNumber,   
