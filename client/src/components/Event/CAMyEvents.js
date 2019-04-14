@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import MyEventCard from './MyEventCard'
-import myEvents from '../myEvents/myEvents';
 // const axios = require('axios');
 import TestBar from "./testBar"
 
@@ -21,7 +19,7 @@ class MyEvents extends Component {
     
   }
   render() {
-    if(this.state.Event===null){
+    if(this.state.Event===null||typeof this.state.Event!=="Undefined"||this.state.Event.length===0){
         return (
             <div className="App">
               <label>Loading....</label>

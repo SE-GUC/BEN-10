@@ -15,7 +15,7 @@ class CAMyProjects extends Component {
     }
   }
   componentDidMount(){
-    fetch(`http://localhost:5000/api/consultancyagency/${this.state.caId}/projects`).then(res=>res.json())
+    fetch(`http://localhost:5000/api/consultancyagency/${this.state.caId}/myprojects`).then(res=>res.json())
     .then(projects=>this.setState({Project:projects.data}))
     
   }
@@ -26,11 +26,17 @@ class CAMyProjects extends Component {
               <label>Loading....</label>
             </div>
           );
+    }else if(this.state.Project && this.state.Project.length===0){
+      return (
+        <div className="App">
+        You Do Not Have Any Projects
+        </div>
+      );
     }
     else{
     return (
       <div className="App">
-      <TestBar projects={this.state.Project}/>
+      <TestBar projects={this.state.Project} edit={true}/>
       </div>
     );
   

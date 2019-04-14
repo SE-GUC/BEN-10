@@ -28,7 +28,7 @@ class MemberMyProjects extends Component {
     return (
       <div className="App">
       <h1>Recommendations</h1> 
-       {this.state.Project.map((Project,i)=><MyProjectCard key={i} project={Project} />)} 
+       {this.state.Project.map((Project,i)=><MyProjectCard key={i} project={Project} edit={false} />)} 
       </div>
     );
   

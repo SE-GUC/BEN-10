@@ -29,7 +29,7 @@ class PartnerMyProjects extends Component {
     else{
     return (
       <div className="App">
-          <TestBar projects={this.state.Project}/>
+          <TestBar projects={this.state.Project} edit={true}/>
       </div>
     );
   

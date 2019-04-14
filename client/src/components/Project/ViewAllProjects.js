@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -12,6 +12,7 @@ import { BrowserRouter as Router , Route , withRouter } from "react-router-dom";
 import classes from'classnames' ;
 import axios from "axios";
 import AllProjectsCard from './AllProjectsCard'
+import MyProjectCard from './MyProjectCard';
 
 
 const styles = {
@@ -50,7 +51,7 @@ class ViewAllProjects extends React.Component {
   if(this.state.projects){
     console.log("yessss")
   return (
-    this.state.projects.map((p,i)=> <AllProjectsCard key={i} p={p} /> ));
+    this.state.projects.map((p,i)=> <MyProjectCard key={i} type={this.props.type} project={p} /> ));
   }else{
     return(
       <div>loooding</div>

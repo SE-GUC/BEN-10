@@ -44,7 +44,7 @@ class MyEventCard extends Component{
 render(){    
     const { classes } = this.props;
     if(this.state.redirect){
-      const path = `/myEvents/${this.props.event._id}`
+      const path = `/Events/${this.props.event._id}`
       return <Redirect to={path}/>;
     }else{
 return (

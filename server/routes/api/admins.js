@@ -216,6 +216,7 @@ router.put("/:id/myProjects/:pid/sendDraft", async (req, res) => {
   }
 });
 
+
 async function sendFinalDraft(projectID, draft) {
   const body = {
     lifeCycle: "Final Draft",
@@ -856,5 +857,4 @@ router.get("/:id/projects", async (req, res) => {
     return res.status(404).send({ error: "ID not found" });
   }
 });
-
 module.exports = router;

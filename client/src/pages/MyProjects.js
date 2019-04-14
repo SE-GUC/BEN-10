@@ -16,8 +16,8 @@ class MyProjects extends React.Component{
     render(){
         return(<div> 
         <PMyProject id={this.state.parId}/>
-        {/* <MMyProject id={this.state.parId}/> */}
-        {/* <MMyRec id={this.state.parId}/> */}
+        <MMyProject id={this.state.parId}/>
+        <MMyRec id={this.state.parId}/>
         {/* <CAMyProject id={this.state.parId}/> */}
         </div>);               
     }

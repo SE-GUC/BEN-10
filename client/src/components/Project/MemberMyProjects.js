@@ -15,7 +15,7 @@ class MemberMyProjects extends Component {
   }
   componentDidMount(){
     console.log(this.props.id)
-    fetch(`http://localhost:5000/api/members/${this.state.memId}/ShowMyProjects`).then(res=>res.json())
+    fetch(`http://localhost:5000/api/members/${this.state.memId}/myProjects`).then(res=>res.json())
     .then(projects=>this.setState({Project:projects.data}))
     
   }
@@ -26,11 +26,17 @@ class MemberMyProjects extends Component {
               <label>Loading....</label>
             </div>
           );
+    }else if(this.state.Project && this.state.Project.length===0){
+      return (
+        <div className="App">
+        You Do Not Have Any Projects
+        </div>
+      );
     }
     else{
     return (
       <div className="App">
-       <TestBar projects={this.state.Project}/>
+       <TestBar projects={this.state.Project} edit={false}/>
       </div>
     );
   

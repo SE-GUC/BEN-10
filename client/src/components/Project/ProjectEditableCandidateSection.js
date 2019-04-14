@@ -29,7 +29,7 @@ export default class EditableView extends React.Component {
             userID:props.user._id,
             user:props.user,
             project : props.project,
-            memberID:props.project.memberID,
+            memberID:props.project.memberId,
             // member needed attributes
             member:null,
             memberFirstName:null,
