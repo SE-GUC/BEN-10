@@ -45,7 +45,7 @@ class Project extends Component {
     });
   }
   handleClicksz  = ()=>{
-    let path = `/MyProjects/${this.state.project._id}`;
+    let path = `/Projects/${this.state.project._id}`;
     this.props.history.push({
       pathname : path,
     });

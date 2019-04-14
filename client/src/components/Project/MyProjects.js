@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Project from "../components/Project/project";
+import Project from "./project";
 import axios from "axios";
 import {Redirect} from 'react-router-dom'
 import  PropTypes from 'prop-types'; 
