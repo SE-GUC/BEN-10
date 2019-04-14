@@ -120,7 +120,9 @@ router.put('/:id1/Myprojects/:id2/submit/:link',async(req,res)=>{
     if(project_appliedfor!=null && member_applying!=null){
       var lifeCycle=project_appliedfor["lifeCycle"];
       if(lifeCycle==="In Progress"){
-        if(project_appliedfor["memberId"].toString()!=member_id.toString()){
+        console.log(project_appliedfor.memberID)
+        console.log(member_id.toString())
+        if(project_appliedfor.memberID.toString()!=member_id.toString()){
           return res.status(404).send({ error: "this projects is not assigned to you" });
         }
       var error=true;
@@ -128,12 +130,14 @@ router.put('/:id1/Myprojects/:id2/submit/:link',async(req,res)=>{
         lifeCycle:"Final Review",
         submittedProjectLink:link
       }
+      console.log(1);
       await fetch(`${server}/api/projects/${project_id}`, {
         method: "PUT",
         body: JSON.stringify(body),
         headers: { "Content-Type": "application/json" }
       })
         .then(res => {
+          console.log(res)
           
           if (res.status === 200) {
             error = false;
@@ -155,7 +159,7 @@ router.put('/:id1/Myprojects/:id2/submit/:link',async(req,res)=>{
        if(member_applying==null)
        return res.status(404).send({ error: "there is no such member with this id" });
     }
-  } else return res.status(404).send({ error: "Not a valid id format" })
+  } else return res.status(404).send({ error: "Not a valid id format1" })
   }
   catch(error){
     return res.status(404).send({ error: "Not a valid id format" });
@@ -260,7 +264,7 @@ router.post("/:id1/projects/:id2/apply", async (req, res) => {
       }
     }
     if(!found){
-      return res.status(404).send({ error: "this member does not have the required skills for this project" });
+      return res.send({ error: "this member does not have the required skills for this project" });
     }
     const application = {
       applicantId: member_id,
@@ -282,14 +286,14 @@ router.post("/:id1/projects/:id2/apply", async (req, res) => {
 
 
   }else{
-    return res.status(400).send({error:"You already applied before"})
+    return res.send({error:"You already applied before"})
   }
 }
   else{
-    return res.status(404).send({ error: "there no such data with these ids" });
+    return res.send({ error: "there no such data with these ids" });
   }
   } else {
-    return res.status(404).send({ error: "Not a valid id format" });
+    return res.send({ error: "Not a valid id format" });
   }
 
 });

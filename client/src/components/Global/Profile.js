@@ -28,7 +28,7 @@ class Profile extends React.Component {
 
   }
   viewProjects = () => {
-    let path = `/MyProjects`;
+    let path = `/Projects`;
     this.props.history.push({
       pathname: path
     });
