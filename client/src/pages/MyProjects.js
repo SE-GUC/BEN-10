@@ -4,6 +4,8 @@ import MMyProject from "../components/Project/MemberMyProjects"
 import CAMyProject from "../components/Project/CAMyProjects"
 import MMyRec from "../components/Project/MemberRecommendations"
 // import Myfilter from "../components/Project/FilterProj"
+const server = require("../../src/config");
+
 class MyProjects extends React.Component{
     constructor(props){
         super(props);

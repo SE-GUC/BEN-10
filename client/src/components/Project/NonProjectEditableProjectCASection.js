@@ -4,6 +4,7 @@ import { TextField } from '@material-ui/core';
 import classNames from 'classnames';
 import { Card } from "react-bootstrap";
 import ListSubheader from "@material-ui/core/ListSubheader";
+const server = require("../../config");
 
 const effort = ['Low','Normal','Hard','Extreme']
 const cycle=['Waiting for consultancy Agency' , 'Negotiation',
@@ -39,7 +40,7 @@ export default class EditableView extends React.Component {
        
         if(this.state.project.wantConsultancy == true){
             await  axios
-            .get(`http://localhost:5000/api/consultancyagency/${this.state.caId}`)
+            .get(`${server}/api/consultancyagency/${this.state.caId}`)
             .then(res => {
                 
                 return  res.data;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MyProjectCard from './MyProjectCard'
 // const axios = require('axios');
 import TestBar from "./testBar"
+const server = require("../../config");
 
 class PartnerMyProjects extends Component {
 
@@ -14,7 +15,7 @@ class PartnerMyProjects extends Component {
     }
   }
   componentDidMount(){
-    fetch(`http://localhost:5000/api/partners/${this.state.partnerId}/myProjects`).then(res=>res.json())
+    fetch(`${server}/api/partners/${this.state.partnerId}/myProjects`).then(res=>res.json())
     .then(projects=>this.setState({Project:projects.data}))
       
   }

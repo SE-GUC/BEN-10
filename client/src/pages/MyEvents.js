@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PMyEvent from "../components/Event/PartnerMyEvents"
 import MMyEvent from "../components/Event/MemberMyEvents"
 import CAMyEvent from "../components/Event/CAMyEvents"
+const server = require("../../src/config");
+
 class MyEvents extends React.Component{
     constructor(props){
         super(props);

@@ -9,6 +9,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+const server = require("../../config");
+
 const styles = {
     card: {
       minWidth: 275,
@@ -40,7 +42,7 @@ class EventRequest extends Component{
         }
     }
     componentDidMount(){
-        fetch(`http://localhost:5000/api/consultancyagency/${this.state.body.requestorId}`)
+        fetch(`${server}/api/consultancyagency/${this.state.body.requestorId}`)
     .then(res=>{return res.json()}).then(
        result=>{
          if(result.error!==undefined){
@@ -58,7 +60,7 @@ class EventRequest extends Component{
        }
     )
     if(this.state.requestorName==null){
-    fetch(`http://localhost:5000/api/partners/${this.state.body.requestorId}`)
+    fetch(`${server}/api/partners/${this.state.body.requestorId}`)
     .then(res=>{return res.json()}).then(
        result=>{
         if(result.msg!==undefined){

@@ -1,6 +1,7 @@
 import EachPartner from './EachPartner'
 import React from "react";
 import axios from "axios";
+const server = require("../../config");
 
 
 class allPartners extends React.Component {
@@ -14,7 +15,7 @@ class allPartners extends React.Component {
   }
   componentDidMount() {
     axios
-      .get(`http://localhost:5000/api/partners/`)
+      .get(`${server}/api/partners/`)
       .then(res => {
         return res.data;
       })

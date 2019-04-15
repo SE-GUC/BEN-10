@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // const axios = require('axios');
 import TestBar from "./testBar"
+const server = require("../../config");
 
 class MyEvents extends Component {
 
@@ -14,7 +15,7 @@ class MyEvents extends Component {
     console.log(this.state.caId)
   }
   componentDidMount(){
-    fetch(`http://localhost:5000/api/consultancyagency/${this.state.caId}/ShowMyEvents`).then(res=>res.json())
+    fetch(`${server}/api/consultancyagency/${this.state.caId}/ShowMyEvents`).then(res=>res.json())
     .then(events=>this.setState({Event:events.data}))
     
   }

@@ -15,6 +15,7 @@ import ApproveFinalDraft from "../components/ApproveFinalDraft";
 import ApproveFinalWork from "../components/ApproveFinalWork";
 import SendFinalDraft from "../components/SendFinalDraft";
 import NotifyMember from "../components/NotifyMember";
+const server = require("../../src/config");
 
 
 
@@ -30,7 +31,7 @@ export default class ViewProject extends Component {
   }
   async componentDidMount() {
     await axios
-      .get(`http://localhost:5000/api/projects/${this.state.projectID}`)
+      .get(`${server}/api/projects/${this.state.projectID}`)
       .then(res => {
         return res.data;
       })

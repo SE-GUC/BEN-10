@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import ApplyingCAsFab from './ApplyingCAsFab'
 import axios from 'axios'
+const server = require("../../config");
 
 const styles = theme => ({
   close: {
@@ -36,7 +37,7 @@ class ApplyingCAButton extends Component {
     };
     axios
       .put(
-        `http://localhost:5000/api/admins/${this.state.admin._id}/assignCA/${this.state.project._id}/to/${this.state.ca}`,body
+        `${server}/api/admins/${this.state.admin._id}/assignCA/${this.state.project._id}/to/${this.state.ca}`,body
       )
       .then(function(response) {
         console.log(response);

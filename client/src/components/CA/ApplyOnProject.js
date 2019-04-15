@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import ApplyingMessage from '../Member/SubmitWork/Message';
+const server = require("../../config");
 
 
 
@@ -30,7 +31,7 @@ const styles = theme => ({
         this.applyClick=this.applyClick.bind(this)
     }
     applyClick(){
-         fetch(`http://localhost:5000/api/consultancyagency/${this.state.id}/caApplyProject/${this.state.project_id}`, {
+         fetch(`${server}/api/consultancyagency/${this.state.id}/caApplyProject/${this.state.project_id}`, {
         method: 'PUT',
         body: {}
     })

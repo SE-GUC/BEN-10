@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MyProjectCard from './MyProjectCard'
 // const axios = require('axios');
+const server = require("../../config");
 
 class MemberMyProjects extends Component {
 
@@ -12,7 +13,7 @@ class MemberMyProjects extends Component {
     }
   }
   componentDidMount(){
-    fetch(`http://localhost:5000/api/members/${this.state.partnerId}/recommendations`).then(res=>res.json())
+    fetch(`${server}/api/members/${this.state.partnerId}/recommendations`).then(res=>res.json())
     .then(projects=>this.setState({Project:projects.data}))
     }
 

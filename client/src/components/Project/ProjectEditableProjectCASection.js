@@ -8,6 +8,7 @@ import styles from './editableViews.css';
 import ListSubheader from "@material-ui/core/ListSubheader";
 import ApplyingCAsOnProject from './ApplyingCAsOnProject';
 import PartnerApplyingCAsOnProject from './PartnerApplyingCAsOnProject';
+const server = require("../../config");
 
 const effort = ['Low','Normal','Hard','Extreme']
 const cycle=['Waiting for consultancy Agency' , 'Negotiation',
@@ -44,7 +45,7 @@ export default class EditableView extends React.Component {
        console.log(this.state.caId)
         if(this.state.wantConsultancy){
             await  axios
-            .get(`http://localhost:5000/api/consultancyagency/${this.state.caId}`)
+            .get(`${server}/api/consultancyagency/${this.state.caId}`)
             .then(res => {
                 
                 return  res.data;

@@ -10,6 +10,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import color from "@material-ui/core/colors/blueGrey";
 import style from './MyProjects.css'
 import { blue } from "@material-ui/core/colors";
+const server = require("../../config");
 
 
 class MyProjects extends Component {
@@ -22,7 +23,7 @@ class MyProjects extends Component {
 }
   async componentDidMount(){
     if(this.props.type === "partner"){
-    await axios.get(`http://localhost:5000/api/partners/${this.state.partner_id}/myProjects`)
+    await axios.get(`${server}/api/partners/${this.state.partner_id}/myProjects`)
     .then(res => {
       return res.data; 
     })
@@ -30,7 +31,7 @@ class MyProjects extends Component {
       this.setState({projects:projects.data})
   })}
   if(this.props.type === "consultancyagency"){
-    await axios.get(`http://localhost:5000/api/consultancyagency/${this.props.user._id}/myProjects`)
+    await axios.get(`${server}/api/consultancyagency/${this.props.user._id}/myProjects`)
     .then(res => {
       return res.data; 
     })
@@ -38,7 +39,7 @@ class MyProjects extends Component {
       this.setState({projects:projects.data})
   })}
   if(this.props.type === "admin"){
-    await axios.get(`http://localhost:5000/api/projects/`)
+    await axios.get(`${server}/api/projects/`)
     .then(res => {
       return res.data; 
     })
@@ -46,7 +47,7 @@ class MyProjects extends Component {
       this.setState({projects:projects.data})
   })}
   if(this.props.type === "member"){
-    await axios.get(`http://localhost:5000/api/members/${this.props.user._id}/myProjects`)
+    await axios.get(`${server}/api/members/${this.props.user._id}/myProjects`)
     .then(res => {
       return res.data; 
     })

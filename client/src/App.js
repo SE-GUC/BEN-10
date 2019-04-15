@@ -11,6 +11,7 @@ import axios from "axios";
 import EditProject from "./pages/EditProject";
 import ViewProject from "./pages/ViewProject";
 import { BrowserRouter, Route } from "react-router-dom";
+
 //import ViewAndAssign from "./components/ViewApplyingMemAndAssign";
 
 import SendFinalDraft from "./components/SendFinalDraft";
@@ -24,9 +25,10 @@ import RedirectButton from "./components/Global/RedirectButton";
 import Projects from "./pages/Projects";
 import ProjectId from "./pages/ProjectId";
 import EventId from "./pages/EventId";
-
+import Nav from './components/Global/PrimarySearchAppBar'
 import Loading from "./components/Global/Loading";
 import CreateEvent from "./components/Admin/CreateEvent";
+const server = require("./config");
 class App extends Component {
   state = {
     user: null,
@@ -34,7 +36,7 @@ class App extends Component {
   };
   asPartner = () => {
     axios
-      .get("http://localhost:5000/api/partners")
+      .get(`${server}/api/partners`)
       .then(res => {
         return res.data;
       })
@@ -48,7 +50,7 @@ class App extends Component {
 
   asMember = () => {
     axios
-      .get("http://localhost:5000/api/members")
+      .get(`${server}/api/members`)
       .then(res => {
         return res.data;
       })
@@ -63,7 +65,7 @@ class App extends Component {
   asAdmin = () => {
     console.log("admin");
     axios
-      .get("http://localhost:5000/api/admins")
+      .get(`${server}/api/admins`)
       .then(res => {
         return res.data;
       })
@@ -78,7 +80,7 @@ class App extends Component {
 
   asCA = () => {
     axios
-      .get("http://localhost:5000/api/consultancyagency")
+      .get(`${server}/api/consultancyagency`)
       .then(res => {
         return res.data;
       })
@@ -96,7 +98,7 @@ class App extends Component {
         <BrowserRouter>
           
           
-          
+          <Nav id={this.state.user._id} type={this.state.type+'s'}/>
           <Route
             exact
             path="/profile"

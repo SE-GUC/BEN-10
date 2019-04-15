@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Route , withRouter} from 'react-router-dom';
 import {Redirect} from 'react-router-dom'
+const server = require("../../config");
 
 
 const styles = {

@@ -10,6 +10,7 @@ import PMyProject from "../components/Project/PartnerMyProjects";
 import MMyProject from "../components/Project/MemberMyProjects";
 import CAMyProject from "../components/Project/CAMyProjects";
 import MMyRec from "../components/Project/MemberRecommendations";
+const server = require("../../src/config");
 
 class Projects extends Component {
   constructor(props) {

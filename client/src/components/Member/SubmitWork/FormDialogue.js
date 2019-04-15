@@ -7,6 +7,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Message from "./Message"
+const server = require("../../../config");
+
 export default class FormDialog extends React.Component {
   state = {
     open: false,
@@ -17,8 +19,8 @@ export default class FormDialog extends React.Component {
     context:null
   };
   handClick = () =>{
-    //   console.log(`http://localhost:5000/api/members/${this.state.member_id}/Myprojects/${this.state.project_id}/submit/${this.state.link}`)
-    fetch(`http://localhost:5000/api/members/${this.state.member_id}/Myprojects/${this.state.project_id}/submit/${this.state.link}`, {
+    //   console.log(`${server}/api/members/${this.state.member_id}/Myprojects/${this.state.project_id}/submit/${this.state.link}`)
+    fetch(`${server}/api/members/${this.state.member_id}/Myprojects/${this.state.project_id}/submit/${this.state.link}`, {
         method: 'PUT',
         body: {}
     })

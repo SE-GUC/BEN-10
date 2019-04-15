@@ -12,6 +12,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import Message from "../Member/SubmitWork/Message"
 import  { Redirect } from 'react-router-dom'
+const server = require("../../config");
+
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -112,7 +114,7 @@ class CreateEvent extends React.Component {
         headers: { "Content-Type": "application/json" }
        
       };
-      fetch(`http://localhost:5000/api/admins/${this.props.user._id}/addEvent/` , requestOptions).then((response) => {
+      fetch(`${server}/api/admins/${this.props.user._id}/addEvent/` , requestOptions).then((response) => {
         return response.json();
       }).then((result) => {
           if(result.msg=="Event is posted successfully"){

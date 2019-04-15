@@ -3,6 +3,7 @@ import MyProjectCard from './MyProjectCard'
 // const axios = require('axios');
 import TestBar from "./testBar"
 
+const server = require("../../config");
 
 class CAMyProjects extends Component {
 
@@ -15,7 +16,7 @@ class CAMyProjects extends Component {
     }
   }
   componentDidMount(){
-    fetch(`http://localhost:5000/api/consultancyagency/${this.state.caId}/myprojects`).then(res=>res.json())
+    fetch(`${server}/api/consultancyagency/${this.state.caId}/myprojects`).then(res=>res.json())
     .then(projects=>this.setState({Project:projects.data}))
     
   }

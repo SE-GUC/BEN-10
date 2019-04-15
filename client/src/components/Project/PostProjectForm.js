@@ -5,6 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import PostProjectMessage from "./PostProjectMessage"
 
+const server = require("../../config");
 
 const styles = theme => ({
   container: {

@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { Route, withRouter } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
+const server = require("../../config");
 
 const styles = {
   card: {
@@ -46,7 +47,7 @@ class MyProjectCard extends Component {
   }
   componentDidMount() {
     axios
-      .get(`http://localhost:5000/api/partners/${this.props.project.companyId}`)
+      .get(`${server}/api/partners/${this.props.project.companyId}`)
       .then(res => {
         return res.data;
       })
@@ -62,7 +63,7 @@ class MyProjectCard extends Component {
       method: "DELETE"
     };
     fetch(
-      `http://localhost:5000/api/partners/${
+      `${server}/api/partners/${
         this.props.project.companyId
       }/deleteProject/${this.props.project._id}`,
       requestOptions

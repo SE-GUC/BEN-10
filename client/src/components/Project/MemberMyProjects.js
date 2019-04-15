@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MyProjectCard from './MyProjectCard'
 // const axios = require('axios');
 import TestBar from "./testBar"
+const server = require("../../config");
 
 class MemberMyProjects extends Component {
 
@@ -15,7 +16,7 @@ class MemberMyProjects extends Component {
   }
   componentDidMount(){
     console.log(this.props.id)
-    fetch(`http://localhost:5000/api/members/${this.state.memId}/myProjects`).then(res=>res.json())
+    fetch(`${server}/api/members/${this.state.memId}/myProjects`).then(res=>res.json())
     .then(projects=>this.setState({Project:projects.data}))
     
   }

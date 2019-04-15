@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import axios from "axios";
+const server = require("../../config");
 
 
 class EventRequestMessage extends React.Component {
@@ -28,7 +29,7 @@ class EventRequestMessage extends React.Component {
         requestorId: this.props.requestorId
     }
 
-    axios.post(`http://localhost:5000/api/partners/${this.props.requestorId}/eventrequests/`, body)
+    axios.post(`${server}/api/partners/${this.props.requestorId}/eventrequests/`, body)
     .then(function (response) {
       console.log(response.status)
       return response.data;

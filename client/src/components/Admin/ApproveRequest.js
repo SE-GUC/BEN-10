@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import  { Redirect } from 'react-router-dom'
-
+const server = require("../../config");
 
 const styles = theme => ({
   button: {
@@ -38,7 +38,7 @@ class ApproveRequest extends Component{
         const requestOptions = {
             method: 'PUT'
           };
-          fetch(`http://localhost:5000/api/admins/${this.props.admin_id}/EventRequest/${this.state.eid}/true` , requestOptions).then((response) => {
+          fetch(`${server}/api/admins/${this.props.admin_id}/EventRequest/${this.state.eid}/true` , requestOptions).then((response) => {
             return response.json();
           }).then((result) => {
             console.log(result)

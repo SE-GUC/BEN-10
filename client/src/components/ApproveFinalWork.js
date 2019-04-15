@@ -18,6 +18,7 @@ import green from "@material-ui/core/colors/green";
 import Fab from "@material-ui/core/Fab";
 import CheckIcon from "@material-ui/icons/Check";
 import SaveIcon from "@material-ui/icons/Save";
+const server = require("../config");
 
 const styles = theme => ({
   root: {
@@ -90,7 +91,7 @@ class ApproveFinalWork extends React.Component {
     if (this.state.type === "consultancyagency") {
       axios
         .put(
-          `http://localhost:5000/api/consultancyagency/${
+          `${server}/api/consultancyagency/${
             this.state.approvingID
           }/decide/${this.state.pID}/approve`
         )
@@ -118,7 +119,7 @@ class ApproveFinalWork extends React.Component {
       if (this.state.type === "partner") {
         axios
           .put(
-            `http://localhost:5000/api/partners/${
+            `${server}/api/partners/${
               this.state.approvingID
             }/myprojects/${this.state.pID}/finalreview/approve`
           )
@@ -150,7 +151,7 @@ class ApproveFinalWork extends React.Component {
     if (this.state.type === "consultancyagency") {
       axios
         .put(
-          `http://localhost:5000/api/consultancyagency/${
+          `${server}/api/consultancyagency/${
             this.state.approvingID
           }/decide/${this.state.pID}/disapprove`
         )
@@ -178,7 +179,7 @@ class ApproveFinalWork extends React.Component {
       if (this.state.type === "partner") {
         axios
           .put(
-            `http://localhost:5000/api/partners/${
+            `${server}/api/partners/${
               this.state.approvingID
             }/myprojects/${this.state.pID}/finalreview/decline`
           )

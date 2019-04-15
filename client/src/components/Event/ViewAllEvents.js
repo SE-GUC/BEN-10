@@ -12,6 +12,7 @@ import { BrowserRouter as Router , Route , withRouter } from "react-router-dom";
 import classes from'classnames' ;
 import axios from "axios";
 import AllEventsCard from './AllEventsCard';
+const server = require("../../config");
 
 const styles = {
   card: {
@@ -33,7 +34,7 @@ class ViewAllEvents extends React.Component {
   }
   componentDidMount(){
     axios 
-    .get("http://localhost:5000/api/events")
+    .get(`${server}/api/events`)
     .then(res => res.data)
     .then(a =>{
       console.log(a)

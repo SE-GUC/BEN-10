@@ -3,6 +3,8 @@
 import React, { Component } from "react";
 import EventRequest from "./EventRequest";
 import Loading from "../Global/Loading";
+const server = require("../../config");
+
 export default class ViewAllEventRequests extends Component {
   constructor(props) {
     super(props);
@@ -12,7 +14,7 @@ export default class ViewAllEventRequests extends Component {
     };
   }
   componentDidMount() {
-    fetch(`http://localhost:5000/api/admins/${this.state.id}/eventRequests`)
+    fetch(`${server}/api/admins/${this.state.id}/eventRequests`)
       .then(res => {
         return res.json()
       })
