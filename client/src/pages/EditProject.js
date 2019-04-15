@@ -70,7 +70,7 @@ export default class EditProject extends Component {
     const requestOptions = {
       method: 'DELETE'
     };
-    await fetch(`${server}/api/partners/${this.state.userID}/deleteProject/${this.state.projectID}` , requestOptions).then((response) => {
+    await fetch(`${server}/api/partners/${this.state.userID}/cancelproject/${this.state.projectID}` , requestOptions).then((response) => {
       return response.json();
     }).then((result) => {
       console.log(result)

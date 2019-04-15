@@ -41,9 +41,10 @@ export default class EditableView extends React.Component {
     }
 
     componentDidMount=async ()=>{
+       console.log(this.state.project) 
        console.log(this.state.wantConsultancy)
        console.log(this.state.caId)
-        if(this.state.wantConsultancy){
+        if(this.state.caId){
             await  axios
             .get(`${server}/api/consultancyagency/${this.state.caId}`)
             .then(res => {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // const axios = require('axios');
 import TestBar from "./testBar"
+import axios from "axios"
 const server = require("../../config");
 
 class MyEvents extends Component {
@@ -18,7 +19,8 @@ class MyEvents extends Component {
     
   }
   render() {
-    if(this.state.Event===null||typeof this.state.Event!=="Undefined"||this.state.Event.length===0){
+    console.log(this.state.Event===null)
+    if(this.state.Event===null||typeof this.state.Event==="Undefined"||this.state.Event.length===0){
         return (
             <div className="App">
               <label>Loading....</label>

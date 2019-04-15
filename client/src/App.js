@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import { BrowserRouter, Route } from "react-router-dom";
 
 import Profile from "./components/Global/Profile";
 import ViewAllPartners from "./components/Partner/ViewAllPartners";
@@ -10,7 +11,6 @@ import Events from "./pages/Events";
 import axios from "axios";
 import EditProject from "./pages/EditProject";
 import ViewProject from "./pages/ViewProject";
-import { BrowserRouter, Route } from "react-router-dom";
 
 //import ViewAndAssign from "./components/ViewApplyingMemAndAssign";
 
@@ -26,13 +26,15 @@ import Projects from "./pages/Projects";
 import ProjectId from "./pages/ProjectId";
 import EventId from "./pages/EventId";
 import Nav from './components/Global/PrimarySearchAppBar'
+import MyEvent from "./components/View_an_Event/ViewAnEvent";
+import Snack from "./components/View_an_Event/snackBox";
+
 import Loading from "./components/Global/Loading";
 import CreateEvent from "./components/Admin/CreateEvent";
 const server = require("./config");
 class App extends Component {
   state = {
-    user: null,
-    type: null
+    user: null
   };
   asPartner = () => {
     axios
@@ -58,7 +60,7 @@ class App extends Component {
         this.setState({
           user: a.data[0],
           type: "member"
-        })
+        })  
       );
   };
 
@@ -94,11 +96,24 @@ class App extends Component {
 
   render() {
     if (this.state.user) {
+      console.log(this.state)
       return (
         <BrowserRouter>
           
           
           <Nav id={this.state.user._id} type={this.state.type+'s'}/>
+          <Route
+            exact
+            path="/Events/:id"
+            render={props => (
+              <MyEvent
+                {...props}
+                type={this.state.type}
+                user={this.state.user}
+              />
+            )}
+          />
+
           <Route
             exact
             path="/profile"
@@ -126,17 +141,6 @@ class App extends Component {
             path="/Events"
             render={props => (
               <Events
-                {...props}
-                user={this.state.user}
-                type={this.state.type}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/Events/:id"
-            render={props => (
-              <EventId
                 {...props}
                 user={this.state.user}
                 type={this.state.type}
@@ -203,7 +207,7 @@ class App extends Component {
     } else {
       return (
         <>
-          <Loading />
+          <a href='http://localhost:3000/profile#/'>click the link and choose type</a>
           <RedirectButton onClick={this.asAdmin} as={"Login as Admin"} />
           <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
           <RedirectButton onClick={this.asMember} as={"Login as Member"} />

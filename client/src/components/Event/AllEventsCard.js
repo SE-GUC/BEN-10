@@ -36,7 +36,7 @@ class AllEventsCard extends React.Component {
     render(){
   const { classes } = this.props;
   if(this.state.redirect){
-    return <Redirect to={`/EventId/${this.props.p._id}`}/>;
+    return <Redirect to={`/Events/${this.props.p._id}`}/>;
   }else{
   return (
     <Card className={classes.card}>
