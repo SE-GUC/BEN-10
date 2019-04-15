@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
 
 import Profile from "./components/Global/Profile";
-import ViewAllPartners from "./components/Partner/ViewAllPartners";
+import ViewAllPartners from "./components/Partner/ViewAllPArtners";
 import ViewAllCAs from "./components/CA/ViewAllCAs";
 import ViewAllMembers from "./components/Member/ViewAllMembers";
 import EditProfile from "./components/Profile/EditProfile";
@@ -29,7 +29,7 @@ import Nav from './components/Global/PrimarySearchAppBar'
 import MyEvent from "./components/View_an_Event/ViewAnEvent";
 import Snack from "./components/View_an_Event/snackBox";
 
-import Loading from "./components/Global/Loading";
+import Loading from "./components/Global/loading";
 import CreateEvent from "./components/Admin/CreateEvent";
 const server = require("./config");
 class App extends Component {
