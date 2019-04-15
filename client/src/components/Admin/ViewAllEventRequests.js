@@ -2,7 +2,7 @@
 
 import React, { Component } from "react";
 import EventRequest from "./EventRequest";
-import Loading from "../Global/Loading";
+import Loading from "../Global/loading";
 const server = require("../../config");
 
 export default class ViewAllEventRequests extends Component {
