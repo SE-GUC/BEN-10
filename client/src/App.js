@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
+import { BrowserRouter, Route } from "react-router-dom";
 
 import Profile from "./components/Global/Profile";
-import ViewAllPartners from "./components/Partner/ViewAllPartners";
+import ViewAllPartners from "./components/Partner/ViewAllPArtners";
 import ViewAllCAs from "./components/CA/ViewAllCAs";
 import ViewAllMembers from "./components/Member/ViewAllMembers";
 import EditProfile from "./components/Profile/EditProfile";
@@ -24,17 +25,18 @@ import RedirectButton from "./components/Global/RedirectButton";
 import Projects from "./pages/Projects";
 import ProjectId from "./pages/ProjectId";
 import EventId from "./pages/EventId";
+import MyEvent from "./components/View_an_Event/ViewAnEvent";
+import Snack from "./components/View_an_Event/snackBox";
 
 import Loading from "./components/Global/Loading";
 import CreateEvent from "./components/Admin/CreateEvent";
 class App extends Component {
   state = {
-    user: null,
-    type: null
+    user: null
   };
   asPartner = () => {
     axios
-      .get("http://localhost:5000/api/partners/5cae3044a972db1e007da3e7")
+      .get("http://localhost:5000/api/partners/5cae3044a972db1e007da3e5")
       .then(res => {
         return res.data;
       })
@@ -56,7 +58,7 @@ class App extends Component {
         this.setState({
           user: a.data[0],
           type: "member"
-        })
+        })  
       );
   };
 
@@ -100,6 +102,18 @@ class App extends Component {
           
           <Route
             exact
+            path="/Events/:id"
+            render={props => (
+              <MyEvent
+                {...props}
+                type={this.state.type}
+                user={this.state.user}
+              />
+            )}
+          />
+
+          <Route
+            exact
             path="/profile"
             render={props => (
               <Profile
@@ -125,17 +139,6 @@ class App extends Component {
             path="/Events"
             render={props => (
               <Events
-                {...props}
-                user={this.state.user}
-                type={this.state.type}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/Events/:id"
-            render={props => (
-              <EventId
                 {...props}
                 user={this.state.user}
                 type={this.state.type}
