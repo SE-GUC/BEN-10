@@ -6,6 +6,7 @@ import GridListTile from "@material-ui/core/GridListTile";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import ApplyingCAsCard from "./ApplyingCAsCard";
 // import tileData from './tileData';
+const server = require("../../config");
 
 const styles = theme => ({
   card: {

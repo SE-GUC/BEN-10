@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Chip from '@material-ui/core/Chip';
 import ListSubheader from "@material-ui/core/ListSubheader";
+const server = require("../../config");
 
 const effort = ['Low','Normal','Hard','Extreme']
 const cycle=['Waiting for consultancy Agency' , 'Negotiation',

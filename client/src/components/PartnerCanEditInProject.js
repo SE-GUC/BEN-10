@@ -7,6 +7,7 @@ import { BrowserRouter as Router , Route , withRouter } from "react-router-dom";
 import ReactDOM from 'react-dom';
 import { createHashHistory } from 'history'
 export const history = createHashHistory()
+const server = require("../config");
 
 
 class PartnerCanEditInProject extends React.Component {

@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import ApplyingMemberFab from './ApplyingMemberFab'
 import axios from 'axios'
+const server = require("../../config");
 
 const styles = theme => ({
   close: {
@@ -34,7 +35,7 @@ class ApplyingMemberButton extends Component {
     };
     axios
       .put(
-        `http://localhost:5000/api/admins/${this.state.admin._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body
+        `${server}/api/admins/${this.state.admin._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body
       )
       .then(function(response) {
         console.log(response.status);

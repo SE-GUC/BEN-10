@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
 
 import Profile from "./components/Global/Profile";
-import ViewAllPartners from "./components/Partner/ViewAllPArtners";
+import ViewAllPartners from "./components/Partner/ViewAllPartners";
 import ViewAllCAs from "./components/CA/ViewAllCAs";
 import ViewAllMembers from "./components/Member/ViewAllMembers";
 import EditProfile from "./components/Profile/EditProfile";
@@ -11,7 +11,7 @@ import Events from "./pages/Events";
 import axios from "axios";
 import EditProject from "./pages/EditProject";
 import ViewProject from "./pages/ViewProject";
-import { BrowserRouter, Route } from "react-router-dom";
+
 //import ViewAndAssign from "./components/ViewApplyingMemAndAssign";
 
 import SendFinalDraft from "./components/SendFinalDraft";
@@ -25,24 +25,26 @@ import RedirectButton from "./components/Global/RedirectButton";
 import Projects from "./pages/Projects";
 import ProjectId from "./pages/ProjectId";
 import EventId from "./pages/EventId";
+import Nav from './components/Global/PrimarySearchAppBar'
 import MyEvent from "./components/View_an_Event/ViewAnEvent";
 import Snack from "./components/View_an_Event/snackBox";
 
 import Loading from "./components/Global/Loading";
 import CreateEvent from "./components/Admin/CreateEvent";
+const server = require("./config");
 class App extends Component {
   state = {
     user: null
   };
   asPartner = () => {
     axios
-      .get("http://localhost:5000/api/partners/5cae3044a972db1e007da3e5")
+      .get(`${server}/api/partners`)
       .then(res => {
         return res.data;
       })
       .then(a =>
         this.setState({
-          user: a.data,
+          user: a.data[0],
           type: "partner"
         })
       );
@@ -50,7 +52,7 @@ class App extends Component {
 
   asMember = () => {
     axios
-      .get("http://localhost:5000/api/members")
+      .get(`${server}/api/members`)
       .then(res => {
         return res.data;
       })
@@ -65,7 +67,7 @@ class App extends Component {
   asAdmin = () => {
     console.log("admin");
     axios
-      .get("http://localhost:5000/api/admins")
+      .get(`${server}/api/admins`)
       .then(res => {
         return res.data;
       })
@@ -80,7 +82,7 @@ class App extends Component {
 
   asCA = () => {
     axios
-      .get("http://localhost:5000/api/consultancyagency")
+      .get(`${server}/api/consultancyagency`)
       .then(res => {
         return res.data;
       })
@@ -99,7 +101,7 @@ class App extends Component {
         <BrowserRouter>
           
           
-          
+          <Nav id={this.state.user._id} type={this.state.type+'s'}/>
           <Route
             exact
             path="/Events/:id"

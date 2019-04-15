@@ -7,6 +7,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import CAApplyingMemberCard from "./CAApplyingMemberCard";
 import axios from "axios";
 // import tileData from './tileData';
+const server = require("../../config");
 
 const styles = theme => ({
   card: {
@@ -41,7 +42,7 @@ class CAApplyingMembersOnProject extends Component {
   }
 
   async componentDidMount(){
-    await axios(`http://localhost:5000/api/consultancyagency/${this.props.ca._id}/myProjects/${this.props.project._id}/applyingMembers`)
+    await axios(`${server}/api/consultancyagency/${this.props.ca._id}/myProjects/${this.props.project._id}/applyingMembers`)
     .then(res=>{
       if(res.status===200)
         return res.data

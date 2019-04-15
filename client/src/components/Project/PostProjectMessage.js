@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import axios from "axios";
 
+const server = require("../../config");
 
 class PostProjectMessage extends React.Component {
   state = {
@@ -25,7 +26,7 @@ class PostProjectMessage extends React.Component {
         wantConsultancy: this.props.wantConsultancy
     }
 
-    axios.post(`http://localhost:5000/api/partners/${this.props.companyID}/addProject/`, body)
+    axios.post(`${server}/api/partners/${this.props.companyID}/addProject/`, body)
     .then(function (response) {
       console.log(response.status)
       return response.data;

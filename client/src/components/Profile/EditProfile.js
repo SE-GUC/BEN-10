@@ -5,6 +5,8 @@ import EditMember from "./EditMember";
 import EditPartner from "./EditPartner";
 import EditAdmin from "./EditAdmin";
 import EditConsultancyAgency from "./EditConusltancyAgency";
+const server = require("../../config");
+
 const styles = {
   card: {
     maxWidth: 345

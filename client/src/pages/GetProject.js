@@ -7,6 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import PostProjectButton from "../components/PostProjectButton";
+const server = require("../../src/config");
 
 const styles = {
   card: {
@@ -45,7 +46,7 @@ class GetProject extends Component {
   }
 
   async componentDidMount(){
-    await axios(`http://localhost:5000/api/projects/${this.props.project_id}/`)
+    await axios(`${server}/api/projects/${this.props.project_id}/`)
     .then(res=>{
       if(res.status===200)
         return res.json()
@@ -69,7 +70,7 @@ class GetProject extends Component {
         })
       }
     });
-    await axios(`http://localhost:5000/api/partners/${this.state.partnerID}/`)
+    await axios(`${server}/api/partners/${this.state.partnerID}/`)
     .then(res=>{
       if(res.status===200)
         return res.json()

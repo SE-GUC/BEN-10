@@ -6,6 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import MyEventCard from './MyEventCard'
+const server = require("../../config");
 
 function TabContainer(props) {
   return (

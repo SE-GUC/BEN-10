@@ -9,6 +9,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+const server = require("../config");
 
 class SendFinalDraft extends React.Component {
     constructor(props){
@@ -43,7 +44,7 @@ class SendFinalDraft extends React.Component {
            
         axios
             .put(
-                `http://localhost:5000/api/admins/${this.state.adminID}/myProjects/${this.state.pID}/sendDraft`,body
+                `${server}/api/admins/${this.state.adminID}/myProjects/${this.state.pID}/sendDraft`,body
             )
         this.setState({open:false})
         

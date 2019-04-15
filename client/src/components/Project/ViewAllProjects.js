@@ -14,6 +14,7 @@ import axios from "axios";
 import AllProjectsCard from './AllProjectsCard'
 import MyProjectCard from './MyProjectCard';
 
+const server = require("../../config");
 
 const styles = {
   card: {
@@ -35,7 +36,7 @@ class ViewAllProjects extends React.Component {
   }
   componentDidMount(){
     axios 
-    .get("http://localhost:5000/api/projects")
+    .get(`${server}/api/projects`)
     .then(res => res.data)
     .then(a =>{
       console.log(a)

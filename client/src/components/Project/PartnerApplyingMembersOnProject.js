@@ -7,6 +7,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import PartnerApplyingMemberCard from "./PartnerApplyingMemberCard";
 import axios from "axios";
 import SendTaskOrientation from './SendTaskOrientation'
+const server = require("../../config");
 
 // import tileData from './tileData';
 
@@ -43,7 +44,7 @@ class PartnerApplyingMembersOnProject extends Component {
   }
 
   async componentDidMount(){
-    await axios(`http://localhost:5000/api/partners/${this.props.partner._id}/myProjects/${this.props.project._id}/applyingMembers`)
+    await axios(`${server}/api/partners/${this.props.partner._id}/myProjects/${this.props.project._id}/applyingMembers`)
     .then(res=>{
       if(res.status===200)
         return res.data

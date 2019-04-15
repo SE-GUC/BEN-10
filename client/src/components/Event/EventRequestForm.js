@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import EventRequestMessage from "./EventRequestMessage"
+const server = require("../../config");
 
 
 const styles = theme => ({

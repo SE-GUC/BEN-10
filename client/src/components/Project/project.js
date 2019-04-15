@@ -7,6 +7,7 @@ import {Link } from "react-router-dom";
 import axios from "axios";
 import { BrowserRouter as Router , Route , withRouter } from "react-router-dom";
 import ReactDOM from 'react-dom';
+const server = require("../../config");
 
 
 class Project extends Component {
@@ -22,7 +23,7 @@ class Project extends Component {
     const requestOptions = {
       method: 'DELETE'
     };
-    fetch(`http://localhost:5000/api/partners/${this.state.project.companyID}/deleteProject/${this.state.project._id}` , requestOptions).then((response) => {
+    fetch(`${server}/api/partners/${this.state.project.companyID}/deleteProject/${this.state.project._id}` , requestOptions).then((response) => {
       return response.json();
     }).then((result) => {
       console.log(result)

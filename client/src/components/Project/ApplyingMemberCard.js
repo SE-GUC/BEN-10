@@ -6,6 +6,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import ApplyingMemberButton from "./ApplyingMemberButton";
+const server = require("../../config");
+
 const styles = theme => ({
   card: {
     minWidth: 275,
@@ -41,7 +43,7 @@ class ApplyingMemberCard extends Component {
   }
 
   async componentDidMount(){
-    await axios(`http://localhost:5000/api/members/${this.state.ID}/`)
+    await axios(`${server}/api/members/${this.state.ID}/`)
     .then(res=>{
       if(res.status===200)
         return res.data

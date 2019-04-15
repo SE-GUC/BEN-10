@@ -10,6 +10,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
 import classes from "classnames";
+const server = require("../../config");
 
 const styles = {
   card: {

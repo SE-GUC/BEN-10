@@ -8,6 +8,7 @@ import CircularProgress from '../components/Global/CircularIndeterminate';
 import ReactDOM from 'react-dom';
 import ProjectEditableViewCASection from '../components/Project/ProjectEditableProjectCASection';
 import ProjectEditableCandidateSection from '../components/Project/ProjectEditableCandidateSection';
+const server = require("../../src/config");
 
 export default class EditProject extends Component {
   constructor(props){
@@ -23,7 +24,7 @@ export default class EditProject extends Component {
   }
   async  componentDidMount(){
     await  axios
-      .get(`http://localhost:5000/api/projects/${this.state.projectID}`)
+      .get(`${server}/api/projects/${this.state.projectID}`)
       .then(res => {
         
         return  res.data;
@@ -50,7 +51,7 @@ export default class EditProject extends Component {
     const requestOptions = {
       method: 'DELETE'
     };
-    await fetch(`http://localhost:5000/api/projects/${this.state.projectID}` , requestOptions).then((response) => {
+    await fetch(`${server}/api/projects/${this.state.projectID}` , requestOptions).then((response) => {
       return response.json();
     }).then((result) => {
       console.log(result)
@@ -69,7 +70,7 @@ export default class EditProject extends Component {
     const requestOptions = {
       method: 'DELETE'
     };
-    await fetch(`http://localhost:5000/api/partners/${this.state.userID}/cancelproject/${this.state.projectID}` , requestOptions).then((response) => {
+    await fetch(`${server}/api/partners/${this.state.userID}/cancelproject/${this.state.projectID}` , requestOptions).then((response) => {
       return response.json();
     }).then((result) => {
       console.log(result)

@@ -10,6 +10,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+const server = require("../config");
 
 class NotifyMember extends React.Component {
     constructor(props){
@@ -29,14 +30,14 @@ class NotifyMember extends React.Component {
         
         axios 
             .post(
-                `http://localhost:5000/api/admins/${this.state.adminID}/notifications/${this.state.memberID}`,body
+                `${server}/api/admins/${this.state.adminID}/notifications/${this.state.memberID}`,body
             )
     }
     notifyRejected = () => {
 
         axios
             .post(
-                `http://localhost:5000/api/admins/${this.state.adminID}/projects/${this.state.pID}/sendRejection`
+                `${server}/api/admins/${this.state.adminID}/projects/${this.state.pID}/sendRejection`
             )
     }
 

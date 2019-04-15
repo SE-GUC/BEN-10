@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import axios from "axios";
+const server = require("../../config");
 
 
 class SendTaskOrientation extends React.Component {
@@ -21,7 +22,7 @@ class SendTaskOrientation extends React.Component {
   sendInvitation = () => {
     
 
-    axios.post(`http://localhost:5000/api/partners/${this.props.Id}/sendOrientationInvitations/${this.props.projectId}/`)
+    axios.post(`${server}/api/partners/${this.props.Id}/sendOrientationInvitations/${this.props.projectId}/`)
     .then(function (response) {
       console.log(response.status)
       return response.data;

@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Message from "./ApplyingMessage"
 import ApplyingMessage from './ApplyingMessage';
+const server = require("../../../config");
 
 
 
@@ -30,7 +31,7 @@ const styles = theme => ({
         this.applyClick=this.applyClick.bind(this)
     }
     applyClick(){
-        fetch(`http://localhost:5000/api/members/${this.state.member_id}/projects/${this.state.project_id}/apply`, {
+        fetch(`${server}/api/members/${this.state.member_id}/projects/${this.state.project_id}/apply`, {
         method: 'POST',
         body: {}
     })

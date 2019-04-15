@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import ExpansionPanelSubmitProject from "../components/Project/ExpansionPanelSubmitProject";
 import SendTaskOrientation from '../components/Project/SendTaskOrientation'
+const server = require("../../src/config");
 
 class ProjectId extends Component {
   constructor(props) {

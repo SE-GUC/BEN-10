@@ -13,6 +13,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
+const server = require("../../config");
+
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -85,7 +87,7 @@ onUpdate =()=>{
     // projects:this.state.projects,
     // partners:this.state.partners
   }
-  axios.put(`http://localhost:5000/api/partners/${this.props.partner._id}`,body)
+  axios.put(`${server}/api/partners/${this.props.partner._id}`,body)
   .then(res=>{ 
     console.log(res.status);
    return res.data

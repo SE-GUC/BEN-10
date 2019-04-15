@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import ListSubheader from "@material-ui/core/ListSubheader";
 import Chip from '@material-ui/core/Chip';
 import SaveButton from '../Global/SaveButton';
+const server = require("../../config");
 
 const effort = ['Easy','Normal','Hard','Extreme']
 const cycle=['Waiting for consultancy Agency' , 'Negotiation',
@@ -88,7 +89,7 @@ export default class EditableView extends React.Component {
     };
     
     saveChanges =async ()=>{
-      await axios({url : `http://localhost:5000/api/projects/${this.state.projectID}`, method:'put',
+      await axios({url : `${server}/api/projects/${this.state.projectID}`, method:'put',
     data:{
         description : this.state.description,
         category : this.state.category,

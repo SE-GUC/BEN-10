@@ -1,6 +1,7 @@
 import EachCA from './EachCA'
 import React from "react";
 import axios from "axios";
+const server = require("../../config");
 
 
 class allCAs extends React.Component {
@@ -14,7 +15,7 @@ class allCAs extends React.Component {
   }
   componentDidMount() {
     axios
-      .get(`http://localhost:5000/api/consultancyagency/`)
+      .get(`${server}/api/consultancyagency/`)
       .then(res => {
         return res.data;
       })

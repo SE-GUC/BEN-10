@@ -2,6 +2,7 @@ import EachMember from './EachMember'
 import React from "react";
 import axios from "axios";
 
+const server = require("../../config");
 
 class allMembers extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class allMembers extends React.Component {
   }
   componentDidMount() {
     axios
-      .get(`http://localhost:5000/api/members/`)
+      .get(`${server}/api/members/`)
       .then(res => {
         return res.data;
       })
