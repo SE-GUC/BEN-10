@@ -142,7 +142,7 @@ class SimpleCard extends React.Component {
   }
 
   returnClicked  = ()=>{
-    let path = `/myProfile/${this.state.ownerId}`;
+    let path = `/Events`;
     this.props.history.push({
       pathname : path
     });
