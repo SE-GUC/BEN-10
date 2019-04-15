@@ -94,6 +94,7 @@ class App extends Component {
 
   render() {
     if (this.state.user) {
+      console.log(this.state)
       return (
         <BrowserRouter>
           
@@ -204,7 +205,7 @@ class App extends Component {
     } else {
       return (
         <>
-          <Loading />
+          <a href='http://localhost:3000/profile#/'>click the link and choose type</a>
           <RedirectButton onClick={this.asAdmin} as={"Login as Admin"} />
           <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
           <RedirectButton onClick={this.asMember} as={"Login as Member"} />

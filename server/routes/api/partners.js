@@ -112,10 +112,11 @@ router.use("/:aid/assignCA/:pid/to/:cid", async (req, res) => {
     if (project.companyId == req.params.aid){
       if (project.wantConsultancy === true){
         if (project.consultancyId == null){
-          if (project.lifeCycle == "Waiting for consultancy"){
+          if (project.lifeCycle == "Waiting for consultancy Agency"){
             if (isin(cas,req.params.cid)) {
               const j = await assignCA(req.params.pid,req.params.cid)
               res.send(j);
+              return res.send({msg : "Consultancy Agency is assigned"})
             } else return res.send({ msg: "Consultancy Agency did not apply" });
           } else return res.send({ msg: "Consultancy Agency isnt required" });
         } else return res.send({ msg: "a Consultancy Agency is already assigned" });

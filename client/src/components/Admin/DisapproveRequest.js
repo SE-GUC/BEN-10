@@ -31,7 +31,7 @@ class DisapproveRequest extends Component{
         const requestOptions = {
             method: 'PUT'
           };
-          fetch(`http://localhost:5000/api/admins/5ca1111df1fa20462cfd3377/EventRequest/5c7a447dd51f1409a01fd320/false` , requestOptions).then((response) => {
+          fetch(`http://localhost:5000/api/admins/${this.props.admin_id}/EventRequest/${this.props.eid}/false` , requestOptions).then((response) => {
             return response.json();
           }).then((result) => {
               if(result.msg=="Event Request updated successfully"){
