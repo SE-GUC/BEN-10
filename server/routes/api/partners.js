@@ -1005,8 +1005,8 @@ router.use("/:id/cancelproject/:pid", async (req, res) => {
             });
         } else
           return res
-            .status(404)
-            .send({ error: "you cannot cancel this project" });
+            .status(200)
+            .send({ msg: "you cannot cancel this project" });
       } else
         return res
           .status(404)
