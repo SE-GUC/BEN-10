@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
 
 import Profile from "./components/Global/Profile";
-import ViewAllPartners from "./components/Partner/ViewAllPartners";
+import ViewAllPartners from "./components/Partner/ViewAllPArtners";
 import ViewAllCAs from "./components/CA/ViewAllCAs";
 import ViewAllMembers from "./components/Member/ViewAllMembers";
 import EditProfile from "./components/Profile/EditProfile";
