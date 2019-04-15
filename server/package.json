@@ -16,6 +16,7 @@
     "mongoose": "^5.4.16",
     "moongoose": "0.0.5",
     "node-fetch": "^2.3.0",
+    "node-waf": "^1.0.0",
     "nodemon": "^1.18.11",
     "react-bootstrap": "^1.0.0-beta.6",
     "request": "^2.88.0",
