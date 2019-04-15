@@ -23,7 +23,7 @@ import Request from "./components/Admin/ViewAllEventRequests";
 import RedirectButton from "./components/Global/RedirectButton";
 import Projects from "./pages/Projects";
 import ProjectId from "./pages/ProjectId";
-import EventId from "./components/Event/MyEventCard";
+import EventId from "./pages/EventId";
 
 import Loading from "./components/Global/Loading";
 import CreateEvent from "./components/Admin/CreateEvent";
@@ -92,6 +92,7 @@ class App extends Component {
 
   render() {
     if (this.state.user) {
+      console.log(this.state)
       return (
         <BrowserRouter>
           
@@ -201,7 +202,7 @@ class App extends Component {
     } else {
       return (
         <>
-          <Loading />
+          <a href='http://localhost:3000/profile#/'>click the link and choose type</a>
           <RedirectButton onClick={this.asAdmin} as={"Login as Admin"} />
           <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
           <RedirectButton onClick={this.asMember} as={"Login as Member"} />
