@@ -480,6 +480,14 @@ app.post("/send",(req,res)=>{
 app.use((req, res) =>
   res.status(404).send(`<h1>Can not find what you're looking for</h1>`)
 );
+if (process.env.NODE_ENV === 'production') {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, 'client/build')));
+  // Handle React routing, return all requests to React app
+  app.use('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
+}
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server on ${port}`));
 
