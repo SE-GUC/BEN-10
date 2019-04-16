@@ -34,7 +34,7 @@ import CreateEvent from "./components/Admin/CreateEvent";
 const server = require("./config");
 class App extends Component {
   state = {
-    user: null
+    user: null 
   };
   asPartner = () => {
     axios
@@ -207,7 +207,7 @@ class App extends Component {
     } else {
       return (
         <>
-          <a href='http://localhost:3000/profile#/'>click the link and choose type</a>
+          <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
           <RedirectButton onClick={this.asAdmin} as={"Login as Admin"} />
           <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
           <RedirectButton onClick={this.asMember} as={"Login as Member"} />
