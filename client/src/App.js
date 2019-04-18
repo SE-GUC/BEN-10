@@ -51,7 +51,7 @@ class App extends Component {
       );
   };
 
-  asMember =  () => {
+  asMember = async () => {
    await axios
       .get(`http://localhost:5000/api/members`)
       .then(res => {
