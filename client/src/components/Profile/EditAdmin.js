@@ -78,7 +78,6 @@ class OutlinedTextFields extends React.Component {
     alternativeMobileNumber:this.props.admin.alternativeMobileNumber,
     showPassword: false
   }
-  console.log(this.props.partner)
 }
 
 onUpdate =()=>{

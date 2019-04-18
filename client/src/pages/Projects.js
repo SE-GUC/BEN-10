@@ -10,47 +10,58 @@ import PMyProject from "../components/Project/PartnerMyProjects";
 import MMyProject from "../components/Project/MemberMyProjects";
 import CAMyProject from "../components/Project/CAMyProjects";
 import MMyRec from "../components/Project/MemberRecommendations";
+import Nav from '../components/Global/PrimarySearchAppBar'
 const server = require("../../src/config");
 
 class Projects extends Component {
   constructor(props) {
     super(props);
+    this.state={
+      user:JSON.parse(localStorage.getItem('user')),
+      type:localStorage.getItem('type')
+    }
   }
 
   render() {
-    if (this.props.type === "partner") {
+
+    if (this.state.type === "partner") {
       return (
         <div className="App">
-          <ExpansionPanelSubmitProject Id={this.props.user._id} />
-          <PMyProject id={this.props.user._id} />
-          <ViewAllProjects type={this.props.type} />
+        <Nav value={1}/>
+          <ExpansionPanelSubmitProject Id={this.state.user._id} />
+          <PMyProject id={this.state.user._id} />
+          <ViewAllProjects type={this.state.type} />
         </div>
       );
-    } else if (this.props.type === "admin") {
+    } else if (this.state.type === "admin") {
       return (
         <div className="App">
-          <ViewAllProjects type={this.props.type} />
+        <Nav value={1}/>
+          <ViewAllProjects type={this.state.type} />
         </div>
       );
-    } else if (this.props.type === "member") {
+    } else if (this.state.type === "member") {
       return (
         <div className="App">
-          <MMyProject id={this.props.user._id} />
-          <MMyRec id={this.props.user._id} />
-          <ViewAllProjects type={this.props.type} />
+        <Nav value={1}/>
+          <MMyProject id={this.state.user._id} />
+          <MMyRec id={this.state.user._id} />
+          <ViewAllProjects type={this.state.type} />
         </div>
       );
-    } else if (this.props.type === "consultancyagency") {
+    } else if (this.state.type === "consultancyagency") {
       return (
         <div className="App">
-          <CAMyProject id={this.props.user._id} />
-          <ViewAllProjects type={this.props.type} />
+        <Nav value={1}/>
+          <CAMyProject id={this.state.user._id} />
+          <ViewAllProjects type={this.state.type} />
         </div>
       );
     } else {
       return (
         <div className="App">
-          <ViewAllProjects type={this.props.type} />
+        <Nav value={1}/>
+          <ViewAllProjects type={this.state.type} />
         </div>
       );
     }

@@ -22,27 +22,27 @@ class EditProfile extends React.Component {
     super(props);
     
     this.state = {
-      show: false
+      user:JSON.parse(localStorage.getItem('user')),
+      type:localStorage.getItem('type')
     };
-  //  this.onUpdate = this.onUpdate.bind(this);
   }
 
   render() {
-    console.log(this.props.type)
-    const { classes } = this.props;
-    if (this.props.type === "member") {
-      return <div className="App">{<EditMember member={this.props.user} />}</div>;
+    console.log(this.state.type)
+    const { classes } = this.state;
+    if (this.state.type === "member") {
+      return <div className="App">{<EditMember member={this.state.user} />}</div>;
     } else {
-      if (this.props.type === "partner") {
-        return <div className="App">{<EditPartner partner={this.props.user} />}</div>;
+      if (this.state.type === "partner") {
+        return <div className="App">{<EditPartner partner={this.state.user} />}</div>;
       } else {
-        if (this.props.type === "admin") {
-          return <div className="App">{<EditAdmin admin={this.props.user} />}</div>;
+        if (this.state.type === "admin") {
+          return <div className="App">{<EditAdmin admin={this.state.user} />}</div>;
         } else {
-          if (this.props.type === "consultancyagency") {
+          if (this.state.type === "consultancyagency") {
             return (
               <div className="App">
-                {<EditConsultancyAgency agency={this.props.user} />}
+                {<EditConsultancyAgency agency={this.state.user} />}
               </div>
             );
           }

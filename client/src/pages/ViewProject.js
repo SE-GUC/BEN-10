@@ -15,6 +15,8 @@ import ApproveFinalDraft from "../components/ApproveFinalDraft";
 import ApproveFinalWork from "../components/ApproveFinalWork";
 import SendFinalDraft from "../components/SendFinalDraft";
 import NotifyMember from "../components/NotifyMember";
+import Nav from '../components/Global/PrimarySearchAppBar'
+
 const server = require("../../src/config");
 
 
@@ -23,11 +25,13 @@ export default class ViewProject extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user:JSON.parse(localStorage.getItem('user')),
+      type:localStorage.getItem('type'),
       projectID: this.props.match.params.id,
-      userID: this.props.user._id,
-      user: this.props.user,
+      userID: null,
       project: null
     };
+    this.setState({userID:this.state.user._id})
   }
   async componentDidMount() {
     await axios
@@ -77,6 +81,7 @@ export default class ViewProject extends Component {
     if (this.state.project) {
       return (
         <div>
+          <Nav value={1}/>
           <div class="leftCol">
             <div class="col-3 float-left pr-4">
               <nav class="menu" aria-label="Project settings" data-pjax="">
@@ -107,54 +112,54 @@ export default class ViewProject extends Component {
                   Candidate
                 </Button>
                 <br />
-                {(this.state.project.lifeCycle === "Posted"&&this.props.type==="member") ? (
+                {(this.state.project.lifeCycle === "Posted"&&this.state.type==="member") ? (
                   <ApplyButton
-                    member_id={this.props.user._id}
+                    member_id={this.state.user._id}
                     project_id={this.state.projectID}
                   />
                 ) : (
                   ""
                 )}
-                {(this.state.project.lifeCycle === "In Progress"&&this.props.type==="member") ? (
+                {(this.state.project.lifeCycle === "In Progress"&&this.state.type==="member") ? (
                   <FormDialog
-                    member_id={this.props.user._id}
+                    member_id={this.state.user._id}
                     project_id={this.state.projectID}
                   />
                 ) : (
                   ""
                 )}
                 {
-                  ((this.props.type === "partner"&&this.state.project.lifeCycle==="Final Review"&&this.state.project.companyId==this.props.user._id) ||
-                (this.props.type === "consultancyagency"&&this.state.project.lifeCycle==="Final Review"&&this.state.project.companyId==this.props.user._id)) ? 
+                  ((this.state.type === "partner"&&this.state.project.lifeCycle==="Final Review"&&this.state.project.companyId==this.state.user._id) ||
+                (this.state.type === "consultancyagency"&&this.state.project.lifeCycle==="Final Review"&&this.state.project.companyId==this.state.user._id)) ? 
                     <ApproveFinalWork
-                      type={this.props.type}
+                      type={this.state.type}
                       pid={this.state.projectID}
-                      id={this.props.user._id}
+                      id={this.state.user._id}
                     />
                     
                 : 
                   ""
                 }
-                {((this.props.type === "partner"&&this.state.project.lifeCycle==="Final Draft"&&this.state.project.companyId==this.props.user._id) ||
-                (this.props.type === "consultancyagency"&&this.state.project.lifeCycle==="Final Draft"&&this.state.project.companyId==this.props.user._id)) ? 
+                {((this.state.type === "partner"&&this.state.project.lifeCycle==="Final Draft"&&this.state.project.companyId==this.state.user._id) ||
+                (this.state.type === "consultancyagency"&&this.state.project.lifeCycle==="Final Draft"&&this.state.project.companyId==this.state.user._id)) ? 
                     
                     <ApproveFinalDraft
-                      type={this.props.type}
+                      type={this.state.type}
                       pid={this.state.projectID}
-                      id={this.props.user._id}
+                      id={this.state.user._id}
                     />
                 : 
                   ""
                 }
-                {(this.props.type==="admin"&&this.state.project.lifeCycle==="Negotiation")?
+                {(this.state.type==="admin"&&this.state.project.lifeCycle==="Negotiation")?
                 <SendFinalDraft
                 pid={this.state.projectID}
-                aid={this.props.user._id}
+                aid={this.state.user._id}
               />
             :""}
-            {(this.props.type==="admin"&&this.state.project.lifeCycle==="Posted")?
+            {(this.state.type==="admin"&&this.state.project.lifeCycle==="Posted")?
                 <NotifyMember
-                aid={this.props.user._id}
+                aid={this.state.user._id}
                 memid={this.state.project.memberID}
                 pid={this.state.projectID}
               />

@@ -24,6 +24,10 @@ const styles = {
 class Profile extends React.Component {
   constructor(props) {
     super(props);
+    this.state={
+      user:JSON.parse(localStorage.getItem('user')),
+      type:localStorage.getItem('type')
+    }
     this.viewEvents = this.viewEvents.bind(this);
     this.viewProjects = this.viewProjects.bind(this);
 
@@ -46,44 +50,44 @@ class Profile extends React.Component {
     //   const { classes } = this.props;
 
     if (
-      this.props.type === "partner" ||
-      this.props.type === "member" ||
-      this.props.type === "admin"
+      this.state.type === "partner" ||
+      this.state.type === "member" ||
+      this.state.type === "admin"
     ) {
       let month = "";
-      if (new Date(this.props.user.birthDate).getMonth() + 1 === 12) month = "01";
-      else if (new Date(this.props.user.birthDate).getMonth() + 1 < 10)
-        month = "0" + (new Date(this.props.user.birthDate).getMonth() + 1);
-      else month = new Date(this.props.user.birthDate).getMonth() + 1;
+      if (new Date(this.state.user.birthDate).getMonth() + 1 === 12) month = "01";
+      else if (new Date(this.state.user.birthDate).getMonth() + 1 < 10)
+        month = "0" + (new Date(this.state.user.birthDate).getMonth() + 1);
+      else month = new Date(this.state.user.birthDate).getMonth() + 1;
       return (
         <Card className={classes.card}>
           <CardActionArea>
             <CardMedia className={classes.media} title="Profile" />
             <CardContent>
-              First Name: {this.props.user.firstName} <br />
-              Last Name: {this.props.user.lastName} <br />
-              SSN: {this.props.user.SSN} <br />
+              First Name: {this.state.user.firstName} <br />
+              Last Name: {this.state.user.lastName} <br />
+              SSN: {this.state.user.SSN} <br />
               Birth-date:{" "}
-              {new Date(this.props.user.birthDate).getFullYear() +
+              {new Date(this.state.user.birthDate).getFullYear() +
                 "-" +
                 month +
                 "-" +
-                new Date(this.props.user.birthDate).getDate()}{" "}
+                new Date(this.state.user.birthDate).getDate()}{" "}
               <br />
-              Gender: {this.props.user.gender ? "Female" : "Male"} <br />
-              Nationality: {this.props.user.nationality} <br />
-              Marital Status: {this.props.user.maritalStatus} <br />
-              Driving License: {this.props.user.drivingLicense
+              Gender: {this.state.user.gender ? "Female" : "Male"} <br />
+              Nationality: {this.state.user.nationality} <br />
+              Marital Status: {this.state.user.maritalStatus} <br />
+              Driving License: {this.state.user.drivingLicense
                 ? "YES"
                 : "NO"}{" "}
               <br />
-              Country: {this.props.user.country} <br />
-              City: {this.props.user.city} <br />
-              Area: {this.props.user.area} <br />
-              E-mail: {this.props.user.email} <br />
-              Mobile Number: {this.props.user.mobileNumber} <br />
+              Country: {this.state.user.country} <br />
+              City: {this.state.user.city} <br />
+              Area: {this.state.user.area} <br />
+              E-mail: {this.state.user.email} <br />
+              Mobile Number: {this.state.user.mobileNumber} <br />
               Alternative Mobile Number:{" "}
-              {this.props.user.alternativeMobileNumber} <br />
+              {this.state.user.alternativeMobileNumber} <br />
             </CardContent>
           </CardActionArea>
           <CardActions>
@@ -96,19 +100,19 @@ class Profile extends React.Component {
           </CardActions>
         </Card>
       );
-    } else if (this.props.type === "consultancyagency") {
+    } else if (this.state.type === "consultancyagency") {
       return (
         <Card className={classes.card}>
           <CardActionArea>
             <CardMedia className={classes.media} title="Profile" />
             <CardContent>
-              Name: {this.props.user.name} <br />
-              Telephone Number: {this.props.user.telephoneNumber} <br />
-              E-mail: {this.props.user.email} <br />
-              Location: {this.props.user.location} <br />
-              Years Of Experience: {this.props.user.yearsOfExperience} <br />
-              Rating: {this.props.user.rating} <br />
-              Reports: {this.props.user.reports} <br />
+              Name: {this.state.user.name} <br />
+              Telephone Number: {this.state.user.telephoneNumber} <br />
+              E-mail: {this.state.user.email} <br />
+              Location: {this.state.user.location} <br />
+              Years Of Experience: {this.state.user.yearsOfExperience} <br />
+              Rating: {this.state.user.rating} <br />
+              Reports: {this.state.user.reports} <br />
             </CardContent>
           </CardActionArea>
           <CardActions>

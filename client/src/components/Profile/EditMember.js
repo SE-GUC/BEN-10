@@ -110,7 +110,6 @@ onUpdate =()=>{
   }
   axios.put(`${server}/api/members/${this.props.member._id}`,body)
   .then(res=>{ 
-    console.log(res.status);
    return res.data
 })
 .then(json => this.setState({project : json}))

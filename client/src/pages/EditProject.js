@@ -8,16 +8,18 @@ import CircularProgress from '../components/Global/CircularIndeterminate';
 import ReactDOM from 'react-dom';
 import ProjectEditableViewCASection from '../components/Project/ProjectEditableProjectCASection';
 import ProjectEditableCandidateSection from '../components/Project/ProjectEditableCandidateSection';
+import Nav from '../components/Global/PrimarySearchAppBar'
 const server = require("../../src/config");
 
 export default class EditProject extends Component {
   constructor(props){
     super(props); 
   this.state={
+        user:JSON.parse(localStorage.getItem('user')),
+        type:localStorage.getItem('type'),
         projectID : this.props.match.params.id,
-        userID:props.user._id,
+        userID:this.state.user._id,
         project : null,
-        user : props.user,
 
     }  
     console.log(this.state.projectID) 
@@ -46,7 +48,7 @@ export default class EditProject extends Component {
   };
 
   cancelProject= async()=>{
-    if(this.props.type === "admin"){
+    if(this.state.type === "admin"){
       console.log("delete method")
     const requestOptions = {
       method: 'DELETE'
@@ -92,11 +94,11 @@ export default class EditProject extends Component {
    }
 
   viewSection2= (e)=>{
-   ReactDOM.render(<div><ProjectEditableViewCASection user={this.state.user} type= {this.props.type} project={this.state.project}
+   ReactDOM.render(<div><ProjectEditableViewCASection user={this.state.user} type= {this.state.type} project={this.state.project}
     ></ProjectEditableViewCASection> <Button variant="primary" onClick={this.cancelProject}>Cancel project</Button></div>,document.getElementById('container'));
   }
   viewSection3=(e)=>{
-    ReactDOM.render(<div><ProjectEditableCandidateSection user={this.state.user} type= {this.props.type} project={this.state.project}
+    ReactDOM.render(<div><ProjectEditableCandidateSection user={this.state.user} type= {this.state.type} project={this.state.project}
       /><Button variant="primary" onClick={this.cancelProject}>Cancel project</Button></div>,document.getElementById('container'));
     }
   
@@ -106,6 +108,7 @@ export default class EditProject extends Component {
       console.log(this.state.projectID +" "+this.state.userID)
     return (
       <div >
+        <Nav value={1}/>
         <div class = "leftCol">
             <div class="col-3 float-left pr-4">
               <nav class="menu" aria-label="Project settings" data-pjax="">

@@ -7,6 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import PostProjectButton from "../components/PostProjectButton";
+import Nav from '../components/Global/PrimarySearchAppBar'
 const server = require("../../src/config");
 
 const styles = {
@@ -99,6 +100,7 @@ class GetProject extends Component {
     else{
       return (
         <div>
+          <Nav value={1}/>
           <Card className={classes.card}>
             <CardContent>
               <Typography className={classes.title} color="textSecondary" gutterBottom>
