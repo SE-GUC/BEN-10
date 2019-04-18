@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const fetch = require("node-fetch");
 const server = require("./config/config");
 const jwt = require("jsonwebtoken");
-const Member = require("./models/Member");
+const Member = require("./models/member");
 const nodemailer = require("nodemailer");
 // Require Router Handlers
 const eventrequests = require("./routes/api/eventrequests");
