@@ -50,18 +50,22 @@ class App extends Component {
       );
   };
 
-  asMember = async () => {
-   await axios
-      .get(`${server}/api/members`)
-      .then(res => {
-        return res.data;
-      })
-      .then(a =>
-        this.setState({
-          user: a.data[0],
-          type: "member"
-        })  
-      );
+  asMember =  () => {
+  //  await axios
+  //     .get(`${server}/api/members`)
+  //     .then(res => {
+  //       return res.data;
+  //     })
+  //     .then(a =>
+  //       this.setState({
+  //         user: a.data[0],
+  //         type: "member"
+  //       })  
+  //     );
+  this.setState({
+      user:{"events":[],"projects":["5cae5dbe9ef1de2600e06891"],"skillSet":["mernstack","java","python"],"_id":"5cae3044a972db1e007da3e9","firstName":"ahmad","lastName":"hisham","SSN":"29808161200322","birthDate":"1998-08-16T00:00:00.000Z","gender":false,"nationality":"egyptian","maritalStatus":"single","drivingLicense":true,"country":"Egypt","city":"cairo","area":"tagmoa'3","postalCode":200,"email":"ahmedhisham16898@gmail.com","password":"ahmadaaadt@200","mobileNumber":"01015161711","alternativeMobileNumber":"0102006146","__v":0},
+      type:"member"
+    })
   };
 
   asAdmin = async () => {
