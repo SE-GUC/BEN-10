@@ -16,7 +16,7 @@ class MemberMyProjects extends Component {
   }
   async componentDidMount(){
     console.log(this.props.id)
-    await fetch(`http://localhost:5000/api/members/${this.state.memId}/myProjects`).then(res=>res.json())
+    await fetch(`/api/members/${this.state.memId}/myProjects`).then(res=>res.json())
     .then(projects=>this.setState({Project:projects.data}))
     
   }
