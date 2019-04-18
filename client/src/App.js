@@ -87,7 +87,7 @@ class App extends Component {
 
   asCA = async () => {
     await axios
-      .get(`${server}/api/consultancyagency`)
+      .get(`/api/consultancyagency`)
       .then(res => {
         return res.data;
       })
