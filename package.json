@@ -29,7 +29,8 @@
   "devDependencies": {},
   "scripts": {
     "client-install": "npm install --prefix client",
-    "start": "node server",
+    "start": "npm run build && node server",
+    "start:dev":"react-scripts start",
     "server": "nodemon server",
     "test": "jest --runInBand",
     "client": "npm start --prefix client",
