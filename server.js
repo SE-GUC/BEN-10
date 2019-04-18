@@ -17,6 +17,7 @@ const consultancyagencys = require("./routes/api/consultancyagency");
 const member = require("./routes/api/members");
 const notification = require("./routes/api/notifications");
 var blackList = []; //to be not deleted
+const path=require('path')
 const cors = require("cors");
 const app = express();
 
