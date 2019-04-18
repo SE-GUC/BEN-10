@@ -10,6 +10,7 @@
     "config": "^3.0.1",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "heroku": "^7.22.9",
     "jest": "^24.5.0",
     "joi": "^14.3.1",
     "joi-mongodb-objectid": "^0.1.0",
