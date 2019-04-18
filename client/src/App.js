@@ -71,7 +71,7 @@ class App extends Component {
   asAdmin = async () => {
     console.log("admin");
     await axios
-      .get(`${server}/api/admins`)
+      .get(`/api/admins`)
       .then(res => {
         return res.data;
       })
@@ -86,7 +86,7 @@ class App extends Component {
 
   asCA = async () => {
     await axios
-      .get(`${server}/api/consultancyagency`)
+      .get(`http://localhost:5000/api/consultancyagency`)
       .then(res => {
         return res.data;
       })
