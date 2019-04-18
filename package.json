@@ -24,13 +24,17 @@
     "nodemon": "^1.18.11",
     "react-bootstrap": "^1.0.0-beta.6",
     "request": "^2.88.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "webpack": "^4.30.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "webpack-cli": "^3.3.0"
+  },
   "scripts": {
     "client-install": "npm install --prefix client",
-    "start": "npm run build && node server",
-    "start:dev":"react-scripts start",
+    "start": "npm run build && node server.js",
+    "build": "webpack",
+    "start:dev": "react-scripts start",
     "server": "nodemon server",
     "test": "jest --runInBand",
     "client": "npm start --prefix client",
@@ -38,8 +42,9 @@
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "testWatch": "jest --runInBand --watchAll"
   },
+  "heroku-run-build-script": true,
   "engines": {
-    "node":"10.15.1"
+    "node": "10.15.1"
   },
   "repository": {
     "type": "git",
