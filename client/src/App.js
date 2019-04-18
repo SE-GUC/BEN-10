@@ -32,14 +32,14 @@ import Snack from "./components/View_an_Event/snackBox";
 import Loading from "./components/Global/loading";
 import CreateEvent from "./components/Admin/CreateEvent";
 const server = require("./config");
-const localhost = require("./localhost");
+const port = require("./localhost");
 class App extends Component {
   state = {
     user: null 
   };
   asPartner = async() => {
    await axios
-      .get(`${localhost}/api/partners`)
+      .get(`${port}/api/partners`)
       .then(res => {
         return res.data;
       })
@@ -72,7 +72,7 @@ class App extends Component {
   asAdmin = async () => {
     console.log("admin");
     await axios
-      .get(`/api/admins`)
+      .get(`${port}/api/admins`)
       .then(res => {
         return res.data;
       })
@@ -87,7 +87,7 @@ class App extends Component {
 
   asCA = async () => {
     await axios
-      .get(`http://localhost:5000/api/consultancyagency`)
+      .get(`http://localhost:${port}/api/consultancyagency`)
       .then(res => {
         return res.data;
       })
