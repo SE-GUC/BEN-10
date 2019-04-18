@@ -32,13 +32,14 @@ import Snack from "./components/View_an_Event/snackBox";
 import Loading from "./components/Global/loading";
 import CreateEvent from "./components/Admin/CreateEvent";
 const server = require("./config");
+const localhost = require("./localhost");
 class App extends Component {
   state = {
     user: null 
   };
   asPartner = async() => {
    await axios
-      .get(`${server}/api/partners`)
+      .get(`${localhost}/api/partners`)
       .then(res => {
         return res.data;
       })
