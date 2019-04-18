@@ -14,9 +14,9 @@ class MemberMyProjects extends Component {
       filter :"all"
     }
   }
-  componentDidMount(){
+  async componentDidMount(){
     console.log(this.props.id)
-    fetch(`http://localhost:5000/api/members/${this.state.memId}/myProjects`).then(res=>res.json())
+    await fetch(`http://localhost:5000/api/members/${this.state.memId}/myProjects`).then(res=>res.json())
     .then(projects=>this.setState({Project:projects.data}))
     
   }
