@@ -18,7 +18,7 @@ export default class EditProject extends Component {
         user:JSON.parse(localStorage.getItem('user')),
         type:localStorage.getItem('type'),
         projectID : this.props.match.params.id,
-        userID:this.state.user._id,
+        userID:JSON.parse(localStorage.getItem('user'))._id,
         project : null,
 
     }  
