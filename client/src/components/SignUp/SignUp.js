@@ -256,6 +256,7 @@ export default class SignUp extends Component {
                     <h2 class="msg"> Create your personal, your data will be validated. make sure of it!</h2>
                     <div> 
                     <TextField
+                        required
                         id="outlined-name"
                         label="First Name"
                         className={classNames.textField}
@@ -267,6 +268,7 @@ export default class SignUp extends Component {
                     />
                     <br/>
                     <TextField
+                        required
                         id="outlined-name"
                         label="Last Name"
                         className={classNames.textField}
@@ -278,6 +280,7 @@ export default class SignUp extends Component {
                     />
                     <br/>
                     <TextField
+                        required
                         id="outlined-name"
                         label="SSN"
                         className={classNames.textField}
@@ -289,6 +292,7 @@ export default class SignUp extends Component {
                     />
                     <br/>
                     <TextField
+                    required
                     id="date"
                     label="Birth Date"
                     type="date"
@@ -305,6 +309,7 @@ export default class SignUp extends Component {
                     />
                     <br/>
                     <TextField
+                        required
                         select
                         className={classNames.textField}
                         variant="outlined"
@@ -323,6 +328,7 @@ export default class SignUp extends Component {
                     </TextField>
                     <br/>
                     <TextField
+                        required
                         id="outlined-name"
                         label="Nationality"
                         className={classNames.textField}
@@ -334,6 +340,7 @@ export default class SignUp extends Component {
                     />
                     <br/>
                     <TextField
+                        required
                         select
                         className={classNames.textField}
                         variant="outlined"
@@ -352,6 +359,7 @@ export default class SignUp extends Component {
                     </TextField>
                     <br/>
                     <TextField
+                        required
                         select
                         className={classNames.textField}
                         variant="outlined"
@@ -379,6 +387,7 @@ export default class SignUp extends Component {
                  <div>
                    <div> 
                         <TextField
+                        required
                         id="outlined-name"
                         label="Country"
                         className={classNames.textField}
@@ -390,6 +399,7 @@ export default class SignUp extends Component {
                         />
                         <br/>
                         <TextField
+                        required
                         id="outlined-name"
                         label="City"
                         className={classNames.textField}
@@ -418,6 +428,7 @@ export default class SignUp extends Component {
                  <div>
                    <div>  
                         <TextField
+                        required
                         id="outlined-email-input"
                         label="Email"
                         className={classNames.textField}
@@ -432,6 +443,7 @@ export default class SignUp extends Component {
                         />
                         <br/>
                         <TextField
+                        required
                         id="outlined-password-input"
                         label="Password"
                         className={classNames.textField}
@@ -445,6 +457,7 @@ export default class SignUp extends Component {
                         />
                         <br/>
                         <TextField
+                        required
                         id="outlined-name"
                         label="Mobile Number"
                         className={classNames.textField}
@@ -467,6 +480,7 @@ export default class SignUp extends Component {
                         />
                         <br/>
                         {(this.props.type==="Partner")?"":<TextField
+                        required
                         id="outlined-name"
                         label="Skills Set"
                         className={classNames.textField}
