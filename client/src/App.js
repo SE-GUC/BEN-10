@@ -231,7 +231,8 @@ class App extends Component {
           <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
           <RedirectButton onClick={this.asMember} as={"Login as Member"} />
       <RedirectButton onClick={this.asCA} as={"Login as CA"} /> */}
-      <SignUp></SignUp>
+      
+      <LogIn></LogIn>
 
         </>
       );
