@@ -21,10 +21,17 @@ import axios from "axios";
 import Notif from "../Notification/NotificationView";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import logo from './logoWhite.png';
 const server = require('../../config')
 const styles = theme => ({
   root: {
-    width: '100%',
+    width: '100%'
+  },
+  logo:{
+    marginRight:'20px',
+    marginLeft:'10px',
+    marginTop:'10px',
+    marginBottom:'10px'
   },
   app:{
     backgroundColor:'#000000',
@@ -114,12 +121,6 @@ class PrimarySearchAppBar extends React.Component {
       redirectProjects:false
     };
     localStorage.setItem('nav',this.state.value)
-    // if(localStorage.getItem('nav')){
-    //   var value = parseInt(localStorage.getItem('nav'))
-    //   console.log('resetting to : '+ value)
-    //   this.setState({value})
-    // }
-    // console.log("-----" + this.state.value)
 
   }
   
@@ -264,9 +265,9 @@ class PrimarySearchAppBar extends React.Component {
           <div className={classes.root}>
             <AppBar position="static"className={classes.app}>
               <Toolbar>
-                <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-                  Lirten Hub
-                </Typography>
+              <div className={classes.logo}>
+                <img src={logo} alt="Logo" height={60} width={100}  />
+                </div>
             <div className={classes.tabs}>
             <Tabs value={this.state.value}  onChange={this.handleChange}>
             <Tab className={classes.label} label="Explore" />
