@@ -12,7 +12,8 @@ import axios from "axios";
 import EditProject from "./pages/EditProject";
 import ViewProject from "./pages/ViewProject";
 import Home from "./pages/Home"
-
+import SignUp from "./components/SignUp/SignUp";
+import LogIn from './components/LogIn/LogIn';
 //import ViewAndAssign from "./components/ViewApplyingMemAndAssign";
 
 import SendFinalDraft from "./components/SendFinalDraft";
@@ -225,11 +226,13 @@ class App extends Component {
     } else {
       return (
         <>
-          <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
+        {/*  <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
           <RedirectButton onClick={this.asAdmin} as={"Login as Admin"} />
           <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
           <RedirectButton onClick={this.asMember} as={"Login as Member"} />
-          <RedirectButton onClick={this.asCA} as={"Login as CA"} />
+      <RedirectButton onClick={this.asCA} as={"Login as CA"} /> */}
+      <SignUp></SignUp>
+
         </>
       );
     }
