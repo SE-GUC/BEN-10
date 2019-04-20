@@ -98,6 +98,7 @@ export default class SignUp extends Component {
             area:'',
             email:'',
             password:'',
+            confirmpassword:'',
             mobileNumber:'',
             alternativeMobileNumber:'',
             skillSet:null,
@@ -110,6 +111,25 @@ export default class SignUp extends Component {
         });
       };
 
+      validatePassword = () =>{
+        const signup = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}/
+        return signup.test(this.state.password)? true : false 
+      }
+
+      errors = () => {
+        var errors = []
+        if(this.state.password){
+          if(this.state.password.length <5)
+            errors.push('Your password must be at least 5 characters')
+          if(this.state.password.search(/[a-z]/) < 0)
+            errors.push('Your password must contain at least one small letter')
+          if(this.state.password.search(/[A-Z]/) < 0)
+            errors.push('Your password must contain at least one capital letter')
+          if(this.state.password.search(/[0-9]/) < 0)
+            errors.push('Your password must contain at least one number')
+        }
+        return errors
+      }
       handleNext = () => {
         const { activeStep } = this.state;
         const steps = getSteps();
@@ -450,7 +470,22 @@ export default class SignUp extends Component {
                         type="password"
                         value={this.state.password}
                         onChange={this.handleChange('password')}
+                        helperText={this.validatePassword()? '': this.errors()[0]}
                         autoComplete="current-password"
+                        margin="normal"
+                        variant="outlined"
+                        style={{width:"250px"}}
+                        />
+                        <br/>
+                        <TextField
+                        required
+                        id="outlined-password-input"
+                        label="Confirm Password"
+                        className={classNames.textField}
+                        type="password"
+                        value={this.state.confirmpassword}
+                        onChange={this.handleChange('confirmpassword')}
+                        helperText= {(this.state.password!==''&&this.state.confirmpassword!=='')?(this.state.password===this.state.confirmpassword)?'matched' :'not matched':''}
                         margin="normal"
                         variant="outlined"
                         style={{width:"250px"}}
