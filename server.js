@@ -225,91 +225,174 @@ app.put("/logout", verifyToken, (req, res, next) => {
 });
 // i want to sign up
 app.post("/signUp", async (req, res) => {
+
   var body = req.body;
+
   const name = body.type.substring(0,body.type.length-1)
+
   const token = jwt.sign({ id: -1 }, "nada", { expiresIn: "20s" });
+
   console.log(token);
-  if (req.body.type.toString() === "members") {
+
+  if (req.body.type.toString() === "member") {
+
     delete body.type;
+
     await fetch(`${server}/api/members`, {
+
       method: "post",
+
       body: JSON.stringify(body),
+
       headers: {
+
         "Content-Type": "application/json",
+
         Authorization: "bearer " + token.toString()
+
       }
+
     })
+
       .then(res => res.json())
+
       .then(json => res.json(json))
+
       .catch(err => console.log("Error", err));
-  } else if (req.body.type.toString() === "admins") {
+
+  } else if (req.body.type.toString() === "admin") {
+
     delete body.type;
+
     await fetch(`${server}/api/admins`, {
+
       method: "post",
+
       body: JSON.stringify(body),
+
       headers: {
+
         "Content-Type": "application/json",
+
         Authorization: "bearer " + token.toString()
+
       }
+
     })
+
       .then(res => res.json())
+
       .then(json => res.json(json))
+
       .catch(err => console.log("Error", err));
+
   } else if (req.body.type.toString() === "consultancyagency") {
+
     delete body.type;
+
     await fetch(`${server}/api/consultancyagency`, {
+
       method: "post",
+
       body: JSON.stringify(body),
+
       headers: {
+
         "Content-Type": "application/json",
+
         Authorization: "bearer " + token.toString()
+
       }
+
     })
+
       .then(res => res.json())
+
       .then(json => res.json(json))
+
       .catch(err => console.log("Error", err));
-  } else if (req.body.type.toString() === "partners") {
+
+  } else if (req.body.type.toString() === "partner") {
+
     delete body.type;
+
     await fetch(`${server}/api/partners`, {
+
       method: "post",
+
       body: JSON.stringify(body),
+
       headers: {
+
         "Content-Type": "application/json",
+
         Authorization: "bearer " + token.toString()
+
       }
+
     })
+
       .then(res => res.json())
+
       .then(json => res.json(json))
+
       .catch(err => console.log("Error", err));
+
   }
+
   const outPut = `<p>Congratulations you have subscribed to be a LirtenHub${name}</p>`
 
-  // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    service:'gmail',
-    auth: {
-      user: 'ahmedalaamanutd@gmail.com', // generated ethereal user
-      pass: 'rememberme1115' // generated ethereal password
-    }
-  });
-let mailOptions = {
-    from: '"LirtenHub"', // sender address
-    to: req.body.email.toString(), // list of receivers
-    subject: "Registration Notification", // Subject line
-    text: "", // plain text body
-    html: outPut 
-};
-  // send mail with defined transport object
-  transporter.sendMail(mailOptions,(error,info)=>{
-    if(error){
-      console.log(error);
-    }else{
-      console.log("Message Sent!")
-      console.log(info)
-    }
-  });
-});
+ 
 
+  // create reusable transporter object using the default SMTP transport
+
+  let transporter = nodemailer.createTransport({
+
+    service:'gmail',
+
+    auth: {
+
+      user: 'ahmedalaamanutd@gmail.com', // generated ethereal user
+
+      pass: 'rememberme1115' // generated ethereal password
+
+    }
+
+  });
+
+let mailOptions = {
+
+    from: '"LirtenHub"', // sender address
+
+    to: req.body.email.toString(), // list of receivers
+
+    subject: "Registration Notification", // Subject line
+
+    text: "", // plain text body
+
+    html: outPut
+
+};
+
+  // send mail with defined transport object
+
+  transporter.sendMail(mailOptions,(error,info)=>{
+
+    if(error){
+
+      console.log(error);
+
+    }else{
+
+      console.log("Message Sent!")
+
+      console.log(info)
+
+    }
+
+  });
+
+});
 //-------------------- search ----------------------
 app.get("/searchAdmins", async (req, res) => {
   return res.send({ data: await searchInAdmins(req.body.text.toLowerCase()) });
