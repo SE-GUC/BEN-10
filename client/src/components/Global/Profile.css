@@ -1,0 +1,10 @@
+.card{
+      background:'#e5e8e8';
+      color:'#212121';
+    }
+.media{
+      height: 600;
+      width: 400;
+      background-image: url('./background.png');
+    }
+    
