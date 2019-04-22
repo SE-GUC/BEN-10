@@ -27,7 +27,7 @@ class Projects extends Component {
     if (this.state.type === "partner") {
       return (
         <div className="App">
-        <Nav value={1}/>
+        <Nav value={1}/ >
           <ExpansionPanelSubmitProject Id={this.state.user._id} />
           <PMyProject id={this.state.user._id} />
           <ViewAllProjects type={this.state.type} />
