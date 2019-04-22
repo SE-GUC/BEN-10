@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Redirect , BrowserRouter} from 'react-router-dom';
 import style from "./SignUp.css";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -103,7 +104,8 @@ export default class SignUp extends Component {
             alternativeMobileNumber:'',
             skillSet:null,
             user:null,
-            type:null
+            type:null,
+            redirect:false,
       }
       handleChange = name => event => {
         this.setState({
@@ -134,7 +136,7 @@ export default class SignUp extends Component {
         const { activeStep } = this.state;
         const steps = getSteps();
         if(activeStep === steps.length - 1){
-            if(this.props.location.state.type==="ConsultancyAgency"){
+            if(this.state.type==="ConsultancyAgency"){
                 this.SignUpAsCA();
  
             }
@@ -200,7 +202,7 @@ export default class SignUp extends Component {
     };
       SignUpAsPartnerOrMember = async () =>{
         const body={
-            type:this.state.type,
+            type:"member",
             firstName:this.state.firstName,
             lastName:this.state.lastName,
             SSN:this.state.SSN,
@@ -224,14 +226,27 @@ export default class SignUp extends Component {
               headers: { "Content-Type": "application/json" }
              
             };
-           await fetch(`${server}/signUp` , requestOptions).then((response) => {
-              return response.json();
+            console.log("fetch")
+           await fetch(`${server}/signUp` , {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: { "Content-Type": "application/json" }
+           
+          }).then((response) => {
+            console.log(response);
+            console.log(response.data);
+            // console.log(response.json());
+            // console.log(response.json().data);
+
+              return response.clone().json() ;
             }).then((result) => {
+              console.log(result)
               if((result.msg==="Partner was created successfully")||
               (result.msg==="member was created successfully")){
                 this.setState({
                   user:body,
-                  type:"partner"
+                  type:"partner",
+                  redirect:true,
                 }) 
               }
               else{
@@ -247,6 +262,14 @@ export default class SignUp extends Component {
         const { classes } = this.props;
         const steps = getSteps();
         const { activeStep } = this.state;
+         console.log(this.state.redirect)
+      if(this.state.redirect){
+        console.log("redirecttt")
+        return(
+          <Redirect to={{pathname:"/login"}}/>
+          );
+      } 
+    else    
     return (
       <div>
         <div class="bg-shade-gradient">
