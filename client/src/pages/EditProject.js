@@ -14,19 +14,6 @@ import ProjectEditableCandidateSection from '../components/Project/ProjectEditab
 import Nav from '../components/Global/PrimarySearchAppBar'
 const server = require("../../src/config");
 
-const styles = theme => ({
-  root: {
-    display: 'flex',
-  },
-  paper: {
-    marginRight: theme.spacing.unit * 2,
-  },
-  divitem: {
-    width: "auto",
-
-  },
-});
-
 export default class EditProject extends Component {
   constructor(props){
     super(props); 
@@ -123,7 +110,7 @@ export default class EditProject extends Component {
     if(this.state.project!== null){  
       console.log(this.state.projectID +" "+this.state.userID)
     return (
-      <div class="divitem" >
+      <div >
         <Nav value={1}/>
         <div class = "leftCol">
             <div class="col-3 float-left pr-4">

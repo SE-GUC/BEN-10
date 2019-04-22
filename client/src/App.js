@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
-
+import StrangeCard from "./components/Global/StrangerProfileCard"
 import Profile from "./pages/Profile";
 import ViewAllPartners from "./components/Partner/ViewAllPArtners";
 import ViewAllCAs from "./components/CA/ViewAllCAs";
@@ -12,6 +12,7 @@ import axios from "axios";
 import EditProject from "./pages/EditProject";
 import ViewProject from "./pages/ViewProject";
 import Home from "./pages/Home"
+import SearchPage from "./components/Global/SearchPage"
 import SignUp from "./components/SignUp/SignUp";
 import LogIn from './components/LogIn/LogIn';
 import Footer from './components/Global/Footer';
@@ -31,6 +32,7 @@ import EventId from "./pages/EventId";
 import Nav from './components/Global/PrimarySearchAppBar'
 import MyEvent from "./components/View_an_Event/ViewAnEvent";
 import Snack from "./components/View_an_Event/snackBox";
+import Footer from './components/Global/Footer';
 
 import Loading from "./components/Global/loading";
 import CreateEvent from "./components/Admin/CreateEvent";
@@ -124,6 +126,24 @@ class App extends Component {
               />
             )}
           />
+          <Route
+            exact
+            path="/Search"
+            render={props => (
+              <SearchPage
+              {...props}
+              />
+            )}
+          />
+          {/* <Route
+            exact
+            path="/StrangeCard"
+            render={props => (
+              <StrangeCard
+              /> */}
+            )}
+          />
+
           <Route
             exact
             path="/Home"
