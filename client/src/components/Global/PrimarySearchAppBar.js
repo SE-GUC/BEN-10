@@ -21,6 +21,7 @@ import axios from "axios";
 import Notif from "../Notification/NotificationView";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import SearchPage from "./SearchPage"
 const server = require('../../config')
 const styles = theme => ({
   root: {
@@ -111,8 +112,12 @@ class PrimarySearchAppBar extends React.Component {
       type:localStorage.getItem('type'),
       value:this.props.value,
       redirectEvents:false,
-      redirectProjects:false
+      redirectProjects:false,
+      searchWord:"",
+      GoSearch:false
     };
+    this.handlePress = this.handlePress.bind(this);
+    this.keyPress = this.keyPress.bind(this);
     localStorage.setItem('nav',this.state.value)
     // if(localStorage.getItem('nav')){
     //   var value = parseInt(localStorage.getItem('nav'))
@@ -139,7 +144,7 @@ class PrimarySearchAppBar extends React.Component {
           notifications: json.data
         })
         );
-      var newNotifications = this.state.notifications.filter(Notification => (Notification.seen === false))
+      var newNotifications = (this.state.notifications!=null)?(this.state.notifications.filter(Notification => (Notification.seen === false))):""
       this.setState({numberOfNotifications:newNotifications.length})
     }
     console.log("they are : "+ this.state.value + " other  "+ localStorage.getItem('nav'))
@@ -156,6 +161,17 @@ class PrimarySearchAppBar extends React.Component {
     this.setState({redirectProfile:true});
 
   };
+  handlePress(e) {
+    this.setState({ searchWord: e.target.value });
+ }
+
+ keyPress(e){
+    if(e.keyCode == 13){
+      //  console.log('value', this.state.searchWord);
+       // put the login here
+       this.setState({GoSearch:true})
+    }
+ }
   editClicked = event => {
     this.setState({redirectEdit:true});
   };
@@ -196,6 +212,7 @@ class PrimarySearchAppBar extends React.Component {
   };  
 
   render() {
+    if(this.state.GoSearch===false){
     const { anchorEl, mobileMoreAnchorEl,numberOfNotifications,anchorEl2 } = this.state;
     const { classes } = this.props;
     const isMenuOpen = Boolean(anchorEl);
@@ -286,7 +303,11 @@ class PrimarySearchAppBar extends React.Component {
                     classes={{
                       root: classes.inputRoot,
                       input: classes.inputInput,
+                      
                     }}
+                    value={this.state.searchWord}
+                    onKeyDown={this.keyPress} 
+                    onChange={this.handlePress}
                   />
                 </div>
   
@@ -337,6 +358,14 @@ class PrimarySearchAppBar extends React.Component {
           return <Redirect to={{ pathname:"/EditProfile" }}/>
       
     }
+  }else{
+    // return <SearchPage searchWord={this.state.searchWord} />
+    return <Redirect to={{ pathname:"/Search" ,
+    state:{searchWord:this.state.searchWord}  }}/>
+
+    
+
+  }
   }
 }
 
