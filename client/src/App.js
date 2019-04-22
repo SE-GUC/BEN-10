@@ -16,6 +16,7 @@ import SearchPage from "./components/Global/SearchPage"
 import SignUp from "./components/SignUp/SignUp";
 import LogIn from './components/LogIn/LogIn';
 import Footer from './components/Global/Footer';
+import PreSign from './components/PreSign/PreSign'
 //import ViewAndAssign from "./components/ViewApplyingMemAndAssign";
 
 import SendFinalDraft from "./components/SendFinalDraft";
@@ -32,7 +33,6 @@ import EventId from "./pages/EventId";
 import Nav from './components/Global/PrimarySearchAppBar'
 import MyEvent from "./components/View_an_Event/ViewAnEvent";
 import Snack from "./components/View_an_Event/snackBox";
-import Footer from './components/Global/Footer';
 
 import Loading from "./components/Global/loading";
 import CreateEvent from "./components/Admin/CreateEvent";
@@ -253,18 +253,27 @@ class App extends Component {
             />
           )}
         />
+        <Route
+        exact
+        path="/start"
+        render={props => (
+          <PreSign
+          
+          />
+        )}
+        
+        
+        />
         </BrowserRouter>
       );
     } else {
       return (
         <>
-      {/*    <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
+          <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
           <RedirectButton onClick={this.asAdmin} as={"Login as Admin"} />
           <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
           <RedirectButton onClick={this.asMember} as={"Login as Member"} />
-      <RedirectButton onClick={this.asCA} as={"Login as CA"} /> */} 
-      <SignUp></SignUp>
-      <Footer></Footer>
+      <RedirectButton onClick={this.asCA} as={"Login as CA"} />  
       
       
 
