@@ -3,6 +3,7 @@ import axios from "axios";
 import { TextField } from '@material-ui/core';
 import classNames from 'classnames';
 import { Card } from "react-bootstrap";
+import Typography from '@material-ui/core/Typography';
 import ListSubheader from "@material-ui/core/ListSubheader";
 const server = require("../../config");
 
@@ -68,9 +69,11 @@ export default class EditableView extends React.Component {
            return( 
             <div class="mainContainer">    
                 <div id="ProjectAttributes">
-                    <div class="headerArea"> <ListSubheader component="div">
+                <br></br>
+
+                    <div class="headerArea"> <Typography variant="h4" gutterBottom>
                     Consultancy Agency Info
-    </ListSubheader> 
+      </Typography>
                         <div class="col-9 float-left">
                             <Card>
                             <TextField

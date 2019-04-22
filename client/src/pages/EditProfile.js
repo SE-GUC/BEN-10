@@ -10,7 +10,8 @@ class EditProfile extends React.Component{
            user:JSON.parse(localStorage.getItem('user')),
            type:localStorage.getItem('type')
         };
-        console.log("hi")
+        console.log(this.state)
+               console.log("hi")
     }
     render(){
         return(<div> 
