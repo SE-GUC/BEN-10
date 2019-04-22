@@ -9,8 +9,6 @@ import Button from '@material-ui/core/Button';
 import ListSubheader from "@material-ui/core/ListSubheader";
 import Chip from '@material-ui/core/Chip';
 import SaveButton from '../Global/SaveButton';
-import Typography from '@material-ui/core/Typography';
-
 const server = require("../../config");
 
 const effort = ['Easy','Normal','Hard','Extreme']
@@ -18,7 +16,6 @@ const cycle=['Waiting for consultancy Agency' , 'Negotiation',
   'Final Draft' , 'Approved' , 'Canceled' , 'Posted' , 'In Progress' , 'Final Review' , 'Finished']
 const expLevel = ['Fundamental Awareness','Novice','Intermediate','Advanced','Expert']
 const skills=[]
-
 
 
 export default class EditableView extends React.Component {
@@ -122,11 +119,9 @@ export default class EditableView extends React.Component {
         return (
         <div class="mainContainer">    
              <div id="ProjectAttributes">
-             <br></br>
-
-              <div class="headerArea"> <Typography variant="h4" gutterBottom>
-              Project Attributes
-      </Typography>
+              <div class="headerArea"> <ListSubheader component="div">
+              project attributes
+    </ListSubheader>
               <div class="col-9 float-left">
                 <Card>         
                   <TextField class="allInputs"
@@ -155,7 +150,7 @@ export default class EditableView extends React.Component {
                     id="outlined-select-currency"
                     select
                     label="Project Life Cycle"
-                    className={classNames.textField}
+                    className={classNames.lifeCycle}
                     value={this.state.lifeCycle}
                     onChange={this.handleChange('lifeCycle')}
                     SelectProps={{
@@ -234,7 +229,7 @@ export default class EditableView extends React.Component {
                  <div class = "SkillCard">
 
                    <div class="addSkill">   
-                 <TextField class="allInputs "
+                 <TextField class="allInputs"
                     id="outlined-set"
                     label="required Skills"
                     className={classNames.textField}
