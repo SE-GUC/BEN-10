@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -11,20 +10,9 @@ import Typography from "@material-ui/core/Typography";
 import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
 import classes from "classnames";
 import  { Redirect } from 'react-router-dom'
+import background from './background.png'
+import styles from './Profile.css'
 const server = require("../../config");
-
-const styles = {
-  card: {
-    maxWidth: 345,
-    background:'#e0e0e0',
-    color:'#212121'
-  },
-  media: {
-    height: 140,
-    background:'#ABA2A2'
-  },
-  
-};
 
 class Profile extends React.Component {
   constructor(props) {
@@ -48,7 +36,6 @@ class Profile extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
     if(this.state.redirectEvents){
         return <Redirect to = {{pathname :"/Events"}}/>
     }else{
@@ -66,35 +53,10 @@ class Profile extends React.Component {
             month = "0" + (new Date(this.state.user.birthDate).getMonth() + 1);
           else month = new Date(this.state.user.birthDate).getMonth() + 1;
           return (
-            <Card className={classes.card}>
+            <Card class="card">
+            <div class='media'/>
               <CardActionArea>
-                <CardMedia title="Profile" />
-                <CardContent>
-                  First Name: {this.state.user.firstName} <br />
-                  Last Name: {this.state.user.lastName} <br />
-                  SSN: {this.state.user.SSN} <br />
-                  Birth-date:{" "}
-                  {new Date(this.state.user.birthDate).getFullYear() +
-                    "-" +
-                    month +
-                    "-" +
-                    new Date(this.state.user.birthDate).getDate()}{" "}
-                  <br />
-                  Gender: {this.state.user.gender ? "Female" : "Male"} <br />
-                  Nationality: {this.state.user.nationality} <br />
-                  Marital Status: {this.state.user.maritalStatus} <br />
-                  Driving License: {this.state.user.drivingLicense
-                    ? "YES"
-                    : "NO"}{" "}
-                  <br />
-                  Country: {this.state.user.country} <br />
-                  City: {this.state.user.city} <br />
-                  Area: {this.state.user.area} <br />
-                  E-mail: {this.state.user.email} <br />
-                  Mobile Number: {this.state.user.mobileNumber} <br />
-                  Alternative Mobile Number:{" "}
-                  {this.state.user.alternativeMobileNumber} <br />
-                </CardContent>
+                
               </CardActionArea>
               <CardActions>
                 <Button size="small" color="primary" onClick={this.viewEvents}>
@@ -108,9 +70,9 @@ class Profile extends React.Component {
           );
         } else if (this.state.type === "consultancyagency") {
           return (
-            <Card className={classes.card}>
+            <Card class="card">
               <CardActionArea>
-                <CardMedia className={classes.media} title="Profile" />
+                <CardMedia class="media" title="Profile" />
                 <CardContent>
                   Name: {this.state.user.name} <br />
                   Telephone Number: {this.state.user.telephoneNumber} <br />
@@ -143,4 +105,4 @@ Profile.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Profile)
+export default Profile;
