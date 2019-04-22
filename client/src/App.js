@@ -236,12 +236,12 @@ class App extends Component {
     } else {
       return (
         <>
-      {/*    <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
+         <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
           <RedirectButton onClick={this.asAdmin} as={"Login as Admin"} />
           <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
           <RedirectButton onClick={this.asMember} as={"Login as Member"} />
-      <RedirectButton onClick={this.asCA} as={"Login as CA"} /> */} 
-      <SignUp></SignUp> 
+      <RedirectButton onClick={this.asCA} as={"Login as CA"} /> 
+      {/* <SignUp></SignUp>  */}
       
       
 
