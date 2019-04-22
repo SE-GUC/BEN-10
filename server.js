@@ -596,22 +596,22 @@ let mailOptions = {
 
 });
 //-------------------- search ----------------------
-app.get("/searchAdmins", async (req, res) => {
+app.post("/searchAdmins", async (req, res) => {
   return res.send({ data: await searchInAdmins(req.body.text.toLowerCase()) });
 });
-app.get("/searchMembers", async (req, res) => {
+app.post("/searchMembers", async (req, res) => {
   return res.send({ data: await searchInMembers(req.body.text.toLowerCase()) });
 });
-app.get("/searchCAs", async (req, res) => {
+app.post("/searchCAs", async (req, res) => {
   return res.send({ data: await searchInConsultancyAgency(req.body.text.toLowerCase()) });
 });
-app.get("/searchProjects", async (req, res) => {
+app.post("/searchProjects", async (req, res) => {
   return res.send({ data: await searchInProjects(req.body.text.toLowerCase()) });
 });
-app.get("/searchEvents", async (req, res) => {
+app.post("/searchEvents", async (req, res) => {
   return res.send({ data: await searchInEvents(req.body.text.toLowerCase()) });
 });
-app.get("/searchPartners", async (req, res) => {
+app.post("/searchPartners", async (req, res) => {
   return res.send({ data: await searchInPartners  (req.body.text.toLowerCase()) });
 });
 
@@ -722,9 +722,9 @@ async function searchInAdmins(t) {
 async function searchInEvents(t) {
   var events = await Event.find();
   events = events.filter(
-    p =>
-      p.type.toLowerCase().includes(t) ||
-      p.location.toLowerCase().includes(t) ||
+    p => 
+      p.eventType.toLowerCase().includes(t) ||
+      p.eventLocation.toLowerCase().includes(t) ||
       p.description.toLowerCase().includes(t) ||
       p.topics
         .toString()

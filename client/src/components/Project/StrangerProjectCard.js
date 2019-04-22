@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { Route , withRouter} from 'react-router-dom';
 import {Redirect} from 'react-router-dom'
 import { Paper } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
 const server = require("../../config");
 
 
@@ -57,15 +58,15 @@ const styles = {
   }
 };
 
-class MyEventCard extends Component{
+class StrangerProjectCard extends Component{
     constructor(props){
         super(props)
-        this.viewEvent = this.viewEvent.bind(this);
+        this.viewProject = this.viewProject.bind(this);
         this.state = {
           redirect:false
       }
     }
-    viewEvent() {
+    viewProject() {
       this.setState({redirect:true})
     }
 
@@ -73,35 +74,10 @@ class MyEventCard extends Component{
 render(){    
     const { classes } = this.props;
     if(this.state.redirect){
-      const path = `/Events/${this.props.event._id}`
+      const path = `/Projects/${this.props.project._id}`
       return <Redirect to={path}/>;
     }else{
 return (
-    // <Card className={classes.card}>
-    //   <CardActionArea onClick = {this.viewEvent}>
-    //     <CardContent>
-    //       <Typography className={classes.firstTypo} >
-    //       topics
-    //       </Typography>
-    //       <Typography className={classes.secondTypo} >
-    //       {this.props.event.topics.toString()} </Typography>
-    //       <Typography className={classes.firstTypo} >
-    //       event type
-    //       </Typography>
-    //       <Typography className={classes.secondTypo} >
-    //       {this.props.event.eventLocation}
-    //        </Typography>
-    //        <Typography className={classes.firstTypo} >
-    //        description
-    //       </Typography>
-    //       <Typography className={classes.secondTypo} >
-    //       {this.props.event.description}
-    //        </Typography>
-    //     </CardContent>
-    //   </CardActionArea>
-    //   <CardActions>
-    //   </CardActions>
-    // </Card>
     <div 
     className={classes.block}
     
@@ -111,19 +87,20 @@ return (
         >
           
           <a
-  href= {`/Events/${this.props.event._id}`}
+  href= {`/Projects/${this.props.project._id}`}
   className={classes.Link}
   >
-  {this.props.event.eventType}
+  {this.props.project.name.toString()}
 
     </a>
           
           <Typography className={classes.secondTypo} >
-          This event implies {this.props.event.description}<br></br> 
-          and it will take place in {this.props.event.eventLocation}
-          and in {this.props.event.eventDate}<br></br>
-          it covers the following topics {this.props.event.topics}
-          
+          our project implies {this.props.project.description+" "} 
+          the project's category is {this.props.project.category+" "}
+          the project is currently {this.props.project.lifeCycle+" "}
+          the estimated effort for this project is {this.props.project.estimatedEffort+" "} 
+           the experience level needed for this project is {this.props.project.experienceLevelNeeded+" "}
+          the needed skills for this project are {this.props.project.requiredSkillsSet}
            </Typography>
 
         </Paper>
@@ -134,8 +111,8 @@ return (
 }
 }
 
-MyEventCard.propTypes = {
+StrangerProjectCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MyEventCard);
+export default withStyles(styles)(StrangerProjectCard);
