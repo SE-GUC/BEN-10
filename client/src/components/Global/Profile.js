@@ -21,7 +21,8 @@ class Profile extends React.Component {
       user:JSON.parse(localStorage.getItem('user')),
       type:localStorage.getItem('type'),
       redirectEvents:false,
-      redirectProjects:false
+      redirectProjects:false,
+      loading:false
     }
     this.viewEvents = this.viewEvents.bind(this);
     this.viewProjects = this.viewProjects.bind(this);
@@ -35,6 +36,17 @@ class Profile extends React.Component {
     this.setState({redirectEvents:true})
   };
 
+  componentDidMount(){
+    if(this.props.flag){
+      this.setState({
+        user:this.props.user,
+        type:this.props.type,
+        loading:true
+      })
+    }
+  }
+
+ 
   render() {
     if(this.state.redirectEvents){
         return <Redirect to = {{pathname :"/Events"}}/>
@@ -42,6 +54,8 @@ class Profile extends React.Component {
       if(this.state.redirectProjects){
         return <Redirect to = {{pathname :"/Projects"}}/>
       }else{
+        if(this.state.loading){
+        
         if (
           this.state.type === "partner" ||
           this.state.type === "member" ||
@@ -93,7 +107,8 @@ class Profile extends React.Component {
               </CardActions>
             </Card>
           );
-        } else {
+        }
+      } else {
           return <div />;
         }
       }

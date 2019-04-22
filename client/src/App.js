@@ -147,6 +147,15 @@ class App extends Component {
           />
           <Route
             exact
+            path="/profile/:id"
+            render={props => (
+              <Profile
+                {...props}
+              />
+            )}
+          />
+          <Route
+            exact
             path="/Projects"
             render={props => (
               <Projects
