@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const Member = require("./models/Member");
 const nodemailer = require("nodemailer");
 // Require Router Handlers
+
 const eventrequests = require("./routes/api/eventrequests");
 const projects = require("./routes/api/projects");
 const orientationinvitations = require("./routes/api/orientationinvitations");
@@ -98,6 +99,7 @@ app.use("/api/consultancyagency", consultancyagencys);
 app.use("/api/notifications", notification);
 // as a user i want to login
 app.put("/login", async (req, res) => {
+  console.log("the req is  :"+req.body.email+":" )
   var flag = true;
   var allUsers = await Member.find();
   var user = allUsers.filter(u => u.email.toString() === req.body.email);
@@ -105,15 +107,23 @@ app.put("/login", async (req, res) => {
     user = user[0];
     if (user.password.toString() === req.body.password.toString()) {
       flag = false;
-      const data = {
-        id: user._id,
-        type: "members"
+      var data2 = {
+        user: user,
+        type: "member"
       };
-      jwt.sign({ data }, "nada", { expiresIn: "1200s" }, (err, token) => {
-        res.json({ token });
+      jwt.sign({ data2 }, "nada", { expiresIn: "1200s" }, (err, token) => {
+        //  data = JSON.parse(data);
+        const data={
+          user:user,
+          type:"member",
+          token:token
+
+        }
+      return  res.json({ data });
       });
+
     } else {
-      return res.status(400).send({ error: "password not correct" });
+      return res.send({ error: "password not correct" });
     }
   }
   //------- admin
@@ -124,12 +134,18 @@ app.put("/login", async (req, res) => {
       user = user[0];
       if (user.password.toString() === req.body.password.toString()) {
         flag = false;
-        const data = {
-          id: user._id,
-          type: "admins"
+        const data2 = {
+          user: user,
+          type: "admin"
         };
-        jwt.sign({ data }, "nada", { expiresIn: "1200s" }, (err, token) => {
-          res.json({ token });
+        jwt.sign({ data2 }, "nada", { expiresIn: "1200s" }, (err, token) => {
+          const data={
+            user:user,
+            type:"member",
+            token:token
+  
+          }
+         return  res.json({ data });
         });
       } else {
         return res.status(400).send({ error: "password not correct" });
@@ -145,13 +161,19 @@ app.put("/login", async (req, res) => {
       user = user[0];
       if (user.password.toString() === req.body.password.toString()) {
         flag = false;
-        const data = {
-          id: user._id,
-          type: "admins"
+        const data2 = {
+          user: user,
+          type: "partner"
         };
-        jwt.sign({ data }, "nada", { expiresIn: "1200s" }, (err, token) => {
-          res.json({ token });
-          next();
+        jwt.sign({ data2 }, "nada", { expiresIn: "1200s" }, (err, token) => {
+          const data={
+            user:user,
+            type:"member",
+            token:token
+  
+          }
+          return  res.json({ data });
+        
         });
       } else {
         return res.status(400).send({ error: "password not correct" });
@@ -164,17 +186,23 @@ app.put("/login", async (req, res) => {
     allUsers = await ConsultancyAgency.find();
     user = allUsers.filter(u => u.email.toString() === req.body.email);
     if (user.length == 0) {
-      return res.status(404).send({ error: "email not correct" });
+      return res.send({ error: "email not correct" });
     } else {
       user = user[0];
       if (user.password.toString() === req.body.password.toString()) {
         flag = false;
-        const data = {
-          id: user._id,
-          type: "admins"
+        const data2 = {
+          user: user,
+          type: "consultancyagency"
         };
-        jwt.sign({ data }, "nada", { expiresIn: "1200s" }, (err, token) => {
-          res.json({ token });
+        jwt.sign({ data2 }, "nada", { expiresIn: "1200s" }, (err, token) => {
+          const data={
+            user:user,
+            type:"member",
+            token:token
+  
+          }
+         return  res.json({ data });
         });
       } else {
         return res.status(400).send({ error: "password not correct" });
