@@ -71,18 +71,25 @@ class Profile extends React.Component {
   };
 
   componentDidMount(){
+    console.log(this.props.flag)
     if(this.props.flag){
       this.setState({
         user:this.props.user,
         type:this.props.type,
-        loading:true
+        
       })
+
     }
+    this.setState({
+      loading:true
+    })
   }
 
         
 
   render() {
+    console.log('HHHHHHHHH')
+
    const {classes}=this.props
     if (this.state.redirectEvents) {
       return <Redirect to={{ pathname: "/Events" }} />;
@@ -98,7 +105,9 @@ class Profile extends React.Component {
         //   }
 
         // }
+        console.log(this.state.loading)
         if(this.state.loading){
+          console.log('HHHHHHHHH')
         if (
           this.state.type === "partner" ||
           this.state.type === "member" ||
