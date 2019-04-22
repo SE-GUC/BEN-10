@@ -461,9 +461,7 @@ app.post("/signUp", async (req, res) => {
         return res.json(json)})
 
       .catch(err => console.log("Error", err));
-
   } else if (req.body.type.toString() === "admin") {
-
     delete body.type;
 
     await fetch(`${server}/api/admins`, {
@@ -513,9 +511,7 @@ app.post("/signUp", async (req, res) => {
       .then(json => res.json(json))
 
       .catch(err => console.log("Error", err));
-
   } else if (req.body.type.toString() === "partner") {
-
     delete body.type;
 
     await fetch(`${server}/api/partners`, {
