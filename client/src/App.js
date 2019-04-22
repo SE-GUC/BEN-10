@@ -14,6 +14,8 @@ import ViewProject from "./pages/ViewProject";
 import Home from "./pages/Home"
 import SignUp from "./components/SignUp/SignUp";
 import LogIn from './components/LogIn/LogIn';
+import ForgotPassword from './components/LogIn/forgotPassword';
+
 //import ViewAndAssign from "./components/ViewApplyingMemAndAssign";
 
 import SendFinalDraft from "./components/SendFinalDraft";
@@ -231,17 +233,35 @@ class App extends Component {
             />
           )}
         />
+        <Route
+          exact
+          path="/signUp"
+          render={props => (
+            <SignUp
+            
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/forgotPassword"
+          render={props => (
+            <ForgotPassword
+            
+            />
+          )}
+        />
         </BrowserRouter>
       );
     } else {
       return (
         <>
-      {/*    <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
+         <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
           <RedirectButton onClick={this.asAdmin} as={"Login as Admin"} />
           <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
           <RedirectButton onClick={this.asMember} as={"Login as Member"} />
-      <RedirectButton onClick={this.asCA} as={"Login as CA"} /> */} 
-      <SignUp></SignUp> 
+      <RedirectButton onClick={this.asCA} as={"Login as CA"} /> 
+      {/* <SignUp></SignUp>  */}
       
       
 
