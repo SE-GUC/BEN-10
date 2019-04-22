@@ -34,8 +34,8 @@ const theme = createMuiTheme({
 export default class PreSign extends Component {
   state={
     type:'',
-    rediR:'',
-    rediS:'',
+    rediR:false,
+    rediS:false,
   }
   handleChange = name => event => {
     this.setState({
@@ -54,13 +54,16 @@ export default class PreSign extends Component {
 
   render() {
     if(this.state.rediR){
-     return  <Redirect to={{pathname:"/signup"}}></Redirect>
-
+      return(
+        <Redirect to={{pathname:"/signUp"}}/>
+        );
     }
     if(this.state.rediS){
-     return <Redirect to={{pathname:"/login"}}></Redirect>
-
+      return(
+        <Redirect to={{pathname:"/login"}}/>
+        );
     }
+  
 
     return (
       <div class="main">
@@ -70,8 +73,8 @@ export default class PreSign extends Component {
          <div class="middle">
            <div class="register">
            
-             <Button color="dark" style={{width:"100px", border:"2px solid black",background:"white"}}><Typography style={{fontWeight:"bolder",fontSize:"300"}} component={"p"} onClick={this.handleRegister()} >Register</Typography></Button>
-             <Button color="dark" style={{width:"100px", border:"2px solid black",background:"white"}}><Typography style={{fontWeight:"bolder",fontSize:"300"}} component={"p"} onClick={this.handleLogin()} >Login</Typography></Button>
+             <Button color="dark" style={{width:"100px", border:"2px solid black",background:"white"}}><Typography style={{fontWeight:"bolder",fontSize:"300"}} component={"p"} onClick={this.handleRegister} >Register</Typography></Button>
+             <Button color="dark" style={{width:"100px", border:"2px solid black",background:"white"}}><Typography style={{fontWeight:"bolder",fontSize:"300"}} component={"p"} onClick={this.handleLogin} >Login</Typography></Button>
              <Button color="dark" style={{width:"100px", border:"2px solid black",background:"white"}}><Typography style={{fontWeight:"bolder",fontSize:"300"}} component={"p"} onClick={this.handleChange("member")} >Member</Typography></Button>
              <Button color="dark" style={{width:"100px", border:"2px solid black",background:"white"}}><Typography style={{fontWeight:"bolder",fontSize:"300"}} component={"p"} onClick={this.handleChange("consultancyagency")} >CA</Typography></Button>
              <Button color="dark" style={{width:"100px", border:"2px solid black",background:"white"}}><Typography style={{fontWeight:"bolder",fontSize:"300"}} component={"p"}onClick={this.handleChange("partner")} >Partner</Typography></Button>
