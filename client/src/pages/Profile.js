@@ -3,6 +3,7 @@ import Nav from '../components/Global/PrimarySearchAppBar'
 import ProfileView from "../components/Global/Profile";
 import axios from "axios";
 
+import styles from './Profile.css'
 const server = require("../../src/config");
 
 class Profile extends React.Component{
@@ -14,7 +15,6 @@ class Profile extends React.Component{
             loading:false,
             flag:false
         };
-        console.log("hi")
     }
     async componentDidMount(){
         console.log("ay7agaaaa")

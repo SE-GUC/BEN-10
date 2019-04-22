@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
-
+import StrangeCard from "./components/Global/StrangerProfileCard"
 import Profile from "./pages/Profile";
 import ViewAllPartners from "./components/Partner/ViewAllPArtners";
 import ViewAllCAs from "./components/CA/ViewAllCAs";
@@ -12,8 +12,13 @@ import axios from "axios";
 import EditProject from "./pages/EditProject";
 import ViewProject from "./pages/ViewProject";
 import Home from "./pages/Home"
+import SearchPage from "./components/Global/SearchPage"
 import SignUp from "./components/SignUp/SignUp";
 import LogIn from './components/LogIn/LogIn';
+import ForgotPassword from './components/LogIn/forgotPassword';
+
+import Footer from './components/Global/Footer';
+import PreSign from './components/PreSign/PreSign'
 //import ViewAndAssign from "./components/ViewApplyingMemAndAssign";
 
 import SendFinalDraft from "./components/SendFinalDraft";
@@ -35,6 +40,7 @@ import Loading from "./components/Global/loading";
 import CreateEvent from "./components/Admin/CreateEvent";
 
 const server = require("./config");
+
 class App extends Component {
   state = {
     user: null 
@@ -122,6 +128,22 @@ class App extends Component {
               />
             )}
           />
+          <Route
+            exact
+            path="/Search"
+            render={props => (
+              <SearchPage
+              {...props}
+              />
+            )}
+          />
+          {/* <Route
+            exact
+            path="/StrangeCard"
+            render={props => (
+              <StrangeCard
+              /> */}
+
           <Route
             exact
             path="/Home"
@@ -240,17 +262,42 @@ class App extends Component {
             />
           )}
         />
+        <Route
+          exact
+          path="/signUp"
+          render={props => (
+            <SignUp
+            
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/forgotPassword"
+          render={props => (
+            <ForgotPassword
+            
+            />
+          )}/>
+          <Route
+        exact
+        path="/start"
+        render={props => (
+          <PreSign
+          
+          />
+        )}        
+        />
         </BrowserRouter>
       );
     } else {
       return (
         <>
-         <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
+          <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
           <RedirectButton onClick={this.asAdmin} as={"Login as Admin"} />
           <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
           <RedirectButton onClick={this.asMember} as={"Login as Member"} />
-      <RedirectButton onClick={this.asCA} as={"Login as CA"} /> 
-      {/* <SignUp></SignUp>  */}
+      <RedirectButton onClick={this.asCA} as={"Login as CA"} />  
       
       
 

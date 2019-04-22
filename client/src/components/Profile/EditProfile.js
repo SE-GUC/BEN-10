@@ -32,6 +32,7 @@ class EditProfile extends React.Component {
     console.log(this.state.type)
     const { classes } = this.state;
     if (this.state.type === "member") {
+      console.log(this.state.user)
       return <div className="App">{<EditMember member={this.state.user} />}</div>;
     } else {
       if (this.state.type === "partner") {
