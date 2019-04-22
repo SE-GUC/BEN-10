@@ -119,6 +119,7 @@ app.put("/login", async (req, res) => {
           token:token
 
         }
+        console.log(data)
       return  res.json({ data });
       });
 
@@ -223,12 +224,211 @@ app.put("/logout", verifyToken, (req, res, next) => {
     }
   });
 });
+//---------------------------------------------------------
+//------------------- i want to recieve my old password -----
+app.put("/sendOldPassword",async(req,res)=>{
+  const body = req.body;
+  var users = null;
+  var flag = false;
+  var myUser = null;
+  if(body.email){
+    users = await Member.find();
+    myUser = users.filter(u=>(u.email===body.email));
+    console.log(myUser)
+    myUser = myUser[0];
+    if(myUser){
+      flag = true;
+    }else{
+      users = await Admin.find();
+      myUser = users.filter(u=>(u.email===body.email));
+      myUser = myUser[0];
+      if(myUser){
+        flag = true;
+      }else{
+        users = await Partner.find();
+        myUser = users.filter(u=>(u.email===body.email));
+        myUser = myUser[0];
+        if(myUser){
+          flag = true;
+        }else{
+          users = await ConsultancyAgency.find();
+          myUser = users.filter(u=>(u.email===body.email));
+          myUser = myUser[0];
+          if(myUser){
+            flag=true;
+          }
+        }
+      }
+    }
+    if(flag){
+// sending the mail-------------------------
+
+const outPut = `<div><p>You requested to recieve your old password  so your old Password is:${myUser.password}</p></div>`
+
+ 
+
+  // create reusable transporter object using the default SMTP transport
+
+  let transporter = nodemailer.createTransport({
+
+    service:'gmail',
+
+    auth: {
+
+      user: 'ahmedalaamanutd@gmail.com', // generated ethereal user
+
+      pass: 'rememberme1115' // generated ethereal password
+
+    }
+
+  });
+
+let mailOptions = {
+
+    from: '"LirtenHub"', // sender address
+
+    to: body.email.toString(), // list of receivers
+
+    subject: "Forgot your password ! we got you", // Subject line
+
+    text: "", // plain text body
+
+    html: outPut
+
+};
+
+  // send mail with defined transport object
+
+  transporter.sendMail(mailOptions,(error,info)=>{
+
+    if(error){
+
+      console.log(error);
+
+    }else{
+
+      console.log("Message Sent!")
+
+      console.log(info)
+
+    }
+
+  });
+
+//-------------------------------------------
+    }else{
+      res.send({error:"no one is registered with this email"})
+    }
+
+
+
+  }else{
+    res.send({error:"Mail is required"})
+  }
+
+  
+})
+
+
+
+
+
+
+
+
+
+//i want to change my password incase i forgot it
+app.put("/forgotPassword",async(req,res)=>{
+  const body = req.body;
+  var users = null;
+  var flag = false;
+  var type = null;
+  var myUser = null;
+  if(body.email&&body.password&&body.newPassword){
+    users = await Member.find();
+    myUser = users.filter(u=>(u.email===body.email));
+    console.log(myUser)
+    myUser = myUser[0];
+    if(myUser){
+      type = "member";
+      flag = true;
+    }else{
+      users = await Admin.find();
+      type = "admin";
+      myUser = users.filter(u=>(u.email===body.email));
+      myUser = myUser[0];
+      if(myUser){
+        flag = true;
+      }else{
+        users = await Partner.find();
+        type = "partner"
+        myUser = users.filter(u=>(u.email===body.email));
+        myUser = myUser[0];
+        if(myUser){
+          flag = true;
+        }else{
+          users = await ConsultancyAgency.find();
+          type = "consultancyagency";
+          myUser = users.filter(u=>(u.email===body.email));
+          myUser = myUser[0];
+          if(myUser){
+            flag=true;
+          }
+        }
+      }
+    }
+    if(flag){
+      console.log(type)
+      if(myUser.password===body.password){
+        const sentBody={
+          password:body.newPassword
+        }
+        if(type==="consultancyagency"){
+          await fetch(`${server}/api/consultancyagency/${myUser._id}`, {
+
+            method: "put",
+      
+            body: JSON.stringify(sentBody),
+      
+            headers: {
+      
+              "Content-Type": "application/json",
+      
+            }
+      
+          })
+        }else{
+          console.log("monda")
+          await fetch(`${server}/api/${type}s/${myUser._id}`, {
+
+            method: "put",
+      
+            body: JSON.stringify(sentBody),
+      
+            headers: {
+      
+              "Content-Type": "application/json",
+      
+            }
+      
+          })
+        }
+      }
+    }
+  }else{
+    res.send({error:"error in inputs"});
+  }
+});
+
+
+
+
 // i want to sign up
 app.post("/signUp", async (req, res) => {
 
   var body = req.body;
 
-  const name = body.type.substring(0,body.type.length-1)
+  const name = body.type
 
   const token = jwt.sign({ id: -1 }, "nada", { expiresIn: "20s" });
 
@@ -256,7 +456,9 @@ app.post("/signUp", async (req, res) => {
 
       .then(res => res.json())
 
-      .then(json => res.json(json))
+      .then(json => {
+        console.log(json)
+        return res.json(json)})
 
       .catch(err => console.log("Error", err));
 

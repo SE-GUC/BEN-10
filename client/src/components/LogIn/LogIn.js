@@ -136,10 +136,10 @@ export default class LogIn extends Component {
            <small id="emailHelp" style={{marginLeft:"20px",marginTop:"5px"}} class="form-text text-muted">at least 8 characters including  number , lowercase , uppercase, special character.
 
            .</small>
-           <a href="forgot password" style={{marginLeft:"20px",marginTop:"5px"}}>forgot password?</a>
+           <a href="http://localhost:3000/forgotPassword" style={{marginLeft:"20px",marginTop:"5px"}}>forgot password?</a>
           
 
-           <button type="button" class="btn btn-success" onClick={this.handleSubmit} style={{width:"150px",marginTop:"30px",marginLeft:"65px"}}>Login</button>
+           <button type="button" class="btn btn-success" onClick={this.handleSubmit} style={{width:"150px",margin:"auto"}}>Login</button>
 
               
              </Card>
