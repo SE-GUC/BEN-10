@@ -615,6 +615,7 @@ async function searchInProjects(t) {
   var projects = await Project.find();
   projects = projects.filter(
     p =>
+    p.name.toLowerCase().includes(t) ||
       p.description.toLowerCase().includes(t) ||
       p.category.toLowerCase().includes(t) ||
       p.lifeCycle.toLowerCase().includes(t) ||

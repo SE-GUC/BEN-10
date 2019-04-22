@@ -143,8 +143,6 @@ class App extends Component {
             render={props => (
               <StrangeCard
               /> */}
-            )}
-          />
 
           <Route
             exact
@@ -279,9 +277,7 @@ class App extends Component {
           <PreSign
           
           />
-        )}
-        
-        
+        )}        
         />
         </BrowserRouter>
       );
