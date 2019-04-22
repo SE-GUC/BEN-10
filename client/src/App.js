@@ -14,6 +14,7 @@ import ViewProject from "./pages/ViewProject";
 import Home from "./pages/Home"
 import SignUp from "./components/SignUp/SignUp";
 import LogIn from './components/LogIn/LogIn';
+import Footer from './components/Global/Footer';
 //import ViewAndAssign from "./components/ViewApplyingMemAndAssign";
 
 import SendFinalDraft from "./components/SendFinalDraft";
@@ -35,6 +36,7 @@ import Loading from "./components/Global/loading";
 import CreateEvent from "./components/Admin/CreateEvent";
 
 const server = require("./config");
+
 class App extends Component {
   state = {
     user: null 
@@ -241,7 +243,8 @@ class App extends Component {
           <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
           <RedirectButton onClick={this.asMember} as={"Login as Member"} />
       <RedirectButton onClick={this.asCA} as={"Login as CA"} /> */} 
-      <SignUp></SignUp> 
+      <SignUp></SignUp>
+      <Footer></Footer>
       
       
 
