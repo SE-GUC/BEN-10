@@ -201,7 +201,7 @@ app.post("/signUp", async (req, res) => {
   const name = body.type.substring(0,body.type.length-1)
   const token = jwt.sign({ id: -1 }, "nada", { expiresIn: "20s" });
   console.log(token);
-  if (req.body.type.toString() === "members") {
+  if (req.body.type.toString() === "member") {
     delete body.type;
     await fetch(`${server}/api/members`, {
       method: "post",
@@ -214,7 +214,7 @@ app.post("/signUp", async (req, res) => {
       .then(res => res.json())
       .then(json => res.json(json))
       .catch(err => console.log("Error", err));
-  } else if (req.body.type.toString() === "admins") {
+  } else if (req.body.type.toString() === "admin") {
     delete body.type;
     await fetch(`${server}/api/admins`, {
       method: "post",
@@ -240,7 +240,7 @@ app.post("/signUp", async (req, res) => {
       .then(res => res.json())
       .then(json => res.json(json))
       .catch(err => console.log("Error", err));
-  } else if (req.body.type.toString() === "partners") {
+  } else if (req.body.type.toString() === "partner") {
     delete body.type;
     await fetch(`${server}/api/partners`, {
       method: "post",

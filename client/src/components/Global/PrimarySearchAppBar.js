@@ -37,7 +37,6 @@ const styles = theme => ({
     backgroundColor:'#000000',
   },
   menu:{
-    color:'#767070',
     
   },
   grow: {
@@ -194,7 +193,10 @@ class PrimarySearchAppBar extends React.Component {
     }
 
     
-  };  
+  }; 
+  logoutClicked = () =>{
+    
+  }
 
   render() {
     const { anchorEl, mobileMoreAnchorEl,numberOfNotifications,anchorEl2 } = this.state;
@@ -213,6 +215,7 @@ class PrimarySearchAppBar extends React.Component {
       >
         <MenuItem onClick={this.profileClicked}>Profile</MenuItem>
         <MenuItem onClick={this.editClicked}>Edit My Profile</MenuItem>
+        <MenuItem onClick={this.logoutClicked}>logout</MenuItem>
       </Menu>
     );
     const notificationsMenu = (
