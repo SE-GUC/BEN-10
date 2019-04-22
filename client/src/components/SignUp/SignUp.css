@@ -1,0 +1,76 @@
+.bg-shade-gradient {
+    background-image: linear-gradient(180deg,rgba(27,31,35,.065),rgba(27,31,35,0))!important;
+    background-repeat: no-repeat!important;
+    background-size: 100% 200px!important;
+}
+.py-5 {
+    padding-bottom: 32px!important;
+    padding-top: 32px!important;
+}
+.container-lg, .container-xl {
+    margin-left: auto;
+    margin-right: auto;
+}
+.container-lg {
+    max-width: 1012px;
+}
+.p-responsive {
+    padding-left: 40px!important;
+    padding-right: 40px!important;
+}
+.setup-header {
+    border-bottom: 1px solid #ddd;
+    margin: 0 auto 30px;
+    overflow: hidden;
+    padding-bottom: 20px;
+    text-align: left;
+}
+.setup-org {
+    border-bottom: 1px solid black;
+    padding-bottom: 0;
+}
+.tabs{
+    margin-bottom: 6px;
+
+}
+.msg{
+    font-size: 24px;
+    font-weight: 100;
+    margin-bottom: 50px;
+
+}
+.gender{
+    width:600;
+    margin-Left :15;
+    margin-Bottom:15;
+
+}
+.textInput{
+ margin-top: 20px;   
+  margin-Left: 15;
+  margin-right: 20px;
+  margin-Bottom:15;
+  width:600;
+}
+.button{
+  margin-Left: 600;
+  margin-Top:5;
+}
+.label{
+    width:600;
+    margin-Left:15;
+}
+.title{
+    color:"#283593";
+}
+.date{
+    width:600;
+    margin-Bottom:10;
+    margin-Left:15;
+}
+.low{
+    display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}

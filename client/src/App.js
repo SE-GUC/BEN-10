@@ -13,6 +13,8 @@ import EditProject from "./pages/EditProject";
 import ViewProject from "./pages/ViewProject";
 import Home from "./pages/Home"
 import SearchPage from "./components/Global/SearchPage"
+import SignUp from "./components/SignUp/SignUp";
+import LogIn from './components/LogIn/LogIn';
 //import ViewAndAssign from "./components/ViewApplyingMemAndAssign";
 
 import SendFinalDraft from "./components/SendFinalDraft";
@@ -33,6 +35,7 @@ import Footer from './components/Global/Footer';
 
 import Loading from "./components/Global/loading";
 import CreateEvent from "./components/Admin/CreateEvent";
+
 const server = require("./config");
 class App extends Component {
   state = {
@@ -239,17 +242,29 @@ class App extends Component {
               />
             )}
           />
+          <Route
+          exact
+          path="/login"
+          render={props => (
+            <LogIn
+            
+            />
+          )}
+        />
         </BrowserRouter>
       );
     } else {
       return (
         <>
-          <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
+      {/*    <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
           <RedirectButton onClick={this.asAdmin} as={"Login as Admin"} />
           <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
           <RedirectButton onClick={this.asMember} as={"Login as Member"} />
-          <RedirectButton onClick={this.asCA} as={"Login as CA"} />
-          {/* <Footer></Footer> */}
+      <RedirectButton onClick={this.asCA} as={"Login as CA"} /> */} 
+      <SignUp></SignUp> 
+      
+      
+
         </>
       );
     }

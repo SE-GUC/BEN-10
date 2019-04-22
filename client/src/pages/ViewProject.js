@@ -17,6 +17,7 @@ import SendFinalDraft from "../components/SendFinalDraft";
 import NotifyMember from "../components/NotifyMember";
 import Nav from '../components/Global/PrimarySearchAppBar'
 
+import Typography from '@material-ui/core/Typography';
 const server = require("../../src/config");
 
 
@@ -86,9 +87,11 @@ export default class ViewProject extends Component {
             <div class="col-3 float-left pr-4">
               <nav class="menu" aria-label="Project settings" data-pjax="">
                 <h3 class="menu-heading">
-                  <ListSubheader component="div">
-                    project attributes
-                  </ListSubheader>
+                <br></br>
+
+                <Typography variant="h4" gutterBottom>
+              Project Attributes
+      </Typography>
                 </h3>
 
                 <Button

@@ -1,0 +1,159 @@
+.Header{
+    position: relative!important;
+    box-sizing: border-box;
+     /* border: 1px solid blue;   */
+     height: 10%;
+
+}
+.middle{
+     /* border: 1px solid red;  */
+     height: 80%;
+
+
+}
+.m1{
+    float: left;
+    width: 20%;
+    /* border: 1px solid yellow;  */
+    height: 100%;
+
+
+}
+.m2{
+    float: left;
+    width:60%;
+    height: 100%;
+    /* border: 5px solid black;  */
+
+
+}
+.logo{
+    position: relative;
+    height: 20%;
+    /* border: 5px solid yellow;  */
+
+}
+.form{
+    position: relative;
+    height: 71%;
+    /* border: 5px solid blueviolet;  */
+
+
+}
+.card{
+    margin-left: 250px;
+    width: 300px;
+    height: 350px;
+}
+.m3{
+    float: left;
+    width: 20%;
+    /* border: 1px solid yellow;  */
+    height: 100%;
+
+
+
+
+}
+.footer{
+         /* border: 1px solid blue;  */
+         height: 10%;
+
+}
+.headerLogOut{
+    background-color: transparent;
+    border-bottom: 0;
+    width: 100%!important;
+    box-sizing: border-box;
+    display: block;
+    background: url('./MainLogoTransparent.png'),white; 
+    
+
+}
+.logo-row {
+    width: 250px;
+    margin: 0 auto;
+    background: url('./MainLogoTransparent.png'),white; 
+
+}
+
+.logo {
+    width: 100%;
+    height: 150px;
+    text-align: center;
+}
+.middle{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.main{
+    background:white;
+    height: 100vh;
+    width: 686px;
+    /* background: url('./cover.png'),white; */
+    background-position: left 5%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #f9f9f9;    /* border: 1px solid yellow;  */
+
+
+  /* border: 1px solid red; */
+  float: left;
+  width: 100%;
+
+}
+
+
+
+.left{
+    width:50%;
+    float:left;
+    height: 100%;
+     /* border: 1px solid blue;  */
+
+}
+.right{
+ width:40%;
+ float:left;
+ padding-right: 300px;
+ padding-left: 150px;
+ padding-top: 100px;
+  /* border: 1px solid red;  */
+
+}
+.login{
+    padding-right: 30px;
+    margin-right: 50px;
+    height: 500px;
+    border: 1px solid black; 
+    background: white;
+    width: 400px;
+
+}
