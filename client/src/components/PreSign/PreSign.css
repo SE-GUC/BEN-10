@@ -2,11 +2,11 @@
     background:white;
     height: 100vh;
     /* background: url('./cover.png'),white; */
-    background-position: left 5%;
+    /* background: url('../LogIn/meeting3.png'),white; */
+    background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     /* background-color: #f9f9f9;    border: 1px solid yellow;  */
-    background: url('../LogIn/meeting1.jpg'),white;
     background-position: center;
 
 

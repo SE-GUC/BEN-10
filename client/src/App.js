@@ -140,9 +140,9 @@ class App extends Component {
             path="/StrangeCard"
             render={props => (
               <StrangeCard
-              /> */}
+              /> 
             )}
-          />
+          />*/}
 
           <Route
             exact
@@ -253,27 +253,37 @@ class App extends Component {
             />
           )}
         />
+
         <Route
         exact
-        path="/start"
+        path="/signUp"
         render={props => (
-          <PreSign
+          <SignUp
           
           />
         )}
-        
-        
+      />
+
+        <Route
+          exact
+          path="/start"
+          render={props => (
+            <PreSign
+            
+            />
+          )}
         />
+       
         </BrowserRouter>
       );
     } else {
       return (
         <>
-          <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
+         <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
           <RedirectButton onClick={this.asAdmin} as={"Login as Admin"} />
           <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
           <RedirectButton onClick={this.asMember} as={"Login as Member"} />
-      <RedirectButton onClick={this.asCA} as={"Login as CA"} />  
+      <RedirectButton onClick={this.asCA} as={"Login as CA"} /> 
       
       
 
