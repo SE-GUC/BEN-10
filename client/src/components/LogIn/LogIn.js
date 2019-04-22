@@ -109,7 +109,7 @@ export default class LogIn extends Component {
           <div class="m2">
             <div class="logo">
               <img src={background} alt="Logo" height={100} width={250} style={{margin:"center"}}></img>
-              <h3 class="form-text" font="Montserrat">Sign in to Lirten</h3>
+              <h3 class="form-text" font="Montserrat" style={{color:"white"}}>Sign in to Lirten</h3>
             </div>
             <div class="form">
 
@@ -151,8 +151,6 @@ export default class LogIn extends Component {
         </div>
         
         
-        <div class="footer">
-        </div>
       </div>
     
     )
