@@ -15,6 +15,8 @@ import Home from "./pages/Home"
 import SearchPage from "./components/Global/SearchPage"
 import SignUp from "./components/SignUp/SignUp";
 import LogIn from './components/LogIn/LogIn';
+import ForgotPassword from './components/LogIn/forgotPassword';
+
 import Footer from './components/Global/Footer';
 import PreSign from './components/PreSign/PreSign'
 //import ViewAndAssign from "./components/ViewApplyingMemAndAssign";
@@ -169,6 +171,15 @@ class App extends Component {
           />
           <Route
             exact
+            path="/profile/:id"
+            render={props => (
+              <Profile
+                {...props}
+              />
+            )}
+          />
+          <Route
+            exact
             path="/Projects"
             render={props => (
               <Projects
@@ -255,6 +266,23 @@ class App extends Component {
         />
 
         <Route
+          exact
+          path="/signUp"
+          render={props => (
+            <SignUp
+            
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/forgotPassword"
+          render={props => (
+            <ForgotPassword
+            
+            />
+          )}/>
+          <Route
         exact
         path="/signUp"
         render={props => (

@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { Card } from "react-bootstrap";
 import styles from './editableViews.css';
 import Button from '@material-ui/core/Button';
-import ListSubheader from "@material-ui/core/ListSubheader";
+import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import SaveButton from '../Global/SaveButton';
 const server = require("../../config");
@@ -117,13 +117,15 @@ export default class EditableView extends React.Component {
         console.log(this.state.project)
 
         return (
-        <div class="mainContainer">    
+        <div class="mainContainer">  
              <div id="ProjectAttributes">
-              <div class="headerArea"> <ListSubheader component="div">
-              project attributes
-    </ListSubheader>
-              <div class="col-9 float-left">
-                <Card>         
+             <br></br>
+
+<div class="headerArea"> <Typography variant="h4" gutterBottom>
+Project Attributes
+</Typography>
+              <div>
+                <Card>
                   <TextField class="allInputs"
                     id="outlined-multiline-static"
                     multiline
@@ -262,8 +264,6 @@ export default class EditableView extends React.Component {
                 </div>
                 </div>
                <Button onClick={this.saveChanges}>Save</Button>
-                <SaveButton  onClick={this.saveChanges}></SaveButton>
-
 
 
                 </Card>

@@ -40,7 +40,7 @@ class EachPartner extends React.Component {
     const partner = this.props.partners;
     const { classes } = this.props;
     if(this.state.show){
-      const path =`/myProfile/${partner._id}`
+      const path =`/Profile/${partner._id}`
       return <Redirect to={path}/>;
     }else
     console.log(partner)

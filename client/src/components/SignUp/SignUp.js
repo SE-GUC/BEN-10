@@ -266,7 +266,7 @@ export default class SignUp extends Component {
       if(this.state.redirect){
         console.log("redirecttt")
         return(
-          <Redirect to={{pathname:"/Home"}}/>
+          <Redirect to={{pathname:"/login"}}/>
           );
       } 
     else    
