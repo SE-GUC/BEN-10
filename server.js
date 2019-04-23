@@ -140,7 +140,7 @@ app.put("/login", async (req, res) => {
         jwt.sign({ data2 }, "nada", { expiresIn: "1200s" }, (err, token) => {
           const data = {
             user: user,
-            type: "member",
+            type: "admin",
             token: token
           };
           return res.json({ data });
@@ -166,7 +166,7 @@ app.put("/login", async (req, res) => {
         jwt.sign({ data2 }, "nada", { expiresIn: "1200s" }, (err, token) => {
           const data = {
             user: user,
-            type: "member",
+            type: "partner",
             token: token
           };
           return res.json({ data });
@@ -194,7 +194,7 @@ app.put("/login", async (req, res) => {
         jwt.sign({ data2 }, "nada", { expiresIn: "1200s" }, (err, token) => {
           const data = {
             user: user,
-            type: "member",
+            type: "consultancyagency",
             token: token
           };
           return res.json({ data });
