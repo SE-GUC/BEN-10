@@ -29,11 +29,11 @@ const styles = theme => ({
     color: theme.palette.text.secondary,
   },
   seenAv:{
-    backgroundColor:"#e91e63"
+    backgroundColor:"#616161"
 
   },
   unseenAv:{
-    backgroundColor:"#616161"
+    backgroundColor:"#e91e63"
 
   }
 

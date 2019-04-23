@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Redirect , BrowserRouter} from 'react-router-dom';
 import style  from './LogIn.css';
-import background from './MainLogoTransparent.png';
+import background from './BigLogoWhiteNoPoweredBy.png';
 import { classes } from 'istanbul-lib-coverage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CardContent from '@material-ui/core/CardContent';
@@ -65,20 +65,20 @@ export default class LogIn extends Component {
        
          
         }).then((response) => {
-          console.log("hehehe"+response)
           return response.json();
         }).then((result) => {
-          console.log("hohoho"+JSON.stringify( result))
-          localStorage.setItem('user',JSON.stringify(result.data.user))
-            localStorage.setItem('type',result.data.type)
-            localStorage.setItem('token',JSON.stringify(result.data.token))
+          console.log(Object.keys(result))
+          if(Object.keys(result).toString()!==["error"].toString()){
+            localStorage.setItem('user',JSON.stringify(result.data.user))
+              localStorage.setItem('type',result.data.type)
+              localStorage.setItem('token',result.data.token)
+            }
           j=result;
            if(result.data){      
              this.setState({redirect:true})
            }
            else{
-            console.log(result)
-             alert(result)
+             alert(result.error)
            }
         
           })

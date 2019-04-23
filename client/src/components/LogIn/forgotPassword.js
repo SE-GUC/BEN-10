@@ -43,7 +43,8 @@ export default class LogIn extends Component {
         oldPassword:'',
         newPassword:'',
         redirect:false,
-        mailSubmitted:false
+        mailSubmitted:false,
+        return:false
     }
     handleChange = name => event => {
       this.setState({
@@ -87,15 +88,25 @@ export default class LogIn extends Component {
   
         }
   
-      })
-      console.log("done")
+      }).then(res => {console.log(res);return res.json()})
+
+      .then(json =>{
+        console.log(Object.keys(json).toString())
+        if(Object.keys(json).toString()===["error"].toString()){
+        alert(json.error);
+      }else{
+        this.setState({return:true})
+      }
+    })
+
+
+
       
 
 }
 handleSend = async()=>{
   console.log(this.state.email)
   if(this.state.email){
-    console.log("@1")
     const body = {
       email:this.state.email
     }
@@ -112,24 +123,76 @@ handleSend = async()=>{
       }
 
     })
-      .catch(err => console.log("Error", err));
       this.setState({mailSubmitted:true});
-      // window.location.reload();
 
   }
 }
   render() {
-    if(this.state.redirect){
+    console.log(this.state.redirect)
+    if(this.state.return===true){
+      return (<Redirect to={{pathname:"/login"}}/>);
+    }else{
+      if(this.state.redirect){
 
-      return(
-      <Redirect to={{pathname:"/Home"}}/>
-      );
-    }
-   else {
-    if(this.state.mailSubmitted===false){
-
-      return(
-      <div class="main">
+        return(
+        <Redirect to={{pathname:"/Home"}}/>
+        );
+      }
+     else {
+      if(this.state.mailSubmitted===false){
+  
+        return(
+        <div class="main">
+          <div class="Header"> 
+          </div>
+          
+          
+          <div class="middle">
+            <div class="m1">
+            </div>
+            <div class="m2">
+              <div class="logo">
+                <img src={background} alt="Logo" height={100} width={250} style={{margin:"center"}}></img>
+                <h3 class="form-text" font="Montserrat">Sign in to Lirten</h3>
+              </div>
+              <div class="form">
+  
+               <Card border="dark" class="card" style={{margin:"center"}} class="rounded">
+               <MuiThemeProvider theme={theme}>
+               <br></br>
+               
+               <TextField
+               className={classes.margin}
+               label="Email"
+               onChange={this.handleChange('email')}
+               id="mui-theme-provider-standard-input"
+               style={{width:"250px",marginLeft:"20px"}}
+               />
+               <br/><br/>
+               <button type="button" class="btn btn-success" onClick={this.handleSend} style={{width:"150px",margin:"auto"}}>Send Password</button>
+             </MuiThemeProvider> 
+               </Card>
+              </div>
+            </div>
+            <div class="m3">
+            </div>
+          </div>
+          
+          
+          <div class="footer">
+          </div>
+        </div>
+      
+  
+  
+  
+  
+  
+  );
+      }else{
+        return(
+          
+        <div class="main">
         <div class="Header"> 
         </div>
         
@@ -143,22 +206,31 @@ handleSend = async()=>{
               <h3 class="form-text" font="Montserrat">Sign in to Lirten</h3>
             </div>
             <div class="form">
-
+  
              <Card border="dark" class="card" style={{margin:"center"}} class="rounded">
              <MuiThemeProvider theme={theme}>
              <br></br>
-             
+            <TextField
+               className={classes.margin}
+               label="Old Password"
+               onChange={this.handleChange('oldPassword')}
+               id="mui-theme-provider-standard-input"
+               style={{width:"250px",marginLeft:"20px"}}
+             />
+             <br></br>
+     
              <TextField
              className={classes.margin}
-             label="Email"
-             onChange={this.handleChange('email')}
+             label="New Password"
+             helperText={this.validatePassword()? '': this.errors()[0]}
+             onChange={this.handleChange('newPassword')}
              id="mui-theme-provider-standard-input"
              style={{width:"250px",marginLeft:"20px"}}
              />
-             <br/><br/>
-             <button type="button" class="btn btn-success" onClick={this.handleSend} style={{width:"150px",margin:"auto"}}>Send Password</button>
-           </MuiThemeProvider> 
+             <button type="button" class="btn btn-success" onClick={this.handleSubmit} style={{width:"150px",margin:"auto"}}>Change Password</button>
+           </MuiThemeProvider>   
              </Card>
+             
             </div>
           </div>
           <div class="m3">
@@ -170,80 +242,22 @@ handleSend = async()=>{
         </div>
       </div>
     
-
-
-
-
-
-);
-    }else{
-      return(
-        
-      <div class="main">
-      <div class="Header"> 
-      </div>
-      
-      
-      <div class="middle">
-        <div class="m1">
-        </div>
-        <div class="m2">
-          <div class="logo">
-            <img src={background} alt="Logo" height={100} width={250} style={{margin:"center"}}></img>
-            <h3 class="form-text" font="Montserrat">Sign in to Lirten</h3>
-          </div>
-          <div class="form">
-
-           <Card border="dark" class="card" style={{margin:"center"}} class="rounded">
-           <MuiThemeProvider theme={theme}>
-           <br></br>
-          <TextField
-             className={classes.margin}
-             label="Old Password"
-             onChange={this.handleChange('oldPassword')}
-             id="mui-theme-provider-standard-input"
-             style={{width:"250px",marginLeft:"20px"}}
-           />
-           <br></br>
-   
-           <TextField
-           className={classes.margin}
-           label="New Password"
-           helperText={this.validatePassword()? '': this.errors()[0]}
-           onChange={this.handleChange('newPassword')}
-           id="mui-theme-provider-standard-input"
-           style={{width:"250px",marginLeft:"20px"}}
-           />
-           <button type="button" class="btn btn-success" onClick={this.handleSubmit} style={{width:"150px",margin:"auto"}}>Change Password</button>
-         </MuiThemeProvider>   
-           </Card>
-           
-          </div>
-        </div>
-        <div class="m3">
-        </div>
-      </div>
-      
-      
-      <div class="footer">
-      </div>
-    </div>
   
-
-
-
-      );
-
-
-
-
-
-
-
-
-
-
+  
+  
+        );
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      }
+     }
     }
-   }
   }
 }

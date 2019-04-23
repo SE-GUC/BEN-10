@@ -211,13 +211,24 @@ class PrimarySearchAppBar extends React.Component {
 
     
   }; 
-  logoutClicked = () =>{
+  logoutClicked = async () =>{
     this.setState({logout:true})
+    const token = localStorage.getItem('token')
+    await fetch(`${server}/logout`, {
+      method: "put",
+
+
+      headers: {
+        "Content-Type": "application/json",
+
+        Authorization: "bearer " + token
+      }
+    })
   }
 
   render() {
    if(this.state.logout){
-    
+    return(<Redirect to={{pathname:"/login"}}/>);
    }else{
     if(this.state.GoSearch===false){
       const { anchorEl, mobileMoreAnchorEl,numberOfNotifications,anchorEl2 } = this.state;
