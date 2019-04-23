@@ -15,6 +15,7 @@ import classes from'classnames' ;
 import axios from "axios";
 import AllProjectsCard from './AllProjectsCard'
 import MyProjectCard from './MyProjectCard';
+import { LinearProgress } from '@material-ui/core';
 
 const server = require("../../config");
 
@@ -31,6 +32,7 @@ const styles = theme => ({
     justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
+    margin:"auto"
   },
   gridList: {
     width: "auto",
@@ -68,19 +70,17 @@ class ViewAllProjects extends React.Component {
     <div className={classes.root}>
     <br></br>
       
-    <GridList cellHeight={180} className={classes.gridList}>
-        <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
+    {/* <GridList cellHeight={"auto"} className={classes.gridList}> */}
         
-        </GridListTile>
       {this.state.projects.map((p,i)=> <MyProjectCard key={i} type={this.props.type} project={p} /> )}
       
-      </GridList>
+      {/* </GridList> */}
       
     </div>
   )
   }else{
     return(
-      <div>loading</div>
+      <LinearProgress/>
     )
   }
   }

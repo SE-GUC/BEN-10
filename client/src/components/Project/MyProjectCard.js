@@ -15,14 +15,15 @@ const server = require("../../config");
 
 const styles = {
   card: {
-    width: 300,
-    marginBottom: 10,
-    marginLeft: 530
+    minWidth: 275,
+    marginLeft:"auto",
+    marginRight:"auto",
+    marginTop:20,
   },
-  media: {
-    // ⚠️ object-fit is not supported by IE 11.
-    objectFit: "cover"
-  },
+  // media: {
+  //   // ⚠️ object-fit is not supported by IE 11.
+  //   objectFit: "cover"
+  // },
   text: {
     color: "#e53935"
   }
