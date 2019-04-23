@@ -15,8 +15,8 @@ import axios from "axios"
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
 const server = require("../../config");
-
-
+const dev = process.env.NODE_ENV !== 'production';
+const red = dev ? 'http://localhost:3000' : 'https://lirtenhub.herokuapp.com';
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -139,7 +139,7 @@ export default class LogIn extends Component {
            <small id="emailHelp" style={{marginLeft:"20px",marginTop:"5px"}} class="form-text text-muted">at least 8 characters including  number , lowercase , uppercase, special character.
 
            .</small>
-           <a href="http://localhost:3000/forgotPassword" style={{marginLeft:"20px",marginTop:"5px"}}>forgot password?</a>
+           <a href={red+"/forgotPassword"} style={{marginLeft:"20px",marginTop:"5px"}}>forgot password?</a>
           
 
            <button type="button" class="btn btn-success" onClick={this.handleSubmit} style={{width:"150px",margin:"auto"}}>Login</button>
