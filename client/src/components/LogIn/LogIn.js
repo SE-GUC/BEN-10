@@ -65,20 +65,20 @@ export default class LogIn extends Component {
        
          
         }).then((response) => {
-          console.log("hehehe"+response)
           return response.json();
         }).then((result) => {
-          console.log("hohoho"+JSON.stringify( result))
-          localStorage.setItem('user',JSON.stringify(result.data.user))
-            localStorage.setItem('type',result.data.type)
-            localStorage.setItem('token',JSON.stringify(result.data.token))
+          console.log(Object.keys(result))
+          if(Object.keys(result).toString()!==["error"].toString()){
+            localStorage.setItem('user',JSON.stringify(result.data.user))
+              localStorage.setItem('type',result.data.type)
+              localStorage.setItem('token',result.data.token)
+            }
           j=result;
            if(result.data){      
              this.setState({redirect:true})
            }
            else{
-            console.log(result)
-             alert(result)
+             alert(result.error)
            }
         
           })
@@ -127,6 +127,7 @@ export default class LogIn extends Component {
      
              <TextField
              className={classes.margin}
+             type="password"
              label="Password"
              onChange={this.handleChange('password')}
              id="mui-theme-provider-standard-input"
