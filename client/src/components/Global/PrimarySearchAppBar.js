@@ -22,7 +22,7 @@ import Notif from "../Notification/NotificationView";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import SearchPage from "./SearchPage"
-import logo from './logoWhite.png';
+import logo from './3DNav.png';
 const server = require('../../config')
 const styles = theme => ({
   root: {
@@ -301,7 +301,7 @@ class PrimarySearchAppBar extends React.Component {
               <AppBar position="static"className={classes.app}>
                 <Toolbar>
                 <div className={classes.logo}>
-                  <img src={logo} alt="Logo" height={60} width={100}  />
+                  <img src={logo} alt="Logo" height={35} width={110}  />
                   </div>
               <div className={classes.tabs}>
               <Tabs value={this.state.value}  onChange={this.handleChange}>
