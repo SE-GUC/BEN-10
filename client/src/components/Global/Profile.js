@@ -26,6 +26,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import ThumbUp from '@material-ui/icons/ThumbUp';
+import { LinearProgress } from "@material-ui/core";
 const server = require("../../config");
 function TabContainer(props) {
   return (
@@ -377,7 +378,7 @@ class Profile extends React.Component {
         }
       
       } else {
-          return <div />;
+          return <LinearProgress/>;
         }
       }
     }

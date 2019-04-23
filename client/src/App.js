@@ -38,7 +38,7 @@ import Snack from "./components/View_an_Event/snackBox";
 
 import Loading from "./components/Global/loading";
 import CreateEvent from "./components/Admin/CreateEvent";
-
+import LinearProgress from './components/Global/loading'
 const server = require("./config");
 
 class App extends Component {
@@ -282,15 +282,7 @@ class App extends Component {
             
             />
           )}/>
-          <Route
-        exact
-        path="/signUp"
-        render={props => (
-          <SignUp
-          
-          />
-        )}
-      />
+         
 
         <Route
           exact
@@ -307,6 +299,7 @@ class App extends Component {
     } else {
       return (
         <>
+        <LinearProgress/>
          <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
           <RedirectButton onClick={this.asAdmin} as={"Login as Admin"} />
           <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />

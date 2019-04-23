@@ -3,6 +3,7 @@
 import React, { Component } from "react";
 import EventRequest from "./EventRequest";
 import Loading from "../Global/loading";
+import { LinearProgress } from "@material-ui/core";
 const server = require("../../config");
 
 export default class ViewAllEventRequests extends Component {
@@ -35,7 +36,7 @@ export default class ViewAllEventRequests extends Component {
         </div>
       );
     } else {
-      return <Loading />;
+      return <LinearProgress />;
     }
     // return(
 
