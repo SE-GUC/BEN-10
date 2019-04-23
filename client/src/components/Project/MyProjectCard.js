@@ -42,6 +42,7 @@ class MyProjectCard extends Component {
       flag: false
     };
   }
+  
   viewProject() {
     this.setState({ redirectview: true });
   }
