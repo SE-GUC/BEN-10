@@ -38,7 +38,7 @@ import Snack from "./components/View_an_Event/snackBox";
 
 import Loading from "./components/Global/loading";
 import CreateEvent from "./components/Admin/CreateEvent";
-
+import LinearProgress from './components/Global/loading'
 const server = require("./config");
 
 class App extends Component {
@@ -142,7 +142,9 @@ class App extends Component {
             path="/StrangeCard"
             render={props => (
               <StrangeCard
-              /> */}
+              /> 
+            )}
+          />*/}
 
           <Route
             exact
@@ -164,6 +166,15 @@ class App extends Component {
                 {...props}
                 user={this.state.user}
                 type={this.state.type}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/profile/:id"
+            render={props => (
+              <Profile
+                {...props}
               />
             )}
           />
@@ -253,12 +264,13 @@ class App extends Component {
             />
           )}
         />
+
         <Route
           exact
-          path="/signUp"
+          path="/signUp/:type"
           render={props => (
             <SignUp
-            
+            {...props}
             />
           )}
         />
@@ -270,25 +282,30 @@ class App extends Component {
             
             />
           )}/>
-          <Route
-        exact
-        path="/start"
-        render={props => (
-          <PreSign
-          
-          />
-        )}        
+        
+         
+
+        <Route
+          exact
+          path="/start"
+          render={props => (
+            <PreSign
+            
+            />
+          )}
         />
+       
         </BrowserRouter>
       );
     } else {
       return (
         <>
-          <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
+        <LinearProgress/>
+         <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
           <RedirectButton onClick={this.asAdmin} as={"Login as Admin"} />
           <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
           <RedirectButton onClick={this.asMember} as={"Login as Member"} />
-      <RedirectButton onClick={this.asCA} as={"Login as CA"} />  
+      <RedirectButton onClick={this.asCA} as={"Login as CA"} /> 
       
       
 

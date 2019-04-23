@@ -12,6 +12,7 @@ import MenuList from '@material-ui/core/MenuList';
 import ProjectEditableViewCASection from '../components/Project/ProjectEditableProjectCASection';
 import ProjectEditableCandidateSection from '../components/Project/ProjectEditableCandidateSection';
 import Nav from '../components/Global/PrimarySearchAppBar'
+import LinearProgress from '../components/Global/loading'
 const server = require("../../src/config");
 
 export default class EditProject extends Component {
@@ -158,7 +159,7 @@ export default class EditProject extends Component {
     else{
         return(
             <div>
-            <CircularProgress></CircularProgress>
+            <LinearProgress/>
             </div>
         )
     }

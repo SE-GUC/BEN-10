@@ -26,6 +26,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import ThumbUp from '@material-ui/icons/ThumbUp';
+import { LinearProgress } from "@material-ui/core";
 const server = require("../../config");
 function TabContainer(props) {
   return (
@@ -53,7 +54,8 @@ class Profile extends React.Component {
       type: localStorage.getItem("type"),
       redirectEvents: false,
       redirectProjects: false,
-      value:0
+      value:0,
+      loading:false
     };
     this.viewEvents = this.viewEvents.bind(this);
     this.viewProjects = this.viewProjects.bind(this);
@@ -69,8 +71,26 @@ class Profile extends React.Component {
     this.setState({value})
   };
 
+  componentDidMount(){
+    console.log(this.props.flag)
+    if(this.props.flag){
+      this.setState({
+        user:this.props.user,
+        type:this.props.type,
+        
+      })
+
+    }
+    this.setState({
+      loading:true
+    })
+  }
+
+        
 
   render() {
+    console.log('HHHHHHHHH')
+
    const {classes}=this.props
     if (this.state.redirectEvents) {
       return <Redirect to={{ pathname: "/Events" }} />;
@@ -86,6 +106,9 @@ class Profile extends React.Component {
         //   }
 
         // }
+        console.log(this.state.loading)
+        if(this.state.loading){
+          console.log('HHHHHHHHH')
         if (
           this.state.type === "partner" ||
           this.state.type === "member" ||
@@ -352,8 +375,10 @@ class Profile extends React.Component {
 
             </div>
           );
-        } else {
-          return <div />;
+        }
+      
+      } else {
+          return <LinearProgress/>;
         }
       }
     }

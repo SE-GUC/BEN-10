@@ -16,8 +16,11 @@ import ApproveFinalWork from "../components/ApproveFinalWork";
 import SendFinalDraft from "../components/SendFinalDraft";
 import NotifyMember from "../components/NotifyMember";
 import Nav from '../components/Global/PrimarySearchAppBar'
-
+import Paper from '@material-ui/core/Paper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
 import Typography from '@material-ui/core/Typography';
+import { LinearProgress } from "@material-ui/core";
 const server = require("../../src/config");
 
 
@@ -89,34 +92,17 @@ export default class ViewProject extends Component {
                 <h3 class="menu-heading">
                 <br></br>
 
-                <Typography variant="h4" gutterBottom>
-              Project Attributes
-      </Typography>
                 </h3>
+                <Paper>
 
-                <Button
-                  class="js-selected-navigation-item selected menu-item"
-                  onClick={this.viewSection1}
-                >
-                  Project attributes
-                </Button>
-                <br />
-                <Button
-                  class="js-selected-navigation-item menu-item"
-                  onClick={this.viewSection2}
-                >
-                  Consultancy Agency
-                </Button>
-                <br />
-                <Button
-                  class="js-selected-navigation-item menu-item"
-                  onClick={this.viewSection3}
-                >
-                  Candidate
-                </Button>
-                <br />
+                    <MenuList>
+                      <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.viewSection1}>Project attributes</MenuItem>
+                      <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.viewSection2}>Consultancy Agency</MenuItem>
+                      <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.viewSection3}>Candidate</MenuItem>
+                      
                 {(this.state.project.lifeCycle === "Posted"&&this.state.type==="member") ? (
                   <ApplyButton
+                  class="js-selected-navigation-item selected menu-item"
                     member_id={this.state.user._id}
                     project_id={this.state.projectID}
                   />
@@ -125,6 +111,7 @@ export default class ViewProject extends Component {
                 )}
                 {(this.state.project.lifeCycle === "In Progress"&&this.state.type==="member") ? (
                   <FormDialog
+                  class="js-selected-navigation-item selected menu-item"
                     member_id={this.state.user._id}
                     project_id={this.state.projectID}
                   />
@@ -135,6 +122,7 @@ export default class ViewProject extends Component {
                   ((this.state.type === "partner"&&this.state.project.lifeCycle==="Final Review"&&this.state.project.companyId==this.state.user._id) ||
                 (this.state.type === "consultancyagency"&&this.state.project.lifeCycle==="Final Review"&&this.state.project.companyId==this.state.user._id)) ? 
                     <ApproveFinalWork
+                    class="js-selected-navigation-item selected menu-item"
                       type={this.state.type}
                       pid={this.state.projectID}
                       id={this.state.user._id}
@@ -147,6 +135,7 @@ export default class ViewProject extends Component {
                 (this.state.type === "consultancyagency"&&this.state.project.lifeCycle==="Final Draft"&&this.state.project.companyId==this.state.user._id)) ? 
                     
                     <ApproveFinalDraft
+                    class="js-selected-navigation-item selected menu-item"
                       type={this.state.type}
                       pid={this.state.projectID}
                       id={this.state.user._id}
@@ -154,19 +143,27 @@ export default class ViewProject extends Component {
                 : 
                   ""
                 }
+                
                 {(this.state.type==="admin"&&this.state.project.lifeCycle==="Negotiation")?
                 <SendFinalDraft
+                class="js-selected-navigation-item selected menu-item"
                 pid={this.state.projectID}
                 aid={this.state.user._id}
               />
             :""}
             {(this.state.type==="admin"&&this.state.project.lifeCycle==="Posted")?
                 <NotifyMember
+                class="js-selected-navigation-item selected menu-item"
                 aid={this.state.user._id}
                 memid={this.state.project.memberID}
                 pid={this.state.projectID}
               />
             :""}
+                    </MenuList>
+                </Paper>
+
+                
+                <br />
             
               </nav>
             </div>
@@ -182,7 +179,7 @@ export default class ViewProject extends Component {
     } else {
       return (
         <div>
-          <CircularProgress />
+          <LinearProgress />
         </div>
       );
     }

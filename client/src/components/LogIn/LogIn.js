@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Redirect , BrowserRouter} from 'react-router-dom';
 import style  from './LogIn.css';
-import background from './BigLogoWhiteNoPoweredBy.png';
+import background from './3D.png';
 import { classes } from 'istanbul-lib-coverage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CardContent from '@material-ui/core/CardContent';
@@ -109,7 +109,7 @@ export default class LogIn extends Component {
           <div class="m2">
             <div class="logo">
               <img src={background} alt="Logo" height={100} width={250} style={{margin:"center"}}></img>
-              <h3 class="form-text" font="Montserrat">Sign in to Lirten</h3>
+              <h3 class="form-text" font="Montserrat" style={{color:"white"}}>Sign in to Lirten</h3>
             </div>
             <div class="form">
 
@@ -127,6 +127,7 @@ export default class LogIn extends Component {
      
              <TextField
              className={classes.margin}
+             type="password"
              label="Password"
              onChange={this.handleChange('password')}
              id="mui-theme-provider-standard-input"
@@ -151,8 +152,6 @@ export default class LogIn extends Component {
         </div>
         
         
-        <div class="footer">
-        </div>
       </div>
     
     )

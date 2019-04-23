@@ -58,6 +58,9 @@ const styles = theme => ({
 function getSteps() {
     return ['Personal Information', 'Location Information', 'Account Information'];
   }
+  function getStepsCA() {
+    return ['Consultancy Information', 'Account Information'];
+  }  
   
   function getStepContent(step) {
     switch (step) {
@@ -71,13 +74,23 @@ function getSteps() {
         return 'Unknown step';
     }
   }
+  function getStepContentCA(step) {
+    switch (step) {
+      case 0:
+        return 'provide the consultancy data...';
+      case 1:
+        return 'provide consultancy account information';
+      default:
+        return 'Unknown step';
+    }
+  }
   const gender=[{value:'male'},{value:'female'}]
 const status=[{value:'married'},{value:'single'}]
 const drivingLicense=[{value:'yes'},{value:'no'}]
 
 export default class SignUp extends Component {
     state={
-        type:this.props.type,
+        type:this.props.match.params.type,
         activeStep: 0,
         name:'',
             about:'',
@@ -136,6 +149,25 @@ export default class SignUp extends Component {
         const { activeStep } = this.state;
         const steps = getSteps();
         if(activeStep === steps.length - 1){
+            if(this.props.match.params.type==="consultancyagency"){
+                this.SignUpAsCA();
+ 
+            }
+            else {
+                this.SignUpAsPartnerOrMember();
+            }
+
+        }
+        else{
+            this.setState({
+            activeStep: activeStep + 1,
+            });
+        }
+      };
+      handleNextCA = () => {
+        const { activeStep } = this.state;
+        const steps = getStepsCA();
+        if(activeStep === steps.length - 1){
             if(this.state.type==="ConsultancyAgency"){
                 this.SignUpAsCA();
  
@@ -166,9 +198,9 @@ export default class SignUp extends Component {
       };
        
       SignUpAsCA=async() =>{
-        if(this.props.location.state.type==="ConsultancyAgency"){
+        if(this.props.match.params.type==="consultancyagency"){
             const body={
-              type:this.state.type,  
+              type:this.props.match.params.type,  
               name:this.state.name,
               about:this.state.about,
               telephoneNumber:this.state.telephone,
@@ -190,7 +222,9 @@ export default class SignUp extends Component {
               if(result.msg==="Consultancy Agency was created successfully"){
                 this.setState({
                   user:body,
-                  type:"consultancyagency"
+                  type:"consultancyagency",
+                  redirect:true,
+
                 }) 
               }
               else{
@@ -202,7 +236,7 @@ export default class SignUp extends Component {
     };
       SignUpAsPartnerOrMember = async () =>{
         const body={
-            type:"member",
+            type:this.state.type,
             firstName:this.state.firstName,
             lastName:this.state.lastName,
             SSN:this.state.SSN,
@@ -261,14 +295,178 @@ export default class SignUp extends Component {
     render() {
         const { classes } = this.props;
         const steps = getSteps();
+        const steps2 = getStepsCA();
         const { activeStep } = this.state;
-         console.log(this.state.redirect)
+         console.log(this.props.match.params.type)
       if(this.state.redirect){
         console.log("redirecttt")
         return(
           <Redirect to={{pathname:"/login"}}/>
           );
-      } 
+      }
+     if(this.props.match.params.type ==="consultancyagency"){
+      return( 
+      <div>
+      <div class="bg-shade-gradient">
+          <div class="container-lg p-responsive py-5">
+              <div class="setup-header setup-org">
+                  <h1>Join Lirten Hub</h1>
+                  <div class="tabs">
+                  <Stepper activeStep={activeStep}>
+                  {steps2.map((label, index) => {
+                      const props = {};
+                      const labelProps = {};
+                      return (
+                      <Step key={label} {...props}>
+                          <StepLabel {...labelProps}>{label}</StepLabel>
+                      </Step>
+                      );
+                  })}
+                  </Stepper>
+                  <Typography >{getStepContentCA(activeStep)}</Typography>
+              </div>
+              </div>
+
+              {this.state.activeStep=== 0?
+                (
+              <div>
+                  <div> 
+                      <h2 class="msg"> Create your personal, your data will be validated. make sure of it!</h2>
+                      <div> 
+                          <TextField
+                              required
+                              id="outlined-name"
+                              label="Consultancy Name"
+                              className={classNames.textField}
+                              value={this.state.name}
+                              onChange={this.handleChange('name')}
+                              margin="normal"
+                              variant="outlined"
+                              style={{width:"250px"}}
+                          />
+                          <br/>
+                          <TextField
+                              required
+                              id="outlined-name"
+                              label="About"
+                              className={classNames.textField}
+                              value={this.state.about}
+                              onChange={this.handleChange('about')}
+                              margin="normal"
+                              variant="outlined"
+                              style={{width:"250px"}}
+                          />
+                          <br/>
+                          <TextField
+                              required
+                              id="outlined-name"
+                              label="Telephone Number"
+                              className={classNames.textField}
+                              value={this.state.telephone}
+                              onChange={this.handleChange('telephone')}
+                              margin="normal"
+                              variant="outlined"
+                              style={{width:"250px"}}
+                          />
+                          
+                          <br/>
+                          <TextField
+                              required
+                              className={classNames.textField}
+                              variant="outlined"
+                              label="Location"
+                              value={this.state.location}
+                              onChange={this.handleChange('location')}
+                              margin="normal"
+                              variant="outlined"
+                              style={{width:"250px"}}
+                          />
+                              
+                          <br/>
+
+                          <TextField
+                              required
+                              className={classNames.textField}
+                              variant="outlined"
+                              label="Years of Experience"
+                              value={this.state.yearsOfExperience}
+                              onChange={this.handleChange('yearsOfExperience')}
+                              margin="normal"
+                              variant="outlined"
+                              style={{width:"250px"}}
+                          />
+                              
+              
+                  
+                      </div>
+                  </div> 
+            </div>
+                ):
+                (<div>
+
+                  <TextField
+                  required
+                  id="date"
+                  label="E-mail"
+                  type="email"
+                  value={this.state.email}
+                  onChange={this.handleChange('email')}
+                  className={classNames.textField}
+                  style={{width:"250px"}}
+                  margin="normal"
+                  variant="outlined"
+
+                  />
+                  <br/>
+                  <TextField
+                      required
+                      type="password"
+                      className={classNames.textField}
+                      variant="outlined"
+                      label="password"
+                      value={this.state.password}
+                      onChange={this.handleChange('password')}
+                      margin="normal"
+                      variant="outlined"
+                      style={{width:"250px"}}
+                  />
+                    </div>  
+                )
+              }
+              <div>
+            {activeStep === steps.length ? (
+                <div>
+                <Typography >
+                    All steps completed - you&apos;re finished
+                </Typography>
+                <Button onClick={this.handleReset} >
+                    Reset
+                </Button>
+                </div>
+            ) : (
+                <div>
+                <div style={{marginTop:"20px"}}>
+                    <Button
+                    disabled={activeStep === 0}
+                    onClick={this.handleBack}
+                    >
+                    Back
+                    </Button>
+                    <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.handleNext}
+                    >
+                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    </Button>
+                </div>
+                </div>
+            )}
+            </div> 
+
+            </div>  </div>  </div>   
+      );
+     }  
     else    
     return (
       <div>

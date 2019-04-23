@@ -40,7 +40,7 @@ class EachCA extends React.Component {
     const ca = this.props.consultancyagency;
     const { classes } = this.props;
     if(this.state.show){
-      const path =`/myProfile/${ca._id}`
+      const path =`/Profile/${ca._id}`
       return <Redirect to={path}/>;
     }else
     console.log(ca)

@@ -1,6 +1,7 @@
 import EachPartner from './EachPartner'
 import React from "react";
 import axios from "axios";
+import { LinearProgress } from '@material-ui/core';
 const server = require("../../config");
 
 
@@ -32,7 +33,7 @@ class allPartners extends React.Component {
     </div>
     )
 }
-    else return <label>Loading...</label>;
+    else return <LinearProgress/>;
   }
 }
 export default allPartners;
