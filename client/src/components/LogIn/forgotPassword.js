@@ -95,6 +95,7 @@ export default class LogIn extends Component {
         if(Object.keys(json).toString()===["error"].toString()){
         alert(json.error);
       }else{
+        console.log("login")
         this.setState({return:true})
       }
     })
@@ -105,6 +106,7 @@ export default class LogIn extends Component {
 
 }
 handleSend = async()=>{
+  this.setState({mailSubmitted:true});
   console.log(this.state.email)
   if(this.state.email){
     const body = {
@@ -123,7 +125,7 @@ handleSend = async()=>{
       }
 
     })
-      this.setState({mailSubmitted:true});
+      
 
   }
 }
