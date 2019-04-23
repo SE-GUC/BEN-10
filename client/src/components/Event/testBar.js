@@ -56,9 +56,9 @@ class SimpleTabs extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar className={classes.Tab} position="static">
-          <Tabs value={value}  onChange={this.handleChange}>
-            <Tab className={classes.label} label="All" />
+        {/* <AppBar className={classes.Tab} position="static"> */}
+          {/* <Tabs value={value}  onChange={this.handleChange}>
+            <Tab className={classes.label} label="All" /> */}
             {/* <Tab label="Waiting For Consultancy Agency" />
             <Tab label="Negotiation" />
             <Tab label="Final Draft" />
@@ -68,8 +68,8 @@ class SimpleTabs extends React.Component {
             <Tab  label="In Progress" />
             <Tab label="Final Review" />
             <Tab label="Finished" /> */}
-          </Tabs>
-        </AppBar>
+          {/* </Tabs> */}
+        {/* </AppBar> */}
         {value === 0 && <TabContainer>{this.state.events.map(((Event,i)=><MyEventCard key={i} event={Event} />))}</TabContainer>}
         {/* {value === 1 && <TabContainer>{(this.state.events.filter(m => m.life_cycle === "Waiting For Consultancy Agency")).map(((Event,i)=><MyEventCard key={i} event={Event} />))}</TabContainer>}
         {value === 2 && <TabContainer>{(this.state.events.filter(m => m.life_cycle === "Negotiation")).map(((Event,i)=><MyEventCard key={i} event={Event} />))}</TabContainer>}
