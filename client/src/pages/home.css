@@ -1,0 +1,112 @@
+.mainu{
+    background:white;
+    height: 100vh;
+    background: url('../pages/office1.jpg'),white;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* background-color: #f9f9f9;    border: 1px solid yellow;  */
+    float: left;
+    width: 100%;
+}
+.m4{
+    position: relative;
+    margin-top:9%;
+    margin-bottom:20%;
+    margin-left:25%;
+    margin-right:20%;
+    background:rgba(255,255,255,0.5);
+    text-align: center;
+    width: 50%;
+    /* border: 1px solid yellow;  */
+    height: 40%;
+}
+.m5{
+    
+color:fff;
+font-size: 21px;
+    padding: 95px;
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box;
+    position: relative;
+    margin-top:15%;
+    margin-bottom:9%;
+    margin-left:4%;
+    margin-right:4%;
+    text-align: center;
+    /* border: 1px solid yellow;  */
+    height: 50%;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.main{
+    background:white;
+    height: 100vh;
+    width: 686px;
+    /* background: url('./cover.png'),white; */
+    background-position: left 5%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #f9f9f9;    /* border: 1px solid yellow;  */
+
+
+  /* border: 1px solid red; */
+  float: left;
+  width: 100%;
+
+}
+
+
+
+.left{
+    width:50%;
+    float:left;
+    height: 100%;
+     /* border: 1px solid blue;  */
+
+}
+.right{
+ width:40%;
+ float:left;
+ padding-right: 300px;
+ padding-left: 150px;
+ padding-top: 100px;
+  /* border: 1px solid red;  */
+
+}
+.login{
+    padding-right: 30px;
+    margin-right: 50px;
+    height: 500px;
+    border: 1px solid black; 
+    background: white;
+    width: 400px;
+
+}
