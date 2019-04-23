@@ -1,4 +1,5 @@
 import React from 'react';
+import  { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -18,20 +19,29 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import axios from "axios";
 import Notif from "../Notification/NotificationView";
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import SearchPage from "./SearchPage"
+import logo from './3DNav.png';
 const server = require('../../config')
 const styles = theme => ({
   root: {
-    width: '100%',
+    width: '100%'
+  },
+  logo:{
+    marginRight:'20px',
+    marginLeft:'10px',
+    marginTop:'10px',
+    marginBottom:'10px'
+  },
+  app:{
+    backgroundColor:'#000000',
   },
   menu:{
-
+    
   },
   grow: {
     flexGrow: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
   },
   title: {
     display: 'none',
@@ -96,23 +106,38 @@ class PrimarySearchAppBar extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      redirectHome:false,
+      redirectProfile:false,
+      redirectEdit:false,
       anchorEl: null,
       anchorEl2:null,
       mobileMoreAnchorEl: null,
       numberOfNotifications:0,
       notifications:null,
-      id:props.id,
-      type:props.type
+      id:JSON.parse(localStorage.getItem('user'))._id,
+      type:localStorage.getItem('type'),
+      value:this.props.value,
+      redirectEvents:false,
+      redirectProjects:false,
+      searchWord:"",
+      GoSearch:false,
+      logout:false
     };
+    this.handlePress = this.handlePress.bind(this);
+    this.keyPress = this.keyPress.bind(this);
+    localStorage.setItem('nav',this.state.value)
+
   }
+  
+
 
   async componentDidMount(){
-    await axios
+    if(this.state.type==="member"){
+      await axios
       .get(
-        `${server}/api/${this.state.type}/${this.state.id}/notifications`
+        `${server}/api/${this.state.type}s/${this.state.id}/notifications`
       )
       .then(res => {
-        console.log(res);
         return res.data;
       })
       .then(json =>
@@ -120,11 +145,37 @@ class PrimarySearchAppBar extends React.Component {
           notifications: json.data
         })
         );
-        console.log(this.state.notifications)
-      var newNotifications = this.state.notifications.filter(Notification => (Notification.seen === false))
+      var newNotifications = (this.state.notifications!=null)?(this.state.notifications.filter(Notification => (Notification.seen === false))):""
       this.setState({numberOfNotifications:newNotifications.length})
+    }
+    console.log("they are : "+ this.state.value + " other  "+ localStorage.getItem('nav'))
+    if(this.state.value !==parseInt(localStorage.getItem('nav'))){
+      console.log('in')
+      this.setState({value:parseInt(localStorage.getItem('nav'))})
+    }
   }
+  homeClicked = event => {
+    this.setState({redirectHome:true});
 
+  };
+  profileClicked = event => {
+    this.setState({redirectProfile:true});
+
+  };
+  handlePress(e) {
+    this.setState({ searchWord: e.target.value });
+ }
+
+ keyPress(e){
+    if(e.keyCode == 13){
+      //  console.log('value', this.state.searchWord);
+       // put the login here
+       this.setState({GoSearch:true})
+    }
+ }
+  editClicked = event => {
+    this.setState({redirectEdit:true});
+  };
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -143,125 +194,198 @@ class PrimarySearchAppBar extends React.Component {
 
   handleMobileMenuClose = () => {
     this.setState({ mobileMoreAnchorEl: null });
+    
   };
+  handleChange = (event,value) => {
+    if(this.state.value!==value){
+    this.setState({ value });
+    console.log("handle change: "+ value)
+    localStorage.setItem('nav',value)
+    if(value===1){
+      this.setState({redirectProjects:true})
+    }
+    if(value===2){
+      this.setState({redirectEvents:true})
+    }
+    }
+
+    
+  }; 
+  logoutClicked = async () =>{
+    this.setState({logout:true})
+    const token = localStorage.getItem('token')
+    await fetch(`${server}/logout`, {
+      method: "put",
+
+
+      headers: {
+        "Content-Type": "application/json",
+
+        Authorization: "bearer " + token
+      }
+    })
+  }
 
   render() {
-    const { anchorEl, mobileMoreAnchorEl,numberOfNotifications,anchorEl2 } = this.state;
-    const { classes } = this.props;
-    const isMenuOpen = Boolean(anchorEl);
-    const isMenuOpen2 = Boolean(anchorEl2);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-    const renderMenu = (
-      <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>Settings</MenuItem>
-      </Menu>
-    );
-    const notificationsMenu = (
-      <Menu
-        anchorEl={anchorEl2}
-        className={classes.menu}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMenuOpen2}
-        onClose={this.handleMenuClose}
-      >
-      <Notif notifications = {this.state.notifications }/>
-      </Menu>
-    );
-    
-
-    const renderMobileMenu = (
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMobileMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-              <HomeIcon />
-          </IconButton>
-          <p>Home</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton color="inherit">
-            <Badge badgeContent={numberOfNotifications} color="secondary"onClick={this.handleNotificationsMenuOpen}>
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
-          <p>Profile</p>
-        </MenuItem>
-      </Menu>
-    );
-
-    return (
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-              <MenuIcon />
+   if(this.state.logout){
+    return(<Redirect to={{pathname:"/login"}}/>);
+   }else{
+    if(this.state.GoSearch===false){
+      const { anchorEl, mobileMoreAnchorEl,numberOfNotifications,anchorEl2 } = this.state;
+      const { classes } = this.props;
+      const isMenuOpen = Boolean(anchorEl);
+      const isMenuOpen2 = Boolean(anchorEl2);
+      const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  
+      const renderMenu = (
+        <Menu
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={isMenuOpen}
+          onClose={this.handleMenuClose}
+        >
+          <MenuItem onClick={this.profileClicked}>Profile</MenuItem>
+          <MenuItem onClick={this.editClicked}>Edit My Profile</MenuItem>
+          <MenuItem onClick={this.logoutClicked}>logout</MenuItem>
+        </Menu>
+      );
+      const notificationsMenu = (
+        <Menu
+          anchorEl={anchorEl2}
+          className={classes.menu}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={isMenuOpen2}
+          onClose={this.handleMenuClose}
+        >
+        <Notif notifications = {this.state.notifications }/>
+        </Menu>
+      );
+      
+  
+      const renderMobileMenu = (
+        <Menu
+          anchorEl={mobileMoreAnchorEl}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={isMobileMenuOpen}
+          onClose={this.handleMenuClose}
+        >
+          <MenuItem >
+            <IconButton color="inherit" onClick={this.homeClicked}>
+                <HomeIcon/>
             </IconButton>
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              Lirten Hub
-            </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
+            <p>Home</p>
+          </MenuItem>
+          <MenuItem onClick={this.handleProfileMenuOpen}>
+            <IconButton color="inherit">
+              <Badge badgeContent={numberOfNotifications} color="secondary"onClick={this.handleNotificationsMenuOpen}>
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <p>Notifications</p>
+          </MenuItem>
+          <MenuItem onClick={this.handleProfileMenuOpen}>
+            <IconButton color="inherit">
+              <AccountCircle />
+            </IconButton>
+            <p>Profile</p>
+          </MenuItem>
+        </Menu>
+      );
+      if(!this.state.redirectHome&&!this.state.redirectProfile&&!this.state.redirectEdit){
+        if(!this.state.redirectProjects&&!this.state.redirectEvents){
+          return (
+            <div className={classes.root}>
+              <AppBar position="static"className={classes.app}>
+                <Toolbar>
+                <div className={classes.logo}>
+                  <img src={logo} alt="Logo" height={35} width={110}  />
+                  </div>
+              <div className={classes.tabs}>
+              <Tabs value={this.state.value}  onChange={this.handleChange}>
+              <Tab className={classes.label} label="Explore" />
+              <Tab className={classes.label} label="Projects" />
+              <Tab className={classes.label}  label="Events" />
+              </Tabs>
+    
               </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-              />
+    
+    
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <SearchIcon />
+                    </div>
+                    <InputBase
+                      placeholder="Search…"
+                      classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput,
+                        
+                      }}
+                      value={this.state.searchWord}
+                      onKeyDown={this.keyPress} 
+                      onChange={this.handlePress}
+                    />
+                  </div>
+    
+                  <div className={classes.grow} />
+                  <div className={classes.sectionDesktop}>
+                    <IconButton color="inherit"onClick={this.homeClicked}>
+                        <HomeIcon/>
+                    </IconButton>
+                    {this.state.type==="member" ? <IconButton color="inherit">
+                      <Badge badgeContent={numberOfNotifications} color="secondary" onClick={this.handleNotificationsMenuOpen}>
+                        <NotificationsIcon />
+                      </Badge>
+                    </IconButton>:""}
+                    <IconButton
+                      aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                      aria-haspopup="true"
+                      onClick={this.handleProfileMenuOpen}
+                      color="inherit"
+                    >
+                      <AccountCircle />
+                    </IconButton>
+                  </div>
+                  <div className={classes.sectionMobile}>
+                    <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
+                      <MoreIcon />
+                    </IconButton>
+                  </div>
+                </Toolbar>
+              </AppBar>
+              {renderMenu}
+              {notificationsMenu}
+              {renderMobileMenu}
             </div>
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-              <IconButton color="inherit">
-                  <HomeIcon />
-              </IconButton>
-              {this.props.type==="members" ? <IconButton color="inherit">
-                <Badge badgeContent={numberOfNotifications} color="secondary" onClick={this.handleNotificationsMenuOpen}>
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>:""}
-              <IconButton
-                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                aria-haspopup="true"
-                onClick={this.handleProfileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-            </div>
-            <div className={classes.sectionMobile}>
-              <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
-                <MoreIcon />
-              </IconButton>
-            </div>
-          </Toolbar>
-        </AppBar>
-        {renderMenu}
-        {notificationsMenu}
-        {renderMobileMenu}
-      </div>
-    );
+          );
+        }else{
+          if(this.state.redirectProjects)
+          return <Redirect to={{pathname:"/projects"}}/>
+          else
+          return <Redirect to={{pathname:"/events"}}/>
+        }
+      }else{
+        if(this.state.redirectHome)
+          return <Redirect to={{ pathname:"/Home" }}/>
+        else
+          if(this.state.redirectProfile)
+            return <Redirect to={{ pathname:"/Profile" }}/>
+          else 
+            return <Redirect to={{ pathname:"/EditProfile" }}/>
+        
+      }
+    }else{
+      // return <SearchPage searchWord={this.state.searchWord} />
+      return <Redirect to={{ pathname:"/Search" ,
+      state:{searchWord:this.state.searchWord}  }}/>
+  
+      
+  
+    }
+   }
   }
 }
 

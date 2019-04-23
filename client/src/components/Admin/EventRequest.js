@@ -9,6 +9,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { LinearProgress } from "@material-ui/core";
 const server = require("../../config");
 
 const styles = {
@@ -135,17 +136,11 @@ class EventRequest extends Component{
            }
            else{
              return(
-             <div>
-               bye
-             </div>
+             <LinearProgress/>
              )
            }
            }
-           else{
-               return (
-                   <div>hi</div>
-               )
-           }
+           
         
     }
 

@@ -1,17 +1,24 @@
 import React, { Component } from "react";
 import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
-
-import Profile from "./components/Global/Profile";
+import StrangeCard from "./components/Global/StrangerProfileCard"
+import Profile from "./pages/Profile";
 import ViewAllPartners from "./components/Partner/ViewAllPArtners";
 import ViewAllCAs from "./components/CA/ViewAllCAs";
 import ViewAllMembers from "./components/Member/ViewAllMembers";
-import EditProfile from "./components/Profile/EditProfile";
+import EditProfile from "./pages/EditProfile";
 import Events from "./pages/Events";
 import axios from "axios";
 import EditProject from "./pages/EditProject";
 import ViewProject from "./pages/ViewProject";
+import Home from "./pages/Home"
+import SearchPage from "./components/Global/SearchPage"
+import SignUp from "./components/SignUp/SignUp";
+import LogIn from './components/LogIn/LogIn';
+import ForgotPassword from './components/LogIn/forgotPassword';
 
+import Footer from './components/Global/Footer';
+import PreSign from './components/PreSign/PreSign'
 //import ViewAndAssign from "./components/ViewApplyingMemAndAssign";
 
 import SendFinalDraft from "./components/SendFinalDraft";
@@ -31,13 +38,15 @@ import Snack from "./components/View_an_Event/snackBox";
 
 import Loading from "./components/Global/loading";
 import CreateEvent from "./components/Admin/CreateEvent";
+import LinearProgress from './components/Global/loading'
 const server = require("./config");
+
 class App extends Component {
   state = {
     user: null 
   };
-  asPartner = () => {
-    axios
+  asPartner = async() => {
+    await axios
       .get(`${server}/api/partners`)
       .then(res => {
         return res.data;
@@ -48,10 +57,12 @@ class App extends Component {
           type: "partner"
         })
       );
+      localStorage.setItem('type',this.state.type);
+      localStorage.setItem('user',JSON.stringify(this.state.user));
   };
 
-  asMember = () => {
-    axios
+  asMember = async () => {
+    await axios
       .get(`${server}/api/members`)
       .then(res => {
         return res.data;
@@ -62,11 +73,14 @@ class App extends Component {
           type: "member"
         })  
       );
+      localStorage.setItem('type',this.state.type);
+      localStorage.setItem('user',JSON.stringify(this.state.user));
+      var i = JSON.parse(localStorage.getItem('user'))
+      console.log(i._id)
   };
 
-  asAdmin = () => {
-    console.log("admin");
-    axios
+  asAdmin = async () => {
+    await axios
       .get(`${server}/api/admins`)
       .then(res => {
         return res.data;
@@ -78,10 +92,12 @@ class App extends Component {
         });
         console.log(a.data[0]._id);
       });
+      localStorage.setItem('type',this.state.type);
+      localStorage.setItem('user',JSON.stringify(this.state.user));
   };
 
-  asCA = () => {
-    axios
+  asCA = async () => {
+    await axios
       .get(`${server}/api/consultancyagency`)
       .then(res => {
         return res.data;
@@ -92,21 +108,49 @@ class App extends Component {
           type: "consultancyagency"
         })
       );
+      localStorage.setItem('type',this.state.type);
+      localStorage.setItem('user',JSON.stringify(this.state.user));
   };
 
   render() {
-    if (this.state.user) {
-      console.log(this.state)
+    
+      localStorage.setItem('nav',0);
       return (
         <BrowserRouter>
-          
-          
-          <Nav id={this.state.user._id} type={this.state.type+'s'}/>
           <Route
             exact
             path="/Events/:id"
             render={props => (
               <MyEvent
+                {...props}
+                type={this.state.type}
+                user={this.state.user}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/Search"
+            render={props => (
+              <SearchPage
+              {...props}
+              />
+            )}
+          />
+          {/* <Route
+            exact
+            path="/StrangeCard"
+            render={props => (
+              <StrangeCard
+              /> 
+            )}
+          />*/}
+
+          <Route
+            exact
+            path="/Home"
+            render={props => (
+              <Home
                 {...props}
                 type={this.state.type}
                 user={this.state.user}
@@ -122,6 +166,15 @@ class App extends Component {
                 {...props}
                 user={this.state.user}
                 type={this.state.type}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/profile/:id"
+            render={props => (
+              <Profile
+                {...props}
               />
             )}
           />
@@ -202,20 +255,50 @@ class App extends Component {
               />
             )}
           />
+          <Route
+          exact
+          path="/login"
+          render={props => (
+            <LogIn
+            
+            />
+          )}
+        />
+
+        <Route
+          exact
+          path="/signUp/:type"
+          render={props => (
+            <SignUp
+            {...props}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/forgotPassword"
+          render={props => (
+            <ForgotPassword
+            
+            />
+          )}/>
+        
+         
+
+        <Route
+          exact
+          path="/"
+          render={props => (
+            <PreSign
+            
+            />
+          )}
+        />
+       
         </BrowserRouter>
       );
-    } else {
-      return (
-        <>
-          <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
-          <RedirectButton onClick={this.asAdmin} as={"Login as Admin"} />
-          <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
-          <RedirectButton onClick={this.asMember} as={"Login as Member"} />
-          <RedirectButton onClick={this.asCA} as={"Login as CA"} />
-        </>
-      );
-    }
-  }
+    } 
+  
 }
 
 export default App;

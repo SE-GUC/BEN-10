@@ -66,7 +66,7 @@ class OutlinedTextFields extends React.Component {
     lastName:this.props.member.lastName,
     SSN:this.props.member.SSN,
     birthDate:this.props.member.birthDate,
-    gender:this.props.member.gender,
+    gender:this.props.member.gender?"Female":"Male",
     nationality:this.props.member.nationality,
     maritalStatus:this.props.member.maritalStatus,
     drivingLicense:this.props.member.drivingLicense,
@@ -92,7 +92,7 @@ onUpdate =()=>{
     lastName:this.state.lastName,
     SSN:this.state.SSN,
     birthDate:this.state.birthDate,
-    gender:this.state.gender,
+    gender:this.state.gender==="Female"?true:false,
     nationality:this.state.nationality,
     maritalStatus:this.state.maritalStatus,
     drivingLicense:this.state.drivingLicense,
@@ -110,7 +110,6 @@ onUpdate =()=>{
   }
   axios.put(`${server}/api/members/${this.props.member._id}`,body)
   .then(res=>{ 
-    console.log(res.status);
    return res.data
 })
 .then(json => this.setState({project : json}))

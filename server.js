@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const Member = require("./models/Member");
 const nodemailer = require("nodemailer");
 // Require Router Handlers
+
 const eventrequests = require("./routes/api/eventrequests");
 const projects = require("./routes/api/projects");
 const orientationinvitations = require("./routes/api/orientationinvitations");
@@ -27,17 +28,17 @@ app.use(function(req, res, next) {
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    next();
+  );
+  next();
+});
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+
+  app.use("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
-  if(process.env.NODE_ENV==='production'){
-    app.use(express.static('client/build'))
-  
-    app.use('*',(req,res)=>{
-      res.sendFile(path.resolve(__dirname,'client','build','index.html'))
-    })
-  }
-  // DB Config
+}
+// DB Config
 const db = require("./config/keys").mongoURI;
 
 // Connect to mongo
@@ -68,7 +69,7 @@ app.use("/api/projects", projects);
 app.use("/api/admins", admins);
 app.use("/api/events", require("./routes/api/events"));
 app.use("/api/partners", partners);
-app.use("/api/members",member);
+app.use("/api/members", member);
 
 app.use("/api/projects", projects);
 app.use("/api/admins", admins);
@@ -98,6 +99,7 @@ app.use("/api/consultancyagency", consultancyagencys);
 app.use("/api/notifications", notification);
 // as a user i want to login
 app.put("/login", async (req, res) => {
+  console.log("the req is  :" + req.body.email + ":");
   var flag = true;
   var allUsers = await Member.find();
   var user = allUsers.filter(u => u.email.toString() === req.body.email);
@@ -105,15 +107,22 @@ app.put("/login", async (req, res) => {
     user = user[0];
     if (user.password.toString() === req.body.password.toString()) {
       flag = false;
-      const data = {
-        id: user._id,
-        type: "members"
+      var data2 = {
+        user: user,
+        type: "member"
       };
-      jwt.sign({ data }, "nada", { expiresIn: "1200s" }, (err, token) => {
-        res.json({ token });
+      jwt.sign({ data2 }, "nada", { expiresIn: "1h" }, (err, token) => {
+        //  data = JSON.parse(data);
+        const data = {
+          user: user,
+          type: "member",
+          token: token
+        };
+        console.log(data);
+        return res.json({ data });
       });
     } else {
-      return res.status(400).send({ error: "password not correct" });
+      return res.send({ error: "password not correct" });
     }
   }
   //------- admin
@@ -124,12 +133,17 @@ app.put("/login", async (req, res) => {
       user = user[0];
       if (user.password.toString() === req.body.password.toString()) {
         flag = false;
-        const data = {
-          id: user._id,
-          type: "admins"
+        const data2 = {
+          user: user,
+          type: "admin"
         };
-        jwt.sign({ data }, "nada", { expiresIn: "1200s" }, (err, token) => {
-          res.json({ token });
+        jwt.sign({ data2 }, "nada", { expiresIn: "1200s" }, (err, token) => {
+          const data = {
+            user: user,
+            type: "admin",
+            token: token
+          };
+          return res.json({ data });
         });
       } else {
         return res.status(400).send({ error: "password not correct" });
@@ -145,13 +159,17 @@ app.put("/login", async (req, res) => {
       user = user[0];
       if (user.password.toString() === req.body.password.toString()) {
         flag = false;
-        const data = {
-          id: user._id,
-          type: "admins"
+        const data2 = {
+          user: user,
+          type: "partner"
         };
-        jwt.sign({ data }, "nada", { expiresIn: "1200s" }, (err, token) => {
-          res.json({ token });
-          next();
+        jwt.sign({ data2 }, "nada", { expiresIn: "1200s" }, (err, token) => {
+          const data = {
+            user: user,
+            type: "partner",
+            token: token
+          };
+          return res.json({ data });
         });
       } else {
         return res.status(400).send({ error: "password not correct" });
@@ -164,17 +182,22 @@ app.put("/login", async (req, res) => {
     allUsers = await ConsultancyAgency.find();
     user = allUsers.filter(u => u.email.toString() === req.body.email);
     if (user.length == 0) {
-      return res.status(404).send({ error: "email not correct" });
+      return res.send({ error: "email not correct" });
     } else {
       user = user[0];
       if (user.password.toString() === req.body.password.toString()) {
         flag = false;
-        const data = {
-          id: user._id,
-          type: "admins"
+        const data2 = {
+          user: user,
+          type: "consultancyagency"
         };
-        jwt.sign({ data }, "nada", { expiresIn: "1200s" }, (err, token) => {
-          res.json({ token });
+        jwt.sign({ data2 }, "nada", { expiresIn: "1200s" }, (err, token) => {
+          const data = {
+            user: user,
+            type: "consultancyagency",
+            token: token
+          };
+          return res.json({ data });
         });
       } else {
         return res.status(400).send({ error: "password not correct" });
@@ -190,122 +213,336 @@ app.put("/logout", verifyToken, (req, res, next) => {
       res.sendStatus(403);
     } else {
       blackList.push(req.token);
+      console.log("@jwaaaaaaaaaaaaaaaaaa")
+      console.log(blackList)
       res.json("Out");
       next();
     }
   });
 });
+//---------------------------------------------------------
+//------------------- i want to recieve my old password -----
+app.put("/sendOldPassword", async (req, res) => {
+  const body = req.body;
+  var users = null;
+  var flag = false;
+  var myUser = null;
+  if (body.email) {
+    users = await Member.find();
+    myUser = users.filter(u => u.email === body.email);
+    console.log(myUser);
+    myUser = myUser[0];
+    if (myUser) {
+      flag = true;
+    } else {
+      users = await Admin.find();
+      myUser = users.filter(u => u.email === body.email);
+      myUser = myUser[0];
+      if (myUser) {
+        flag = true;
+      } else {
+        users = await Partner.find();
+        myUser = users.filter(u => u.email === body.email);
+        myUser = myUser[0];
+        if (myUser) {
+          flag = true;
+        } else {
+          users = await ConsultancyAgency.find();
+          myUser = users.filter(u => u.email === body.email);
+          myUser = myUser[0];
+          if (myUser) {
+            flag = true;
+          }
+        }
+      }
+    }
+    if (flag) {
+      // sending the mail-------------------------
+
+      const outPut = `<div><p>You requested to recieve your old password  so your old Password is:${
+        myUser.password
+      }</p></div>`;
+
+      // create reusable transporter object using the default SMTP transport
+
+      let transporter = nodemailer.createTransport({
+        service: "gmail",
+
+        auth: {
+          user: "ahmedalaamanutd@gmail.com", // generated ethereal user
+
+          pass: "rememberme1115" // generated ethereal password
+        }
+      });
+
+      let mailOptions = {
+        from: '"LirtenHub"', // sender address
+
+        to: body.email.toString(), // list of receivers
+
+        subject: "Forgot your password ! we got you", // Subject line
+
+        text: "", // plain text body
+
+        html: outPut
+      };
+
+      // send mail with defined transport object
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Message Sent!");
+
+          console.log(info);
+        }
+      });
+
+      //-------------------------------------------
+    } else {
+      res.send({ error: "no one is registered with this email" });
+    }
+  } else {
+    res.send({ error: "Mail is required" });
+  }
+});
+
+//i want to change my password incase i forgot it
+app.put("/forgotPassword", async (req, res) => {
+  const body = req.body;
+  var users = null;
+  var flag = false;
+  var type = null;
+  var myUser = null;
+  if (body.email && body.password && body.newPassword) {
+    users = await Member.find();
+    myUser = users.filter(u => u.email === body.email);
+    console.log(myUser);
+    myUser = myUser[0];
+    if (myUser) {
+      type = "member";
+      flag = true;
+    } else {
+      users = await Admin.find();
+      type = "admin";
+      myUser = users.filter(u => u.email === body.email);
+      myUser = myUser[0];
+      if (myUser) {
+        flag = true;
+      } else {
+        users = await Partner.find();
+        type = "partner";
+        myUser = users.filter(u => u.email === body.email);
+        myUser = myUser[0];
+        if (myUser) {
+          flag = true;
+        } else {
+          users = await ConsultancyAgency.find();
+          type = "consultancyagency";
+          myUser = users.filter(u => u.email === body.email);
+          myUser = myUser[0];
+          if (myUser) {
+            flag = true;
+          }
+        }
+      }
+    }
+    if (flag) {
+      console.log(type);
+      if (myUser.password === body.password) {
+        const sentBody = {
+          password: body.newPassword
+        };
+        if (type === "consultancyagency") {
+          await fetch(`${server}/api/consultancyagency/${myUser._id}`, {
+            method: "put",
+
+            body: JSON.stringify(sentBody),
+
+            headers: {
+              "Content-Type": "application/json"
+            }
+          });
+        } else {
+          console.log("monda");
+          await fetch(`${server}/api/${type}s/${myUser._id}`, {
+            method: "put",
+
+            body: JSON.stringify(sentBody),
+
+            headers: {
+              "Content-Type": "application/json"
+            }
+          });
+        }
+      }
+    }
+  } else {
+    res.send({ error: "error in inputs" });
+  }
+});
+
 // i want to sign up
 app.post("/signUp", async (req, res) => {
   var body = req.body;
-  const name = body.type.substring(0,body.type.length-1)
+
+  const name = body.type;
+
   const token = jwt.sign({ id: -1 }, "nada", { expiresIn: "20s" });
+
   console.log(token);
-  if (req.body.type.toString() === "members") {
+
+  if (req.body.type.toString() === "member") {
     delete body.type;
+
     await fetch(`${server}/api/members`, {
       method: "post",
+
       body: JSON.stringify(body),
+
       headers: {
         "Content-Type": "application/json",
+
         Authorization: "bearer " + token.toString()
       }
     })
       .then(res => res.json())
-      .then(json => res.json(json))
+
+      .then(json => {
+        console.log(json);
+        return res.json(json);
+      })
+
       .catch(err => console.log("Error", err));
-  } else if (req.body.type.toString() === "admins") {
+  } else if (req.body.type.toString() === "admin") {
     delete body.type;
+
     await fetch(`${server}/api/admins`, {
       method: "post",
+
       body: JSON.stringify(body),
+
       headers: {
         "Content-Type": "application/json",
+
         Authorization: "bearer " + token.toString()
       }
     })
       .then(res => res.json())
+
       .then(json => res.json(json))
+
       .catch(err => console.log("Error", err));
   } else if (req.body.type.toString() === "consultancyagency") {
     delete body.type;
+
     await fetch(`${server}/api/consultancyagency`, {
       method: "post",
+
       body: JSON.stringify(body),
+
       headers: {
         "Content-Type": "application/json",
+
         Authorization: "bearer " + token.toString()
       }
     })
       .then(res => res.json())
+
       .then(json => res.json(json))
+
       .catch(err => console.log("Error", err));
-  } else if (req.body.type.toString() === "partners") {
+  } else if (req.body.type.toString() === "partner") {
     delete body.type;
+
     await fetch(`${server}/api/partners`, {
       method: "post",
+
       body: JSON.stringify(body),
+
       headers: {
         "Content-Type": "application/json",
+
         Authorization: "bearer " + token.toString()
       }
     })
       .then(res => res.json())
+
       .then(json => res.json(json))
+
       .catch(err => console.log("Error", err));
   }
-  const outPut = `<p>Congratulations you have subscribed to be a LirtenHub${name}</p>`
+
+  const outPut = `<p>Congratulations you have subscribed to be a LirtenHub${name}</p>`;
 
   // create reusable transporter object using the default SMTP transport
+
   let transporter = nodemailer.createTransport({
-    service:'gmail',
+    service: "gmail",
+
     auth: {
-      user: 'ahmedalaamanutd@gmail.com', // generated ethereal user
-      pass: 'rememberme1115' // generated ethereal password
+      user: "ahmedalaamanutd@gmail.com", // generated ethereal user
+
+      pass: "rememberme1115" // generated ethereal password
     }
   });
-let mailOptions = {
+
+  let mailOptions = {
     from: '"LirtenHub"', // sender address
+
     to: req.body.email.toString(), // list of receivers
+
     subject: "Registration Notification", // Subject line
+
     text: "", // plain text body
-    html: outPut 
-};
+
+    html: outPut
+  };
+
   // send mail with defined transport object
-  transporter.sendMail(mailOptions,(error,info)=>{
-    if(error){
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
       console.log(error);
-    }else{
-      console.log("Message Sent!")
-      console.log(info)
+    } else {
+      console.log("Message Sent!");
+
+      console.log(info);
     }
   });
 });
-
 //-------------------- search ----------------------
-app.get("/searchAdmins", async (req, res) => {
+app.post("/searchAdmins", async (req, res) => {
   return res.send({ data: await searchInAdmins(req.body.text.toLowerCase()) });
 });
-app.get("/searchMembers", async (req, res) => {
+app.post("/searchMembers", async (req, res) => {
   return res.send({ data: await searchInMembers(req.body.text.toLowerCase()) });
 });
-app.get("/searchCAs", async (req, res) => {
-  return res.send({ data: await searchInConsultancyAgency(req.body.text.toLowerCase()) });
+app.post("/searchCAs", async (req, res) => {
+  return res.send({
+    data: await searchInConsultancyAgency(req.body.text.toLowerCase())
+  });
 });
-app.get("/searchProjects", async (req, res) => {
-  return res.send({ data: await searchInProjects(req.body.text.toLowerCase()) });
+app.post("/searchProjects", async (req, res) => {
+  return res.send({
+    data: await searchInProjects(req.body.text.toLowerCase())
+  });
 });
-app.get("/searchEvents", async (req, res) => {
+app.post("/searchEvents", async (req, res) => {
   return res.send({ data: await searchInEvents(req.body.text.toLowerCase()) });
 });
-app.get("/searchPartners", async (req, res) => {
-  return res.send({ data: await searchInPartners  (req.body.text.toLowerCase()) });
+app.post("/searchPartners", async (req, res) => {
+  return res.send({
+    data: await searchInPartners(req.body.text.toLowerCase())
+  });
 });
 
 async function searchInProjects(t) {
   var projects = await Project.find();
   projects = projects.filter(
     p =>
+      p.name.toLowerCase().includes(t) ||
       p.description.toLowerCase().includes(t) ||
       p.category.toLowerCase().includes(t) ||
       p.lifeCycle.toLowerCase().includes(t) ||
@@ -342,7 +579,7 @@ async function searchInPartners(t) {
       p.area.toLowerCase().includes(t) ||
       p.email.toLowerCase().includes(t)
   );
-  partners.map(p=> (delete p._doc.password));
+  partners.map(p => delete p._doc.password);
   return partners;
 }
 async function searchInMembers(t) {
@@ -366,7 +603,7 @@ async function searchInMembers(t) {
         .toLowerCase()
         .includes(t)
   );
-  members.map(p=> (delete p._doc.password));
+  members.map(p => delete p._doc.password);
   return members;
 }
 async function searchInConsultancyAgency(t) {
@@ -382,7 +619,7 @@ async function searchInConsultancyAgency(t) {
         .toLowerCase()
         .includes(t)
   );
-  CAs.map(p=> (delete p._doc.password));
+  CAs.map(p => delete p._doc.password);
   return CAs;
 }
 async function searchInAdmins(t) {
@@ -401,8 +638,8 @@ async function searchInAdmins(t) {
       p.city.toLowerCase().includes(t) ||
       p.area.toLowerCase().includes(t) ||
       p.email.toLowerCase().includes(t)
-  ); 
-  admins.map(p=> (delete p._doc.password));
+  );
+  admins.map(p => delete p._doc.password);
 
   return admins;
 }
@@ -410,8 +647,8 @@ async function searchInEvents(t) {
   var events = await Event.find();
   events = events.filter(
     p =>
-      p.type.toLowerCase().includes(t) ||
-      p.location.toLowerCase().includes(t) ||
+      p.eventType.toLowerCase().includes(t) ||
+      p.eventLocation.toLowerCase().includes(t) ||
       p.description.toLowerCase().includes(t) ||
       p.topics
         .toString()
@@ -430,6 +667,7 @@ async function searchInEvents(t) {
 
 function verifyToken(req, res, next) {
   const bearerHeader = req.headers["authorization"];
+  console.log(bearerHeader)
   if (typeof bearerHeader !== "undefined") {
     const bearer = bearerHeader.split(" ");
     const bearerToken = bearer[1];
@@ -441,51 +679,19 @@ function verifyToken(req, res, next) {
 }
 //---------------------------------- Mail
 
-app.post("/send",(req,res)=>{ 
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+app.post("/send", (req, res) => {});
 
 //-----------------------------------------
 
 app.use((req, res) =>
   res.status(404).send(`<h1>Can not find what you're looking for</h1>`)
 );
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   // Serve any static files
-  app.use(express.static(path.join(__dirname, 'client/build')));
+  app.use(express.static(path.join(__dirname, "client/build")));
   // Handle React routing, return all requests to React app
-  app.use('*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  app.use("*", function(req, res) {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
   });
 }
 const port = process.env.PORT || 5000;

@@ -15,17 +15,17 @@ const server = require("../../config");
 
 const styles = {
   card: {
-    width: 300,
-    backgroundColor: "#006064",
-    marginBottom: 10,
-    marginLeft: 530
+    minWidth: 275,
+    marginLeft:"auto",
+    marginRight:"auto",
+    marginTop:20,
   },
-  media: {
-    // ⚠️ object-fit is not supported by IE 11.
-    objectFit: "cover"
-  },
+  // media: {
+  //   // ⚠️ object-fit is not supported by IE 11.
+  //   objectFit: "cover"
+  // },
   text: {
-    color: "#ffc107"
+    color: "#e53935"
   }
 };
 
@@ -42,6 +42,7 @@ class MyProjectCard extends Component {
       flag: false
     };
   }
+  
   viewProject() {
     this.setState({ redirectview: true });
   }
@@ -101,12 +102,27 @@ class MyProjectCard extends Component {
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2" />
               <Typography className={classes.text} component="p">
-                Company Name:{this.state.company}
+                <Typography variant="subtitle2" gutterBottom>
+                Project Name:
+                </Typography>
+                {this.props.project.name}
                 <br />
-                Description: {this.props.project.description}
                 <br />
-                Life Cycle:{this.props.project.lifeCycle}
+                <Typography variant="subtitle2" gutterBottom>
+                Company Name:
+                </Typography>
+                 {this.state.company}
                 <br />
+                <br />
+                <Typography variant="subtitle2" gutterBottom>
+                Description:
+                </Typography> {this.props.project.description}
+                <br />
+                <br />
+                <Typography variant="subtitle2" gutterBottom>
+                Life Cycle:
+                </Typography>
+                 {this.props.project.lifeCycle}
               </Typography>
             </CardContent>
           </CardActionArea>

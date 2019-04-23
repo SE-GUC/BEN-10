@@ -8,7 +8,7 @@ import styles from './editableViews.css';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Chip from '@material-ui/core/Chip';
-import ListSubheader from "@material-ui/core/ListSubheader";
+import Typography from '@material-ui/core/Typography';
 const server = require("../../config");
 
 const effort = ['Low','Normal','Hard','Extreme']
@@ -70,11 +70,14 @@ export default class EditableView extends React.Component {
         return (
         <div class="mainContainer">    
              <div id="ProjectAttributes">
-              <div class="headerArea"> <ListSubheader component="div">
-              project attributes
-    </ListSubheader>
-              <div class="col-9 float-left">
-                <Card>         
+             <br></br>
+
+              <div class="headerArea"> <Typography variant="h4" gutterBottom>
+              Project Attributes
+      </Typography>
+              <div class="col-2 float-left">
+              
+                <Card style={{ height: 'auto' ,width:'25rem'}}>         
                   <TextField class="allInputs"
                     id="outlined-multiline-static"
                     multiline
@@ -116,7 +119,7 @@ export default class EditableView extends React.Component {
 
                  <TextField class="allInputs"
                     id="outlined-select-currency"
-                    label="Native select"
+                    label="Estimated Effort"
                     className={classNames.textField}
                     value={this.state.estimatedEffort}
                     InputProps={{
@@ -157,7 +160,7 @@ export default class EditableView extends React.Component {
                  <div class="addedSkills"> 
                  <Card style={{width:'200px'}} >
               
-                 <h3>Set</h3>
+                 <h3>Skill Set</h3>
                  {this.state.requiredSkillsSet.map(option => (
                   <Chip 
                   key={option}

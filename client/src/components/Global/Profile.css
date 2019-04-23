@@ -1,0 +1,67 @@
+.mainCard {
+  position: center;
+  margin:auto;
+  width: 800px;
+  height: 15%;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: xx-large;
+  padding-top: 2px;
+    /* border:1px solid black;
+  border-left-width: thick;
+  border-right-width: thick;
+  border-top-width: thick;
+  border-bottom-width: thick;
+  border-color: brown */
+
+}
+.nameCard::first-letter{
+  font-weight: bold;
+  font-size: 5em;
+}
+.media {
+  color: deeppink;
+  height: 100%;
+  width: 100%;
+}
+.all {
+  /* background-image: url("./background.png"); */
+  width: auto;
+  height: 100vh;
+  position: relative;
+  /* background-color: blue; */
+  /* border-color: yellow; */
+}
+.pic{
+margin-left: auto;
+ /* position: center;*/
+ margin-right: auto;
+}
+.content{
+ /* background-color: blueviolet; */
+ background-color: #e5e8e8;
+ margin-top: 20px;
+ position: center;
+ margin:auto;
+ width: 800px;
+ height: 90%;
+}
+.paper{
+  padding-bottom: 7px
+}
+.text1{
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bolder;
+  font-size: 22;
+  padding-left: 2px;
+
+}
+.text2{
+  font-family:'Montserrat';
+  color: #757575  ;
+  font-size: 20;
+  padding-left: 2px;
+  font-weight: bold;
+
+}
+

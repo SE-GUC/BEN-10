@@ -5,47 +5,53 @@ import PMyEvent from "../components/Event/PartnerMyEvents"
 import MMyEvent from "../components/Event/MemberMyEvents"
 import CAMyEvent from "../components/Event/CAMyEvents"
 import ViewAllEventRequests from "../components/Admin/ViewAllEventRequests"
+import Nav from '../components/Global/PrimarySearchAppBar'
 const server = require("../../src/config");
 
 class Events extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-          ID: props.Id,
-          reload: true
+        user:JSON.parse(localStorage.getItem('user')),
+        type:localStorage.getItem('type'),
+        reload: true
         };
     }
 
         
     render(){
-        if(this.props.type==="admin"){
+        if(this.state.type==="admin"){
             console.log("hi")
             return(
                 <div> 
-                    <ViewAllEventRequests admin_id={this.props.user._id}/>
+                    <Nav value={2}/>
+                    <ViewAllEventRequests admin_id={this.state.user._id}/>
                     <ViewAllEvents />
                 </div>);   
         }
-        else if(this.props.type==="partner"){
+        else if(this.state.type==="partner"){
             return(
             <div> 
-                <ExpansionPanelER requestorId={this.props.user._id} requestedBy={this.props.user.name} />
-                <PMyEvent id={this.props.user._id} />
+                <Nav value={2}/>
+                <ExpansionPanelER requestorId={this.state.user._id} requestedBy={this.state.user.name} />
+                <PMyEvent id={this.state.user._id} />
                 <ViewAllEvents />
             </div>);            
         }
-        else if(this.props.type==="member"){
+        else if(this.state.type==="member"){
             return(
                 <div> 
-                    <MMyEvent id={this.props.user._id} />
+                    <Nav value={2}/>
+                    <MMyEvent id={this.state.user._id} />
                     <ViewAllEvents />
                 </div>);   
         }
-        else if(this.props.type==="consultancyagency"){
+        else if(this.state.type==="consultancyagency"){
             return(
             <div>
-                <ExpansionPanelER requestorId={this.props.user._id} requestedBy={this.props.user.name} />
-                <CAMyEvent id={this.props.user._id} />
+                <Nav value={2}/>
+                <ExpansionPanelER requestorId={this.state.user._id} requestedBy={this.state.user.name} />
+                <CAMyEvent id={this.state.user._id} />
                 <ViewAllEvents />
             </div>
             )

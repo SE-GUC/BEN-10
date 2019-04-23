@@ -12,6 +12,7 @@ import { BrowserRouter as Router , Route , withRouter } from "react-router-dom";
 import classes from'classnames' ;
 import axios from "axios";
 import AllEventsCard from './AllEventsCard';
+import { LinearProgress } from '@material-ui/core';
 const server = require("../../config");
 
 const styles = {
@@ -53,7 +54,7 @@ class ViewAllEvents extends React.Component {
       this.state.events.map((p,i)=> <AllEventsCard key={i} p={p} /> ));
     }else{
       return(
-        <div>loooding</div>
+        <LinearProgress/>
       )
     }
     }
