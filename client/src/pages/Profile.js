@@ -4,6 +4,7 @@ import ProfileView from "../components/Global/Profile";
 import axios from "axios";
 
 import styles from './Profile.css'
+import { LinearProgress } from "@material-ui/core";
 const server = require("../../src/config");
 
 class Profile extends React.Component{
@@ -77,7 +78,7 @@ class Profile extends React.Component{
         </div>);
         }   
         else{
-            return<div>looading</div>
+            return <LinearProgress/>
         }
     }
 }

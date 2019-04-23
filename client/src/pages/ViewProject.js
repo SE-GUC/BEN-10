@@ -20,6 +20,7 @@ import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Typography from '@material-ui/core/Typography';
+import { LinearProgress } from "@material-ui/core";
 const server = require("../../src/config");
 
 
@@ -178,7 +179,7 @@ export default class ViewProject extends Component {
     } else {
       return (
         <div>
-          <CircularProgress />
+          <LinearProgress />
         </div>
       );
     }
