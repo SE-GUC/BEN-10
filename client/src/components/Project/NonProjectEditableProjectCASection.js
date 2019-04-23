@@ -74,8 +74,8 @@ export default class EditableView extends React.Component {
                     <div class="headerArea"> <Typography variant="h4" gutterBottom>
                     Consultancy Agency Info
       </Typography>
-                        <div class="col-9 float-left">
-                            <Card>
+                        <div class="col-2 float-left">
+                            <Card style={{ height: 'auto' ,width:'25rem'}}>
                             <TextField
                                 id="outlined-read-only-input"
                                 label="Email"

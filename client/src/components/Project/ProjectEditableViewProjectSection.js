@@ -124,8 +124,8 @@ export default class EditableView extends React.Component {
 <div class="headerArea"> <Typography variant="h4" gutterBottom>
 Project Attributes
 </Typography>
-              <div>
-                <Card>
+              <div class="col-2 float-left"> 
+                <Card style={{ height: 'auto' ,width:'25rem'}}>
                   <TextField class="allInputs"
                     id="outlined-multiline-static"
                     multiline
@@ -137,6 +137,7 @@ Project Attributes
                     margin="normal"
                     variant="outlined"
                   />
+                  
 
                   <TextField class="allInputs"
                    id="outlined-category"
@@ -241,6 +242,7 @@ Project Attributes
                     variant="outlined"
                     style={{float:"left"}}
                   />
+                  <br></ br>
                   <Button variant="primary" style={{width:'fit-content',float:'left'}} onClick={this.addSkill}>Add</Button>
                   </div>     
                  
@@ -249,7 +251,7 @@ Project Attributes
                  <div class="addedSkills"> 
                  <Card style={{width:'200px'}} >
               
-                 <h3>Set</h3>
+                 <h3>Skill Set</h3>
                  {this.state.requiredSkillsSet.map(option => (
                   <Chip 
                   key={option}
