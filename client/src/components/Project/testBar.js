@@ -29,10 +29,10 @@ const styles = theme => ({
   ,
   Tab:{
       width:"auto",
-      backgroundColor:"#006064"
+      backgroundColor:"#e5e8e8"
   },
   label:{
-    color:"#ffc107"
+    color:"deeppink"
   }
 });
 
