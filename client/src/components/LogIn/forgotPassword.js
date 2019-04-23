@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Redirect , BrowserRouter} from 'react-router-dom';
 import style  from './LogIn.css';
-import background from './MainLogoTransparent.png';
+import background from './3D.png';
 import { classes } from 'istanbul-lib-coverage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CardContent from '@material-ui/core/CardContent';
