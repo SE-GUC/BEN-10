@@ -98,7 +98,7 @@ export default class LogIn extends Component {
     }
    else 
     return (
-      <div class="main">
+      <div class="mainin">
         <div class="Header"> 
         </div>
         

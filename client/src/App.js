@@ -113,7 +113,7 @@ class App extends Component {
   };
 
   render() {
-    if (this.state.user) {
+    
       localStorage.setItem('nav',0);
       return (
         <BrowserRouter>
@@ -287,7 +287,7 @@ class App extends Component {
 
         <Route
           exact
-          path="/start"
+          path="/"
           render={props => (
             <PreSign
             
@@ -297,22 +297,8 @@ class App extends Component {
        
         </BrowserRouter>
       );
-    } else {
-      return (
-        <>
-        <LinearProgress/>
-         <a href='http://localhost:5000/profile#/'>click the link and choose type</a>
-          <RedirectButton onClick={this.asAdmin} as={"Login as Admin"} />
-          <RedirectButton onClick={this.asPartner} as={"Login as Partner"} />
-          <RedirectButton onClick={this.asMember} as={"Login as Member"} />
-      <RedirectButton onClick={this.asCA} as={"Login as CA"} /> 
-      
-      
-
-        </>
-      );
-    }
-  }
+    } 
+  
 }
 
 export default App;

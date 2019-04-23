@@ -1,9 +1,8 @@
-.main{
+.mainpre{
     background:white;
     height: 100vh;
-    /* background: url('./cover.png'),white; */
     background: url('../LogIn/meeting1.jpg'),white;
-    background-position: center;
+    background-position: left;
     background-size: cover;
     background-repeat: no-repeat;
     /* background-color: #f9f9f9;    border: 1px solid yellow;  */
@@ -16,23 +15,54 @@
   width: 100%;
 
 }
-.Header{
+.Headerpre{
     position: relative!important;
     box-sizing: border-box;
      /* border: 1px solid blue;   */
      height: 20%;
 
 }
-.middle{
-     /* border: 1px solid red;  */
+.middlepre{
+     /* border: 5px solid red;  */
      height: 80%;
 
 
 
 }
+.fade {
+    animation: fade-in-keyframes 1s;
+  }
+  @keyframes fade-in-keyframes {
+    from {opacity: 0}
+    to {opacity: 1}
+  }
+.r1{
+float: left;
+width: 15%;
+height: 100%;
+
+border-color:5px solid aqua;
+
+
+}
+
 .register{
-    margin-top: 300px;
-    margin-left: 230px;
+   float: left;
+   width: 70%;
+   position: relative;
+   border-color:5px solid black;
+   height: 100%;
+   margin-top: 200px;
+
+
+
+}
+.r2{
+    float: left;
+    width: 15%;
+    height: 100%;
+
+
 }
 .paragraph{
     font-weight: bolder;
