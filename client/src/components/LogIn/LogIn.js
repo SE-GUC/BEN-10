@@ -127,6 +127,7 @@ export default class LogIn extends Component {
      
              <TextField
              className={classes.margin}
+             type="password"
              label="Password"
              onChange={this.handleChange('password')}
              id="mui-theme-provider-standard-input"

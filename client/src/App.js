@@ -267,10 +267,10 @@ class App extends Component {
 
         <Route
           exact
-          path="/signUp"
+          path="/signUp/:type"
           render={props => (
             <SignUp
-            
+            {...props}
             />
           )}
         />
@@ -282,15 +282,7 @@ class App extends Component {
             
             />
           )}/>
-          <Route
-        exact
-        path="/signUp"
-        render={props => (
-          <SignUp
-          
-          />
-        )}
-      />
+        
 
         <Route
           exact
