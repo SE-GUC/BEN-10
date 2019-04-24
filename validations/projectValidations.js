@@ -4,6 +4,7 @@ Joi.objectId = require('joi-objectid')(Joi);
 module.exports = {
     createValidation: request => {
         const createSchema = {
+            name:Joi.string.required(),
             description:Joi.string().required(),
             companyId:Joi.objectId(),
             category:Joi.string().required(),
@@ -42,6 +43,7 @@ module.exports = {
 
     updateValidation: request => {
         const updateSchema = {
+            name:Joi.string(),
             description:Joi.string(),
             companyId:Joi.objectId(),
             category:Joi.string(),

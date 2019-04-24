@@ -15,17 +15,30 @@ const styles = theme => ({
     width: '100%',
   },
   menu: {
-      width:300
+      width:300,
   },
+  
   heading: {
     fontSize: theme.typography.pxToRem(15),
     flexBasis: '33.33%',
     flexShrink: 0,
+    fontcolor:'#000000'
   },
   secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary,
   },
+  seenAv:{
+    backgroundColor:"#616161"
+
+  },
+  unseenAv:{
+    backgroundColor:"#e91e63"
+
+  }
+
+
+
 });
 
 class ControlledExpansionPanels extends React.Component {
@@ -154,12 +167,15 @@ console.log(panel)
     return (
       <div className={classes.menu}>
         {this.state.notifications.map(n =>(
-            <ExpansionPanel expanded={expanded === 'panel'+(i)} onChange={this.handleChange('panel'+(i))}>
+            <ExpansionPanel expanded={expanded === 'panel'+(i)} onChange={this.handleChange('panel'+(i))} background = { n.seen? '#FAF061':'#C85252'}>
             <ExpansionPanelSummary>
-              <Typography className={classes.heading}><Avatar children={this.state.types[i]}/></Typography>
+              <Typography className={classes.heading}>
+              {n.seen?<Avatar children={this.state.types[i]} className={classes.seenAv}/>:<Avatar children={this.state.types[i]} className={classes.unseenAv}/>}
+              
+              </Typography>
               <Typography className={classes.secondaryHeading}>{this.state.from[i++]}</Typography>
             </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
+            <ExpansionPanelDetails >
               <Typography>
                 {n.description}
               </Typography>

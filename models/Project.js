@@ -3,6 +3,10 @@ const Schema = mongoose.Schema
 
 // Create the schema
 const ProjectSchema = new Schema({
+    name:{
+        type:String,
+        required:true
+    },
     description: {
         type: String,
         required: true

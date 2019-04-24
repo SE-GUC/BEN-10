@@ -34,25 +34,8 @@ const styles = theme => ({
   },
 });
 
-const currencies = [
-  {
-    value: 'USD',
-    label: '$',
-  },
-  {
-    value: 'EUR',
-    label: '€',
-  },
-  {
-    value: 'BTC',
-    label: '฿',
-  },
-  {
-    value: 'JPY',
-    label: '¥',
-  },
-];
 
+  
 
 class OutlinedTextFields extends React.Component {
   constructor(props) {
@@ -64,7 +47,7 @@ class OutlinedTextFields extends React.Component {
     lastName:this.props.admin.lastName,
     SSN:this.props.admin.SSN,
     birthDate:this.props.admin.birthDate,
-    gender:this.props.admin.gender,
+    gender:this.props.admin.gender?"Female":"Male",
     nationality:this.props.admin.nationality,
     maritalStatus:this.props.admin.maritalStatus,
     drivingLicense:this.props.admin.drivingLicense,
@@ -78,16 +61,15 @@ class OutlinedTextFields extends React.Component {
     alternativeMobileNumber:this.props.admin.alternativeMobileNumber,
     showPassword: false
   }
-  console.log(this.props.partner)
 }
 
-onUpdate =()=>{
+onUpdate =async()=>{
   const body={
     firstName:this.state.firstName,
     lastName:this.state.lastName,
     SSN:this.state.SSN,
     birthDate:this.state.birthDate,
-    gender:this.state.gender,
+    gender:this.state.gender==="Female"?true:false,
     nationality:this.state.nationality,
     maritalStatus:this.state.maritalStatus,
     drivingLicense:this.state.drivingLicense,
@@ -101,13 +83,13 @@ onUpdate =()=>{
     alternativeMobileNumber:this.state.alternativeMobileNumber
     
   }
-  axios.put(`${server}/api/admins/${this.props.admin._id}`,body)
+  await axios.put(`${server}/api/admins/${this.props.admin._id}`,body)
   .then(res=>{ 
-    console.log(res.status);
+    console.log(res.data);
    return res.data
 })
 .then(json => this.setState({project : json}))
-window.location.reload();
+// window.location.reload();
 
 
 }

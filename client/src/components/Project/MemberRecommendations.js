@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MyProjectCard from './MyProjectCard'
+import { LinearProgress } from '@material-ui/core';
 // const axios = require('axios');
 const server = require("../../config");
 
@@ -21,7 +22,7 @@ class MemberMyProjects extends Component {
     if(this.state.Project===null){
         return (
             <div className="App">
-              <label>Loading....</label>
+            <LinearProgress/>
             </div>
           );
     }

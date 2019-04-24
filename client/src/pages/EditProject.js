@@ -6,18 +6,24 @@ import PartnerCanEditInProject from '../components/PartnerCanEditInProject';
 import EditableView from '../components/Project/ProjectEditableViewProjectSection';
 import CircularProgress from '../components/Global/CircularIndeterminate';
 import ReactDOM from 'react-dom';
+import Paper from '@material-ui/core/Paper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
 import ProjectEditableViewCASection from '../components/Project/ProjectEditableProjectCASection';
 import ProjectEditableCandidateSection from '../components/Project/ProjectEditableCandidateSection';
+import Nav from '../components/Global/PrimarySearchAppBar'
+import LinearProgress from '../components/Global/loading'
 const server = require("../../src/config");
 
 export default class EditProject extends Component {
   constructor(props){
     super(props); 
   this.state={
+        user:JSON.parse(localStorage.getItem('user')),
+        type:localStorage.getItem('type'),
         projectID : this.props.match.params.id,
-        userID:props.user._id,
+        userID:JSON.parse(localStorage.getItem('user'))._id,
         project : null,
-        user : props.user,
 
     }  
     console.log(this.state.projectID) 
@@ -46,7 +52,7 @@ export default class EditProject extends Component {
   };
 
   cancelProject= async()=>{
-    if(this.props.type === "admin"){
+    if(this.state.type === "admin"){
       console.log("delete method")
     const requestOptions = {
       method: 'DELETE'
@@ -87,17 +93,17 @@ export default class EditProject extends Component {
     }
   }
   viewSection1= (e)=>{
-    ReactDOM.render(<div><EditableView project={this.state.project}/> <Button variant="primary" onClick={this.cancelProject}>Cancel project</Button>
+    ReactDOM.render(<div><EditableView project={this.state.project}/> 
 </div>,document.getElementById('container'));
    }
 
   viewSection2= (e)=>{
-   ReactDOM.render(<div><ProjectEditableViewCASection user={this.state.user} type= {this.props.type} project={this.state.project}
-    ></ProjectEditableViewCASection> <Button variant="primary" onClick={this.cancelProject}>Cancel project</Button></div>,document.getElementById('container'));
+   ReactDOM.render(<div><ProjectEditableViewCASection user={this.state.user} type= {this.state.type} project={this.state.project}
+    ></ProjectEditableViewCASection> </div>,document.getElementById('container'));
   }
   viewSection3=(e)=>{
-    ReactDOM.render(<div><ProjectEditableCandidateSection user={this.state.user} type= {this.props.type} project={this.state.project}
-      /><Button variant="primary" onClick={this.cancelProject}>Cancel project</Button></div>,document.getElementById('container'));
+    ReactDOM.render(<div><ProjectEditableCandidateSection user={this.state.user} type= {this.state.type} project={this.state.project}
+      /></div>,document.getElementById('container'));
     }
   
 
@@ -106,28 +112,46 @@ export default class EditProject extends Component {
       console.log(this.state.projectID +" "+this.state.userID)
     return (
       <div >
+        <Nav value={1}/>
         <div class = "leftCol">
             <div class="col-3 float-left pr-4">
               <nav class="menu" aria-label="Project settings" data-pjax="">
-                <h3 class="menu-heading"><ListSubheader component="div">
-              project attributes
-    </ListSubheader>
+                <h3 class="menu-heading">
                 </h3>
 
-                <Button class="js-selected-navigation-item selected menu-item" onClick={this.viewSection1}>
-                Project attributes</Button><br/>
-                <Button class="js-selected-navigation-item menu-item"  onClick={this.viewSection2}>
-                Consultancy Agency</Button><br/>
-                <Button class="js-selected-navigation-item menu-item" onClick={this.viewSection3}>
-                Candidate</Button><br/>
-                
+                <Paper>
+
+                    <MenuList>
+                      <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.viewSection1}>Project attributes</MenuItem>
+                      <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.viewSection2}>Consultancy Agency</MenuItem>
+                      <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.viewSection3}>Candidate</MenuItem>
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <br></br>
+                      <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.cancelProject}>Delete project</MenuItem>
+                    </MenuList>
+                </Paper>
 
               </nav>
             </div>
         </div>
         <div id="container">
           <EditableView project={this.state.project}></EditableView>
-          <Button variant="primary" onClick={this.cancelProject}>Delete project</Button>
        </div>  
       </div>
     )
@@ -135,7 +159,7 @@ export default class EditProject extends Component {
     else{
         return(
             <div>
-            <CircularProgress></CircularProgress>
+            <LinearProgress/>
             </div>
         )
     }

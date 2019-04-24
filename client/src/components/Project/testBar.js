@@ -10,7 +10,7 @@ const server = require("../../config");
 
 function TabContainer(props) {
   return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
+    <Typography component="div" style={{ width:"auto",  }}>
       {props.children}
     </Typography>
   );
@@ -28,11 +28,11 @@ const styles = theme => ({
   
   ,
   Tab:{
-      width:1680,
-      backgroundColor:"#006064"
+      width:"auto",
+      backgroundColor:"#e5e8e8"
   },
   label:{
-    color:"#ffc107"
+    color:"deeppink"
   }
 });
 
@@ -57,7 +57,7 @@ class SimpleTabs extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar className={classes.Tab} position="static">
+        <AppBar className={classes.Tab} position="center">
           <Tabs value={value}  onChange={this.handleChange}>
             <Tab className={classes.label} label="All" />
             <Tab className={classes.label}  label="Waiting For Consultancy Agency" />

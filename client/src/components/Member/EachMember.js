@@ -40,7 +40,7 @@ class EachMember extends React.Component {
     const member = this.props.members;
     const { classes } = this.props;
     if(this.state.show){
-      const path =`/myProfile/${member._id}`
+      const path =`/Profile/${member._id}`
       return <Redirect to={path}/>;
     }else
     console.log(member)

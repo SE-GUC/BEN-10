@@ -4,6 +4,7 @@ import { TextField } from '@material-ui/core';
 import classNames from 'classnames';
 import { Card } from "react-bootstrap";
 import ListSubheader from "@material-ui/core/ListSubheader";
+import Typography from '@material-ui/core/Typography';
 const server = require("../../config");
 
 const effort = ['Low','Normal','Hard','Extreme']
@@ -61,11 +62,13 @@ export default class EditableView extends React.Component {
                 <div class="mainContainer">    
                 <div id="ProjectAttributes">
                     <div class="headerArea">
-                    <ListSubheader component="div">
+                    <br></br>
+
+                    <Typography variant="h4" gutterBottom>
                     Member Info
-    </ListSubheader>
-                        <div class="col-9 float-left">
-                            <Card>
+      </Typography>
+                        <div class="col-2 float-left">
+                            <Card style={{ height: 'auto' ,width:'25rem'}}>
                             <TextField
                                 id="outlined-read-only-input"
                                 label="Name"

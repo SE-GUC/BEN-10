@@ -10,22 +10,50 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Route , withRouter} from 'react-router-dom';
 import {Redirect} from 'react-router-dom'
+import { Paper } from '@material-ui/core';
 const server = require("../../config");
 
 
 const styles = {
+  block:{
+    // marginLeft:100,
+    // maxWidth: 845,
+    // display: "inline-block"
+
+  },
   card: {
-    width: 300,
-    backgroundColor:"#006064",
-    marginBottom:10,
-    marginLeft:530
+    marginLeft:10,
+    maxWidth: 860,
+    marginBottom:5
+    // backgroundColor:""
   },
   media: {
     // ⚠️ object-fit is not supported by IE 11.
     objectFit: 'cover',
   },
-  text:{
-    color:"#ffc107"
+  Link:{
+    fontFamily:"Arial",
+    fontStyle: "normal",
+    // fontVariant: "small-caps",
+    fontWeight: "bold",
+    fontSize: 20,
+    textAlign: "justify",
+    paddingLeft:10
+    // marginLeft:30
+    // display: "inline-block"
+    },
+  
+  
+  secondTypo:{
+      fontFamily:"Montserrat",
+      fontStyle: "normal",
+      fontSize:16,
+      color:"#616161",
+      textAlign: "justify",
+      paddingLeft:10
+      // marginLeft:30
+      // display: "inline-block"
+
   }
 };
 
@@ -49,21 +77,58 @@ render(){
       return <Redirect to={path}/>;
     }else{
 return (
-    <Card className={classes.card}>
-      <CardActionArea onClick = {this.viewEvent}>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-          </Typography>
-          <Typography className={classes.text} component="p">
-          topics: {this.props.event.topics} <br></br>
-          eventType:{this.props.event.eventLocation}<br></br>
-          description: {this.props.event.description}<br></br>
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-      </CardActions>
-    </Card>
+    // <Card className={classes.card}>
+    //   <CardActionArea onClick = {this.viewEvent}>
+    //     <CardContent>
+    //       <Typography className={classes.firstTypo} >
+    //       topics
+    //       </Typography>
+    //       <Typography className={classes.secondTypo} >
+    //       {this.props.event.topics.toString()} </Typography>
+    //       <Typography className={classes.firstTypo} >
+    //       event type
+    //       </Typography>
+    //       <Typography className={classes.secondTypo} >
+    //       {this.props.event.eventLocation}
+    //        </Typography>
+    //        <Typography className={classes.firstTypo} >
+    //        description
+    //       </Typography>
+    //       <Typography className={classes.secondTypo} >
+    //       {this.props.event.description}
+    //        </Typography>
+    //     </CardContent>
+    //   </CardActionArea>
+    //   <CardActions>
+    //   </CardActions>
+    // </Card>
+    <div 
+    className={classes.block}
+    
+    >
+        <Paper 
+        className={classes.card}
+        >
+          
+          <a
+  href= {`/Events/${this.props.event._id}`}
+  className={classes.Link}
+  >
+  {this.props.event.eventType}
+
+    </a>
+          
+          <Typography className={classes.secondTypo} >
+          This event implies {this.props.event.description}<br></br> 
+          and it will take place in {this.props.event.eventLocation}
+          and in {this.props.event.eventDate}<br></br>
+          it covers the following topics {this.props.event.topics}
+          
+           </Typography>
+
+        </Paper>
+    
+    </div>
   );
 }
 }
