@@ -114,7 +114,7 @@ class CreateEvent extends React.Component {
         headers: { "Content-Type": "application/json" }
        
       };
-      fetch(`${server}/api/admins/${this.props.user._id}/addEvent/` , requestOptions).then((response) => {
+      fetch(`${server}/api/admins/${this.props.location.state.requestorId}/addEvent/` , requestOptions).then((response) => {
         return response.json();
       }).then((result) => {
           if(result.msg=="Event is posted successfully"){

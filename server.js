@@ -18,7 +18,6 @@ const consultancyagencys = require("./routes/api/consultancyagency");
 const member = require("./routes/api/members");
 const notification = require("./routes/api/notifications");
 var blackList = []; //to be not deleted
-const path=require('path')
 const cors = require("cors");
 const app = express();
 const path = require('path')
@@ -127,7 +126,7 @@ app.put("/login", async (req, res) => {
           type: "member",
           token: token
         };
-        console.log(data);
+        // console.log(data);
         return res.json({ data });
       });
     } else {

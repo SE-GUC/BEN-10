@@ -22,17 +22,9 @@ TabContainer.propTypes = {
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
+    
   }
-  ,
-  Tab:{
-      width:1680,
-      backgroundColor:"#006064"
-  },
-  label:{
-    color:"#ffc107"
-  }
+ 
 });
 
 class SimpleTabs extends React.Component {
@@ -56,30 +48,8 @@ class SimpleTabs extends React.Component {
 
     return (
       <div className={classes.root}>
-        {/* <AppBar className={classes.Tab} position="static"> */}
-          {/* <Tabs value={value}  onChange={this.handleChange}>
-            <Tab className={classes.label} label="All" /> */}
-            {/* <Tab label="Waiting For Consultancy Agency" />
-            <Tab label="Negotiation" />
-            <Tab label="Final Draft" />
-            <Tab  label="Approved" />
-            <Tab  label="Canceled" />
-            <Tab label="Posted" />
-            <Tab  label="In Progress" />
-            <Tab label="Final Review" />
-            <Tab label="Finished" /> */}
-          {/* </Tabs> */}
-        {/* </AppBar> */}
-        {value === 0 && <TabContainer>{this.state.events.map(((Event,i)=><MyEventCard key={i} event={Event} />))}</TabContainer>}
-        {/* {value === 1 && <TabContainer>{(this.state.events.filter(m => m.life_cycle === "Waiting For Consultancy Agency")).map(((Event,i)=><MyEventCard key={i} event={Event} />))}</TabContainer>}
-        {value === 2 && <TabContainer>{(this.state.events.filter(m => m.life_cycle === "Negotiation")).map(((Event,i)=><MyEventCard key={i} event={Event} />))}</TabContainer>}
-        {value === 3 && <TabContainer>{(this.state.events.filter(m => m.life_cycle === "Final Draft")).map(((Event,i)=><MyEventCard key={i} event={Event} />))}</TabContainer>}
-        {value === 4 && <TabContainer>{(this.state.events.filter(m => m.life_cycle === "Approved")).map(((Event,i)=><MyEventCard key={i} event={Event} />))}</TabContainer>}
-        {value === 5 && <TabContainer>{(this.state.events.filter(m => m.life_cycle === "Canceled")).map(((Event,i)=><MyEventCard key={i} event={Event} />))}</TabContainer>}
-        {value === 6 && <TabContainer>{(this.state.events.filter(m => m.life_cycle === "Posted")).map(((Event,i)=><MyEventCard key={i} event={Event} />))}</TabContainer>}
-        {value === 7 && <TabContainer>{(this.state.events.filter(m => m.life_cycle === "In Progress")).map(((Event,i)=><MyEventCard key={i} event={Event} />))}</TabContainer>}
-        {value === 8 && <TabContainer>{(this.state.events.filter(m => m.life_cycle === "Final Review")).map(((Event,i)=><MyEventCard key={i} event={Event} />))}</TabContainer>}
-        {value === 9 && <TabContainer>{(this.state.events.filter(m => m.life_cycle === "Finished")).map(((Event,i)=><MyEventCard key={i} event={Event} />))}</TabContainer>} */}
+        
+        {this.state.events.map(((Event,i)=><MyEventCard key={i} event={Event} />))}
       </div>
     );
   }

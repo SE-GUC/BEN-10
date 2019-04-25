@@ -16,45 +16,45 @@ const server = require("../../config");
 
 const styles = {
   block:{
-    // marginLeft:100,
-    // maxWidth: 845,
-    // display: "inline-block"
+    marginTop:5
+    
 
   },
   card: {
-    marginLeft:10,
-    maxWidth: 860,
-    marginBottom:5
-    // backgroundColor:""
-  },
-  media: {
-    // ⚠️ object-fit is not supported by IE 11.
-    objectFit: 'cover',
+    minWidth: 475,
+    maxWidth: 800,
+    display:"inline-block",
+    marginBottom:5,
+    
   },
   Link:{
     fontFamily:"Arial",
     fontStyle: "normal",
-    // fontVariant: "small-caps",
     fontWeight: "bold",
-    fontSize: 20,
-    textAlign: "justify",
+    fontSize: 23,
     paddingLeft:10
-    // marginLeft:30
-    // display: "inline-block"
-    },
-  
-  
-  secondTypo:{
+ 
+    }
+    ,
+    secondTypo:{
       fontFamily:"Montserrat",
       fontStyle: "normal",
-      fontSize:16,
+      fontSize:20,
       color:"#616161",
-      textAlign: "justify",
       paddingLeft:10
-      // marginLeft:30
-      // display: "inline-block"
+  
 
-  }
+  },
+  firstTypo:{
+    fontFamily:"Arial",
+    fontStyle:"normal",
+    fontSize:22,
+    color:"#000000",
+    paddingLeft:10,
+    fontWeight:"bolder",
+    fontVariant:"small-caps"
+
+  },
 };
 
 class MyEventCard extends Component{
@@ -77,31 +77,7 @@ render(){
       return <Redirect to={path}/>;
     }else{
 return (
-    // <Card className={classes.card}>
-    //   <CardActionArea onClick = {this.viewEvent}>
-    //     <CardContent>
-    //       <Typography className={classes.firstTypo} >
-    //       topics
-    //       </Typography>
-    //       <Typography className={classes.secondTypo} >
-    //       {this.props.event.topics.toString()} </Typography>
-    //       <Typography className={classes.firstTypo} >
-    //       event type
-    //       </Typography>
-    //       <Typography className={classes.secondTypo} >
-    //       {this.props.event.eventLocation}
-    //        </Typography>
-    //        <Typography className={classes.firstTypo} >
-    //        description
-    //       </Typography>
-    //       <Typography className={classes.secondTypo} >
-    //       {this.props.event.description}
-    //        </Typography>
-    //     </CardContent>
-    //   </CardActionArea>
-    //   <CardActions>
-    //   </CardActions>
-    // </Card>
+    
     <div 
     className={classes.block}
     
@@ -109,9 +85,11 @@ return (
         <Paper 
         className={classes.card}
         >
+        <div style={{width:600}}>
           
           <a
-  href= {`/Events/${this.props.event._id}`}
+  href= {""}
+  onClick={this.viewEvent}
   className={classes.Link}
   >
   {this.props.event.eventType}
@@ -121,10 +99,11 @@ return (
           <Typography className={classes.secondTypo} >
           This event implies {this.props.event.description}<br></br> 
           and it will take place in {this.props.event.eventLocation}
-          and in {this.props.event.eventDate}<br></br>
+          and in {new Date(this.props.event.eventDate).getFullYear()+"-"+((new Date(this.props.event.eventDate).getMonth())+1)+"-"+new Date(this.props.event.eventDate).getDate()}<br></br>
           it covers the following topics {this.props.event.topics}
           
            </Typography>
+           </div>
 
         </Paper>
     

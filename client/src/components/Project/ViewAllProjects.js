@@ -27,12 +27,12 @@ const styles = theme => ({
     height: 140,
   },
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
-    margin:"auto"
+    // display: 'flex',
+    // flexWrap: 'wrap',
+    // justifyContent: 'space-around',
+    // overflow: 'hidden',
+    // backgroundColor: theme.palette.background.paper,
+    // margin:"auto"
   },
   gridList: {
     width: "auto",
