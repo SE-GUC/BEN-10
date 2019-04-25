@@ -3,7 +3,6 @@ import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
 import StrangeCard from "./components/Global/StrangerProfileCard"
 import Profile from "./pages/Profile";
-import NotFound from "./pages/NotFound"
 import ViewAllPartners from "./components/Partner/ViewAllPArtners";
 import ViewAllCAs from "./components/CA/ViewAllCAs";
 import ViewAllMembers from "./components/Member/ViewAllMembers";
@@ -288,13 +287,13 @@ class App extends Component {
           )}
         />
 
-        <Route
+        {/* <Route
           
           path="/l"
           render={props => (
             <NotFound />
           )}
-        />
+        /> */}
         
        
         </BrowserRouter>

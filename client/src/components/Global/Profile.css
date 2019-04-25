@@ -2,7 +2,7 @@
   position: center;
   margin:auto;
   width: 800px;
-  height: 15%;
+  height: 18%;
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
   font-size: xx-large;
@@ -47,6 +47,7 @@ margin-left: auto;
  height: 90%;
 }
 .paper{
+  /* padding-top: 10; */
   padding-bottom: 7px
 }
 .text1{
