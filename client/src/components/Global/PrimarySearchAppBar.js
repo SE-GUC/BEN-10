@@ -1,5 +1,5 @@
 import React from 'react';
-import  { Redirect } from 'react-router-dom'
+import  { Redirect , Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -21,8 +21,10 @@ import axios from "axios";
 import Notif from "../Notification/NotificationView";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import SearchPage from "./SearchPage"
+import SearchPage from "./SearchPage";
+import Profile from '../../pages/Profile';
 import logo from './3DNav.png';
+import { inherits } from 'util';
 const server = require('../../config')
 const styles = theme => ({
   root: {
@@ -245,8 +247,12 @@ class PrimarySearchAppBar extends React.Component {
           open={isMenuOpen}
           onClose={this.handleMenuClose}
         >
-          <MenuItem onClick={this.profileClicked}>Profile</MenuItem>
-          <MenuItem onClick={this.editClicked}>Edit My Profile</MenuItem>
+         <Link to ="/profile">
+            <MenuItem >Profile</MenuItem>
+         </Link>
+         <Link to="/EditProfile">
+            <MenuItem onClick={this.editClicked}>Edit My Profile</MenuItem>
+         </Link>
           <MenuItem onClick={this.logoutClicked}>logout</MenuItem>
         </Menu>
       );
@@ -273,9 +279,11 @@ class PrimarySearchAppBar extends React.Component {
           onClose={this.handleMenuClose}
         >
           <MenuItem >
-            <IconButton color="inherit" onClick={this.homeClicked}>
+          <Link to="/Home">
+            <IconButton color="inherit">
                 <HomeIcon/>
             </IconButton>
+            </Link>
             <p>Home</p>
           </MenuItem>
           <MenuItem onClick={this.handleProfileMenuOpen}>
@@ -304,10 +312,15 @@ class PrimarySearchAppBar extends React.Component {
                   <img src={logo} alt="Logo" height={35} width={110}  />
                   </div>
               <div className={classes.tabs}>
-              <Tabs value={this.state.value}  onChange={this.handleChange}>
+              <Tabs value={this.state.value}>
               <Tab className={classes.label} label="Explore" />
-              <Tab className={classes.label} label="Projects" />
-              <Tab className={classes.label}  label="Events" />
+              <Link to="/Projects" style={{ color: '#FFF' }}>
+                 <Tab className={classes.label} label="Projects" />
+              </Link>
+              <Link to="/Events" style={{ color: '#FFF' }}>
+                 <Tab className={classes.label}  label="Events" />
+              </Link>
+
               </Tabs>
     
               </div>
@@ -332,9 +345,12 @@ class PrimarySearchAppBar extends React.Component {
     
                   <div className={classes.grow} />
                   <div className={classes.sectionDesktop}>
-                    <IconButton color="inherit"onClick={this.homeClicked}>
+                  
+                  <Link to="/Home" style={{ color: '#FFF' }}>
+                    <IconButton color="inherit">
                         <HomeIcon/>
                     </IconButton>
+                  </Link>  
                     {this.state.type==="member" ? <IconButton color="inherit">
                       <Badge badgeContent={numberOfNotifications} color="secondary" onClick={this.handleNotificationsMenuOpen}>
                         <NotificationsIcon />
@@ -372,7 +388,7 @@ class PrimarySearchAppBar extends React.Component {
           return <Redirect to={{ pathname:"/Home" }}/>
         else
           if(this.state.redirectProfile)
-            return <Redirect to={{ pathname:"/Profile" }}/>
+            return <Link to="/Profile"/>
           else 
             return <Redirect to={{ pathname:"/EditProfile" }}/>
         
