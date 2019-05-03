@@ -8,7 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { Route, withRouter } from "react-router-dom";
+import { Route, withRouter ,Link} from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 const server = require("../../config");
@@ -97,6 +97,8 @@ class MyProjectCard extends Component {
       return <Redirect to={path} />;
     } else if (this.state.company) {
       return (
+        <Link to={`/Projects/${this.props.project._id}`}>
+        <div  style={{"display": "block"}}>
         <Card className={classes.card}>
           <CardActionArea onClick={this.viewProject}>
             <CardContent>
@@ -131,6 +133,8 @@ class MyProjectCard extends Component {
             
           <CardActions />
         </Card>
+        </div>
+        </Link>
       );
     } else {
       return <div> </div>;

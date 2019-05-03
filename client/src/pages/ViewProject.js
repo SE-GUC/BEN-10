@@ -86,8 +86,8 @@ export default class ViewProject extends Component {
       return (
         <div>
           <Nav value={1}/>
-          <div class="leftCol">
-            <div class="col-3 float-left pr-4">
+          <div class="leftCol" >
+            <div class="col-3 float-left " style={{height:"100%"}}>
               <nav class="menu" aria-label="Project settings" data-pjax="">
                 <h3 class="menu-heading">
                 <br></br>
@@ -96,9 +96,9 @@ export default class ViewProject extends Component {
                 <Paper>
 
                     <MenuList>
-                      <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.viewSection1}>Project attributes</MenuItem>
-                      <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.viewSection2}>Consultancy Agency</MenuItem>
-                      <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.viewSection3}>Candidate</MenuItem>
+                      <MenuItem onClick={this.viewSection1}>Project attributes</MenuItem>
+                      <MenuItem onClick={this.viewSection2}>Consultancy Agency</MenuItem>
+                      <MenuItem onClick={this.viewSection3}>Candidate</MenuItem>
                       
                 {(this.state.project.lifeCycle === "Posted"&&this.state.type==="member") ? (
                   <ApplyButton
