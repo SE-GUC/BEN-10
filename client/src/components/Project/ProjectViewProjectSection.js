@@ -77,7 +77,7 @@ export default class EditableView extends React.Component {
       </Typography>
               <div class="col-2 float-left">
               
-                <Card style={{ height: 'auto' ,width:'25rem'}}>         
+                <Card style={{ height: 'auto' ,width:'60rem'}}>         
                   <TextField class="allInputs"
                     id="outlined-multiline-static"
                     multiline

@@ -9,8 +9,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import SaveButton from '../Global/SaveButton';
-const server = require("../../config");
+import Snackbar from '@material-ui/core/Snackbar';
 
+const server = require("../../config");
 const effort = ['Easy','Normal','Hard','Extreme']
 const cycle=['Waiting for consultancy Agency' , 'Negotiation',
   'Final Draft' , 'Approved' , 'Canceled' , 'Posted' , 'In Progress' , 'Final Review' , 'Finished']
@@ -58,19 +59,32 @@ export default class EditableView extends React.Component {
         caEmail:null,
         caTelephoneNumber:null,
         //other variables
-        skillVariable:null
+        skillVariable:null,
+        snackBarAddSkillExist:false
 
     
     }
     }
  
 
-     addSkill =event=>{
+    addSkill =event=>{
       event.preventDefault();
        const arr = this.state.requiredSkillsSet
+       console.log(arr)
+       console.log(this.state.skillVariable)
+       if(arr.includes(this.state.skillVariable)){
+          this.setState({snackBarAddSkillExist:true})
+       }
+       else{
        arr.push(this.state.skillVariable)
          this.setState({requiredSkillsSet:arr})
+       }
      }
+    
+    CloseSnack1 = () =>{
+      this.setState({snackBarAddSkillExist:false})
+    }
+
     handleDelete = data => (event) => {
       event.preventDefault();
       const arr = this.state.requiredSkillsSet
@@ -125,8 +139,8 @@ export default class EditableView extends React.Component {
 Project Attributes
 </Typography>
               <div class="col-2 float-left"> 
-                <Card style={{ height: 'auto' ,width:'25rem'}}>
-                  <TextField class="allInputs"
+                <Card style={{ height: '1000px' ,width:'60rem'}}>
+                  <TextField style={{width:'25rem',paddingLeft:"10px"}}
                     id="outlined-multiline-static"
                     multiline
                     label="Description"
@@ -139,7 +153,8 @@ Project Attributes
                   />
                   
 
-                  <TextField class="allInputs"
+                  <TextField
+                  style={{width:'25rem',paddingLeft:"10px"}}
                    id="outlined-category"
                    label="Category"
                    className={classNames.textField}
@@ -149,7 +164,7 @@ Project Attributes
                    variant="outlined"
                   /> 
 
-                  <TextField class="allInputs"
+                  <TextField style={{width:'25rem',paddingLeft:"10px"}}
                     id="outlined-select-currency"
                     select
                     label="Project Life Cycle"
@@ -172,7 +187,7 @@ Project Attributes
                     ))}
                   </TextField>
 
-                 <TextField class="allInputs"
+                 <TextField style={{width:'25rem',paddingLeft:"10px"}}
                     id="outlined-select-currency"
                     select
                     label="Estimated Effort"
@@ -196,7 +211,7 @@ Project Attributes
                   </TextField>
 
 
-                  <TextField class="allInputs"
+                  <TextField style={{width:'25rem',paddingLeft:"10px"}}
                     id="outlined-select-currency"
                     select
                     label="Exprience Level Needed"
@@ -219,7 +234,7 @@ Project Attributes
                     ))}
                   </TextField>
 
-                  <TextField class="allInputs"
+                  <TextField style={{width:'25rem',paddingLeft:"10px"}}
                     id="outlined-link"
                     label="Submission Link"
                     className={classNames.textField}
@@ -232,7 +247,7 @@ Project Attributes
                  <div class = "SkillCard">
 
                    <div class="addSkill">   
-                 <TextField class="allInputs"
+                 <TextField style={{width:'25rem',paddingLeft:"10px"}}
                     id="outlined-set"
                     label="required Skills"
                     className={classNames.textField}
@@ -243,7 +258,8 @@ Project Attributes
                     style={{float:"left"}}
                   />
                   <br></ br>
-                  <Button variant="primary" style={{width:'fit-content',float:'left'}} onClick={this.addSkill}>Add</Button>
+                  <Button variant="primary" onClick={this.addSkill}>Add</Button>
+                  
                   </div>     
                  
                  
@@ -272,6 +288,20 @@ Project Attributes
                 </div>     
               </div>
               </div>
+              <Snackbar
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              open={this.state.snackBarAddSkillExist}
+              autoHideDuration={2500}
+              onClose={this.CloseSnack1}
+              ContentProps={{
+                'aria-describedby': 'message-id',
+              }}
+              message={<span id="message-id">{"this skill is already in the skill set"}</span>}
+              
+            />
             </div>
         );
         }

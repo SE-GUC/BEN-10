@@ -128,8 +128,9 @@ class MyProjectCard extends Component {
               </Typography>
             </CardContent>
           </CardActionArea>
-          {(this.props.edit ||this.props.type ==="admin")? <div><Button onClick={this.goToEditPage}>Edit</Button>
-            </div>:"" }
+
+          {(this.props.edit ||this.props.type ==="admin")? <Link to={`/MyProject/edit/${this.props.project._id}`}><div><Button onClick={this.goToEditPage}>Edit</Button>
+            </div></Link>:"" }
             
           <CardActions />
         </Card>
