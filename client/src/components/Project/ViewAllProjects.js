@@ -51,7 +51,7 @@ class ViewAllProjects extends React.Component {
   }
   componentDidMount(){
     axios 
-    .get(`/api/projects`)
+    .get(`https://lirtenben.herokuapp.com/api/projects`)
     .then(res => {
       console.log(res)
       return res.data
