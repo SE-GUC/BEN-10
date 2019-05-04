@@ -35,7 +35,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 import axios from "axios"
-import ReportEditor from './Editor';
 const server = require("../../config");
 function TabContainer(props) {
   return (
