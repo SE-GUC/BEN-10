@@ -32,7 +32,7 @@ const styles = theme => ({
     }
     applyClick(){
       console.log("token " + localStorage.getItem('token'))
-        fetch(`${server}/api/members/${this.state.member_id}/projects/${this.state.project_id}/apply`, {
+        fetch(`https://lirtenben.herokuapp.com/api/members/${this.state.member_id}/projects/${this.state.project_id}/apply`, {
         method: 'POST',
         headers: { "Content-Type": "application/json",
         "Authorization": "bearer " + localStorage.getItem('token')

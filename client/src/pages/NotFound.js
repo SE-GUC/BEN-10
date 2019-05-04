@@ -12,7 +12,7 @@ class NotFound extends Component{
         return(
             <div class="page">
 
-            <label>Whoops</label>
+            <label class="labelnotfound">Whoops</label>
             <div class="side2">
             <h id="word">Can't Find Any Results !!!!</h>
 

@@ -29,7 +29,7 @@ class PostProjectMessage extends React.Component {
     console.log("consalrnlsfdm")
     console.log(localStorage.getItem('token'))
 
-    axios.post(`${server}/api/partners/${this.props.companyID}/addProject/`, body,{
+    axios.post(`https://lirtenben.herokuapp.com/api/partners/${this.props.companyID}/addProject/`, body,{
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')
      }
@@ -65,7 +65,9 @@ class PostProjectMessage extends React.Component {
       <div>
         <Button style={{
         borderRadius: 35,
-        backgroundColor: "#21b6ae"
+        backgroundColor: "#283593",
+        color:"#fff",
+        marginLeft:550
     }} onClick={this.handleClick({ vertical: 'bottom', horizontal: 'left' })} variant="contained" className={this.props.className}>
             Submit Request
         </Button>

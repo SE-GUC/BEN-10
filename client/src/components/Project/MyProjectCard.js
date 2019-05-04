@@ -23,6 +23,7 @@ const styles = {
     maxWidth: 800,
     display:"inline-block",
     marginBottom:5,
+    marginTop:10
     
   },
   Link:{
@@ -78,7 +79,7 @@ class MyProjectCard extends Component {
   }
   componentDidMount() {
     axios
-      .get(`${server}/api/partners/${this.props.project.companyId}`,{
+      .get(`https://lirtenben.herokuapp.com/api/partners/${this.props.project.companyId}`,{
         headers: { "Content-Type": "application/json",
         "Authorization": "bearer " + localStorage.getItem('token')
        }
@@ -101,7 +102,7 @@ class MyProjectCard extends Component {
      }
     };
     fetch(
-      `${server}/api/partners/${
+      `https://lirtenben.herokuapp.com/api/partners/${
         this.props.project.companyId
       }/deleteProject/${this.props.project._id}`,
       requestOptions
@@ -134,11 +135,12 @@ class MyProjectCard extends Component {
       return <Redirect to={path} />;
     } else if (this.state.company) {
       return (
-        <Link to={`/Projects/${this.props.project._id}`}>
+     
         <div 
     className={classes.block}
     
     >
+    <Link to={`/Projects/${this.props.project._id}`}>
         <Paper 
         className={classes.card}
         >
@@ -172,13 +174,13 @@ class MyProjectCard extends Component {
           <Typography className={classes.secondTypo}>
           {this.props.project.lifeCycle}
           </Typography>
-           {(this.props.edit ||this.props.type ==="admin")? <div ><Button variant="contained"  onClick={this.goToEditPage}>Edit</Button>
-            </div>:"" }
+           {(this.props.edit ||this.props.type ==="admin")? <Link to={`/MyProject/edit/${this.props.project._id}`}><div ><Button variant="contained"  onClick={this.goToEditPage}>Edit</Button>
+            </div></Link>:"" }
 
         </Paper>
-    
+        </Link>
     </div>
-    </Link>
+
 
 
       );

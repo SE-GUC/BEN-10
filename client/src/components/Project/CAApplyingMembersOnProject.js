@@ -42,7 +42,7 @@ class CAApplyingMembersOnProject extends Component {
   }
 
   async componentDidMount(){
-    await axios(`${server}/api/consultancyagency/${this.props.ca._id}/myProjects/${this.props.project._id}/applyingMembers`,{
+    await axios(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.props.ca._id}/myProjects/${this.props.project._id}/applyingMembers`,{
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')
      }
@@ -69,19 +69,11 @@ class CAApplyingMembersOnProject extends Component {
     if( this.state.applyingMembers){
     return (
       <div className={classes.root}>
-        <GridList cellHeight={180} className={classes.gridList}>
-          <GridListTile key="Subheader" cols={1} style={{ height: "auto" }}>
-            <ListSubheader component="div">
-              Applying Members On this Project
-            </ListSubheader>
-          </GridListTile>
+        
           
           {this.state.applyingMembers.map(i => (
-            <GridListTile key={i}>
               <CAApplyingMemberCard project={this.props.project} ca={this.props.ca} mem={i._id} />
-            </GridListTile>
           ))}
-        </GridList>
       </div>
     );
   } else {

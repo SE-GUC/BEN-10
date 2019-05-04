@@ -16,7 +16,7 @@ class MyEvents extends Component {
     console.log(this.state.caId)
   }
   componentDidMount(){
-    fetch(`${server}/api/consultancyagency/${this.state.caId}/ShowMyEvents`,{
+    fetch(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.caId}/ShowMyEvents`,{
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')
      }

@@ -16,7 +16,7 @@ class allMembers extends React.Component {
   }
   componentDidMount() {
     axios
-      .get(`${server}/api/members/`,{
+      .get(`https://lirtenben.herokuapp.com/api/members/`,{
         headers: { "Content-Type": "application/json",
         "Authorization": "bearer " + localStorage.getItem('token')
        }

@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import Button from '@material-ui/core/Button';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import UpdateButton from './UpdateButton'
@@ -20,6 +25,7 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     width:300,
+    marginBottom:50
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -72,7 +78,8 @@ class OutlinedTextFields extends React.Component {
     partners:this.props.agency.partners,
     projects:this.props.agency.projects,
     events:this.props.agency.events,
-    showPassword: false
+    showPassword: false,
+    personal:true
   }
   console.log(this.props.partner)
 }
@@ -90,10 +97,10 @@ onUpdate =async()=>{
      reports:this.state.reports,
      partners:this.state.partners,
      projects:this.state.projects,
-     events:this.state.events 
+     events:this.state.events, 
   }
   
-  await axios.put(`${server}/api/consultancyagency/${this.props.agency._id}`,body,{
+  await axios.put(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.props.agency._id}`,body,{
     headers: { "Content-Type": "application/json",
     "Authorization": "bearer " + localStorage.getItem('token')
    }})
@@ -103,7 +110,7 @@ onUpdate =async()=>{
 })
 .then(json => this.setState({project : json}))
 await axios
-      .get(`${server}/api/partners/${this.props.agency._id}`,{
+      .get(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.props.agency._id}`,{
         headers: { "Content-Type": "application/json",
         "Authorization": "bearer " + localStorage.getItem('token')
        }
@@ -114,10 +121,13 @@ await axios
       .then(a =>{
         localStorage.setItem('type',"consultancyagency");
         localStorage.setItem('user',JSON.stringify(a.data));
-        window.location.reload();
+        // window.location.reload();
       }
       );
 
+}
+handlePersonal = () =>{
+  this.setState({personal:true})
 }
 
 
@@ -134,7 +144,31 @@ await axios
     const { classes } = this.props;
         
     return (
-      <form className={classes.container} noValidate autoComplete="off">
+      <div>
+        <div style={{width:"20%" ,height:"100vh",float:"left"}}>
+        
+        <List component="nav" >
+      <ListItem button onClick={this.handlePersonal}>
+        <ListItemText primary="Personal Info" />
+      </ListItem>
+      <Divider />
+      {/* <ListItem button divider>
+        <ListItemText primary="Update" onClick={this.onUpdate} />
+      </ListItem> */}
+
+<Button style={{backgroundColor:"#283593",float:"left",marginTop:5}} onClick={this.onUpdate}>
+       <h style={{color:"#fff",fontWeight:"bold"}}>
+        Update
+        </h>
+      </Button>
+      {/* <UpdateButton onUpdate={this.onUpdate} /> */}
+      </List>
+        </div>
+        <div style={{width:"80%",height:"100vh",float:"right",display:"inline-block"}}>
+        {(this.state.personal)?
+        <div style={{display:"inline-block"}}>
+        <div style={{marginButtom:55}}>
+        
         <TextField
           id="name"
           label="Name"
@@ -144,6 +178,7 @@ await axios
           margin="normal"
           variant="outlined"
         />  
+        <br></br>
         <TextField
           id="about"
           label="About"
@@ -153,6 +188,7 @@ await axios
           margin="normal"
           variant="outlined"
         /> 
+        <br></br>
         <TextField
           id="telephoneNumber"
           label="Telephone Number"
@@ -162,6 +198,7 @@ await axios
           margin="normal"
           variant="outlined"
         />
+        <br></br>
          <TextField
           id="outlined-email-input"
           label="Email"
@@ -173,6 +210,7 @@ await axios
           margin="normal"
           variant="outlined"
         />
+        <br></br>
 
        
 <TextField
@@ -196,6 +234,7 @@ await axios
             ),
           }}
         />
+        <br></br>
       
         <TextField
           id="location"
@@ -206,6 +245,7 @@ await axios
           margin="normal"
           variant="outlined"
         />
+        <br></br>
         <TextField
           id="years Of Experience"
           label="yearsOfExperience"
@@ -215,6 +255,7 @@ await axios
           margin="normal"
           variant="outlined"
         />
+        <br></br>
         <TextField
           id="rating"
           label="Rating"
@@ -224,47 +265,27 @@ await axios
           margin="normal"
           variant="outlined"
         />
-        <TextField
-          id="reports"
-          label="Reports"
-          className={classes.textField}
-          value={this.state.reports}
-          onChange={this.handleChange('reports')}
-          margin="normal"
-          variant="outlined"
-        />
-        {
-        // <TextField
-        //   id="partners"
-        //   label="Partners"
-        //   className={classes.textField}
-        //   value={this.state.partners}
-        //   onChange={this.handleChange('partners')}
-        //   margin="normal"
-        //   variant="outlined"
-        // />
-        // <TextField
-        //   id="projects"
-        //   label="Projects"
-        //   className={classes.textField}
-        //   value={this.state.projects}
-        //   onChange={this.handleChange('projects')}
-        //   margin="normal"
-        //   variant="outlined"
-        // />
         
-        // <TextField
-        //   id="events"
-        //   label="Events"
-        //   className={classes.textField}
-        //   value={this.state.events}
-        //   onChange={this.handleChange('events')}
-        //   margin="normal"
-        //   variant="outlined"
-        // />
-        }
-      <UpdateButton onUpdate={this.onUpdate} />
-      </form>
+        
+        
+        
+        
+        
+        </div>
+        
+        </div>
+        :""}
+        </div>
+
+
+
+
+
+
+
+
+
+      </div>
     );
   }
 }

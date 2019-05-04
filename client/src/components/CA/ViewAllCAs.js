@@ -16,7 +16,7 @@ class allCAs extends React.Component {
   }
   componentDidMount() {
     axios
-      .get(`${server}/api/consultancyagency/`,{
+      .get(`https://lirtenben.herokuapp.com/api/consultancyagency/`,{
         headers: { "Content-Type": "application/json",
         "Authorization": "bearer " + localStorage.getItem('token')
        }

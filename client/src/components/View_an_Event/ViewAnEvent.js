@@ -21,7 +21,7 @@ class SimpleCard extends React.Component {
     super(props);
     this.state={
       showBooker:false,
-      showEvent:false,
+      showEvent:true,
       showMember:false,
       Event:null,
       eventId:this.props.match.params.id
@@ -48,7 +48,7 @@ class SimpleCard extends React.Component {
   }
   componentDidMount(){
     // console.log(`${server}/api/events/${}`)
-    Axios.get(`${server}/api/events/${this.state.eventId}`,{
+    Axios.get(`https://lirtenben.herokuapp.com/api/events/${this.state.eventId}`,{
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')
      }

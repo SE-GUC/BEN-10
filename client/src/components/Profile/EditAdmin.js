@@ -20,6 +20,7 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     width:300,
+    marginBottom:50
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -83,7 +84,7 @@ onUpdate =async()=>{
     alternativeMobileNumber:this.state.alternativeMobileNumber
     
   }
-  await axios.put(`${server}/api/admins/${this.props.admin._id}`,body,{
+  await axios.put(`https://lirtenben.herokuapp.com/api/admins/${this.props.admin._id}`,body,{
     headers: { "Content-Type": "application/json",
     "Authorization": "bearer " + localStorage.getItem('token')
    }
@@ -94,7 +95,7 @@ onUpdate =async()=>{
 })
 .then(json => this.setState({project : json}))
 await axios
-      .get(`${server}/api/admins/${this.props.admin._id}`,{
+      .get(`https://lirtenben.herokuapp.com/api/admins/${this.props.admin._id}`,{
         headers: { "Content-Type": "application/json",
         "Authorization": "bearer " + localStorage.getItem('token')
        }
@@ -106,7 +107,7 @@ await axios
       .then(a =>{
         localStorage.setItem('type',"admin");
         localStorage.setItem('user',JSON.stringify(a.data));
-        window.location.reload();
+        // window.location.reload();
       }
       );
 

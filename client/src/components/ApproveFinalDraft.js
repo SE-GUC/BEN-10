@@ -91,7 +91,7 @@ class ApproveFinalDraft extends React.Component {
     if (this.state.type === "consultancyagency") {
       axios
         .put(
-          `${server}/api/consultancyagency/${
+          `https://lirtenben.herokuapp.com/api/consultancyagency/${
             this.state.approvingID
           }/myprojects/${this.state.pID}/finaldraft/approve`,{
             headers: { "Content-Type": "application/json",
@@ -122,7 +122,7 @@ class ApproveFinalDraft extends React.Component {
       if (this.state.type === "partner") {
         axios
           .put(
-            `${server}/api/partners/${
+            `https://lirtenben.herokuapp.com/api/partners/${
               this.state.approvingID
             }/myprojects/${this.state.pID}/finaldraft/approve`,{
               headers: { "Content-Type": "application/json",
@@ -158,7 +158,7 @@ class ApproveFinalDraft extends React.Component {
     if (this.state.type === "consultancyagency") {
       axios
         .put(
-          `${server}/api/consultancyagency/${
+          `https://lirtenben.herokuapp.com/api/consultancyagency/${
             this.state.approvingID
           }/myprojects/${this.state.pID}/finaldraft/disapprove`,{
             headers: { "Content-Type": "application/json",
@@ -190,7 +190,7 @@ class ApproveFinalDraft extends React.Component {
       if (this.state.type === "partner") {
         axios
           .put(
-            `${server}/api/partners/${
+            `https://lirtenben.herokuapp.com/api/partners/${
               this.state.approvingID
             }/myprojects/${this.state.pID}/finaldraft/disapprove`,{
               headers: { "Content-Type": "application/json",

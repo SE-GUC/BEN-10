@@ -23,7 +23,7 @@ class MyProjects extends Component {
 }
   async componentDidMount(){
     if(this.props.type === "partner"){
-    await axios.get(`${server}/api/partners/${this.state.partner_id}/myProjects`,{
+    await axios.get(`https://lirtenben.herokuapp.com/api/partners/${this.state.partner_id}/myProjects`,{
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')
      }
@@ -35,7 +35,7 @@ class MyProjects extends Component {
       this.setState({projects:projects.data})
   })}
   if(this.props.type === "consultancyagency"){
-    await axios.get(`${server}/api/consultancyagency/${this.props.user._id}/myProjects`,{
+    await axios.get(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.props.user._id}/myProjects`,{
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')
      }
@@ -47,7 +47,7 @@ class MyProjects extends Component {
       this.setState({projects:projects.data})
   })}
   if(this.props.type === "admin"){
-    await axios.get(`${server}/api/projects/`,{
+    await axios.get(`https://lirtenben.herokuapp.com/api/projects/`,{
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')
      }
@@ -59,7 +59,7 @@ class MyProjects extends Component {
       this.setState({projects:projects.data})
   })}
   if(this.props.type === "member"){
-    await axios.get(`${server}/api/members/${this.props.user._id}/myProjects`,{
+    await axios.get(`https://lirtenben.herokuapp.com/api/members/${this.props.user._id}/myProjects`,{
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')
      }

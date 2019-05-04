@@ -50,7 +50,7 @@ class requestor extends React.Component{
     }
      componentDidMount(){
         
-            Axios.get(`${server}/api/partners/${this.state.id}`,{
+            Axios.get(`https://lirtenben.herokuapp.com/api/partners/${this.state.id}`,{
               headers: { "Content-Type": "application/json",
               "Authorization": "bearer " + localStorage.getItem('token')
              }
@@ -66,7 +66,7 @@ class requestor extends React.Component{
         )
 
         
-       Axios.get(`${server}/api/consultancyagency/${this.state.id}`,{
+       Axios.get(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.id}`,{
         headers: { "Content-Type": "application/json",
         "Authorization": "bearer " + localStorage.getItem('token')
        }
@@ -111,6 +111,7 @@ class requestor extends React.Component{
               }}
               variant="outlined"
             />
+             <br/>
     
              <TextField
               id="outlined-read-only-input"
@@ -126,6 +127,7 @@ class requestor extends React.Component{
               }}
               variant="outlined"
             />
+             <br/>
             <TextField
               id="outlined-read-only-input"
               label="Experience Years"
@@ -137,7 +139,7 @@ class requestor extends React.Component{
               }}
               variant="outlined"
             />
-            
+             <br/>
            
     
             <TextField
@@ -151,7 +153,7 @@ class requestor extends React.Component{
               }}
               variant="outlined"
             />
-    
+     <br/>
             <TextField
               id="outlined-read-only-input"
               label="Mobile Number"
@@ -163,6 +165,7 @@ class requestor extends React.Component{
               }}
               variant="outlined"
             />
+             <br/>
             <Typography variant={"h6"} className={classes.title}>Rating</Typography>
             <Rating
           onRate={() => console.log('onRate')}

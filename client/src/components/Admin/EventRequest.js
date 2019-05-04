@@ -69,7 +69,7 @@ class EventRequest extends Component{
         }
     }
     componentDidMount(){
-        fetch(`${server}/api/consultancyagency/${this.state.body.requestorId}`,{
+        fetch(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.body.requestorId}`,{
           headers: { "Content-Type": "application/json",
           "Authorization": "bearer " + localStorage.getItem('token')
          }
@@ -91,7 +91,7 @@ class EventRequest extends Component{
        }
     )
     if(this.state.requestorName==null){
-    fetch(`${server}/api/partners/${this.state.body.requestorId}`,
+    fetch(`https://lirtenben.herokuapp.com/api/partners/${this.state.body.requestorId}`,
     {
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')

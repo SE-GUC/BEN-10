@@ -102,7 +102,7 @@ export default class EditableView extends React.Component {
     };
     
     saveChanges =async ()=>{
-      await axios({url : `${server}/api/projects/${this.state.projectID}`, method:'put',
+      await axios({url : `https://lirtenben.herokuapp.com/api/projects/${this.state.projectID}`, method:'put',
     data:{
         description : this.state.description,
         category : this.state.category,
@@ -134,7 +134,7 @@ export default class EditableView extends React.Component {
              <div id="ProjectAttributes">
              <br></br>
 
-<div class="headerArea"> <Typography variant="h4" gutterBottom>
+<div class="headerArea"> <Typography variant="h4" style={{color:"#283593",fontWeight:"bold"}} gutterBottom>
 Project Attributes
 </Typography>
               <div class="col-2 float-left"> 

@@ -51,7 +51,7 @@ class ViewAllProjects extends React.Component {
   }
   componentDidMount(){
     axios 
-    .get(`${server}/api/projects`,{
+    .get(`https://lirtenben.herokuapp.com/api/projects`,{
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')
      }

@@ -15,7 +15,7 @@ class MyEvents extends Component {
     }
   }
   componentDidMount(){
-    Axios.get(`${server}/api/members/${this.state.memId}/ShowMyEvents`,
+    Axios.get(`https://lirtenben.herokuapp.com/api/members/${this.state.memId}/ShowMyEvents`,
     {
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')

@@ -22,6 +22,11 @@ const theme = createMuiTheme({
     },
   },
   typography: { useNextVariants: true },
+  button:{
+    backgroundColor:"#283593",
+    marginLeft:550,
+    color:"#fff"
+  }
 });
 
 class feedBackSending extends React.Component {
@@ -41,7 +46,7 @@ class feedBackSending extends React.Component {
     if(this.state.type==="partner"){
       await axios
       .post(
-        `http://localhost:8000/api/partners/${this.state.ownerId}/rating/${this.state.eventId}`,{
+        `https://lirtenben.herokuapp.com/api/partners/${this.state.ownerId}/rating/${this.state.eventId}`,{
           headers: { "Content-Type": "application/json",
           "Authorization": "bearer " + localStorage.getItem('token')
          }
@@ -61,7 +66,7 @@ class feedBackSending extends React.Component {
         if(this.state.type==="consultancyagency"){
           await axios
           .post(
-            `http://localhost:8000/api/consultancyagency/${this.state.ownerId}/rating/${this.state.eventId}`,{
+            `https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.ownerId}/rating/${this.state.eventId}`,{
               headers: { "Content-Type": "application/json",
               "Authorization": "bearer " + localStorage.getItem('token')
              }
@@ -83,7 +88,7 @@ class feedBackSending extends React.Component {
             console.log("here");
           await axios
           .post(
-            `http://localhost:8000/api/admins/${this.state.ownerId}/events/${this.state.eventId}/sendFeedBackForm`,{
+            `https://lirtenben.herokuapp.com/api/admins/${this.state.ownerId}/events/${this.state.eventId}/sendFeedBackForm`,{
               headers: { "Content-Type": "application/json",
               "Authorization": "bearer " + localStorage.getItem('token')
              }
@@ -123,10 +128,11 @@ class feedBackSending extends React.Component {
 
   
   render() {
+    const { classes } = this.props;
     if (this.state.show) {
       return (
         <div>
-             <MuiThemeProvider theme={theme}> <Button onClick={()=>{this.sendClicked()}} variant="primary">
+             <MuiThemeProvider theme={theme}> <Button className={classes.button} onClick={()=>{this.sendClicked()}} variant="primary">
                 Send FeedBack
               </Button></MuiThemeProvider>
               

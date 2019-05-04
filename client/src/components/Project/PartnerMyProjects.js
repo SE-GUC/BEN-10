@@ -16,7 +16,7 @@ class PartnerMyProjects extends Component {
     }
   }
   componentDidMount(){
-    fetch(`${server}/api/partners/${this.state.partnerId}/myProjects`,{
+    fetch(`https://lirtenben.herokuapp.com/api/partners/${this.state.partnerId}/myProjects`,{
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')
      }

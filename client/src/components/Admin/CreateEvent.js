@@ -116,7 +116,7 @@ class CreateEvent extends React.Component {
                      }
        
       };
-      fetch(`${server}/api/admins/${JSON.parse(localStorage.getItem("user"))._id}/addEvent/` , requestOptions).then((response) => {
+      fetch(`https://lirtenben.herokuapp.com/api/admins/${JSON.parse(localStorage.getItem("user"))._id}/addEvent/` , requestOptions).then((response) => {
         return response.json();
       }).then((result) => {
           if(result.msg=="Event is posted successfully"){

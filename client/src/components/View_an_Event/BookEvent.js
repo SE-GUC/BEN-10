@@ -156,7 +156,7 @@ class bookEvent extends React.Component {
     if(this.state.type==="member"){
       await axios
       .put(
-        `http://localhost:8000/api/members/${this.state.member._id}/bookEvent/${this.state.eventId}`,{},{
+        `https://lirtenben.herokuapp.com/api/members/${this.state.member._id}/bookEvent/${this.state.eventId}`,{},{
           headers: { "Content-Type": "application/json",
           "Authorization": "bearer " + localStorage.getItem('token')
          }

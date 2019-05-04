@@ -31,7 +31,7 @@ const styles = theme => ({
         this.applyClick=this.applyClick.bind(this)
     }
     applyClick(){
-         fetch(`${server}/api/consultancyagency/${this.state.id}/caApplyProject/${this.state.project_id}`, {
+         fetch(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.id}/caApplyProject/${this.state.project_id}`, {
         method: 'PUT',
         body: {},
         headers: { "Content-Type": "application/json",

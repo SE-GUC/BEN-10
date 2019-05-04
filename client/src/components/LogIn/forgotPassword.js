@@ -76,7 +76,7 @@ export default class LogIn extends Component {
         newPassword:this.state.newPassword
       }
       console.log(body)
-      await fetch(`${server}/forgotPassword`, {
+      await fetch(`https://lirtenben.herokuapp.com/forgotPassword`, {
 
         method: "put",
   
@@ -112,7 +112,7 @@ handleSend = async()=>{
     const body = {
       email:this.state.email
     }
-    await fetch(`${server}/sendOldPassword`, {
+    await fetch(`https://lirtenben.herokuapp.com/sendOldPassword`, {
 
       method: "put",
 

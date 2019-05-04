@@ -15,7 +15,7 @@ class MyEvents extends Component {
     }
   }
   componentDidMount(){
-    fetch(`${server}/api/partners/${this.state.partnerId}/ShowMyEvents`,{
+    fetch(`https://lirtenben.herokuapp.com/api/partners/${this.state.partnerId}/ShowMyEvents`,{
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')
      }
@@ -25,7 +25,7 @@ class MyEvents extends Component {
   }
   render() {
     console.log(this.state.Event===null)
-    if(this.state.Event===null||typeof this.state.Event==="Undefined"||this.state.Event.length===0){
+    if(this.state.Event===null||typeof this.state.Event==="Undefined"){
         return (
             <div className="App">
             <LinearProgress/>

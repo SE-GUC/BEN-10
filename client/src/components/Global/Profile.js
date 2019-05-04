@@ -6,7 +6,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
+import {Button} from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
 import classes from "classnames";
@@ -26,7 +26,15 @@ import HelpIcon from '@material-ui/icons/Help';
 import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import ThumbUp from '@material-ui/icons/ThumbUp';
-import { LinearProgress } from "@material-ui/core";
+import { LinearProgress, TextField } from "@material-ui/core";
+import Snackbar from '@material-ui/core/Snackbar';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+
+import axios from "axios"
 const server = require("../../config");
 function TabContainer(props) {
   return (
@@ -55,7 +63,11 @@ class Profile extends React.Component {
       redirectEvents: false,
       redirectProjects: false,
       value:0,
-      loading:false
+      loading:false,
+      StringReport:'',
+      ReportTitle:'',
+      snackBarRepoAdded:false,
+      snackmsg:''
     };
     this.viewEvents = this.viewEvents.bind(this);
     this.viewProjects = this.viewProjects.bind(this);
@@ -84,10 +96,57 @@ class Profile extends React.Component {
       loading:true
     })
   }
+  handleReportTitle = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
 
-        
+
+  handleReport = name => event => {
+    const s = this.state.ReportTitle;
+    const s2 = s+"   "+event.target.value;
+    this.setState({
+      [name]: s2
+    });
+  };
+
+  addReport=async()=>{
+    // step 1 : get the consultancy
+    var reports =[];
+    await axios.get(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.user._id}`)
+     .then(res=>res.data)
+     .then(c=>{
+       console.log(c.data.reports)
+       reports=c.data.reports
+     })
+     reports.push(this.state.StringReport);
+     console.log(reports)
+     const body={reports}
+     var msg = ''
+     axios.put(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.user._id}`,body)
+     .then(res=>res.data)
+     .then(c=>{
+     msg=c.msg
+
+     }) 
+     this.setState({snackBarRepoAdded:true,snackmsg:msg});
+     var usern=null;
+     await axios.get(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.user._id}`)
+     .then(res=>res.data)
+     .then(c=>{
+       usern=c.data
+     })
+     this.setState({user:usern})
+     localStorage.setItem('user',JSON.stringify(usern))
+    }
+  CloseSnack1 = () =>{
+    this.setState({snackBarRepoAdded:false})
+  }
 
   render() {
+    console.log(this.state.ReportTitle)
+    console.log(this.state.StringReport)
 
    const {classes}=this.props
     if (this.state.redirectEvents) {
@@ -138,38 +197,38 @@ class Profile extends React.Component {
         <div class="paper">
         <Paper  >
         
-        <Typography class="text1" variant="h6"> SSN </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.SSN}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> SSN </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.SSN}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Birth Date </Typography> 
-         <Typography class="text2" component="p" >{new Date(this.state.user.birthDate).getFullYear()+"-"+new Date(this.state.user.birthDate).getMonth()+"-"+new Date(this.state.user.birthDate).getDate()}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Birth Date </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{new Date(this.state.user.birthDate).getFullYear()+"-"+new Date(this.state.user.birthDate).getMonth()+"-"+new Date(this.state.user.birthDate).getDate()}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Gender </Typography> 
-         <Typography class="text2" component="p" >{(this.state.user.gender)?"Female":"Male"}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Gender </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{(this.state.user.gender)?"Female":"Male"}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Nationality </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.nationality}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Nationality </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.nationality}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Marital Status </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.maritalStatus}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Marital Status </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.maritalStatus}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Driving License </Typography> 
-         <Typography class="text2" component="p" >{(this.state.user.drivingLicense)?"user have a driving license":"user can not drive"}<br></br></Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Driving License </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{(this.state.user.drivingLicense)?"user have a driving license":"user can not drive"}<br></br></Typography>
         </Paper>
      </div>
       </TabContainer>}
@@ -177,27 +236,27 @@ class Profile extends React.Component {
         <div class="paper">
         <Paper  >
         
-        <Typography class="text1" variant="h6"> Country </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.country}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Country </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.country}</Typography>
         </Paper>
         </div>
         
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> City </Typography> 
-         <Typography class="text2" component="p" >{(this.state.user.city)?"Female":"Male"}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> City </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{(this.state.user.city)?"Female":"Male"}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Area </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.area}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Area </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.area}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Postal Code </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.postalCode}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Postal Code </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.postalCode}</Typography>
         </Paper>
         </div>
         
@@ -208,26 +267,26 @@ class Profile extends React.Component {
       {this.state.value === 2 && <TabContainer>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Email </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.email}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Email </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.email}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Mobile Number </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.mobileNumber}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Mobile Number </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.mobileNumber}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Alternative Mobile Number </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.alternativeMobileNumber}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Alternative Mobile Number </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.alternativeMobileNumber}</Typography>
         </Paper>
         </div>
         {(this.state.type=="member")? <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Skills Set </Typography> 
-         <Typography class="text2" component="p" >{(this.state.user.skillSet.length>0)?this.state.user.skillSet.map(s=> s+" "):"None"}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Skills Set </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{(this.state.user.skillSet.length>0)?this.state.user.skillSet.map(s=> s+" "):"None"}</Typography>
         </Paper>
         </div> :""}
         
@@ -274,39 +333,39 @@ class Profile extends React.Component {
         <div class="paper">
         <Paper  >
         
-        <Typography class="text1" variant="h6"> About </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.about}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> About </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.about}</Typography>
         </Paper>
         </div>
         
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Phone Number </Typography> 
-         <Typography class="text2" component="p" >{(this.state.user.telephoneNumber)}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Phone Number </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{(this.state.user.telephoneNumber)}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Email </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.email}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Email </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.email}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Agency Location </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.location}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Agency Location </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.location}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Experience Years </Typography> 
-         <Typography class="text2" component="p" >{(this.state.user.yearsOfExperience)?"user have a driving license":"user can not drive"}<br></br></Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Experience Years </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{(this.state.user.yearsOfExperience)?"user have a driving license":"user can not drive"}<br></br></Typography>
         </Paper>
      </div>
      <div class="paper">
         <Paper  >
         
-        <Typography class="text1" variant="h6"> Rating </Typography> 
+        <Typography class="text1" variant="h6" style={{fontSize:20}}>  Rating </Typography> 
         <Rating
           onRate={() => console.log('onRate')}
           value={3}
@@ -328,19 +387,101 @@ class Profile extends React.Component {
             {r}
             </Typography>
             </Typography>
-          </Paper>
-          
+          </Paper>          
           </div>
         )}
+        <ExpansionPanel>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography >Add report</Typography>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+        <Paper style={{height:"550px"}}>
+       
+        <TextField
+        type="String"
+        label="Title"
+        onChange={this.handleReportTitle('ReportTitle')}  
+        id="mui-theme-provider-standard-input"
+        style={{width:"250px",marginLeft:"20px"}}
+        />
+        <br></br>
+        <br/>
+        <TextField
+        id="standard-multiline-flexible"
+        multiline
+        rows="20"
+        label="report"
+        onChange={this.handleReport('StringReport')}
+        style={{width:"45rem",marginLeft:"20px"}}
+        />
+        <br></br>
+        <br></br>
+        <button type="button" class="btn btn-success" onClick={this.addReport} style={{width:"150px",marginLeft:"15px"}}>Add report</button>
+
+      </Paper>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+      <Snackbar
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}
+      open={this.state.snackBarRepoAdded}
+      autoHideDuration={2500}
+      onClose={this.CloseSnack1}
+      ContentProps={{
+        'aria-describedby': 'message-id',
+      }}
+      message={<span id="message-id">{"report added successfally"}</span>}
+      
+    />
         </div>:
         <div class="paper">
           <Paper>
           <Typography class="text2" component="p" >
-            <Typography class="text1" component="p">
+            <Typography class="text1" component="p" style={{fontSize:20}}>
             This Profile didn't upload any reports :(
             </Typography>
             </Typography>
           </Paper>
+          <Paper style={{height:"550px"}}>
+       
+            <TextField
+            type="String"
+            label="Title"
+            onChange={this.handleReportTitle('ReportTitle')}  
+            id="mui-theme-provider-standard-input"
+            style={{width:"250px",marginLeft:"20px"}}
+            />
+            <br></br>
+            <br/>
+            <TextField
+            id="standard-multiline-flexible"
+            multiline
+            rows="20"
+            label="report"
+            onChange={this.handleReport('StringReport')}
+            style={{width:"45rem",marginLeft:"20px"}}
+            />
+            <br></br>
+            <br></br>
+            <button type="button" class="btn btn-success" onClick={this.addReport} style={{width:"150px",marginLeft:"15px"}}>Add report</button>
+
+          </Paper>
+          <Snackbar
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              open={this.state.snackBarRepoAdded}
+              autoHideDuration={2500}
+              onClose={this.CloseSnack1}
+              ContentProps={{
+                'aria-describedby': 'message-id',
+              }}
+              message={<span id="message-id">{"report added successfally"}</span>}
+              
+            />
         </div>
         )}
         

@@ -30,7 +30,7 @@ class NotifyMember extends React.Component {
         
         axios 
             .post(
-                `${server}/api/admins/${this.state.adminID}/notifications/${this.state.memberID}`,body,{
+                `https://lirtenben.herokuapp.com/api/admins/${this.state.adminID}/notifications/${this.state.memberID}`,body,{
                     headers: { "Content-Type": "application/json",
                     "Authorization": "bearer " + localStorage.getItem('token')
                    }}
@@ -40,7 +40,7 @@ class NotifyMember extends React.Component {
 
         axios
             .post(
-                `${server}/api/admins/${this.state.adminID}/projects/${this.state.pID}/sendRejection`,{
+                `https://lirtenben.herokuapp.com/api/admins/${this.state.adminID}/projects/${this.state.pID}/sendRejection`,{
                     headers: { "Content-Type": "application/json",
                     "Authorization": "bearer " + localStorage.getItem('token')
                    }

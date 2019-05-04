@@ -26,7 +26,7 @@ class Project extends Component {
       "Authorization": "bearer " + localStorage.getItem('token')
      }
     };
-    fetch(`${server}/api/partners/${this.state.project.companyID}/deleteProject/${this.state.project._id}` , requestOptions).then((response) => {
+    fetch(`https://lirtenben.herokuapp.com/api/partners/${this.state.project.companyID}/deleteProject/${this.state.project._id}` , requestOptions).then((response) => {
       return response.json();
     }).then((result) => {
       console.log(result)

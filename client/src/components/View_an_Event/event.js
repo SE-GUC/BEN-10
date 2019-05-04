@@ -21,6 +21,7 @@ import Typography from '@material-ui/core/Typography';
 import FolderIcon from '@material-ui/icons/Folder';
 import DeleteIcon from '@material-ui/icons/Delete';
 import BookEvent from "./BookEvent"
+import FeedBack from "./Feed_Back"
 const styles = theme => ({
     container: {
       display: 'flex',
@@ -55,7 +56,8 @@ class event extends React.Component{
         super(props);
         this.state={
             Event:JSON.parse(localStorage.getItem('event')),
-            eventId:JSON.parse(localStorage.getItem('event'))._id
+            eventId:JSON.parse(localStorage.getItem('event'))._id,
+            ownerId:JSON.parse(localStorage.getItem('event')).requestorId
 
         }
     }
@@ -75,6 +77,7 @@ class event extends React.Component{
           }}
           variant="outlined"
         />
+        <br/>
 
          <TextField
           id="outlined-read-only-input"
@@ -87,6 +90,7 @@ class event extends React.Component{
           }}
           variant="outlined"
         />
+         <br/>
         
         <TextField
           id="outlined-read-only-input"
@@ -101,6 +105,7 @@ class event extends React.Component{
           }}
           variant="outlined"
         />
+         <br/>
 
         <TextField
           id="outlined-read-only-input"
@@ -113,6 +118,7 @@ class event extends React.Component{
           }}
           variant="outlined"
         />
+         <br/>
 
         <TextField
           id="outlined-read-only-input"
@@ -125,6 +131,7 @@ class event extends React.Component{
           }}
           variant="outlined"
         />
+         <br/>
 
         <Grid container spacing={16}>
           <Grid item xs={12} md={6}>
@@ -144,6 +151,7 @@ class event extends React.Component{
             </div>
           </Grid>
           </Grid>
+          <br/>
 
           <TextField
           id="outlined-read-only-input"
@@ -156,6 +164,7 @@ class event extends React.Component{
           }}
           variant="outlined"
         />
+         <br/>
 
         <TextField
           id="outlined-read-only-input"
@@ -168,6 +177,7 @@ class event extends React.Component{
           }}
           variant="outlined"
         />
+         <br/>
 
      <TextField
           id="outlined-read-only-input"
@@ -180,6 +190,7 @@ class event extends React.Component{
           }}
           variant="outlined"
         />
+         <br/>
 
      <TextField
           id="outlined-read-only-input"
@@ -192,6 +203,7 @@ class event extends React.Component{
           }}
           variant="outlined"
         />
+         <br/>
 
     <TextField
           id="outlined-read-only-input"
@@ -204,7 +216,10 @@ class event extends React.Component{
           }}
           variant="outlined"
         />
+         {(JSON.parse(localStorage.getItem("user")))._id.toString()===this.state.ownerId.toString()? <FeedBack eventId={this.state.eventId} ownerId={this.state.ownerId} type={localStorage.getItem("type")} reqId={(JSON.parse(localStorage.getItem("user")))._id}></FeedBack>:""}
+
           <BookEvent eventId={this.state.eventId }type={localStorage.getItem("type")}  member={JSON.parse(localStorage.getItem("user"))}  > </BookEvent>
+
 
 
 

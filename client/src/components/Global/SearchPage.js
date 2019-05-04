@@ -72,7 +72,7 @@ class SearchPage extends Component{
     constructor(props){
         super(props);
         this.state={
-            searchWord:this.props.location.state.searchWord,
+            searchWord:localStorage.getItem('search'),
             type:localStorage.getItem('type'),
             value: 0,
             partner:null,
@@ -90,7 +90,7 @@ class SearchPage extends Component{
                 text:this.state.searchWord
             }
             if(this.state.type=="admin"){
-            axios.post(`${server}/searchAdmins`,body,{
+            axios.post(`https://lirtenben.herokuapp.com/searchAdmins`,body,{
               headers: { "Content-Type": "application/json",
               "Authorization": "bearer " + localStorage.getItem('token')
              }
@@ -101,7 +101,7 @@ class SearchPage extends Component{
           .then(json => this.setState({admin:json.data}))
         }
           //partners
-          axios.post(`${server}/searchPartners`,body,{
+          axios.post(`https://lirtenben.herokuapp.com/searchPartners`,body,{
             headers: { "Content-Type": "application/json",
             "Authorization": "bearer " + localStorage.getItem('token')
            }})
@@ -110,7 +110,7 @@ class SearchPage extends Component{
           })
           .then(json => this.setState({partner:json.data}))
           // member
-          axios.post(`${server}/searchMembers`,body,{
+          axios.post(`https://lirtenben.herokuapp.com/searchMembers`,body,{
             headers: { "Content-Type": "application/json",
             "Authorization": "bearer " + localStorage.getItem('token')
            }
@@ -120,7 +120,7 @@ class SearchPage extends Component{
           })
           .then(json => this.setState({member:json.data}))
           // agencies
-          axios.post(`${server}/searchCAs`,body,{
+          axios.post(`https://lirtenben.herokuapp.com/searchCAs`,body,{
             headers: { "Content-Type": "application/json",
             "Authorization": "bearer " + localStorage.getItem('token')
            }
@@ -130,7 +130,7 @@ class SearchPage extends Component{
           })
           .then(json => this.setState({consultancy:json.data}))
           // projects
-          axios.post(`${server}/searchProjects`,body,{
+          axios.post(`https://lirtenben.herokuapp.com/searchProjects`,body,{
             headers: { "Content-Type": "application/json",
             "Authorization": "bearer " + localStorage.getItem('token')
            }
@@ -145,7 +145,7 @@ class SearchPage extends Component{
               this.setState({projects:json.data})
             })
           // Events
-          axios.post(`${server}/searchEvents`,body,{
+          axios.post(`https://lirtenben.herokuapp.com/searchEvents`,body,{
             headers: { "Content-Type": "application/json",
             "Authorization": "bearer " + localStorage.getItem('token')
            }
@@ -164,6 +164,7 @@ class SearchPage extends Component{
       };
     render(){
         const { classes } = this.props;
+        console.log(this.state.searchWord)
 
             return (
               <div>

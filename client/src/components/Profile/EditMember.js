@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import UpdateButton from './UpdateButton'
 import axios from "axios";
@@ -20,6 +25,7 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     width:300,
+    marginBottom:50
   },
   textField: {
     
@@ -81,7 +87,10 @@ class OutlinedTextFields extends React.Component {
     events:this.props.member.events,
     projects:this.props.member.projects,
     skillSet:this.props.member.skillSet,
-    showPassword: false
+    showPassword: false,
+    personal:true,
+    location:false,
+    account:false
   }
   console.log(this.props.member)
 }
@@ -108,7 +117,7 @@ onUpdate =async ()=>{
     projects:this.state.projects,
     skillSet:this.state.skillSet
   }
-  await axios.put(`${server}/api/members/${this.props.member._id}`,body,{
+  await axios.put(`https://lirtenben.herokuapp.com/api/members/${this.props.member._id}`,body,{
     headers: { "Content-Type": "application/json",
     "Authorization": "bearer " + localStorage.getItem('token')
    }
@@ -118,7 +127,7 @@ onUpdate =async ()=>{
 })
 .then(json => this.setState({project : json}))
  await axios
-      .get(`${server}/api/members/${this.props.member._id}`,{
+      .get(`https://lirtenben.herokuapp.com/api/members/${this.props.member._id}`,{
         headers: { "Content-Type": "application/json",
         "Authorization": "bearer " + localStorage.getItem('token')
        }
@@ -129,10 +138,28 @@ onUpdate =async ()=>{
       .then(a =>{
         localStorage.setItem('type',"member");
         localStorage.setItem('user',JSON.stringify(a.data));
-        window.location.reload();
+        // window.location.reload();
       }
       );
 
+
+}
+handlePersonal = () =>{
+  this.setState({personal:true})
+  this.setState({location:false})
+  this.setState({account:false})
+
+}
+handleLocation = () =>{
+  this.setState({personal:false})
+  this.setState({location:true})
+  this.setState({account:false})
+
+}
+handleAccount = () =>{
+  this.setState({personal:false})
+  this.setState({location:false})
+  this.setState({account:true})
 
 }
 
@@ -157,8 +184,37 @@ onUpdate =async ()=>{
        month=new Date(this.state.birthDate).getMonth()+1
         
     return (
-      <form className={classes.container} noValidate autoComplete="off">
-        <TextField
+      <div>
+        <div style={{width:"20%" ,height:"100vh",float:"left"}}>
+        
+        <List component="nav" >
+      <ListItem button onClick={this.handlePersonal}>
+        <ListItemText primary="Personal Info" />
+      </ListItem>
+      <Divider />
+      <ListItem button divider>
+        <ListItemText primary="Location Info" onClick={this.handleLocation} />
+      </ListItem>
+      <ListItem button>
+        <ListItemText primary="Account Info" onClick={this.handleAccount} />
+      </ListItem> 
+      <Divider/> 
+      {/* <ListItem style={{backgroundColor:"#283593"}} button>
+        <ListItemText   onClick={this.onUpdate} ><h style={{color:"#fff"}}>Update</h></ListItemText>
+      </ListItem>      */}
+      <Button style={{backgroundColor:"#283593",float:"left",marginTop:5}} onClick={this.onUpdate}>
+       <h style={{color:"#fff",fontWeight:"bold"}}>
+        Update
+        </h>
+      </Button>
+    </List>
+        </div>
+
+        <div style={{width:"80%",height:"100vh",float:"right",display:"inline-block"}}>
+        {(this.state.personal)?
+        <div style={{display:"inline-block"}}>
+        <div style={{marginBottom:50}}>
+               <TextField
           id="firstName"
           label="First Name"
           className={classes.textField}
@@ -166,16 +222,18 @@ onUpdate =async ()=>{
           onChange={this.handleChange('firstName')}
           margin="normal"
           variant="outlined"
-        />  
+        /> 
+        <br/> 
         <TextField
-          id="Last Name"
-          label="lastName"
+          id="lastName"
+          label="Last Name"
           className={classes.textField}
           value={this.state.lastName}
           onChange={this.handleChange('lastName')}
           margin="normal"
           variant="outlined"
         /> 
+        <br/>
         <TextField
           id="SSN"
           label="SSN"
@@ -185,19 +243,17 @@ onUpdate =async ()=>{
           margin="normal"
           variant="outlined"
         />
-       <TextField
-        id="birthDate"
-        label="Birth Date"
-        type="date"
-        defaultValue={new Date(this.state.birthDate).getFullYear()+"-"+month+"-"+new Date(this.state.birthDate).getDate()}
-        className={classes.textField}
-        onChange={this.handleChange('birthDate')}
-        margin="normal"
+        <br></br>
+        <TextField
+          id="birthdate"
+          label="Birthdate"
+          className={classes.textField}
+          value={new Date(this.state.birthdate).getFullYear()+"-"+new Date(this.state.birthdate).getMonth()+"-"+new Date(this.state.birthdate).getDate()}
+          onChange={this.handleChange('birthdate')}
+          margin="normal"
           variant="outlined"
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
+        />
+        <br></br>
         <TextField
           id="gender"
           label="Gender"
@@ -207,6 +263,7 @@ onUpdate =async ()=>{
           margin="normal"
           variant="outlined"
         />
+        <br></br>
         <TextField
           id="nationality"
           label="Nationality"
@@ -216,6 +273,7 @@ onUpdate =async ()=>{
           margin="normal"
           variant="outlined"
         />
+        <br></br>
         <TextField
           id="maritalStatus"
           label="Marital Status"
@@ -225,6 +283,8 @@ onUpdate =async ()=>{
           margin="normal"
           variant="outlined"
         />
+        <br></br>
+        
         <TextField
           id="drivingLicense"
           label="Driving License"
@@ -234,7 +294,26 @@ onUpdate =async ()=>{
           margin="normal"
           variant="outlined"
         />
+        <br></br>
         <TextField
+          id="skillSet"
+          label="Skill Set"
+          className={classes.textField}
+          value={this.state.skillSet}
+          onChange={this.handleChange('skillSet')}
+          margin="normal"
+          variant="outlined"
+        />
+       
+        </div>
+        </div>
+        :""}
+
+{(this.state.location)?
+        <div style={{display:"inline-block"}}>
+        <div style={{marginBottom:50}}>
+        
+                <TextField
           id="country"
           label="Country"
           className={classes.textField}
@@ -243,6 +322,7 @@ onUpdate =async ()=>{
           margin="normal"
           variant="outlined"
         />
+        <br></br>
         <TextField
           id="city"
           label="City"
@@ -252,6 +332,7 @@ onUpdate =async ()=>{
           margin="normal"
           variant="outlined"
         />
+        <br></br>
         <TextField
           id="outlined-name"
           label="Area"
@@ -261,15 +342,15 @@ onUpdate =async ()=>{
           margin="normal"
           variant="outlined"
         />
-        <TextField
-          id="postalCode"
-          label="Postal Code"
-          className={classes.textField}
-          value={this.state.postalCode}
-          onChange={this.handleChange('postalCode')}
-          margin="normal"
-          variant="outlined"
-        />
+        
+        </div>
+        </div>
+        :""}
+
+{(this.state.account)?
+        <div style={{display:"inline-block"}}>
+        <div style={{marginBottom:50}}>
+
         <TextField
           id="outlined-email-input"
           label="Email"
@@ -281,6 +362,7 @@ onUpdate =async ()=>{
           margin="normal"
           variant="outlined"
         />
+        <br></br>
 
 <TextField
           id="outlined-adornment-password"
@@ -303,6 +385,7 @@ onUpdate =async ()=>{
             ),
           }}
         />
+        <br></br>
         <TextField
           id="mobileNumber"
           label="Mobile Number"
@@ -312,6 +395,7 @@ onUpdate =async ()=>{
           margin="normal"
           variant="outlined"
         />
+        <br></br>
         <TextField
           id="alternativeMobileNumber"
           label="Alternative Mobile Number"
@@ -321,36 +405,30 @@ onUpdate =async ()=>{
           margin="normal"
           variant="outlined"
         />
-        {/* <TextField
-          id="events"
-          label="Events"
-          className={classes.textField}
-          value={this.state.events}
-          onChange={this.handleChange('events')}
-          margin="normal"
-          variant="outlined"
-        /> */}
-        {/* <TextField
-          id="projects"
-          label="Projects"
-          className={classes.textField}
-          value={this.state.projects}
-          onChange={this.handleChange('projects')}
-          margin="normal"
-          variant="outlined"
-        /> */}
-        <TextField
-          id="skillSet"
-          label="Skill Set"
-          className={classes.textField}
-          value={this.state.skillSet}
-          onChange={this.handleChange('skillSet')}
-          margin="normal"
-          variant="outlined"
-        />
+        <br></br>
+       
+        </div>
+       
+       
+        </div>
+        :""}
 
-      <UpdateButton onUpdate={this.onUpdate} />
-      </form>
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        
+       
+      </div>
     );
   }
 }

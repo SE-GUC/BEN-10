@@ -44,18 +44,10 @@ class ApplyingCAsOnProject extends Component {
 
     return (
       <div className={classes.root}>
-        <GridList cellHeight={180} className={classes.gridList}>
-          <GridListTile key="Subheader" cols={1} style={{ height: "auto" }}>
-            <ListSubheader component="div">
-              Applying Consultancy Agencys On this Project
-            </ListSubheader>
-          </GridListTile>
+          
           {this.props.project.applyingCA.map(i => (
-            <GridListTile key={i}>
               <ApplyingCAsCard project={this.props.project} admin={this.props.admin} ca={i} />
-            </GridListTile>
           ))}
-        </GridList>
       </div>
     );
   }

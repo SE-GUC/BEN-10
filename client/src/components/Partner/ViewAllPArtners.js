@@ -16,13 +16,14 @@ class allPartners extends React.Component {
   }
   componentDidMount() {
     axios
-      .get(`${server}/api/partners/`,{
+      .get(`https://lirtenben.herokuapp.com/api/partners/`,{
         headers: { "Content-Type": "application/json",
         "Authorization": "bearer " + localStorage.getItem('token')
        }
       })
       .then(res => {
-        return res.data;
+        console.log(res)
+        return res.json();
       })
       .then(a => this.setState({ partners: a.data, isLoaded: true }));
   }

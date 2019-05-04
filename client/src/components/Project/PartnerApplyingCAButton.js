@@ -36,7 +36,7 @@ class PartnerApplyingCAButton extends Component {
     };
     axios
       .put(
-        `${server}/api/partners/${this.state.partner._id}/assignCA/${this.state.project._id}/to/${this.state.ca}`,body,{
+        `https://lirtenben.herokuapp.com/api/partners/${this.state.partner._id}/assignCA/${this.state.project._id}/to/${this.state.ca}`,body,{
           headers: { "Content-Type": "application/json",
           "Authorization": "bearer " + localStorage.getItem('token')
          }}

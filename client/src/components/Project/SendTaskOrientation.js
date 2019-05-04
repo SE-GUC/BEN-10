@@ -22,7 +22,7 @@ class SendTaskOrientation extends React.Component {
   sendInvitation = () => {
     
 
-    axios.post(`${server}/api/partners/${this.props.Id}/sendOrientationInvitations/${this.props.projectId}/`,{
+    axios.post(`https://lirtenben.herokuapp.com/api/partners/${this.props.Id}/sendOrientationInvitations/${this.props.projectId}/`,{
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')
      }
@@ -60,7 +60,7 @@ class SendTaskOrientation extends React.Component {
     const { vertical, horizontal, open } = this.state;
     return (
       <div>
-        <Button onClick={this.handleClick({ vertical: 'bottom', horizontal: 'left' })} color="secondary" variant="contained" className={this.props.className}>
+        <Button onClick={this.handleClick({ vertical: 'bottom', horizontal: 'left' })} style={{backgroundColor:"#283593",marginLeft:450}} variant="contained" className={this.props.className}>
         Send Task Orientation Invitation
         </Button>
         

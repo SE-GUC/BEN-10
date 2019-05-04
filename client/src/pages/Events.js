@@ -20,7 +20,7 @@ class Events extends React.Component{
         type:localStorage.getItem('type'),
         reload: true,
         eventRequest:false,
-        AllEvents:false,
+        AllEvents:true,
         MyEvents:false
         };
     }
@@ -71,7 +71,7 @@ class Events extends React.Component{
         </div>
         :""}
         {(this.state.AllEvents)?
-        <div style={{columns:2}}>
+        <div >
         <ViewAllEvents />
         </div>
         :""}
@@ -109,7 +109,7 @@ class Events extends React.Component{
       </div>
         :""}
         {(this.state.AllEvents)?
-        <div style={{columns:2}}>
+        <div >
         <ViewAllEvents />
         </div>
         :""}
@@ -139,7 +139,7 @@ class Events extends React.Component{
         </div>
         <div style={{width:"80%",height:"90vh",float:"right"}}>
         {(this.state.MyEvents)?<div ><MMyEvent id={this.state.user._id}/></div>:""}
-        {(this.state.AllEvents)?<div style={{columns:2}}><ViewAllEvents /></div>:""}
+        {(this.state.AllEvents)?<div style={{display:"inline-block"}}><ViewAllEvents /></div>:""}
                     
                     
                     </div>
@@ -176,7 +176,7 @@ class Events extends React.Component{
              </div>
              :""}
              {(this.state.AllEvents)?
-             <div style={{columns:2}}>
+             <div >
              <ViewAllEvents />
              </div>
              :""}   

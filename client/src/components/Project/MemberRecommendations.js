@@ -14,7 +14,7 @@ class MemberMyProjects extends Component {
     }
   }
   componentDidMount(){
-    fetch(`${server}/api/members/${this.state.partnerId}/recommendations`,{
+    fetch(`https://lirtenben.herokuapp.com/api/members/${this.state.partnerId}/recommendations`,{
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')
      }

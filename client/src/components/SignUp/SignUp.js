@@ -15,6 +15,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
+import Axios from 'axios';
 const server = require("../../config");
 
 const styles = theme => ({
@@ -215,7 +216,7 @@ export default class SignUp extends Component {
               headers: { "Content-Type": "application/json" }
              
             };
-            await fetch(`${server}/signUp` , requestOptions).then((response) => {
+            await fetch(`https://lirtenben.herokuapp.com/signUp` , requestOptions).then((response) => {
               return response.json();
             }).then((result) => {
               console.log(result.status)
@@ -236,7 +237,7 @@ export default class SignUp extends Component {
     };
       SignUpAsPartnerOrMember = async () =>{
         const body={
-            type:this.state.type,
+            type:this.props.match.params.type,
             firstName:this.state.firstName,
             lastName:this.state.lastName,
             SSN:this.state.SSN,
@@ -260,28 +261,33 @@ export default class SignUp extends Component {
               headers: { "Content-Type": "application/json" }
              
             };
-            console.log("fetch")
-           await fetch(`${server}/signUp` , {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: { "Content-Type": "application/json" }
-           
-          }).then((response) => {
+            
+            
+            // console.log("fetch")
+           await fetch(`https://lirtenben.herokuapp.com/signUp` , requestOptions).then((response) => {
             console.log(response);
             console.log(response.data);
             // console.log(response.json());
             // console.log(response.json().data);
 
-              return response.clone().json() ;
+              return response.json() ;
             }).then((result) => {
               console.log(result)
-              if((result.msg==="Partner was created successfully")||
-              (result.msg==="member was created successfully")){
+              if((result.msg==="Partner was created successfully")
+              ){
                 this.setState({
                   user:body,
                   type:"partner",
                   redirect:true,
                 }) 
+              }
+              else if((result.msg==="member was created successfully")){
+                this.setState({
+                  user:body,
+                  type:"member",
+                  redirect:true,
+                }) 
+
               }
               else{
                 console.log(result)

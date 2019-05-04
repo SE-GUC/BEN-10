@@ -30,7 +30,7 @@ export default class EditProject extends Component {
   }
   async  componentDidMount(){
     await  axios
-      .get(`${server}/api/projects/${this.state.projectID}`,{
+      .get(`https://lirtenben.herokuapp.com/api/projects/${this.state.projectID}`,{
         headers: { "Content-Type": "application/json",
         "Authorization": "bearer " + localStorage.getItem('token')
        }
@@ -63,7 +63,7 @@ export default class EditProject extends Component {
       "Authorization": "bearer " + localStorage.getItem('token')
      }
     };
-    await fetch(`${server}/api/projects/${this.state.projectID}` , requestOptions).then((response) => {
+    await fetch(`https://lirtenben.herokuapp.com/api/projects/${this.state.projectID}` , requestOptions).then((response) => {
       return response.json();
     }).then((result) => {
       console.log(result)
@@ -85,7 +85,7 @@ export default class EditProject extends Component {
       "Authorization": "bearer " + localStorage.getItem('token')
      }
     };
-    await fetch(`${server}/api/partners/${this.state.userID}/cancelproject/${this.state.projectID}` , requestOptions).then((response) => {
+    await fetch(`https://lirtenben.herokuapp.com/api/partners/${this.state.userID}/cancelproject/${this.state.projectID}` , requestOptions).then((response) => {
       return response.json();
     }).then((result) => {
       console.log(result)
@@ -134,24 +134,6 @@ export default class EditProject extends Component {
                       <MenuItem  onClick={this.viewSection1}>Project attributes</MenuItem>
                       <MenuItem  onClick={this.viewSection2}>Consultancy Agency</MenuItem>
                       <MenuItem  onClick={this.viewSection3}>Candidate</MenuItem>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
                       <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.cancelProject}>Delete project</MenuItem>
                     </MenuList>
                 </Paper>

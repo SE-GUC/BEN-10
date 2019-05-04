@@ -17,7 +17,7 @@ class MemberMyProjects extends Component {
   }
   async componentDidMount(){
     console.log(this.props.id)
-    await fetch(`${server}/api/members/${this.state.memId}/myProjects`,{
+    await fetch(`https://lirtenben.herokuapp.com/api/members/${this.state.memId}/myProjects`,{
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')
      }

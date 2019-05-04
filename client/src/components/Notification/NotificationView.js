@@ -62,7 +62,7 @@ class ControlledExpansionPanels extends React.Component {
           var flag = true;
           await axios
       .get(
-        `http://localhost:8000/api/admins/${this.state.notifications[i].sentById}`,
+        `https://lirtenben.herokuapp.com/api/admins/${this.state.notifications[i].sentById}`,
         {
           headers: { "Content-Type": "application/json",
           "Authorization": "bearer " + localStorage.getItem('token')
@@ -91,7 +91,7 @@ class ControlledExpansionPanels extends React.Component {
       if(flag){
         await axios
         .get(
-          `http://localhost:8000/api/partners/${this.state.notifications[i].notifiedPerson}`
+          `https://lirtenben.herokuapp.com/api/partners/${this.state.notifications[i].notifiedPerson}`
         )
         .then(res => {
             
@@ -114,7 +114,7 @@ class ControlledExpansionPanels extends React.Component {
       if(flag){
         await axios
         .get(
-          `http://localhost:8000/api/consultancyagency/${this.state.notifications[i].notifiedPerson}`,
+          `https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.notifications[i].notifiedPerson}`,
           {
             headers: { "Content-Type": "application/json",
             "Authorization": "bearer " + localStorage.getItem('token')
@@ -153,7 +153,7 @@ console.log(panel)
     const body = {
         seen:true
     }
-    fetch(`http://localhost:8000/api/notifications/${this.state.notifications[n]._id}`, {
+    fetch(`https://lirtenben.herokuapp.com/api/notifications/${this.state.notifications[n]._id}`, {
         method: "put",
         body: JSON.stringify(body),
         headers: { "Content-Type": "application/json",
