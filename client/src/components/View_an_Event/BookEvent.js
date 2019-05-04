@@ -34,6 +34,11 @@ const theme1 = createMuiTheme({
     },
   },
   typography: { useNextVariants: true },
+  button:{
+    backgroundColor:"#283593",
+    marginLeft:550,
+    color:"#fff"
+  }
 });
 
 
@@ -200,9 +205,9 @@ class bookEvent extends React.Component {
     if ( this.state.show) {
       return (
         <div>
-             <MuiThemeProvider theme1={theme1}> <Button onClick={()=>{this.sendClicked()}} >
+             <Button className={classes.button} onClick={()=>{this.sendClicked()}} >
                 Book this event
-                </Button></MuiThemeProvider> 
+                </Button>
                 
                 <div>
                 <Snackbar

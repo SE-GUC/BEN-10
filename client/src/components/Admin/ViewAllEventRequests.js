@@ -29,25 +29,17 @@ export default class ViewAllEventRequests extends Component {
   render() {
     if (this.state.eventRequests) {
       return (
-        <div>
+        <div >
           {this.state.eventRequests.map((e,i) => (
+            <div style={{display:"inline-block"}}>
             <EventRequest key={i} body={e} admin_id={this.props.admin_id} />
+            </div>
           ))}
         </div>
       );
     } else {
       return <LinearProgress />;
     }
-    // return(
-
-    //     <div>{
-    //     this.state.eventRequests.map(e=>(
-    //         <EventRequest body={e.data}/>
-
-    //     ))
-    //     }
-    //     </div>
-
-    // )
+  
   }
 }

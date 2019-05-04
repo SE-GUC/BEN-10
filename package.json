@@ -10,6 +10,7 @@
     "config": "^3.0.1",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "heroku": "^7.22.9",
     "jest": "^24.5.0",
     "joi": "^14.3.1",
     "joi-mongodb-objectid": "^0.1.0",
@@ -28,18 +29,27 @@
     "react-redux": "^7.0.2",
     "reactstrap": "^8.0.0",
     "request": "^2.88.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "webpack": "^4.30.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "webpack-cli": "^3.3.0"
+  },
   "scripts": {
     "client-install": "npm install --prefix client",
-    "start": "node server",
+    "start": "npm run build && node server.js",
+    "build": "webpack",
+    "start:dev": "react-scripts start",
     "server": "nodemon server",
     "test": "jest --runInBand",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "testWatch": "jest --runInBand --watchAll"
+  },
+  "heroku-run-build-script": true,
+  "engines": {
+    "node": "10.15.1"
   },
   "repository": {
     "type": "git",

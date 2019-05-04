@@ -156,6 +156,7 @@ class PrimarySearchAppBar extends React.Component {
       this.setState({value:parseInt(localStorage.getItem('nav'))})
     }
   }
+  
   homeClicked = event => {
     this.setState({redirectHome:true});
 
@@ -394,6 +395,7 @@ class PrimarySearchAppBar extends React.Component {
         
       }
     }else{
+      console.log("hai bbe boy")
       // return <SearchPage searchWord={this.state.searchWord} />
       return <Redirect to={{ pathname:"/Search" ,
       state:{searchWord:this.state.searchWord}  }}/>

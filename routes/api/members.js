@@ -29,11 +29,11 @@ router.get("/:id", async (req, res) => {
       if(mem)
       return res.json({ data: mem });
       else
-      return res.json({ msg: "it doesn't exist" });
+      return res.send({ msg: "it doesn't exist" });
 
     }
     else 
-    return res.status(400).send({ error: "the provided id is not valid one " });
+    return res.send({ error: "the provided id is not valid one " });
   }
 );
 
@@ -583,12 +583,12 @@ router.get("/:id/ShowMyEvents", async (req, res) => {
           }
         }
       }
-      return res.json({"data":arr})
+      return res.json({data:arr})
     } else {
-      return res.status(404).send({ msg: "Member not found" });
+      return res.send({ msg: "Member not found" });
     }
   } else {
-    return res.status(404).send({ msg: "Member not found" });
+    return res.send({ msg: "Member not found" });
   }
 })
 

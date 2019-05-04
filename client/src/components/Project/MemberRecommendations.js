@@ -29,7 +29,7 @@ class MemberMyProjects extends Component {
     else{
     return (
       <div className="App">
-      <h1>Recommendations</h1> 
+      {/* <h1>Recommendations</h1>  */}
        {this.state.Project.map((Project,i)=><MyProjectCard key={i} project={Project} edit={false} />)} 
       </div>
     );

@@ -29,10 +29,10 @@ router.get("/:id", async (req, res) => {
     if (partners) {
       return res.json({ data: partners });
     } else {
-      return res.json({ msg: "it doesn't exist" });
+      return res.send({ msg: "it doesn't exist" });
     }
   } else {
-    return res.json({ msg: `a partner  with id ${id} not found` });
+    return res.send({ msg: `a partner  with id ${id} not found` });
   }
 });
 

@@ -40,7 +40,6 @@ import Loading from "./components/Global/loading";
 import CreateEvent from "./components/Admin/CreateEvent";
 import LinearProgress from './components/Global/loading'
 const server = require("./config");
-
 class App extends Component {
   state = {
     user: null 
@@ -137,14 +136,7 @@ class App extends Component {
               />
             )}
           />
-          {/* <Route
-            exact
-            path="/StrangeCard"
-            render={props => (
-              <StrangeCard
-              /> 
-            )}
-          />*/}
+          
 
           <Route
             exact
@@ -294,6 +286,15 @@ class App extends Component {
             />
           )}
         />
+
+        {/* <Route
+          
+          path="/l"
+          render={props => (
+            <NotFound />
+          )}
+        /> */}
+        
        
         </BrowserRouter>
       );

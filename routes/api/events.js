@@ -20,10 +20,10 @@ router.get("/:id", async (req, res) => {
     if (event) {
       return res.json({ data: event });
     } else {
-      return res.json({ msg: "it was rendering here" });
+      return res.send({ msg: "it was rendering here" });
     }
   } else {
-    return res.status(400).json({ msg: `an event with id ${id} not found` });
+    return res.send({ msg: `an event with id ${id} not found` });
   }
 });
 // create an Event

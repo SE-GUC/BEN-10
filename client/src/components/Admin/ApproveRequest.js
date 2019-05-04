@@ -9,15 +9,19 @@ const server = require("../../config");
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
-    marginLeft:80,
-    backgroundColor:"#0d47a1"
+    // margin: theme.spacing.unit,
+    // marginLeft:80,
+    backgroundColor:"#00897b",
+    marginRight:8,
+    marginLeft:350,
+    // marginTop:120
   },
   input: {
     display: 'none',
   },
   text:{
-    color:"#eeeeee"
+    color:"#eeeeee",
+    fontWeight:"bold"
   }
 });
 
