@@ -10,10 +10,10 @@ class NotFound extends Component{
     }
     render(){
         return(
-            <div class="page">
+            <div class="pagenotfound">
 
-            <label>Whoops</label>
-            <div class="side2">
+            <label class="labelnotfound">Whoops</label>
+            <div class="side2notfound">
             <h id="word">Can't Find Any Results !!!!</h>
 
             </div>
