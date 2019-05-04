@@ -111,7 +111,9 @@ class CreateEvent extends React.Component {
     const requestOptions = {
         method: 'POST',
         body: JSON.stringify(body),
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json",
+                      "Authorization": "bearer " + localStorage.getItem('token')
+                     }
        
       };
       fetch(`${server}/api/admins/${JSON.parse(localStorage.getItem("user"))._id}/addEvent/` , requestOptions).then((response) => {

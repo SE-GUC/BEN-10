@@ -44,7 +44,11 @@ class PartnerApplyingMembersOnProject extends Component {
   }
 
   async componentDidMount(){
-    await axios(`${server}/api/partners/${this.props.partner._id}/myProjects/${this.props.project._id}/applyingMembers`)
+    await axios(`${server}/api/partners/${this.props.partner._id}/myProjects/${this.props.project._id}/applyingMembers`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
     .then(res=>{
       if(res.status===200)
         return res.data

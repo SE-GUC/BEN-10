@@ -99,7 +99,6 @@ export default class EditableView extends React.Component {
       this.setState({
         [name]: event.target.value,
       });
-      console.log("hhhhhaaadadahdakdh" + this.state.estimatedEffort)
     };
     
     saveChanges =async ()=>{
@@ -113,7 +112,10 @@ export default class EditableView extends React.Component {
         experienceLevelNeeded : this.state.experienceLevelNeeded?this.state.experienceLevelNeeded:" ",
         requiredSkillsSet : this.state.requiredSkillsSet,
 
-    }
+    },
+    headers: { "Content-Type": "application/json",
+    "Authorization": "bearer " + localStorage.getItem('token')
+   }
       
     }).then(res=>{ 
         console.log(res.status);
@@ -124,9 +126,6 @@ export default class EditableView extends React.Component {
     };
     
     render() {
-      console.log("skills : "+this.state.skillVariable)
-      console.log(this.state.requiredSkillsSet)
-      console.log(this.state.category)
       if(this.state.project !==null){
         console.log(this.state.project)
 

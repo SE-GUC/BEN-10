@@ -58,7 +58,7 @@ export default class LogIn extends Component {
         console.log(body)
        // url:`${server}/login`,
         var j=null;
-        await fetch(`/login`,{
+        await fetch(`${server}/login`,{
           method: 'PUT',
           body: JSON.stringify(body),
           headers: { "Content-Type": "application/json",

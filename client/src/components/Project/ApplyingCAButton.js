@@ -37,7 +37,11 @@ class ApplyingCAButton extends Component {
     };
     axios
       .put(
-        `${server}/api/admins/${this.state.admin._id}/assignCA/${this.state.project._id}/to/${this.state.ca}`,body
+        `${server}/api/admins/${this.state.admin._id}/assignCA/${this.state.project._id}/to/${this.state.ca}`,body,{
+          headers: { "Content-Type": "application/json",
+          "Authorization": "bearer " + localStorage.getItem('token')
+         }
+        }
       )
       .then(function(response) {
         console.log(response);

@@ -51,7 +51,11 @@ class ViewAllProjects extends React.Component {
   }
   componentDidMount(){
     axios 
-    .get(`${server}/api/projects`)
+    .get(`${server}/api/projects`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
     .then(res => res.data)
     .then(a =>{
       console.log(a)
@@ -65,7 +69,6 @@ class ViewAllProjects extends React.Component {
   render(){
   const { classes } = this.props;
   if(this.state.projects){
-    console.log("yessss")
   return (
     <div className={classes.root}>
     <br></br>

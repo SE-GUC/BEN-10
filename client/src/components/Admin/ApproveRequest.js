@@ -40,7 +40,10 @@ class ApproveRequest extends Component{
     }
     Approve = () =>{
         const requestOptions = {
-            method: 'PUT'
+            method: 'PUT',
+            headers: { "Content-Type": "application/json",
+                      "Authorization": "bearer " + localStorage.getItem('token')
+                     }
           };
           fetch(`${server}/api/admins/${this.props.admin_id}/EventRequest/${this.state.eid}/true` , requestOptions).then((response) => {
             return response.json();

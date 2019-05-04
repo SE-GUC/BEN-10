@@ -90,38 +90,52 @@ class SearchPage extends Component{
                 text:this.state.searchWord
             }
             if(this.state.type=="admin"){
-            axios.post(`${server}/searchAdmins`,body)
+            axios.post(`${server}/searchAdmins`,body,{
+              headers: { "Content-Type": "application/json",
+              "Authorization": "bearer " + localStorage.getItem('token')
+             }
+            })
             .then(res=>{ 
-              console.log(res.status);
              return res.data
           })
           .then(json => this.setState({admin:json.data}))
         }
           //partners
-          axios.post(`${server}/searchPartners`,body)
+          axios.post(`${server}/searchPartners`,body,{
+            headers: { "Content-Type": "application/json",
+            "Authorization": "bearer " + localStorage.getItem('token')
+           }})
             .then(res=>{ 
-              console.log(res.status);
              return res.data
           })
           .then(json => this.setState({partner:json.data}))
           // member
-          axios.post(`${server}/searchMembers`,body)
+          axios.post(`${server}/searchMembers`,body,{
+            headers: { "Content-Type": "application/json",
+            "Authorization": "bearer " + localStorage.getItem('token')
+           }
+          })
             .then(res=>{ 
-              console.log(res.status);
              return res.data
           })
           .then(json => this.setState({member:json.data}))
           // agencies
-          axios.post(`${server}/searchCAs`,body)
+          axios.post(`${server}/searchCAs`,body,{
+            headers: { "Content-Type": "application/json",
+            "Authorization": "bearer " + localStorage.getItem('token')
+           }
+          })
             .then(res=>{ 
-              console.log(res.status);
              return res.data
           })
           .then(json => this.setState({consultancy:json.data}))
           // projects
-          axios.post(`${server}/searchProjects`,body)
+          axios.post(`${server}/searchProjects`,body,{
+            headers: { "Content-Type": "application/json",
+            "Authorization": "bearer " + localStorage.getItem('token')
+           }
+          })
             .then(res=>{ 
-              console.log(res.status);
              return res.data
           })
           .then(json => {
@@ -131,9 +145,12 @@ class SearchPage extends Component{
               this.setState({projects:json.data})
             })
           // Events
-          axios.post(`${server}/searchEvents`,body)
+          axios.post(`${server}/searchEvents`,body,{
+            headers: { "Content-Type": "application/json",
+            "Authorization": "bearer " + localStorage.getItem('token')
+           }
+          })
             .then(res=>{ 
-              console.log(res.status);
              return res.data
           })
           .then(json => this.setState({event:json.data}))

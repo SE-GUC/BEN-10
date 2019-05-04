@@ -93,7 +93,11 @@ class ApproveFinalWork extends React.Component {
         .put(
           `${server}/api/consultancyagency/${
             this.state.approvingID
-          }/decide/${this.state.pID}/approve`
+          }/decide/${this.state.pID}/approve`,{
+            headers: { "Content-Type": "application/json",
+            "Authorization": "bearer " + localStorage.getItem('token')
+           }
+          }
         )
         .then(res => {
           console.log(res);
@@ -121,7 +125,11 @@ class ApproveFinalWork extends React.Component {
           .put(
             `${server}/api/partners/${
               this.state.approvingID
-            }/myprojects/${this.state.pID}/finalreview/approve`
+            }/myprojects/${this.state.pID}/finalreview/approve`,{
+              headers: { "Content-Type": "application/json",
+              "Authorization": "bearer " + localStorage.getItem('token')
+             }
+            }
           )
           .then(res => {
             console.log(res);
@@ -153,7 +161,11 @@ class ApproveFinalWork extends React.Component {
         .put(
           `${server}/api/consultancyagency/${
             this.state.approvingID
-          }/decide/${this.state.pID}/disapprove`
+          }/decide/${this.state.pID}/disapprove`,{
+            headers: { "Content-Type": "application/json",
+            "Authorization": "bearer " + localStorage.getItem('token')
+           }
+          }
         )
         .then(res => {
           console.log(res);
@@ -181,7 +193,11 @@ class ApproveFinalWork extends React.Component {
           .put(
             `${server}/api/partners/${
               this.state.approvingID
-            }/myprojects/${this.state.pID}/finalreview/decline`
+            }/myprojects/${this.state.pID}/finalreview/decline`,{
+              headers: { "Content-Type": "application/json",
+              "Authorization": "bearer " + localStorage.getItem('token')
+             }
+            }
           )
           .then(res => {
             console.log(res);

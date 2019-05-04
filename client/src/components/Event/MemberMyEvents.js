@@ -15,7 +15,13 @@ class MyEvents extends Component {
     }
   }
   componentDidMount(){
-    Axios.get(`${server}/api/members/${this.state.memId}/ShowMyEvents`)
+    Axios.get(`${server}/api/members/${this.state.memId}/ShowMyEvents`,
+    {
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    }
+    )
     .then(res=>res.data)
     .then(a=>this.setState({Event:a.data}))
 

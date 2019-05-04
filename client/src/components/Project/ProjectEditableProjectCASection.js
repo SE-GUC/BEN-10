@@ -48,7 +48,11 @@ export default class EditableView extends React.Component {
        console.log(this.state.caId)
         if(this.state.caId){
             await  axios
-            .get(`${server}/api/consultancyagency/${this.state.caId}`)
+            .get(`${server}/api/consultancyagency/${this.state.caId}`,{
+                headers: { "Content-Type": "application/json",
+                "Authorization": "bearer " + localStorage.getItem('token')
+               }
+            })
             .then(res => {
                 
                 return  res.data;

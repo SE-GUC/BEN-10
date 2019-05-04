@@ -108,13 +108,21 @@ onUpdate =async ()=>{
     projects:this.state.projects,
     skillSet:this.state.skillSet
   }
-  await axios.put(`${server}/api/members/${this.props.member._id}`,body)
+  await axios.put(`${server}/api/members/${this.props.member._id}`,body,{
+    headers: { "Content-Type": "application/json",
+    "Authorization": "bearer " + localStorage.getItem('token')
+   }
+  })
   .then(res=>{ 
    return res.data
 })
 .then(json => this.setState({project : json}))
  await axios
-      .get(`${server}/api/members/${this.props.member._id}`)
+      .get(`${server}/api/members/${this.props.member._id}`,{
+        headers: { "Content-Type": "application/json",
+        "Authorization": "bearer " + localStorage.getItem('token')
+       }
+      })
       .then(res => {
         return res.data;
       })

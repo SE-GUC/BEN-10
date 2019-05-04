@@ -93,14 +93,21 @@ onUpdate =async()=>{
      events:this.state.events 
   }
   
-  await axios.put(`${server}/api/consultancyagency/${this.props.agency._id}`,body)
+  await axios.put(`${server}/api/consultancyagency/${this.props.agency._id}`,body,{
+    headers: { "Content-Type": "application/json",
+    "Authorization": "bearer " + localStorage.getItem('token')
+   }})
   .then(res=>{ 
     console.log(res.status);
    return res.data
 })
 .then(json => this.setState({project : json}))
 await axios
-      .get(`${server}/api/partners/${this.props.agency._id}`)
+      .get(`${server}/api/partners/${this.props.agency._id}`,{
+        headers: { "Content-Type": "application/json",
+        "Authorization": "bearer " + localStorage.getItem('token')
+       }
+      })
       .then(res => {
         return res.data;
       })

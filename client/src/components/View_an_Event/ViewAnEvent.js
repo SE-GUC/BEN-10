@@ -48,7 +48,11 @@ class SimpleCard extends React.Component {
   }
   componentDidMount(){
     // console.log(`${server}/api/events/${}`)
-    Axios.get(`${server}/api/events/${this.state.eventId}`)
+    Axios.get(`${server}/api/events/${this.state.eventId}`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
       .then(res => res.data)
       .then(event =>
         localStorage.setItem('event',JSON.stringify(event.data))

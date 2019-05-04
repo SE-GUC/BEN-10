@@ -36,7 +36,11 @@ class ApplyingMemberButton extends Component {
     console.log(body)
     axios
       .put(
-        `${server}/api/admins/${this.state.admin._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body
+        `${server}/api/admins/${this.state.admin._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body,{
+          headers: { "Content-Type": "application/json",
+          "Authorization": "bearer " + localStorage.getItem('token')
+         }
+        }
       )
       .then(function(response) {
         console.log(response.status);

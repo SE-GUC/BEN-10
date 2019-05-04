@@ -16,7 +16,11 @@ class PartnerMyProjects extends Component {
     }
   }
   componentDidMount(){
-    fetch(`${server}/api/partners/${this.state.partnerId}/myProjects`).then(res=>res.json())
+    fetch(`${server}/api/partners/${this.state.partnerId}/myProjects`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    }).then(res=>res.json())
     .then(projects=>this.setState({Project:projects.data}))
       
   }

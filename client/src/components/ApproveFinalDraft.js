@@ -93,10 +93,13 @@ class ApproveFinalDraft extends React.Component {
         .put(
           `${server}/api/consultancyagency/${
             this.state.approvingID
-          }/myprojects/${this.state.pID}/finaldraft/approve`
+          }/myprojects/${this.state.pID}/finaldraft/approve`,{
+            headers: { "Content-Type": "application/json",
+            "Authorization": "bearer " + localStorage.getItem('token')
+           }
+          }
         )
         .then(res => {
-          console.log(res);
           return res.data;
         });
       if (!this.state.loading) {
@@ -121,7 +124,11 @@ class ApproveFinalDraft extends React.Component {
           .put(
             `${server}/api/partners/${
               this.state.approvingID
-            }/myprojects/${this.state.pID}/finaldraft/approve`
+            }/myprojects/${this.state.pID}/finaldraft/approve`,{
+              headers: { "Content-Type": "application/json",
+              "Authorization": "bearer " + localStorage.getItem('token')
+             }
+            }
           )
           .then(res => {
             console.log(res);
@@ -153,7 +160,11 @@ class ApproveFinalDraft extends React.Component {
         .put(
           `${server}/api/consultancyagency/${
             this.state.approvingID
-          }/myprojects/${this.state.pID}/finaldraft/disapprove`
+          }/myprojects/${this.state.pID}/finaldraft/disapprove`,{
+            headers: { "Content-Type": "application/json",
+            "Authorization": "bearer " + localStorage.getItem('token')
+           }
+          }
         )
         .then(res => {
           console.log(res);
@@ -181,7 +192,11 @@ class ApproveFinalDraft extends React.Component {
           .put(
             `${server}/api/partners/${
               this.state.approvingID
-            }/myprojects/${this.state.pID}/finaldraft/disapprove`
+            }/myprojects/${this.state.pID}/finaldraft/disapprove`,{
+              headers: { "Content-Type": "application/json",
+              "Authorization": "bearer " + localStorage.getItem('token')
+             }
+            }
           )
           .then(res => {
             console.log(res);

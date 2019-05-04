@@ -43,7 +43,11 @@ class PartnerApplyingCAsCard extends Component {
   }
 
   async componentDidMount(){
-    await axios(`${server}/api/consultancyagency/${this.state.ID}/`)
+    await axios(`${server}/api/consultancyagency/${this.state.ID}/`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
     .then(res=>{
       if(res.status===200)
         return res.data

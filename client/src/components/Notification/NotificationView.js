@@ -62,7 +62,12 @@ class ControlledExpansionPanels extends React.Component {
           var flag = true;
           await axios
       .get(
-        `http://localhost:5000/api/admins/${this.state.notifications[i].sentById}`
+        `http://localhost:8000/api/admins/${this.state.notifications[i].sentById}`,
+        {
+          headers: { "Content-Type": "application/json",
+          "Authorization": "bearer " + localStorage.getItem('token')
+         }
+        }
       )
       .then(res => {
         console.log(res.data.data)
@@ -86,7 +91,7 @@ class ControlledExpansionPanels extends React.Component {
       if(flag){
         await axios
         .get(
-          `http://localhost:5000/api/partners/${this.state.notifications[i].notifiedPerson}`
+          `http://localhost:8000/api/partners/${this.state.notifications[i].notifiedPerson}`
         )
         .then(res => {
             
@@ -109,7 +114,12 @@ class ControlledExpansionPanels extends React.Component {
       if(flag){
         await axios
         .get(
-          `http://localhost:5000/api/consultancyagency/${this.state.notifications[i].notifiedPerson}`
+          `http://localhost:8000/api/consultancyagency/${this.state.notifications[i].notifiedPerson}`,
+          {
+            headers: { "Content-Type": "application/json",
+            "Authorization": "bearer " + localStorage.getItem('token')
+           }
+          }
         )
         .then(res => {
             console.log(res.data)
@@ -143,10 +153,12 @@ console.log(panel)
     const body = {
         seen:true
     }
-    fetch(`http://localhost:5000/api/notifications/${this.state.notifications[n]._id}`, {
+    fetch(`http://localhost:8000/api/notifications/${this.state.notifications[n]._id}`, {
         method: "put",
         body: JSON.stringify(body),
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json",
+        "Authorization": "bearer " + localStorage.getItem('token')
+       }
       }).then(res => {
       
       if (res.status === 200) {

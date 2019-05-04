@@ -36,10 +36,15 @@ export default class EditableView extends React.Component {
     }
     componentDidMount=async ()=>{
        
-            await  axios
-            .get(`${server}/api/members/${this.state.memberID}`)
+            if(this.state.memberID){
+                await  axios
+            .get(`${server}/api/members/${this.state.memberID}`,{
+                headers: { "Content-Type": "application/json",
+                "Authorization": "bearer " + localStorage.getItem('token')
+               }
+            })
             .then(res => {
-                
+                console.log("res is "+ JSON.stringify(res))
                 return  res.data;
                 
             })
@@ -52,7 +57,8 @@ export default class EditableView extends React.Component {
                     memberMobileNumber:a.data.MobileNumber,   
                 })
                 });  
-        
+                
+            }        
 
     }
 

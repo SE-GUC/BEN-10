@@ -16,7 +16,11 @@ class allCAs extends React.Component {
   }
   componentDidMount() {
     axios
-      .get(`${server}/api/consultancyagency/`)
+      .get(`${server}/api/consultancyagency/`,{
+        headers: { "Content-Type": "application/json",
+        "Authorization": "bearer " + localStorage.getItem('token')
+       }
+      })
       .then(res => {
         return res.data;
       })

@@ -27,11 +27,15 @@ class PostProjectMessage extends React.Component {
       wantConsultancy: this.props.wantConsultancy
     }
     console.log("consalrnlsfdm")
-    console.log(this.props.wantConsultancy)
+    console.log(localStorage.getItem('token'))
 
-    axios.post(`${server}/api/partners/${this.props.companyID}/addProject/`, body)
+    axios.post(`${server}/api/partners/${this.props.companyID}/addProject/`, body,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
     .then(function (response) {
-      console.log(response.status)
+      console.log(response)
       return response.data;
     })
     .then(res => {

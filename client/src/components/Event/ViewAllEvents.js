@@ -35,7 +35,11 @@ class ViewAllEvents extends React.Component {
   }
   componentDidMount(){
     axios 
-    .get(`${server}/api/events`)
+    .get(`${server}/api/events`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
     .then(res => res.data)
     .then(a =>{
       console.log(a)

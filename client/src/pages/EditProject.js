@@ -30,7 +30,11 @@ export default class EditProject extends Component {
   }
   async  componentDidMount(){
     await  axios
-      .get(`${server}/api/projects/${this.state.projectID}`)
+      .get(`${server}/api/projects/${this.state.projectID}`,{
+        headers: { "Content-Type": "application/json",
+        "Authorization": "bearer " + localStorage.getItem('token')
+       }
+      })
       .then(res => {
         
         return  res.data;
@@ -53,9 +57,11 @@ export default class EditProject extends Component {
 
   cancelProject= async()=>{
     if(this.state.type === "admin"){
-      console.log("delete method")
     const requestOptions = {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
     };
     await fetch(`${server}/api/projects/${this.state.projectID}` , requestOptions).then((response) => {
       return response.json();
@@ -74,7 +80,10 @@ export default class EditProject extends Component {
     }else{
       console.log("delete method")
     const requestOptions = {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
     };
     await fetch(`${server}/api/partners/${this.state.userID}/cancelproject/${this.state.projectID}` , requestOptions).then((response) => {
       return response.json();

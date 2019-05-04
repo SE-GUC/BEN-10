@@ -17,7 +17,11 @@ class CAMyProjects extends Component {
     }
   }
   componentDidMount(){
-    fetch(`${server}/api/consultancyagency/${this.state.caId}/myprojects`).then(res=>res.json())
+    fetch(`${server}/api/consultancyagency/${this.state.caId}/myprojects`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    }).then(res=>res.json())
     .then(projects=>this.setState({Project:projects.data}))
     
   }

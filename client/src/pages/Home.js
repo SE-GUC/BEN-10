@@ -10,7 +10,6 @@ class Home extends React.Component{
         this.state = {
             parId:this.props.user_id
         };
-        console.log("hi")
     }
     render(){
         return(<div class="mainu"> 

@@ -47,7 +47,11 @@ class GetProject extends Component {
   }
 
   async componentDidMount(){
-    await axios(`${server}/api/projects/${this.props.project_id}/`)
+    await axios(`${server}/api/projects/${this.props.project_id}/`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
     .then(res=>{
       if(res.status===200)
         return res.json()
@@ -71,7 +75,11 @@ class GetProject extends Component {
         })
       }
     });
-    await axios(`${server}/api/partners/${this.state.partnerID}/`)
+    await axios(`${server}/api/partners/${this.state.partnerID}/`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
     .then(res=>{
       if(res.status===200)
         return res.json()

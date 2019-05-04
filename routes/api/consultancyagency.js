@@ -106,7 +106,8 @@ async function CARequestEvent(
   description,
   eventType,
   eventLocation,
-  eventDate
+  eventDate,
+  headers
 ) {
   const body = {
     requestorId: requestorId,
@@ -121,7 +122,7 @@ async function CARequestEvent(
   await fetch(`${server}/api/eventrequests/`, {
     method: "post",
     body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" }
+    headers
   })
     .then(res => {
       if (res.status === 200) {
@@ -155,7 +156,8 @@ router.post("/:id/eventrequests/", async (req, res) => {
           req.body.description,
           req.body.eventType,
           req.body.eventLocation,
-          req.body.eventDate
+          req.body.eventDate,
+          req.headers
         );
         res.send(j);
       } else {
@@ -177,11 +179,14 @@ router.get("/:id/myProjects/:pid/applyingMembers", async (req, res) => {
   const pid= await Project.findById(req.params.pid);
  if(cid!=null && pid!=null){
    if (pid.consultancyId == req.params.id){
-  var j = await getApplyingMembers(req.params.pid);
+  var j = await getApplyingMembers(req.params.pid,req.headers);
   var result = [];
   var i;
   for (i = 0; i < j.length; i++) {
-    await fetch(`${server}/api/members/${j[i]}`)
+    await fetch(`${server}/api/members/${j[i]}`,
+    {
+      headers:req.headers
+    })
       .then(res => res.json())
       .then(json => {
         const member = json.data;
@@ -208,9 +213,11 @@ else{
 
 });
 
-async function getApplyingMembers(pid) {
+async function getApplyingMembers(pid,headers) {
   var result = [];
-  await fetch(`${server}/api/applications`)
+  await fetch(`${server}/api/applications`,{
+    headers
+  })
     .then(res => res.json())
     .then(json => {
       const members = json.data;
@@ -258,7 +265,7 @@ router.use("/:cid/assign/:pid/to/:mid", async (req, res) => {
               fetch(url, {
                 method: "put",
                 body: JSON.stringify({ memberID: req.params.mid, lifeCycle: "In Progress" }),
-                headers: { "Content-Type": "application/json" }
+                headers:req.headers
               })
                 .then(res => {
                   return res.json();
@@ -311,11 +318,11 @@ router.delete("/:id", async (req, res) => {
 router.put("/:id/myprojects/:pid/finaldraft/approve/", async (req, res) => {
   try {
     if (ObjectId.isValid(req.params.id) && ObjectId.isValid(req.params.pid)) {
-      const cid=ConsultancyAgency.findById(req.params.id);
-      const pid=Project.findById(req.params.pid);
+      const cid=await ConsultancyAgency.findById(req.params.id);
+      const pid=await Project.findById(req.params.pid);
       if(cid!=null && pid!=null){
       const decision = "Approved";
-      const j = await DecideProject(req.params.pid, decision);
+      const j = await DecideProject(req.params.pid, decision,req.headers);
       res.status(200).send(j);
       }
       else{
@@ -346,7 +353,7 @@ if(CA!=null && project!=null){
   await fetch(url, {
     method: "put",
     body: JSON.stringify({ lifeCycle: decision }),
-    headers: { "Content-Type": "application/json" }
+    headers: req.headers
   })
     .then(res => {
       return res.json();
@@ -375,7 +382,7 @@ router.put("/:id/myprojects/:pid/finaldraft/disapprove", async (req, res) => {
       const pid=Project.findById(req.params.pid);
       if(cid!=null&&pid!=null){
       const decision = "Negotiation";
-      const j = await DecideProject(req.params.pid, decision);
+      const j = await DecideProject(req.params.pid, decision,req.headers);
       res.status(200).send(j);
       }
       else{
@@ -389,13 +396,13 @@ router.put("/:id/myprojects/:pid/finaldraft/disapprove", async (req, res) => {
     return res.status(404).send({ error: "not a project id" });
   }
 });
-async function DecideProject(id, decision) {
+async function DecideProject(id, decision,headers) {
  var j;
  const url = `${server}/api/projects/${id}`;
  await fetch(url, {
    method: "put",
    body: JSON.stringify({ lifeCycle: decision }),
-   headers: { "Content-Type": "application/json" }
+   headers
   })
    .then(res => {
      j = res.json();
@@ -432,7 +439,7 @@ router.get("/:caid/reviewprojects/:pid", async (req, res) => {
      if(CA!=null&&project!=null){
       const caid = req.params.caid;
       const pid = req.params.pid;
-      const matchingProjects = await getProjectsInFinalReview(caid);
+      const matchingProjects = await getProjectsInFinalReview(caid,req.headers);
       var r = null;
       for (var i in matchingProjects) {
         if (matchingProjects[i].id == pid) {
@@ -458,7 +465,7 @@ router.get("/:caid/reviewprojects", async (req, res) => {
       const caid = req.params.caid;
       const CA=await ConsultancyAgency.findById(caid);
       if(CA!=null){
-      const matchingProjects = await getProjectsInFinalReview(caid);
+      const matchingProjects = await getProjectsInFinalReview(caid,req.headers);
       res.json({ data: matchingProjects });
       }
       else{
@@ -474,7 +481,7 @@ router.get("/:caid/reviewprojects", async (req, res) => {
   }
 });
 
-async function getProjectsInFinalReview(caid) {
+async function getProjectsInFinalReview(caid,headers) {
   const allprojects = await Project.find();
   var matchingProjects = [];
   for (var i in allprojects) {
@@ -511,7 +518,7 @@ router.put("/:id/caApplyProject/:pid", async (req, res) => {
     if (ca && project) {
       const applying = project.applyingCA;
       applying.push(req.params.id);
-      const j = await caApplyProject(req.params.pid, applying);
+      const j = await caApplyProject(req.params.pid, applying,req.headers );
       res.status(200).send(j);
     } else return res.status(404).send({ error: "invalid inputs" });
   } else {
@@ -525,7 +532,7 @@ async function caApplyProject(pID, applying) {
   await fetch(`${server}/api/projects/${pID}`, {
     method: "put",
     body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" }
+    headers
   })
     .then(res => {
       if (res.status === 200) {
@@ -551,7 +558,7 @@ router.put("/:id1/finalreview/:id2/approve/", async (req, res) => {
     if (ca && project) {
         if (project.consultancyId == req.params.id1){
           if (project.lifeCycle == "Final Review"){
-                  const j = await approvefinal(req.params.id2);
+                  const j = await approvefinal(req.params.id2,req.headers);
                   res.status(200).send(j);
               }else return res.status(404).send({ error: "project isn't in the Final Review stage" });
           }else return res.status(404).send({ error: "you can't approve this project" }); 
@@ -569,7 +576,7 @@ router.put("/:id1/finalreview/:id2/disapprove/", async (req, res) => {
     if (ca && project) {
       if (project.consultancyId == req.params.id1){
           if (project.lifeCycle == "Final Review"){    
-              const j = await disapprovefinal(req.params.id2);
+              const j = await disapprovefinal(req.params.id2,req.headers);
               res.status(200).send(j);
           }else return res.status(404).send({ error: "project isn't in the Final Review stage" });
       }else return res.status(404).send({ error: "you can't disapprove this project" }); 
@@ -580,14 +587,14 @@ router.put("/:id1/finalreview/:id2/disapprove/", async (req, res) => {
 });
 
 // 8 As a CA I wanto to approve the final review of a project
-async function approvefinal(pid) {
+async function approvefinal(pid,headers) {
   var error = true;
   const body = { lifeCycle: "Finished" };
   var j;
   await fetch(`${server}/api/projects/${pid}`, {
     method: "put",
     body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" }
+    headers
   })
     .then(res => {
       if (res.status === 200) {
@@ -606,14 +613,14 @@ async function approvefinal(pid) {
 }
 
 // 8 As a CA I wanto to disapprove the final review of a project
-async function disapprovefinal(pid) {
+async function disapprovefinal(pid,headers) {
   var error = true;
   const body = { lifeCycle: "In Progress" };
   var j;
   await fetch(`${server}/api/projects/${pid}`, {
     method: "put",
     body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" }
+    headers
   })
     .then(res => {
       if (res.status === 200) {
@@ -641,7 +648,7 @@ router.get("/:id/myProjects",async(req,res)=>{
     var error = true; 
     await fetch(`${server}/api/projects`,{
       method:"get",
-      headers:{"Content-Type":"application/json"}
+      headers:req.headers
     })
       .then(res =>{
         if(res.status === 200){
@@ -680,7 +687,7 @@ router.post("/:cid/rating/:eid/", async (req, res) => {
         const attendees = event.bookedMembers;
         var arr = new Array(attendees.length);
         for (i = 0; i < attendees.length; i++) {
-          const j = await carequestrating(event.formLink, attendees[i], date);
+          const j = await carequestrating(event.formLink, attendees[i], date,req.headers);
           arr[i] = j;
         }
         for (i = 0; i < attendees.length; i++) {
@@ -696,10 +703,10 @@ router.post("/:cid/rating/:eid/", async (req, res) => {
 });
 
 // 11 As a CA I want to give the attendees a form to rate the event and give a feedback
-async function carequestrating(formLink, id, date) {
+async function carequestrating(formLink, id, date,headers) {
   var error = true;
   const body = {
-    description: `Please rate thie event through this form ${formLink}`,
+    description: `Please rate this event through this form ${formLink}`,
     notifiedPerson: id,
     date: date,
     seen: "false"
@@ -708,7 +715,7 @@ async function carequestrating(formLink, id, date) {
   await fetch(`${server}/api/notifications/`, {
     method: "post",
     body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" }
+    headers
   })
     .then(res => {
       if (res.status === 200) {

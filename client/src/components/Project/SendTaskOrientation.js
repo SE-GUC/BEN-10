@@ -22,7 +22,11 @@ class SendTaskOrientation extends React.Component {
   sendInvitation = () => {
     
 
-    axios.post(`${server}/api/partners/${this.props.Id}/sendOrientationInvitations/${this.props.projectId}/`)
+    axios.post(`${server}/api/partners/${this.props.Id}/sendOrientationInvitations/${this.props.projectId}/`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
     .then(function (response) {
       console.log(response.status)
       return response.data;

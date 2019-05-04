@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route,Switch } from "react-router-dom";
 import StrangeCard from "./components/Global/StrangerProfileCard"
 import Profile from "./pages/Profile";
 import ViewAllPartners from "./components/Partner/ViewAllPArtners";
@@ -44,78 +44,12 @@ class App extends Component {
   state = {
     user: null 
   };
-  asPartner = async() => {
-    await axios
-      .get(`${server}/api/partners`)
-      .then(res => {
-        return res.data;
-      })
-      .then(a =>
-        this.setState({
-          user: a.data[0],
-          type: "partner"
-        })
-      );
-      localStorage.setItem('type',this.state.type);
-      localStorage.setItem('user',JSON.stringify(this.state.user));
-  };
-
-  asMember = async () => {
-    await axios
-      .get(`${server}/api/members`)
-      .then(res => {
-        return res.data;
-      })
-      .then(a =>
-        this.setState({
-          user: a.data[0],
-          type: "member"
-        })  
-      );
-      localStorage.setItem('type',this.state.type);
-      localStorage.setItem('user',JSON.stringify(this.state.user));
-      var i = JSON.parse(localStorage.getItem('user'))
-      console.log(i._id)
-  };
-
-  asAdmin = async () => {
-    await axios
-      .get(`${server}/api/admins`)
-      .then(res => {
-        return res.data;
-      })
-      .then(a => {
-        this.setState({
-          user: a.data[0],
-          type: "admin"
-        });
-        console.log(a.data[0]._id);
-      });
-      localStorage.setItem('type',this.state.type);
-      localStorage.setItem('user',JSON.stringify(this.state.user));
-  };
-
-  asCA = async () => {
-    await axios
-      .get(`${server}/api/consultancyagency`)
-      .then(res => {
-        return res.data;
-      })
-      .then(a =>
-        this.setState({
-          user: a.data[0],
-          type: "consultancyagency"
-        })
-      );
-      localStorage.setItem('type',this.state.type);
-      localStorage.setItem('user',JSON.stringify(this.state.user));
-  };
-
   render() {
     
       localStorage.setItem('nav',0);
       return (
         <BrowserRouter>
+        <Switch>
           <Route
             exact
             path="/Events/:id"
@@ -203,15 +137,15 @@ class App extends Component {
             path="/ViewAllMembers"
             render={props => <ViewAllMembers />}
           />
-          <Route
-            exact
-            path="/EditProfile"
-            render={props => (
-              <EditProfile
-                {...props}
-                type={this.state.type}
-                user={this.state.user}
-              />
+            <Route
+              exact
+              path="/EditProfile"
+              render={props => (
+                <EditProfile
+                  {...props}
+                  type={this.state.type}
+                  user={this.state.user}
+                />
             )}
           />
           <Route
@@ -295,7 +229,7 @@ class App extends Component {
           )}
         /> */}
         
-       
+       </Switch>
         </BrowserRouter>
       );
     } 

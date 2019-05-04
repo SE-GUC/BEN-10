@@ -16,7 +16,11 @@ class allPartners extends React.Component {
   }
   componentDidMount() {
     axios
-      .get(`${server}/api/partners/`)
+      .get(`${server}/api/partners/`,{
+        headers: { "Content-Type": "application/json",
+        "Authorization": "bearer " + localStorage.getItem('token')
+       }
+      })
       .then(res => {
         return res.data;
       })

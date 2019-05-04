@@ -15,7 +15,11 @@ class MyEvents extends Component {
     }
   }
   componentDidMount(){
-    fetch(`${server}/api/partners/${this.state.partnerId}/ShowMyEvents`).then(res=>res.json())
+    fetch(`${server}/api/partners/${this.state.partnerId}/ShowMyEvents`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    }).then(res=>res.json())
     .then(events=>this.setState({Event:events.data}))
     
   }

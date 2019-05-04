@@ -35,7 +35,11 @@ class CAApplyingMemberButton extends Component {
     };
     axios
       .put(
-        `${server}/api/consultancyagency/${this.state.ca._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body
+        `${server}/api/consultancyagency/${this.state.ca._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body,{
+          headers: { "Content-Type": "application/json",
+          "Authorization": "bearer " + localStorage.getItem('token')
+         }
+        }
       )
       .then(function(response) {
         console.log(response.status);
