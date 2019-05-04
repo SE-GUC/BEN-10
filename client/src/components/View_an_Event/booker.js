@@ -62,7 +62,7 @@ class booker extends React.Component{
 
 
 
-            Axios.get(`/api/members/${i}`)
+            Axios.get(`https://lirtenben.herokuapp.com/api/members/${i}`)
             .then(res => res.data)
             .then(p =>
                 { 

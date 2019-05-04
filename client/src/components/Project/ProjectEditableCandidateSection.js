@@ -47,7 +47,7 @@ export default class EditableView extends React.Component {
         if(this.state.memberID!=null){
        
             await  axios
-            .get(`/api/members/${this.state.memberID}`)
+            .get(`https://lirtenben.herokuapp.com/api/members/${this.state.memberID}`)
             .then(res => {
                 
                 return  res.data;

@@ -44,7 +44,7 @@ class SendFinalDraft extends React.Component {
            
         axios
             .put(
-                `/api/admins/${this.state.adminID}/myProjects/${this.state.pID}/sendDraft`,body
+                `https://lirtenben.herokuapp.com/api/admins/${this.state.adminID}/myProjects/${this.state.pID}/sendDraft`,body
             )
         this.setState({open:false})
         

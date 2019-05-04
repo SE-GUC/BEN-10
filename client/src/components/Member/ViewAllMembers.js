@@ -16,7 +16,7 @@ class allMembers extends React.Component {
   }
   componentDidMount() {
     axios
-      .get(`/api/members/`)
+      .get(`https://lirtenben.herokuapp.com/api/members/`)
       .then(res => {
         return res.data;
       })

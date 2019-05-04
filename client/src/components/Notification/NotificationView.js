@@ -62,7 +62,7 @@ class ControlledExpansionPanels extends React.Component {
           var flag = true;
           await axios
       .get(
-        `/api/admins/${this.state.notifications[i].sentById}`
+        `https://lirtenben.herokuapp.com/api/admins/${this.state.notifications[i].sentById}`
       )
       .then(res => {
         console.log(res.data.data)
@@ -86,7 +86,7 @@ class ControlledExpansionPanels extends React.Component {
       if(flag){
         await axios
         .get(
-          `/api/partners/${this.state.notifications[i].notifiedPerson}`
+          `https://lirtenben.herokuapp.com/api/partners/${this.state.notifications[i].notifiedPerson}`
         )
         .then(res => {
             
@@ -109,7 +109,7 @@ class ControlledExpansionPanels extends React.Component {
       if(flag){
         await axios
         .get(
-          `/api/consultancyagency/${this.state.notifications[i].notifiedPerson}`
+          `https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.notifications[i].notifiedPerson}`
         )
         .then(res => {
             console.log(res.data)
@@ -143,7 +143,7 @@ console.log(panel)
     const body = {
         seen:true
     }
-    fetch(`/api/notifications/${this.state.notifications[n]._id}`, {
+    fetch(`https://lirtenben.herokuapp.com/api/notifications/${this.state.notifications[n]._id}`, {
         method: "put",
         body: JSON.stringify(body),
         headers: { "Content-Type": "application/json" }

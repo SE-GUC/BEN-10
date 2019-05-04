@@ -15,7 +15,7 @@ export default class ViewAllEventRequests extends Component {
     };
   }
   componentDidMount() {
-    fetch(`/api/admins/${this.state.id}/eventRequests`)
+    fetch(`https://lirtenben.herokuapp.com/api/admins/${this.state.id}/eventRequests`)
       .then(res => {
         return res.json()
       })

@@ -79,7 +79,7 @@ class MyProjectCard extends Component {
   }
   componentDidMount() {
     axios
-      .get(`/api/partners/${this.props.project.companyId}`)
+      .get(`https://lirtenben.herokuapp.com/api/partners/${this.props.project.companyId}`)
       .then(res => {
         return res.data;
       })
@@ -95,7 +95,7 @@ class MyProjectCard extends Component {
       method: "DELETE"
     };
     fetch(
-      `/api/partners/${
+      `https://lirtenben.herokuapp.com/api/partners/${
         this.props.project.companyId
       }/deleteProject/${this.props.project._id}`,
       requestOptions
@@ -168,8 +168,8 @@ class MyProjectCard extends Component {
           <Typography className={classes.secondTypo}>
           {this.props.project.lifeCycle}
           </Typography>
-           {(this.props.edit ||this.props.type ==="admin")? <div ><Button variant="contained"  onClick={this.goToEditPage}>Edit</Button>
-            </div>:"" }
+           {(this.props.edit ||this.props.type ==="admin")? <Link to={`/MyProject/edit/${this.props.project._id}`}><div ><Button variant="contained"  onClick={this.goToEditPage}>Edit</Button>
+            </div></Link>:"" }
 
         </Paper>
         </Link>

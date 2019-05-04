@@ -34,7 +34,7 @@ class DisapproveRequest extends Component{
         const requestOptions = {
             method: 'PUT'
           };
-          fetch(`/api/admins/${this.props.admin_id}/EventRequest/${this.props.eid}/false` , requestOptions).then((response) => {
+          fetch(`https://lirtenben.herokuapp.com/api/admins/${this.props.admin_id}/EventRequest/${this.props.eid}/false` , requestOptions).then((response) => {
             return response.json();
           }).then((result) => {
               if(result.msg=="Event Request updated successfully"){

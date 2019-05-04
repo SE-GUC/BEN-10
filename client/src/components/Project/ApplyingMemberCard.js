@@ -45,7 +45,7 @@ class ApplyingMemberCard extends Component {
   }
 
   async componentDidMount(){
-    await axios(`/api/members/${this.state.ID}/`)
+    await axios(`https://lirtenben.herokuapp.com/api/members/${this.state.ID}/`)
     .then(res=>{
       if(res.status===200)
         return res.data
