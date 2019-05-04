@@ -31,7 +31,7 @@ const styles = theme => ({
         this.applyClick=this.applyClick.bind(this)
     }
     applyClick(){
-        fetch(`${server}/api/members/${this.state.member_id}/projects/${this.state.project_id}/apply`, {
+        fetch(`/api/members/${this.state.member_id}/projects/${this.state.project_id}/apply`, {
         method: 'POST',
         body: {}
     })

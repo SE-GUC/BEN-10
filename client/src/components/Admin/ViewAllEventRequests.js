@@ -15,7 +15,7 @@ export default class ViewAllEventRequests extends Component {
     };
   }
   componentDidMount() {
-    fetch(`${server}/api/admins/${this.state.id}/eventRequests`)
+    fetch(`/api/admins/${this.state.id}/eventRequests`)
       .then(res => {
         return res.json()
       })

@@ -108,20 +108,20 @@ onUpdate =async ()=>{
     projects:this.state.projects,
     skillSet:this.state.skillSet
   }
-  await axios.put(`${server}/api/members/${this.props.member._id}`,body)
+  await axios.put(`/api/members/${this.props.member._id}`,body)
   .then(res=>{ 
    return res.data
 })
 .then(json => this.setState({project : json}))
  await axios
-      .get(`${server}/api/members/${this.props.member._id}`)
+      .get(`/api/members/${this.props.member._id}`)
       .then(res => {
         return res.data;
       })
       .then(a =>{
         localStorage.setItem('type',"member");
         localStorage.setItem('user',JSON.stringify(a.data));
-        window.location.reload();
+        // window.location.reload();
       }
       );
 

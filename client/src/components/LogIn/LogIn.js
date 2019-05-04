@@ -56,7 +56,7 @@ export default class LogIn extends Component {
           password:this.state.password,
         }
         console.log(body)
-       // url:`${server}/login`,
+       // url:`/login`,
         var j=null;
         await fetch(`/login`,{
           method: 'PUT',

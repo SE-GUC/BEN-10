@@ -16,7 +16,7 @@ class MyEvents extends Component {
     console.log(this.state.caId)
   }
   componentDidMount(){
-    fetch(`${server}/api/consultancyagency/${this.state.caId}/ShowMyEvents`).then(res=>res.json())
+    fetch(`/api/consultancyagency/${this.state.caId}/ShowMyEvents`).then(res=>res.json())
     .then(events=>this.setState({Event:events.data}))
     
   }

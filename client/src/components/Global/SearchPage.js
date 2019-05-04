@@ -90,7 +90,7 @@ class SearchPage extends Component{
                 text:this.state.searchWord
             }
             if(this.state.type=="admin"){
-            axios.post(`${server}/searchAdmins`,body)
+            axios.post(`/searchAdmins`,body)
             .then(res=>{ 
               console.log(res.status);
              return res.data
@@ -98,28 +98,28 @@ class SearchPage extends Component{
           .then(json => this.setState({admin:json.data}))
         }
           //partners
-          axios.post(`${server}/searchPartners`,body)
+          axios.post(`/searchPartners`,body)
             .then(res=>{ 
               console.log(res.status);
              return res.data
           })
           .then(json => this.setState({partner:json.data}))
           // member
-          axios.post(`${server}/searchMembers`,body)
+          axios.post(`/searchMembers`,body)
             .then(res=>{ 
               console.log(res.status);
              return res.data
           })
           .then(json => this.setState({member:json.data}))
           // agencies
-          axios.post(`${server}/searchCAs`,body)
+          axios.post(`/searchCAs`,body)
             .then(res=>{ 
               console.log(res.status);
              return res.data
           })
           .then(json => this.setState({consultancy:json.data}))
           // projects
-          axios.post(`${server}/searchProjects`,body)
+          axios.post(`/searchProjects`,body)
             .then(res=>{ 
               console.log(res.status);
              return res.data
@@ -131,7 +131,7 @@ class SearchPage extends Component{
               this.setState({projects:json.data})
             })
           // Events
-          axios.post(`${server}/searchEvents`,body)
+          axios.post(`/searchEvents`,body)
             .then(res=>{ 
               console.log(res.status);
              return res.data

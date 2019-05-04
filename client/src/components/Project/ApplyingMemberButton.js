@@ -36,7 +36,7 @@ class ApplyingMemberButton extends Component {
     console.log(body)
     axios
       .put(
-        `${server}/api/admins/${this.state.admin._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body
+        `/api/admins/${this.state.admin._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body
       )
       .then(function(response) {
         console.log(response.status);

@@ -45,7 +45,7 @@ class ApplyingCAsCard extends Component {
   }
 
   async componentDidMount(){
-    await axios(`${server}/api/consultancyagency/${this.state.ID}/`)
+    await axios(`/api/consultancyagency/${this.state.ID}/`)
     .then(res=>{
       if(res.status===200)
         return res.data

@@ -22,7 +22,7 @@ class SendTaskOrientation extends React.Component {
   sendInvitation = () => {
     
 
-    axios.post(`${server}/api/partners/${this.props.Id}/sendOrientationInvitations/${this.props.projectId}/`)
+    axios.post(`/api/partners/${this.props.Id}/sendOrientationInvitations/${this.props.projectId}/`)
     .then(function (response) {
       console.log(response.status)
       return response.data;

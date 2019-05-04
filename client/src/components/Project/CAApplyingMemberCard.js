@@ -45,7 +45,7 @@ class CAApplyingMemberCard extends Component {
   }
 
   async componentDidMount(){
-    await axios(`${server}/api/members/${this.state.ID}/`)
+    await axios(`/api/members/${this.state.ID}/`)
     .then(res=>{
       if(res.status===200)
         return res.data

@@ -50,7 +50,7 @@ class requestor extends React.Component{
     }
      componentDidMount(){
         
-            Axios.get(`${server}/api/partners/${this.state.id}`)
+            Axios.get(`/api/partners/${this.state.id}`)
             .then(res => res.data)
             .then(p =>
                 { 
@@ -62,7 +62,7 @@ class requestor extends React.Component{
         )
 
         
-       Axios.get(`${server}/api/consultancyagency/${this.state.id}`)
+       Axios.get(`/api/consultancyagency/${this.state.id}`)
             .then(res => res.data)
             .then(p => {
                 

@@ -51,8 +51,11 @@ class ViewAllProjects extends React.Component {
   }
   componentDidMount(){
     axios 
-    .get(`${server}/api/projects`)
-    .then(res => res.data)
+    .get(`/api/projects`)
+    .then(res => {
+      console.log(res)
+      return res.data
+    })
     .then(a =>{
       console.log(a)
       this.setState({

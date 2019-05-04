@@ -46,7 +46,7 @@ class feedBackSending extends React.Component {
     if(this.state.type==="partner"){
       await axios
       .post(
-        `http://localhost:5000/api/partners/${this.state.ownerId}/rating/${this.state.eventId}`
+        `/api/partners/${this.state.ownerId}/rating/${this.state.eventId}`
       )
       .then(res => {
         console.log(res);
@@ -62,7 +62,7 @@ class feedBackSending extends React.Component {
         if(this.state.type==="consultancyagency"){
           await axios
           .post(
-            `http://localhost:5000/api/consultancyagency/${this.state.ownerId}/rating/${this.state.eventId}`
+            `/api/consultancyagency/${this.state.ownerId}/rating/${this.state.eventId}`
           )
           .then(res => {
             console.log(res);
@@ -80,7 +80,7 @@ class feedBackSending extends React.Component {
             console.log("here");
           await axios
           .post(
-            `http://localhost:5000/api/admins/${this.state.ownerId}/events/${this.state.eventId}/sendFeedBackForm`
+            `/api/admins/${this.state.ownerId}/events/${this.state.eventId}/sendFeedBackForm`
           )
           .then(res => {
             console.log(res);

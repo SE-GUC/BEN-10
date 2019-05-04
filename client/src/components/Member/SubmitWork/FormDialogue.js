@@ -19,8 +19,8 @@ export default class FormDialog extends React.Component {
     context:null
   };
   handClick = () =>{
-    //   console.log(`${server}/api/members/${this.state.member_id}/Myprojects/${this.state.project_id}/submit/${this.state.link}`)
-    fetch(`${server}/api/members/${this.state.member_id}/Myprojects/${this.state.project_id}/submit/${this.state.link}`, {
+    //   console.log(`/api/members/${this.state.member_id}/Myprojects/${this.state.project_id}/submit/${this.state.link}`)
+    fetch(`/api/members/${this.state.member_id}/Myprojects/${this.state.project_id}/submit/${this.state.link}`, {
         method: 'PUT',
         body: {}
     })

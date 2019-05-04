@@ -35,7 +35,7 @@ class PartnerApplyingMemberButton extends Component {
     };
     axios
       .put(
-        `${server}/api/partners/${this.state.partner._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body
+        `/api/partners/${this.state.partner._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body
       )
       .then(function(response) {
         console.log(response.status);

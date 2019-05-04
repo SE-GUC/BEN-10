@@ -44,12 +44,13 @@
     "test": "jest --runInBand",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "cd client && npm install && npm run",
+    "heroku-postbuild": "cd client && npm install && npm run build",
     "testWatch": "jest --runInBand --watchAll"
   },
   "heroku-run-build-script": true,
   "engines": {
-    "node": "10.15.1"
+    "node": "10.15.1",
+    "npm": "6.4.1"
   },
   "repository": {
     "type": "git",
