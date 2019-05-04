@@ -49,7 +49,7 @@ class SimpleTabs extends React.Component {
     return (
       <div className={classes.root}>
         
-        {this.state.events.map(((Event,i)=><MyEventCard key={i} event={Event} />))}
+    {this.state.events?this.state.events.map(((Event,i)=><MyEventCard key={i} event={Event} />)):<h1>YOU DONT HAVE ANY EVENTS YET:(</h1>}
       </div>
     );
   }

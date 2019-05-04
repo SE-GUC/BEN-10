@@ -263,7 +263,15 @@ class App extends Component {
         /> */}
         </BrowserRouter>
         <div style={{ backgroundColor: "white" }}>
-          <footer class="page-footer font-small special-color-dark pt-4">
+          <footer style={{height:24, // Replace with the height your footer should be
+    width: "100%", // Don't change
+    backgroundImage: "none",
+    backgroundRepeat: "repeat",
+    backgroundAttachment: "scroll",
+    backgroundPosition: "0% 0%",
+    position: "fixed",
+    bottom: 0,
+    left: 0}}>
             <div class="footer-copyright text-center py-3">
               © 2019 Copyright: Lirten CO.
               <br/>
