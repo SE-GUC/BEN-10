@@ -11,13 +11,14 @@ const server = require("../../config");
 
 const styles = theme => ({
   root: {
-    width: '20%',
+    width: '80%',
   },
   heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
+    fontSize: 18,
+    fontWeight:"bold",
     marginLeft:10,
-    color:"#00695c",
+    color:"#616161",
+    fontFamily:"Arial"
   },
 });
 

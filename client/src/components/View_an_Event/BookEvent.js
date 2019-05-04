@@ -34,6 +34,11 @@ const theme1 = createMuiTheme({
     },
   },
   typography: { useNextVariants: true },
+  button:{
+    backgroundColor:"#283593",
+    marginLeft:550,
+    color:"#fff"
+  }
 });
 
 
@@ -149,7 +154,7 @@ class bookEvent extends React.Component {
     if(this.state.type==="member"){
       await axios
       .put(
-        `http://localhost:5000/api/members/${this.state.member}/bookEvent/${this.state.eventId}`
+        `http://localhost:5000/api/members/${this.state.member._id}/bookEvent/${this.state.eventId}`
       )
       .then(res => {
         console.log(res);
@@ -186,6 +191,8 @@ class bookEvent extends React.Component {
   }
 
   async componentDidMount() {
+    console.log("hhhhhhhhhhhhhhhhhhhhhh")
+    console.log(this.state.type)
     if(this.state.type==='member'){
       this.setState({show:true})
     }
@@ -198,9 +205,9 @@ class bookEvent extends React.Component {
     if ( this.state.show) {
       return (
         <div>
-             <MuiThemeProvider theme1={theme1}> <Button onClick={()=>{this.sendClicked()}} >
+             <Button className={classes.button} onClick={()=>{this.sendClicked()}} >
                 Book this event
-                </Button></MuiThemeProvider> 
+                </Button>
                 
                 <div>
                 <Snackbar

@@ -65,7 +65,7 @@ class OutlinedTextFields extends React.Component {
   console.log(this.props.partner)
 }
 
-onUpdate =()=>{
+onUpdate =async()=>{
   const body={
     firstName:this.state.firstName,
     lastName:this.state.lastName,
@@ -87,13 +87,23 @@ onUpdate =()=>{
     // projects:this.state.projects,
     // partners:this.state.partners
   }
-  axios.put(`${server}/api/partners/${this.props.partner._id}`,body)
+  await axios.put(`${server}/api/partners/${this.props.partner._id}`,body)
   .then(res=>{ 
     console.log(res.status);
    return res.data
 })
 .then(json => this.setState({project : json}))
-window.location.reload();
+await axios
+      .get(`${server}/api/partners/${this.props.partner._id}`)
+      .then(res => {
+        return res.data;
+      })
+      .then(a =>{
+        localStorage.setItem('type',"partner");
+        localStorage.setItem('user',JSON.stringify(a.data));
+        window.location.reload();
+      }
+      );
 
 
 }

@@ -37,6 +37,14 @@ if (process.env.NODE_ENV === "production") {
   app.use("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
+  if(process.env.NODE_ENV==='production'){
+    app.use(express.static(path.join(__dirname,'client/build')))
+  
+    app.get('*',(req,res)=>{
+      res.sendFile(path.resolve(__dirname,'client','build','index.html'))
+    })
+  }
+  // DB Config
 }
 // DB Config
 const db = require("./config/keys").mongoURI;
@@ -118,7 +126,7 @@ app.put("/login", async (req, res) => {
           type: "member",
           token: token
         };
-        console.log(data);
+        // console.log(data);
         return res.json({ data });
       });
     } else {

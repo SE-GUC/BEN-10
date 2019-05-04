@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // const axios = require('axios');
 import TestBar from "./testBar"
 import { LinearProgress } from '@material-ui/core';
+import Axios from 'axios';
 const server = require("../../config");
 
 class MyEvents extends Component {
@@ -14,26 +15,51 @@ class MyEvents extends Component {
     }
   }
   componentDidMount(){
-    console.log(this.props.id)
-    fetch(`${server}/api/members/${this.state.memId}/ShowMyEvents`).then(res=>res.json())
-    .then(events=>this.setState({Event:events.data}))
+    Axios.get(`${server}/api/members/${this.state.memId}/ShowMyEvents`)
+    .then(res=>res.data)
+    .then(a=>this.setState({Event:a.data}))
+
+    // .then(events=>this.setState({Event:events.data}))
   }
   render() {
-    if(this.state.Event===null||typeof this.state.Event!=="Undefined"||this.state.Event.length===0){
-        return (
-            <div className="App">
-            <LinearProgress/>
-            </div>
-          );
+
+    if(this.state.Event!=null){
+      return (
+        <div className="App">
+        <TestBar events={this.state.Event}/>
+        </div>
+      );
     }
     else{
-    return (
-      <div className="App">
-      <TestBar events={this.state.Event}/>
-      </div>
-    );
+      return (
+         
+        <div className="App">
+        {console.log(this.state.Event)}
+        <LinearProgress/>
+        </div>
+      );
+
+    }
   
-}
+
+//     if(this.state.Event===null||typeof this.state.Event!=="Undefined"){
+//       return (
+         
+//             <div className="App">
+//             {console.log(this.state.Event)}
+//             <LinearProgress/>
+//             </div>
+//           );
+//     }
+//     else{
+//       console.log("hello")
+//     return (
+//       <div className="App">
+//       <TestBar events={this.state.Event}/>
+//       </div>
+//     );
+  
+// }
 }
 }
 

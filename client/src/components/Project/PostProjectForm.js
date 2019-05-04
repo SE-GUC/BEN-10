@@ -44,6 +44,7 @@ class PostProjectForm extends React.Component {
     this.clear = this.clear.bind(this)
 
     this.state = {
+      name:"",
       description:"",
       category:"",
       wantConsultancy:false,
@@ -53,15 +54,20 @@ class PostProjectForm extends React.Component {
 
   clear() {
     this.setState({
+      name:"",
       description: "",
       category:"",
     })
   }
   
   handleChange = name => event => {
+    console.log((this.state.wantConsultancy));
+
     this.setState({
       [name]: event.target.value
+      
     });
+    console.log((this.state.wantConsultancy));
   };
 
 
@@ -70,7 +76,18 @@ class PostProjectForm extends React.Component {
     
     return (
       <div>
-        
+        <div>
+          <TextField
+            id="projectName"
+            label="Project Name"
+            className={classes.textField}
+            value={this.state.name}
+            onChange={this.handleChange("name")}
+            margin="normal"
+            variant="outlined"
+          />
+          <br />
+          </div>
         <div>
           <TextField
             id="description"
@@ -118,7 +135,7 @@ class PostProjectForm extends React.Component {
         </div>
        
         <div>
-          <PostProjectMessage className={classes.button} description={this.state.description} category={this.state.category}
+          <PostProjectMessage className={classes.button} name={this.state.name} description={this.state.description} category={this.state.category}
           wantConsultancy={this.state.wantConsultancy} companyID={this.props.companyID} clear={this.clear}/>
         </div>
       </div>

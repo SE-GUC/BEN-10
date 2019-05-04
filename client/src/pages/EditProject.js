@@ -114,17 +114,17 @@ export default class EditProject extends Component {
       <div >
         <Nav value={1}/>
         <div class = "leftCol">
-            <div class="col-3 float-left pr-4">
-              <nav class="menu" aria-label="Project settings" data-pjax="">
+            <div class="col-3 float-left pr-4" style={{height:'1100px'}}>
+              <nav class="menu" aria-label="Project settings" style={{height:'1100px'}}>
                 <h3 class="menu-heading">
                 </h3>
 
-                <Paper>
+                <Paper style={{height:'1100px'}}>
 
                     <MenuList>
-                      <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.viewSection1}>Project attributes</MenuItem>
-                      <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.viewSection2}>Consultancy Agency</MenuItem>
-                      <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.viewSection3}>Candidate</MenuItem>
+                      <MenuItem  onClick={this.viewSection1}>Project attributes</MenuItem>
+                      <MenuItem  onClick={this.viewSection2}>Consultancy Agency</MenuItem>
+                      <MenuItem  onClick={this.viewSection3}>Candidate</MenuItem>
                       <br></br>
                       <br></br>
                       <br></br>

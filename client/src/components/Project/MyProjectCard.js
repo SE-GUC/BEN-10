@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { Paper } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -8,22 +9,51 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { Route, withRouter } from "react-router-dom";
+import { Route, withRouter ,Link} from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 const server = require("../../config");
 
 const styles = {
-  card: {
-    minWidth: 275,
-    marginLeft:"auto",
-    marginRight:"auto",
-    marginTop:20,
+  block:{
+
   },
-  // media: {
-  //   // ⚠️ object-fit is not supported by IE 11.
-  //   objectFit: "cover"
-  // },
+  card: {
+    minWidth: 475,
+    maxWidth: 800,
+    display:"inline-block",
+    marginBottom:5,
+    
+  },
+  Link:{
+    fontFamily:"Arial",
+    fontStyle: "normal",
+    fontWeight: "bold",
+    fontSize: 23,
+    paddingLeft:10
+ 
+    }
+    ,
+    secondTypo:{
+      fontFamily:"Montserrat",
+      fontStyle: "normal",
+      fontSize:20,
+      color:"#616161",
+      paddingLeft:10
+  
+
+  },
+  firstTypo:{
+    fontFamily:"Arial",
+    fontStyle:"normal",
+    fontSize:22,
+    color:"#000000",
+    paddingLeft:10,
+    fontWeight:"bolder",
+    fontVariant:"small-caps"
+
+  },
+  
   text: {
     color: "#e53935"
   }
@@ -88,6 +118,7 @@ class MyProjectCard extends Component {
   }
 
   render() {
+    console.log("hello")
     const { classes } = this.props;
     if (this.state.redirectview ) {
       const path = `/Projects/${this.props.project._id}`;
@@ -97,40 +128,53 @@ class MyProjectCard extends Component {
       return <Redirect to={path} />;
     } else if (this.state.company) {
       return (
-        <Card className={classes.card}>
-          <CardActionArea onClick={this.viewProject}>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2" />
-              <Typography className={classes.text} component="p">
-                <Typography variant="subtitle2" gutterBottom>
-                Project Name:
-                </Typography>
-                {this.props.project.name}
-                <br />
-                <br />
-                <Typography variant="subtitle2" gutterBottom>
-                Company Name:
-                </Typography>
-                 {this.state.company}
-                <br />
-                <br />
-                <Typography variant="subtitle2" gutterBottom>
-                Description:
-                </Typography> {this.props.project.description}
-                <br />
-                <br />
-                <Typography variant="subtitle2" gutterBottom>
-                Life Cycle:
-                </Typography>
-                 {this.props.project.lifeCycle}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          {(this.props.edit ||this.props.type ==="admin")? <div><Button onClick={this.goToEditPage}>Edit</Button>
+        <Link to={`/Projects/${this.props.project._id}`}>
+        <div 
+    className={classes.block}
+    
+    >
+        <Paper 
+        className={classes.card}
+        >
+          
+          <a
+  // onClick={this.viewProject}
+  href= {""}
+  className={classes.Link} onClick={this.viewProject}
+  >
+  {this.props.project.name.toString()}
+
+    </a>
+          
+          <Typography className={classes.firstTypo}>
+          company name
+          </Typography>
+          <Typography className={classes.secondTypo}>
+          {this.state.company}
+          </Typography>
+
+          <Typography className={classes.firstTypo}>
+          description
+          </Typography>
+          <Typography className={classes.secondTypo}>
+          {this.props.project.description}
+          </Typography>
+
+          <Typography className={classes.firstTypo}>
+          life cycle
+          </Typography>
+          <Typography className={classes.secondTypo}>
+          {this.props.project.lifeCycle}
+          </Typography>
+           {(this.props.edit ||this.props.type ==="admin")? <div ><Button variant="contained"  onClick={this.goToEditPage}>Edit</Button>
             </div>:"" }
-            
-          <CardActions />
-        </Card>
+
+        </Paper>
+    
+    </div>
+    </Link>
+
+
       );
     } else {
       return <div> </div>;

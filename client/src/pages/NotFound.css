@@ -1,0 +1,42 @@
+.page{
+/* border:3px solid salmon; */
+background-color:#F6F6F6;
+width: 100%;
+height: 100vh;
+}
+
+.side2{
+    /* border: 3px solid red; */
+    float: right;
+    width: 60%;
+    height: 100vh;
+    background: url(./notfound.jpg)
+
+}
+label{
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-variant: small-caps;
+    font-weight: bolder;
+    font-size: 50px;
+    color:#9e9e9e;
+    /* border: 2px solid yellow; */
+    /* float: left; */
+    position: fixed;
+    bottom: 240px;
+    right: 965px;
+}
+#word{
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-variant: small-caps;
+    font-weight: bolder;
+    font-size: 50px;
+    color:#9e9e9e;
+    /* border: 2px solid yellow; */
+    position: fixed;
+    bottom: 200px;
+    right: 500px;
+    width: 50%;
+
+}

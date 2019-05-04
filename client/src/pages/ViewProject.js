@@ -48,6 +48,11 @@ export default class ViewProject extends Component {
       });
   }
 
+  caapply = async() =>{
+    await axios.put(`${server}/api/consultancyagency/${this.state.user._id}/caApplyProject/${this.state.projectID}`)
+    .then(res=>console.log(res))
+  }
+
   handleChange = name => event => {
     event.preventDefault();
     this.setState({
@@ -86,8 +91,8 @@ export default class ViewProject extends Component {
       return (
         <div>
           <Nav value={1}/>
-          <div class="leftCol">
-            <div class="col-3 float-left pr-4">
+          <div class="leftCol" >
+            <div class="col-3 float-left " style={{height:"100%"}}>
               <nav class="menu" aria-label="Project settings" data-pjax="">
                 <h3 class="menu-heading">
                 <br></br>
@@ -96,9 +101,9 @@ export default class ViewProject extends Component {
                 <Paper>
 
                     <MenuList>
-                      <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.viewSection1}>Project attributes</MenuItem>
-                      <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.viewSection2}>Consultancy Agency</MenuItem>
-                      <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.viewSection3}>Candidate</MenuItem>
+                      <MenuItem onClick={this.viewSection1}>Project attributes</MenuItem>
+                      <MenuItem onClick={this.viewSection2}>Consultancy Agency</MenuItem>
+                      <MenuItem onClick={this.viewSection3}>Candidate</MenuItem>
                       
                 {(this.state.project.lifeCycle === "Posted"&&this.state.type==="member") ? (
                   <ApplyButton
@@ -143,7 +148,11 @@ export default class ViewProject extends Component {
                 : 
                   ""
                 }
-                
+                {
+                  (this.state.type==="consultancyagency"&&this.state.project.lifeCycle==="Waiting for consultancy Agency")?
+                  <Button onClick={this.caapply}>Apply</Button>:""
+
+                }
                 {(this.state.type==="admin"&&this.state.project.lifeCycle==="Negotiation")?
                 <SendFinalDraft
                 class="js-selected-navigation-item selected menu-item"
