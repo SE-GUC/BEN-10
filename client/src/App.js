@@ -39,14 +39,17 @@ import Snack from "./components/View_an_Event/snackBox";
 import Loading from "./components/Global/loading";
 import CreateEvent from "./components/Admin/CreateEvent";
 import LinearProgress from './components/Global/loading'
+import LogInErrorMessage from "./components/LogIn/loginErrorMessage"
 const server = require("./config");
 class App extends Component {
   state = {
-    user: null 
+    user: null ,
+    count :0
   };
   render() {
     
       localStorage.setItem('nav',0);
+      if(localStorage.getItem('token')){
       return (
         <BrowserRouter>
         <Switch>
@@ -232,6 +235,59 @@ class App extends Component {
        </Switch>
         </BrowserRouter>
       );
+
+  }else{
+    return(
+      <BrowserRouter>
+      <Switch>
+      <Route
+          exact
+          path="/login"
+          render={props => (
+            <LogIn
+            
+            />
+          )}
+        />
+
+        <Route
+          exact
+          path="/signUp/:type"
+          render={props => (
+            <SignUp
+            {...props}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/forgotPassword"
+          render={props => (
+            <ForgotPassword
+            
+            />
+          )}/>
+        
+         
+
+        <Route
+          exact
+          path="/"
+          render={props => (
+            <PreSign
+            
+            />
+          )}
+        />
+        <Route render ={props => (
+            <LogInErrorMessage
+            
+            />
+          )}/>
+        </Switch>
+      </BrowserRouter>
+    );
+  }
     } 
   
 }

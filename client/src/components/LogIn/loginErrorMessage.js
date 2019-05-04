@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
 function SimpleSnackbar() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  setOpen(true);
+  
   function handleClick() {
     setOpen(true);
   }
