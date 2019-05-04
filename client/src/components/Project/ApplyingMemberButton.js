@@ -33,6 +33,7 @@ class ApplyingMemberButton extends Component {
     const body = {
       memberID: this.state.mem
     };
+    console.log(body)
     axios
       .put(
         `${server}/api/admins/${this.state.admin._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body

@@ -39,7 +39,7 @@ export default class EditableView extends React.Component {
 
     componentDidMount=async ()=>{
        
-        if(this.state.project.wantConsultancy == true){
+        if(this.state.project.consultancyId){
             await  axios
             .get(`${server}/api/consultancyagency/${this.state.caId}`)
             .then(res => {
@@ -48,8 +48,9 @@ export default class EditableView extends React.Component {
                 
             })
             .then(a => {
+                console.log(a)
                 this.setState({ consultancyAgency: a.data,
-                    wantConsultancy:a.data.wantConsultancy,
+                    wantConsultancy:a.wantConsultancy,
                     caName:a.data.name,
                     caRating:a.data.rating,
                     caEmail:a.data.email,
@@ -66,6 +67,7 @@ export default class EditableView extends React.Component {
         const {classes} = this.props
         console.log(this.state.consultancyAgency)
         if(this.state.consultancyAgency !==null){
+            {console.log(this.state.consultancyAgency.email)}
            return( 
             <div class="mainContainer">    
                 <div id="ProjectAttributes">
@@ -79,6 +81,7 @@ export default class EditableView extends React.Component {
                             <TextField
                                 id="outlined-read-only-input"
                                 label="Email"
+                                
                                 defaultValue={this.state.caEmail}
                                 className={classNames.textField}
                                 margin="normal"

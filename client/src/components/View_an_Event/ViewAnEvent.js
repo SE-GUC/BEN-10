@@ -110,21 +110,28 @@ class SimpleCard extends React.Component {
       display: "none",
       mem: "none",
       noMems: "none",
-      isLoaded: false
+      isLoaded: false,
+      loggedinuser:JSON.parse(localStorage.getItem("user")),
+      loggedintype:localStorage.getItem("type")
     };
   }
   async componentDidMount() {
     console.log(this.state.type)
     await fetch(`http://localhost:5000/api/events/${this.state.eventId}`)
       .then(res => res.json())
-      .then(proj =>
-        this.setState({
-          event: proj.data,
-          bookedmemID: proj.data.bookedMembers,
-          ID: proj.data.requestorId,
-          isLoaded:true,
-          ownerId:proj.data.requestorId
-        })
+      .then(proj => 
+        { 
+          console.log('heeereeeeeee')
+          console.log(proj.data)
+          this.setState({
+            event: proj.data,
+            bookedmemID: proj.data.bookedMembers,
+            ID: proj.data.requestorId,
+            isLoaded:true,
+            ownerId:proj.data.requestorId
+          })
+        }
+       
       );
 
     if (this.state.bookedmemID.length !== 0) {
@@ -323,12 +330,18 @@ class SimpleCard extends React.Component {
           {console.log(this.state.types)}
           {console.log(this.state.ID)}
           {console.log(this.state.show)}
-          {this.props.user._id.toString()===this.state.ownerId.toString()? <Feedback eventId={this.state.eventId} ownerId={this.state.ownerId} type={this.state.types} reqId={this.state.ID}></Feedback>:""}
-          <BookEvent eventId={this.state.eventId }type={this.props.type}  member={this.props.user._id} theme={theme} > </BookEvent>
+          {console.log(this.state.ownerId)}
+          {console.log((JSON.parse(localStorage.getItem("user")))._id.toString()===this.state.ownerId.toString())}
+          {console.log((JSON.parse(localStorage.getItem("user")))._id)}
+          {(JSON.parse(localStorage.getItem("user")))._id.toString()===this.state.ownerId.toString()? <Feedback eventId={this.state.eventId} ownerId={this.state.ownerId} type={localStorage.getItem("type")} reqId={(JSON.parse(localStorage.getItem("user")))._id}></Feedback>:""}
           <MuiThemeProvider theme={theme}> <Button className={classes.button} onClick={this.returnClicked} >
                 Back
               </Button></MuiThemeProvider>
               
+          <BookEvent eventId={this.state.eventId }type={localStorage.getItem("type")}  member={JSON.parse(localStorage.getItem("user"))} theme={theme} > </BookEvent>
+           {    console.log()}{
+           console.log("aaaaaaaaaaaaaaa")
+}   
       
     
   );

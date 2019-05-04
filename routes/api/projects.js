@@ -34,10 +34,10 @@ router.post("/", async (req, res) => {
         .status(400)
         .send({ error: isValidated.error.details[0].message });
     }
-    console.log('bye')
     const newProject = await Project.create(req.body);
     return res.json({ msg: "Project was created successfully", data: newProject });
   } catch (error) {
+    console.log(error)
     return res.status(400).send({ error: "not a project id" });
   }
 });
@@ -45,6 +45,7 @@ router.post("/", async (req, res) => {
 // Update a project
 router.put("/:id", async (req, res) => {
   try {
+
     if (ObjectId.isValid(req.params.id)) {
       const isValidated = validator.updateValidation(req.body);
       if (isValidated.error){

@@ -4,7 +4,7 @@ Joi.objectId = require('joi-objectid')(Joi);
 module.exports = {
     createValidation: request => {
         const createSchema = {
-            name:Joi.string.required(),
+            name:Joi.string().required(),
             description:Joi.string().required(),
             companyId:Joi.objectId(),
             category:Joi.string().required(),
@@ -25,8 +25,8 @@ module.exports = {
                 'Normal',
                 'Hard',
                 'Extreme',),
-            estimatedTime:Joi.string().required(),
-            experienceLevelNeeded:Joi.string().required( 'Fundamental Awareness',
+            estimatedTime:Joi.string(),
+            experienceLevelNeeded:Joi.string().valid( 'Fundamental Awareness',
                 'Novice',
                 'Intermediate',
                 'Advanced',

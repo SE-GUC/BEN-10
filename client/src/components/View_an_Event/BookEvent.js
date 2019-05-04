@@ -149,7 +149,7 @@ class bookEvent extends React.Component {
     if(this.state.type==="member"){
       await axios
       .put(
-        `http://localhost:5000/api/members/${this.state.member}/bookEvent/${this.state.eventId}`
+        `http://localhost:5000/api/members/${this.state.member._id}/bookEvent/${this.state.eventId}`
       )
       .then(res => {
         console.log(res);
@@ -186,6 +186,8 @@ class bookEvent extends React.Component {
   }
 
   async componentDidMount() {
+    console.log("hhhhhhhhhhhhhhhhhhhhhh")
+    console.log(this.state.type)
     if(this.state.type==='member'){
       this.setState({show:true})
     }
