@@ -22,7 +22,10 @@ export default class FormDialog extends React.Component {
     //   console.log(`https://lirtenben.herokuapp.com/api/members/${this.state.member_id}/Myprojects/${this.state.project_id}/submit/${this.state.link}`)
     fetch(`https://lirtenben.herokuapp.com/api/members/${this.state.member_id}/Myprojects/${this.state.project_id}/submit/${this.state.link}`, {
         method: 'PUT',
-        body: {}
+        body: {},
+        headers: { "Content-Type": "application/json",
+        "Authorization": "bearer " + localStorage.getItem('token')
+       }
     })
     .then((response) => {return response.json()})
     .then((result)=>{

@@ -47,8 +47,12 @@ class SimpleCard extends React.Component {
 
   }
   componentDidMount(){
-    // console.log(`https://lirtenben.herokuapp.com/api/events/${}`)
-    Axios.get(`https://lirtenben.herokuapp.com/api/events/${this.state.eventId}`)
+    // console.log(`${server}/api/events/${}`)
+    Axios.get(`https://lirtenben.herokuapp.com/api/events/${this.state.eventId}`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
       .then(res => res.data)
       .then(event =>
         localStorage.setItem('event',JSON.stringify(event.data))

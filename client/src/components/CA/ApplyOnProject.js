@@ -33,7 +33,10 @@ const styles = theme => ({
     applyClick(){
          fetch(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.id}/caApplyProject/${this.state.project_id}`, {
         method: 'PUT',
-        body: {}
+        body: {},
+        headers: { "Content-Type": "application/json",
+        "Authorization": "bearer " + localStorage.getItem('token')
+       }
     })
     .then((response) => {return response.json()})
     .then((result)=>{

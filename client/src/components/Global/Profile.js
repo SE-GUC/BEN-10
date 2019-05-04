@@ -84,7 +84,6 @@ class Profile extends React.Component {
   };
 
   componentDidMount(){
-    console.log(this.props.flag)
     if(this.props.flag){
       this.setState({
         user:this.props.user,
@@ -158,17 +157,8 @@ class Profile extends React.Component {
       if (this.state.redirectProjects) {
         return <Redirect to={{ pathname: "/Projects" }} />;
       } else {
-        // var s="";
-        // if(this.state.type==="member"){
-        //   if(this.state.user.skillSet.length>0 ){
-        //     for(var i=0;this.state.skillSet.length>i;i++)
-        //       s+=this.state.skillSet[i]+" "
-        //   }
-
-        // }
-        console.log(this.state.loading)
         if(this.state.loading){
-          console.log('HHHHHHHHH')
+          
         if (
           this.state.type === "partner" ||
           this.state.type === "member" ||

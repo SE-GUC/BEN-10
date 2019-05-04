@@ -15,7 +15,12 @@ class allPartners extends React.Component {
     };
   }
   componentDidMount() {
-    fetch(`https://lirtenben.herokuapp.com/api/partners/`)
+    axios
+      .get(`https://lirtenben.herokuapp.com/api/partners/`,{
+        headers: { "Content-Type": "application/json",
+        "Authorization": "bearer " + localStorage.getItem('token')
+       }
+      })
       .then(res => {
         console.log(res)
         return res.json();

@@ -90,38 +90,52 @@ class SearchPage extends Component{
                 text:this.state.searchWord
             }
             if(this.state.type=="admin"){
-            axios.post(`/searchAdmins`,body)
+            axios.post(`https://lirtenben.herokuapp.com/searchAdmins`,body,{
+              headers: { "Content-Type": "application/json",
+              "Authorization": "bearer " + localStorage.getItem('token')
+             }
+            })
             .then(res=>{ 
-              console.log(res.status);
              return res.data
           })
           .then(json => this.setState({admin:json.data}))
         }
           //partners
-          axios.post(`/searchPartners`,body)
+          axios.post(`https://lirtenben.herokuapp.com/searchPartners`,body,{
+            headers: { "Content-Type": "application/json",
+            "Authorization": "bearer " + localStorage.getItem('token')
+           }})
             .then(res=>{ 
-              console.log(res.status);
              return res.data
           })
           .then(json => this.setState({partner:json.data}))
           // member
-          axios.post(`/searchMembers`,body)
+          axios.post(`https://lirtenben.herokuapp.com/searchMembers`,body,{
+            headers: { "Content-Type": "application/json",
+            "Authorization": "bearer " + localStorage.getItem('token')
+           }
+          })
             .then(res=>{ 
-              console.log(res.status);
              return res.data
           })
           .then(json => this.setState({member:json.data}))
           // agencies
-          axios.post(`/searchCAs`,body)
+          axios.post(`https://lirtenben.herokuapp.com/searchCAs`,body,{
+            headers: { "Content-Type": "application/json",
+            "Authorization": "bearer " + localStorage.getItem('token')
+           }
+          })
             .then(res=>{ 
-              console.log(res.status);
              return res.data
           })
           .then(json => this.setState({consultancy:json.data}))
           // projects
-          axios.post(`/searchProjects`,body)
+          axios.post(`https://lirtenben.herokuapp.com/searchProjects`,body,{
+            headers: { "Content-Type": "application/json",
+            "Authorization": "bearer " + localStorage.getItem('token')
+           }
+          })
             .then(res=>{ 
-              console.log(res.status);
              return res.data
           })
           .then(json => {
@@ -131,9 +145,12 @@ class SearchPage extends Component{
               this.setState({projects:json.data})
             })
           // Events
-          axios.post(`/searchEvents`,body)
+          axios.post(`https://lirtenben.herokuapp.com/searchEvents`,body,{
+            headers: { "Content-Type": "application/json",
+            "Authorization": "bearer " + localStorage.getItem('token')
+           }
+          })
             .then(res=>{ 
-              console.log(res.status);
              return res.data
           })
           .then(json => this.setState({event:json.data}))

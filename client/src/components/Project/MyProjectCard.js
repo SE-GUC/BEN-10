@@ -79,7 +79,11 @@ class MyProjectCard extends Component {
   }
   componentDidMount() {
     axios
-      .get(`https://lirtenben.herokuapp.com/api/partners/${this.props.project.companyId}`)
+      .get(`https://lirtenben.herokuapp.com/api/partners/${this.props.project.companyId}`,{
+        headers: { "Content-Type": "application/json",
+        "Authorization": "bearer " + localStorage.getItem('token')
+       }
+      })
       .then(res => {
         return res.data;
       })
@@ -92,7 +96,10 @@ class MyProjectCard extends Component {
 
   DeletePage = () => {
     const requestOptions = {
-      method: "DELETE"
+      method: "DELETE",
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
     };
     fetch(
       `https://lirtenben.herokuapp.com/api/partners/${
@@ -119,7 +126,6 @@ class MyProjectCard extends Component {
   }
 
   render() {
-    console.log("hello")
     const { classes } = this.props;
     if (this.state.redirectview ) {
       const path = `/Projects/${this.props.project._id}`;

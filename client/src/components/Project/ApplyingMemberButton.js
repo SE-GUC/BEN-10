@@ -36,7 +36,11 @@ class ApplyingMemberButton extends Component {
     console.log(body)
     axios
       .put(
-        `https://lirtenben.herokuapp.comhttps://lirtenben.herokuapp.com/api/admins/${this.state.admin._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body
+        `https://lirtenben.herokuapp.com/api/admins/${this.state.admin._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body,{
+          headers: { "Content-Type": "application/json",
+          "Authorization": "bearer " + localStorage.getItem('token')
+         }
+        }
       )
       .then(function(response) {
         console.log(response.status);

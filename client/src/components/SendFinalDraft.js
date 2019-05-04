@@ -44,7 +44,10 @@ class SendFinalDraft extends React.Component {
            
         axios
             .put(
-                `https://lirtenben.herokuapp.com/api/admins/${this.state.adminID}/myProjects/${this.state.pID}/sendDraft`,body
+                `https://lirtenben.herokuapp.com/api/admins/${this.state.adminID}/myProjects/${this.state.pID}/sendDraft`,body,{
+                    headers: { "Content-Type": "application/json",
+                    "Authorization": "bearer " + localStorage.getItem('token')
+                   }}
             )
         this.setState({open:false})
         
