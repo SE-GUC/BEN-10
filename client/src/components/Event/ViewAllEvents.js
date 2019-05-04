@@ -51,7 +51,9 @@ class ViewAllEvents extends React.Component {
       console.log("yessss")
       console.log(this.state.events)
     return (
-      this.state.events.map((p,i)=> <AllEventsCard key={i} p={p} /> ));
+      
+      this.state.events.map((p,i)=> <AllEventsCard key={i} p={p} /> )
+      );
     }else{
       return(
         <LinearProgress/>

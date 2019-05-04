@@ -16,7 +16,9 @@ const server = require("../../config");
 
 const styles = {
   block:{
-    marginTop:5
+    marginTop:10,
+    display:"inline-block",
+    marginLeft:20
     
 
   },
@@ -25,6 +27,7 @@ const styles = {
     maxWidth: 800,
     display:"inline-block",
     marginBottom:5,
+    marginRight:100
     
   },
   Link:{

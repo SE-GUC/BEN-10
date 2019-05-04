@@ -78,6 +78,7 @@ class Events extends React.Component{
                     
                     
                     </div>
+                    
                 </div>);   
         }
         else if(this.state.type==="partner"){
@@ -136,12 +137,14 @@ class Events extends React.Component{
       <Divider/>     
     </List>
         </div>
-        <div style={{width:"80%",height:"100vh",float:"right"}}>
-        {(this.state.MyEvents)?<div style={{columns:2}}><MMyEvent id={this.state.user._id}/></div>:""}
+        <div style={{width:"80%",height:"90vh",float:"right"}}>
+        {(this.state.MyEvents)?<div ><MMyEvent id={this.state.user._id}/></div>:""}
         {(this.state.AllEvents)?<div style={{columns:2}}><ViewAllEvents /></div>:""}
                     
                     
                     </div>
+                   
+                   
 
                 </div>);   
         }
