@@ -47,7 +47,7 @@ class GetProject extends Component {
   }
 
   async componentDidMount(){
-    await axios(`/api/projects/${this.props.project_id}/`)
+    await axios(`https://lirtenben.herokuapp.com/api/projects/${this.props.project_id}/`)
     .then(res=>{
       if(res.status===200)
         return res.json()
@@ -71,7 +71,7 @@ class GetProject extends Component {
         })
       }
     });
-    await axios(`/api/partners/${this.state.partnerID}/`)
+    await axios(`https://lirtenben.herokuapp.com/api/partners/${this.state.partnerID}/`)
     .then(res=>{
       if(res.status===200)
         return res.json()

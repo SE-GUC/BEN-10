@@ -35,7 +35,7 @@ class CAApplyingMemberButton extends Component {
     };
     axios
       .put(
-        `/api/consultancyagency/${this.state.ca._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body
+        `https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.ca._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body
       )
       .then(function(response) {
         console.log(response.status);

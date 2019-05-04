@@ -137,7 +137,7 @@ class PrimarySearchAppBar extends React.Component {
     if(this.state.type==="member"){
       await axios
       .get(
-        `/api/${this.state.type}s/${this.state.id}/notifications`
+        `https://lirtenben.herokuapp.com/api/${this.state.type}s/${this.state.id}/notifications`
       )
       .then(res => {
         return res.data;

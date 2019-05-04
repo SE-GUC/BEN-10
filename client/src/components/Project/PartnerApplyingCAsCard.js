@@ -45,7 +45,7 @@ class PartnerApplyingCAsCard extends Component {
   }
 
   async componentDidMount(){
-    await axios(`/api/consultancyagency/${this.state.ID}/`)
+    await axios(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.ID}/`)
     .then(res=>{
       if(res.status===200)
         return res.data

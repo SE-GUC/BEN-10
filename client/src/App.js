@@ -49,7 +49,7 @@ class App extends Component {
   };
   asPartner = async () => {
     await axios
-      .get(`/api/partners`)
+      .get(`https://lirtenben.herokuapp.com/api/partners`)
       .then(res => {
         return res.data;
       })
@@ -65,7 +65,7 @@ class App extends Component {
 
   asMember = async () => {
     await axios
-      .get(`/api/members`)
+      .get(`https://lirtenben.herokuapp.com/api/members`)
       .then(res => {
         return res.data;
       })
@@ -83,7 +83,7 @@ class App extends Component {
 
   asAdmin = async () => {
     await axios
-      .get(`/api/admins`)
+      .get(`https://lirtenben.herokuapp.com/api/admins`)
       .then(res => {
         return res.data;
       })
@@ -100,7 +100,7 @@ class App extends Component {
 
   asCA = async () => {
     await axios
-      .get(`/api/consultancyagency`)
+      .get(`https://lirtenben.herokuapp.com/api/consultancyagency`)
       .then(res => {
         return res.data;
       })

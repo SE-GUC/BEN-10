@@ -17,7 +17,7 @@ class MemberMyProjects extends Component {
   }
   async componentDidMount(){
     console.log(this.props.id)
-    await fetch(`/api/members/${this.state.memId}/myProjects`).then(res=>res.json())
+    await fetch(`https://lirtenben.herokuapp.com/api/members/${this.state.memId}/myProjects`).then(res=>res.json())
     .then(projects=>this.setState({Project:projects.data}))
     
   }

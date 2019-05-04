@@ -15,7 +15,7 @@ class allPartners extends React.Component {
     };
   }
   componentDidMount() {
-    fetch(`/api/partners/`)
+    fetch(`https://lirtenben.herokuapp.com/api/partners/`)
       .then(res => {
         console.log(res)
         return res.json();
