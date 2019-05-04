@@ -60,7 +60,7 @@ export default class EditableView extends React.Component {
                 });  
                 
             }        
-
+        }
     }
 
     render(){

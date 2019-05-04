@@ -219,7 +219,7 @@ class PrimarySearchAppBar extends React.Component {
   logoutClicked = async () =>{
     this.setState({logout:true})
     const token = localStorage.getItem('token')
-    await fetch(`/logout`, {
+    await fetch(`https://lirtenben.herokuapp.com/logout`, {
       method: "put",
       
 
