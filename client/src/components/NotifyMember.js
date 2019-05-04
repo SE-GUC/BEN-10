@@ -30,14 +30,14 @@ class NotifyMember extends React.Component {
         
         axios 
             .post(
-                `${server}/api/admins/${this.state.adminID}/notifications/${this.state.memberID}`,body
+                `/api/admins/${this.state.adminID}/notifications/${this.state.memberID}`,body
             )
     }
     notifyRejected = () => {
 
         axios
             .post(
-                `${server}/api/admins/${this.state.adminID}/projects/${this.state.pID}/sendRejection`
+                `/api/admins/${this.state.adminID}/projects/${this.state.pID}/sendRejection`
             )
     }
 

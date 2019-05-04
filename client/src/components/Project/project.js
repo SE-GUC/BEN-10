@@ -23,7 +23,7 @@ class Project extends Component {
     const requestOptions = {
       method: 'DELETE'
     };
-    fetch(`${server}/api/partners/${this.state.project.companyID}/deleteProject/${this.state.project._id}` , requestOptions).then((response) => {
+    fetch(`/api/partners/${this.state.project.companyID}/deleteProject/${this.state.project._id}` , requestOptions).then((response) => {
       return response.json();
     }).then((result) => {
       console.log(result)

@@ -17,7 +17,7 @@ class CAMyProjects extends Component {
     }
   }
   componentDidMount(){
-    fetch(`${server}/api/consultancyagency/${this.state.caId}/myprojects`).then(res=>res.json())
+    fetch(`/api/consultancyagency/${this.state.caId}/myprojects`).then(res=>res.json())
     .then(projects=>this.setState({Project:projects.data}))
     
   }

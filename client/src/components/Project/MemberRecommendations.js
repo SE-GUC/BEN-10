@@ -14,7 +14,7 @@ class MemberMyProjects extends Component {
     }
   }
   componentDidMount(){
-    fetch(`${server}/api/members/${this.state.partnerId}/recommendations`).then(res=>res.json())
+    fetch(`/api/members/${this.state.partnerId}/recommendations`).then(res=>res.json())
     .then(projects=>this.setState({Project:projects.data}))
     }
 

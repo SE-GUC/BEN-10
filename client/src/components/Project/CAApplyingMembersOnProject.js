@@ -42,7 +42,7 @@ class CAApplyingMembersOnProject extends Component {
   }
 
   async componentDidMount(){
-    await axios(`${server}/api/consultancyagency/${this.props.ca._id}/myProjects/${this.props.project._id}/applyingMembers`)
+    await axios(`/api/consultancyagency/${this.props.ca._id}/myProjects/${this.props.project._id}/applyingMembers`)
     .then(res=>{
       if(res.status===200)
         return res.data

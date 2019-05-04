@@ -103,7 +103,7 @@ export default class EditableView extends React.Component {
     };
     
     saveChanges =async ()=>{
-      await axios({url : `${server}/api/projects/${this.state.projectID}`, method:'put',
+      await axios({url : `/api/projects/${this.state.projectID}`, method:'put',
     data:{
         description : this.state.description,
         category : this.state.category,

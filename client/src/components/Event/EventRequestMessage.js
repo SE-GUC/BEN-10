@@ -29,7 +29,7 @@ class EventRequestMessage extends React.Component {
         requestorId: this.props.requestorId
     }
 
-    axios.post(`${server}/api/partners/${this.props.requestorId}/eventrequests/`, body)
+    axios.post(`/api/partners/${this.props.requestorId}/eventrequests/`, body)
     .then(function (response) {
       console.log(response.status)
       return response.data;

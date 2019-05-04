@@ -87,21 +87,21 @@ onUpdate =async()=>{
     // projects:this.state.projects,
     // partners:this.state.partners
   }
-  await axios.put(`${server}/api/partners/${this.props.partner._id}`,body)
+  await axios.put(`/api/partners/${this.props.partner._id}`,body)
   .then(res=>{ 
     console.log(res.status);
    return res.data
 })
 .then(json => this.setState({project : json}))
 await axios
-      .get(`${server}/api/partners/${this.props.partner._id}`)
+      .get(`/api/partners/${this.props.partner._id}`)
       .then(res => {
         return res.data;
       })
       .then(a =>{
         localStorage.setItem('type',"partner");
         localStorage.setItem('user',JSON.stringify(a.data));
-        window.location.reload();
+        // window.location.reload();
       }
       );
 

@@ -44,7 +44,7 @@ class PartnerApplyingMembersOnProject extends Component {
   }
 
   async componentDidMount(){
-    await axios(`${server}/api/partners/${this.props.partner._id}/myProjects/${this.props.project._id}/applyingMembers`)
+    await axios(`/api/partners/${this.props.partner._id}/myProjects/${this.props.project._id}/applyingMembers`)
     .then(res=>{
       if(res.status===200)
         return res.data

@@ -47,8 +47,8 @@ class SimpleCard extends React.Component {
 
   }
   componentDidMount(){
-    // console.log(`${server}/api/events/${}`)
-    Axios.get(`${server}/api/events/${this.state.eventId}`)
+    // console.log(`/api/events/${}`)
+    Axios.get(`/api/events/${this.state.eventId}`)
       .then(res => res.data)
       .then(event =>
         localStorage.setItem('event',JSON.stringify(event.data))

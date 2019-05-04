@@ -69,7 +69,7 @@ class EventRequest extends Component{
         }
     }
     componentDidMount(){
-        fetch(`${server}/api/consultancyagency/${this.state.body.requestorId}`)
+        fetch(`/api/consultancyagency/${this.state.body.requestorId}`)
     .then(res=>{return res.json()}).then(
        result=>{
          if(result.error!==undefined){
@@ -87,7 +87,7 @@ class EventRequest extends Component{
        }
     )
     if(this.state.requestorName==null){
-    fetch(`${server}/api/partners/${this.state.body.requestorId}`)
+    fetch(`/api/partners/${this.state.body.requestorId}`)
     .then(res=>{return res.json()}).then(
        result=>{
         if(result.msg!==undefined){

@@ -28,7 +28,7 @@ class Profile extends React.Component{
             type: null
           })
           if(!this.state.flag){
-          await axios.get(`http://localhost:5000/api/members/${this.props.match.params.id}`)
+          await axios.get(`/api/members/${this.props.match.params.id}`)
           .then(res =>  res.data)
           .then(user =>{
             if(user.data){
@@ -41,7 +41,7 @@ class Profile extends React.Component{
         }
         if(!this.state.flag){
         await axios
-        .get(`http://localhost:5000/api/consultancyagency/${this.props.match.params.id}`)
+        .get(`/api/consultancyagency/${this.props.match.params.id}`)
         .then(res => {
           return res.data; 
           
@@ -55,7 +55,7 @@ class Profile extends React.Component{
           });
         }).catch();}
         if(!this.state.flag){
-          await axios.get(`http://localhost:5000/api/partners/${this.props.match.params.id}`)
+          await axios.get(`/api/partners/${this.props.match.params.id}`)
           .then(res => res.data)
           .then(user =>{if(user.data)
             this.setState({

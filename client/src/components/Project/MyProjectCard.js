@@ -78,7 +78,7 @@ class MyProjectCard extends Component {
   }
   componentDidMount() {
     axios
-      .get(`${server}/api/partners/${this.props.project.companyId}`)
+      .get(`/api/partners/${this.props.project.companyId}`)
       .then(res => {
         return res.data;
       })
@@ -94,7 +94,7 @@ class MyProjectCard extends Component {
       method: "DELETE"
     };
     fetch(
-      `${server}/api/partners/${
+      `/api/partners/${
         this.props.project.companyId
       }/deleteProject/${this.props.project._id}`,
       requestOptions

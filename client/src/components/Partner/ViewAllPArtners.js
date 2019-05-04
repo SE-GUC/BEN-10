@@ -15,10 +15,10 @@ class allPartners extends React.Component {
     };
   }
   componentDidMount() {
-    axios
-      .get(`${server}/api/partners/`)
+    fetch(`/api/partners/`)
       .then(res => {
-        return res.data;
+        console.log(res)
+        return res.json();
       })
       .then(a => this.setState({ partners: a.data, isLoaded: true }));
   }

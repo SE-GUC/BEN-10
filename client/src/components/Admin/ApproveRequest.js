@@ -42,7 +42,7 @@ class ApproveRequest extends Component{
         const requestOptions = {
             method: 'PUT'
           };
-          fetch(`${server}/api/admins/${this.props.admin_id}/EventRequest/${this.state.eid}/true` , requestOptions).then((response) => {
+          fetch(`/api/admins/${this.props.admin_id}/EventRequest/${this.state.eid}/true` , requestOptions).then((response) => {
             return response.json();
           }).then((result) => {
             console.log(result)

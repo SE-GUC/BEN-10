@@ -16,7 +16,7 @@ class allMembers extends React.Component {
   }
   componentDidMount() {
     axios
-      .get(`${server}/api/members/`)
+      .get(`/api/members/`)
       .then(res => {
         return res.data;
       })

@@ -46,7 +46,7 @@ class App extends Component {
   };
   asPartner = async() => {
     await axios
-      .get(`${server}/api/partners`)
+      .get(`/api/partners`)
       .then(res => {
         return res.data;
       })
@@ -62,7 +62,7 @@ class App extends Component {
 
   asMember = async () => {
     await axios
-      .get(`${server}/api/members`)
+      .get(`/api/members`)
       .then(res => {
         return res.data;
       })
@@ -80,7 +80,7 @@ class App extends Component {
 
   asAdmin = async () => {
     await axios
-      .get(`${server}/api/admins`)
+      .get(`/api/admins`)
       .then(res => {
         return res.data;
       })
@@ -97,7 +97,7 @@ class App extends Component {
 
   asCA = async () => {
     await axios
-      .get(`${server}/api/consultancyagency`)
+      .get(`/api/consultancyagency`)
       .then(res => {
         return res.data;
       })

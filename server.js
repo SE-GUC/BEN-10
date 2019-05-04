@@ -34,8 +34,8 @@ app.use(function(req, res, next) {
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 
-  app.use("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
   });
 }
 // DB Config
@@ -64,18 +64,14 @@ app.use(cors());
 app.get("/", (req, res) => res.send(`<h1>Lirten Hub </h1>`));
 
 // Direct to Route Handlers
+app.use("/api/notifications", notification);
 app.use("/api/eventrequests", eventrequests);
 app.use("/api/projects", projects);
 app.use("/api/admins", admins);
 app.use("/api/events", require("./routes/api/events"));
 app.use("/api/partners", partners);
 app.use("/api/members", member);
-
-app.use("/api/projects", projects);
-app.use("/api/admins", admins);
 app.use("/api/orientationinvitations", orientationinvitations);
-app.use("/api/partners", partners);
-
 app.use("/api/applications", applications);
 app.use("/api/consultancyagency", consultancyagencys);
 // app.use(

@@ -37,7 +37,7 @@ export default class EditableView extends React.Component {
     componentDidMount=async ()=>{
        
             await  axios
-            .get(`${server}/api/members/${this.state.memberID}`)
+            .get(`/api/members/${this.state.memberID}`)
             .then(res => {
                 
                 return  res.data;

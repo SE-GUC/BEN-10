@@ -215,7 +215,7 @@ export default class SignUp extends Component {
               headers: { "Content-Type": "application/json" }
              
             };
-            await fetch(`${server}/signUp` , requestOptions).then((response) => {
+            await fetch(`/signUp` , requestOptions).then((response) => {
               return response.json();
             }).then((result) => {
               console.log(result.status)
@@ -261,7 +261,7 @@ export default class SignUp extends Component {
              
             };
             console.log("fetch")
-           await fetch(`${server}/signUp` , {
+           await fetch(`/signUp` , {
             method: 'POST',
             body: JSON.stringify(body),
             headers: { "Content-Type": "application/json" }

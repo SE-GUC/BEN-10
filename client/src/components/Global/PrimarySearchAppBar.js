@@ -137,7 +137,7 @@ class PrimarySearchAppBar extends React.Component {
     if(this.state.type==="member"){
       await axios
       .get(
-        `${server}/api/${this.state.type}s/${this.state.id}/notifications`
+        `/api/${this.state.type}s/${this.state.id}/notifications`
       )
       .then(res => {
         return res.data;
@@ -217,7 +217,7 @@ class PrimarySearchAppBar extends React.Component {
   logoutClicked = async () =>{
     this.setState({logout:true})
     const token = localStorage.getItem('token')
-    await fetch(`${server}/logout`, {
+    await fetch(`/logout`, {
       method: "put",
 
 

@@ -62,7 +62,7 @@ class booker extends React.Component{
 
 
 
-            Axios.get(`${server}/api/members/${i}`)
+            Axios.get(`/api/members/${i}`)
             .then(res => res.data)
             .then(p =>
                 { 

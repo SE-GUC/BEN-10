@@ -23,7 +23,7 @@ class MyProjects extends Component {
 }
   async componentDidMount(){
     if(this.props.type === "partner"){
-    await axios.get(`${server}/api/partners/${this.state.partner_id}/myProjects`)
+    await axios.get(`/api/partners/${this.state.partner_id}/myProjects`)
     .then(res => {
       return res.data; 
     })
@@ -31,7 +31,7 @@ class MyProjects extends Component {
       this.setState({projects:projects.data})
   })}
   if(this.props.type === "consultancyagency"){
-    await axios.get(`${server}/api/consultancyagency/${this.props.user._id}/myProjects`)
+    await axios.get(`/api/consultancyagency/${this.props.user._id}/myProjects`)
     .then(res => {
       return res.data; 
     })
@@ -39,7 +39,7 @@ class MyProjects extends Component {
       this.setState({projects:projects.data})
   })}
   if(this.props.type === "admin"){
-    await axios.get(`${server}/api/projects/`)
+    await axios.get(`/api/projects/`)
     .then(res => {
       return res.data; 
     })
@@ -47,7 +47,7 @@ class MyProjects extends Component {
       this.setState({projects:projects.data})
   })}
   if(this.props.type === "member"){
-    await axios.get(`${server}/api/members/${this.props.user._id}/myProjects`)
+    await axios.get(`/api/members/${this.props.user._id}/myProjects`)
     .then(res => {
       return res.data; 
     })

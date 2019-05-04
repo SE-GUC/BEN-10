@@ -16,7 +16,7 @@ class PartnerMyProjects extends Component {
     }
   }
   componentDidMount(){
-    fetch(`${server}/api/partners/${this.state.partnerId}/myProjects`).then(res=>res.json())
+    fetch(`/api/partners/${this.state.partnerId}/myProjects`).then(res=>res.json())
     .then(projects=>this.setState({Project:projects.data}))
       
   }

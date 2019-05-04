@@ -91,7 +91,7 @@ class ApproveFinalWork extends React.Component {
     if (this.state.type === "consultancyagency") {
       axios
         .put(
-          `${server}/api/consultancyagency/${
+          `/api/consultancyagency/${
             this.state.approvingID
           }/decide/${this.state.pID}/approve`
         )
@@ -119,7 +119,7 @@ class ApproveFinalWork extends React.Component {
       if (this.state.type === "partner") {
         axios
           .put(
-            `${server}/api/partners/${
+            `/api/partners/${
               this.state.approvingID
             }/myprojects/${this.state.pID}/finalreview/approve`
           )
@@ -151,7 +151,7 @@ class ApproveFinalWork extends React.Component {
     if (this.state.type === "consultancyagency") {
       axios
         .put(
-          `${server}/api/consultancyagency/${
+          `/api/consultancyagency/${
             this.state.approvingID
           }/decide/${this.state.pID}/disapprove`
         )
@@ -179,7 +179,7 @@ class ApproveFinalWork extends React.Component {
       if (this.state.type === "partner") {
         axios
           .put(
-            `${server}/api/partners/${
+            `/api/partners/${
               this.state.approvingID
             }/myprojects/${this.state.pID}/finalreview/decline`
           )
