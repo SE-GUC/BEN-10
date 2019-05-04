@@ -16,7 +16,7 @@ import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/
 import green from '@material-ui/core/colors/green';
 const server = require("../../config");
 const dev = process.env.NODE_ENV !== 'production';
-const red = dev ? 'http://localhost:3000' : 'https://lirtenhub.herokuapp.com';
+const red = dev ? 'http://localhost:3000' : 'https://lirtenben.herokuapp.com';
 const styles = theme => ({
   root: {
     display: 'flex',
