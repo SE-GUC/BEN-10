@@ -10,6 +10,7 @@
     "bootstrap": "^4.3.1",
     "card": "^2.4.0",
     "cors": "^2.8.5",
+    "draft-js": "^0.10.5",
     "form": "^0.2.4",
     "material-ui-rating": "^3.1.0",
     "mdbreact": "^4.13.0",
