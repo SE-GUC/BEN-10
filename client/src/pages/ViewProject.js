@@ -39,7 +39,7 @@ export default class ViewProject extends Component {
   }
   async componentDidMount() {
     await axios
-      .get(`https://lirtenben.herokuapp.comhttps://lirtenben.herokuapp.com/api/projects/${this.state.projectID}`)
+      .get(`https://lirtenben.herokuapp.com/api/projects/${this.state.projectID}`)
       .then(res => {
         return res.data;
       })

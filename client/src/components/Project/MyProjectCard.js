@@ -79,7 +79,7 @@ class MyProjectCard extends Component {
   }
   componentDidMount() {
     axios
-      .get(`https://lirtenben.herokuapp.comhttps://lirtenben.herokuapp.com/api/partners/${this.props.project.companyId}`)
+      .get(`https://lirtenben.herokuapp.com/api/partners/${this.props.project.companyId}`)
       .then(res => {
         return res.data;
       })
