@@ -34,7 +34,6 @@ class EachPartner extends React.Component {
   }
   viewProfile() {
     this.setState({ show: true });
-    console.log("hello");
   }
   render() {
     const partner = this.props.partners;

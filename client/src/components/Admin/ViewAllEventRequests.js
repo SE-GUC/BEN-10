@@ -15,7 +15,11 @@ export default class ViewAllEventRequests extends Component {
     };
   }
   componentDidMount() {
-    fetch(`https://lirtenben.herokuapp.com/api/admins/${this.state.id}/eventRequests`)
+    fetch(`https://lirtenben.herokuapp.com/api/admins/${this.state.id}/eventRequests`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
       .then(res => {
         return res.json()
       })

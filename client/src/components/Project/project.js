@@ -21,7 +21,10 @@ class Project extends Component {
   }
   DeletePage  = ()=>{
     const requestOptions = {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
     };
     fetch(`https://lirtenben.herokuapp.com/api/partners/${this.state.project.companyID}/deleteProject/${this.state.project._id}` , requestOptions).then((response) => {
       return response.json();

@@ -32,7 +32,10 @@ class DisapproveRequest extends Component{
     }
     Disapprove = () =>{
         const requestOptions = {
-            method: 'PUT'
+            method: 'PUT',
+            headers: { "Content-Type": "application/json",
+            "Authorization": "bearer " + localStorage.getItem('token')
+           }
           };
           fetch(`https://lirtenben.herokuapp.com/api/admins/${this.props.admin_id}/EventRequest/${this.props.eid}/false` , requestOptions).then((response) => {
             return response.json();

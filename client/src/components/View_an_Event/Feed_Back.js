@@ -46,7 +46,11 @@ class feedBackSending extends React.Component {
     if(this.state.type==="partner"){
       await axios
       .post(
-        `https://lirtenben.herokuapp.com/api/partners/${this.state.ownerId}/rating/${this.state.eventId}`
+        `https://lirtenben.herokuapp.com/api/partners/${this.state.ownerId}/rating/${this.state.eventId}`,{
+          headers: { "Content-Type": "application/json",
+          "Authorization": "bearer " + localStorage.getItem('token')
+         }
+        }
       )
       .then(res => {
         console.log(res);
@@ -62,7 +66,11 @@ class feedBackSending extends React.Component {
         if(this.state.type==="consultancyagency"){
           await axios
           .post(
-            `https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.ownerId}/rating/${this.state.eventId}`
+            `https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.ownerId}/rating/${this.state.eventId}`,{
+              headers: { "Content-Type": "application/json",
+              "Authorization": "bearer " + localStorage.getItem('token')
+             }
+            }
           )
           .then(res => {
             console.log(res);
@@ -80,7 +88,11 @@ class feedBackSending extends React.Component {
             console.log("here");
           await axios
           .post(
-            `https://lirtenben.herokuapp.com/api/admins/${this.state.ownerId}/events/${this.state.eventId}/sendFeedBackForm`
+            `https://lirtenben.herokuapp.com/api/admins/${this.state.ownerId}/events/${this.state.eventId}/sendFeedBackForm`,{
+              headers: { "Content-Type": "application/json",
+              "Authorization": "bearer " + localStorage.getItem('token')
+             }
+            }
           )
           .then(res => {
             console.log(res);

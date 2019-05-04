@@ -151,10 +151,16 @@ class bookEvent extends React.Component {
     
   };
   async sendClicked() {
+    console.log("its clicked")
+    console.log("its="+ "bearer " + localStorage.getItem('token'))
     if(this.state.type==="member"){
       await axios
       .put(
-        `https://lirtenben.herokuapp.com/api/members/${this.state.member._id}/bookEvent/${this.state.eventId}`
+        `https://lirtenben.herokuapp.com/api/members/${this.state.member._id}/bookEvent/${this.state.eventId}`,{},{
+          headers: { "Content-Type": "application/json",
+          "Authorization": "bearer " + localStorage.getItem('token')
+         }
+        }
       )
       .then(res => {
         console.log(res);
@@ -191,8 +197,6 @@ class bookEvent extends React.Component {
   }
 
   async componentDidMount() {
-    console.log("hhhhhhhhhhhhhhhhhhhhhh")
-    console.log(this.state.type)
     if(this.state.type==='member'){
       this.setState({show:true})
     }

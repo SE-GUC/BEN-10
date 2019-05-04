@@ -15,7 +15,11 @@ class MyEvents extends Component {
     }
   }
   componentDidMount(){
-    fetch(`https://lirtenben.herokuapp.com/api/partners/${this.state.partnerId}/ShowMyEvents`).then(res=>res.json())
+    fetch(`https://lirtenben.herokuapp.com/api/partners/${this.state.partnerId}/ShowMyEvents`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    }).then(res=>res.json())
     .then(events=>this.setState({Event:events.data}))
     
   }

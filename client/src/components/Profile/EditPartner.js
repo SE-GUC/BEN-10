@@ -97,14 +97,22 @@ onUpdate =async()=>{
     // projects:this.state.projects,
     // partners:this.state.partners
   }
-  await axios.put(`https://lirtenben.herokuapp.com/api/partners/${this.props.partner._id}`,body)
+  await axios.put(`https://lirtenben.herokuapp.com/api/partners/${this.props.partner._id}`,body,{
+    headers: { "Content-Type": "application/json",
+    "Authorization": "bearer " + localStorage.getItem('token')
+   }
+  })
   .then(res=>{ 
     console.log(res.status);
    return res.data
 })
 .then(json => this.setState({project : json}))
 await axios
-      .get(`https://lirtenben.herokuapp.com/api/partners/${this.props.partner._id}`)
+      .get(`https://lirtenben.herokuapp.com/api/partners/${this.props.partner._id}`,{
+        headers: { "Content-Type": "application/json",
+        "Authorization": "bearer " + localStorage.getItem('token')
+       }
+      })
       .then(res => {
         return res.data;
       })

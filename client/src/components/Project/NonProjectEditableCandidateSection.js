@@ -37,10 +37,15 @@ export default class EditableView extends React.Component {
     componentDidMount=async ()=>{
         if(this.state.memberID){
        
-            await  axios
-            .get(`https://lirtenben.herokuapp.com/api/members/${this.state.memberID}`)
+            if(this.state.memberID){
+                await  axios
+            .get(`https://lirtenben.herokuapp.com/api/members/${this.state.memberID}`,{
+                headers: { "Content-Type": "application/json",
+                "Authorization": "bearer " + localStorage.getItem('token')
+               }
+            })
             .then(res => {
-                
+                console.log("res is "+ JSON.stringify(res))
                 return  res.data;
                 
             })
@@ -53,9 +58,9 @@ export default class EditableView extends React.Component {
                     memberMobileNumber:a.data.MobileNumber,   
                 })
                 });  
-            }
-        
-
+                
+            }        
+        }
     }
 
     render(){

@@ -42,7 +42,11 @@ class ApplyingMembersOnProject extends Component {
   }
 
   async componentDidMount(){
-    await axios(`https://lirtenben.herokuapp.com/api/admins/${this.props.admin._id}/myProjects/${this.props.project._id}/applyingMembers`)
+    await axios(`https://lirtenben.herokuapp.com/api/admins/${this.props.admin._id}/myProjects/${this.props.project._id}/applyingMembers`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
     .then(res=>{
       if(res.status===200)
         return res.data

@@ -137,7 +137,11 @@ class PrimarySearchAppBar extends React.Component {
     if(this.state.type==="member"){
       await axios
       .get(
-        `https://lirtenben.herokuapp.com/api/${this.state.type}s/${this.state.id}/notifications`
+        `https://lirtenben.herokuapp.com/api/${this.state.type}s/${this.state.id}/notifications`,{
+          headers: { "Content-Type": "application/json",
+          "Authorization": "bearer " + localStorage.getItem('token')
+         }
+        }
       )
       .then(res => {
         return res.data;
@@ -150,9 +154,7 @@ class PrimarySearchAppBar extends React.Component {
       var newNotifications = (this.state.notifications!=null)?(this.state.notifications.filter(Notification => (Notification.seen === false))):""
       this.setState({numberOfNotifications:newNotifications.length})
     }
-    console.log("they are : "+ this.state.value + " other  "+ localStorage.getItem('nav'))
     if(this.state.value !==parseInt(localStorage.getItem('nav'))){
-      console.log('in')
       this.setState({value:parseInt(localStorage.getItem('nav'))})
     }
   }
@@ -189,6 +191,7 @@ class PrimarySearchAppBar extends React.Component {
   handleMenuClose = () => {
     this.setState({ anchorEl: null,anchorEl2: null });
     this.handleMobileMenuClose();
+    window.location.reload();
   };
 
   handleMobileMenuOpen = event => {
@@ -202,7 +205,6 @@ class PrimarySearchAppBar extends React.Component {
   handleChange = (event,value) => {
     if(this.state.value!==value){
     this.setState({ value });
-    console.log("handle change: "+ value)
     localStorage.setItem('nav',value)
     if(value===1){
       this.setState({redirectProjects:true})
@@ -217,8 +219,9 @@ class PrimarySearchAppBar extends React.Component {
   logoutClicked = async () =>{
     this.setState({logout:true})
     const token = localStorage.getItem('token')
-    await fetch(`/logout`, {
+    await fetch(`https://lirtenben.herokuapp.com/logout`, {
       method: "put",
+      
 
 
       headers: {
@@ -227,6 +230,7 @@ class PrimarySearchAppBar extends React.Component {
         Authorization: "bearer " + token
       }
     })
+    localStorage.removeItem('token')
   }
 
   render() {
@@ -395,7 +399,6 @@ class PrimarySearchAppBar extends React.Component {
         
       }
     }else{
-      console.log("hai bbe boy")
       // return <SearchPage searchWord={this.state.searchWord} />
       localStorage.setItem('search',this.state.searchWord);
       return <Redirect to={{ pathname:"/Search" ,

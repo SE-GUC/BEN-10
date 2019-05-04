@@ -134,7 +134,7 @@ router.put('/:id1/Myprojects/:id2/submit/:link',async(req,res)=>{
       await fetch(`${server}/api/projects/${project_id}`, {
         method: "PUT",
         body: JSON.stringify(body),
-        headers: { "Content-Type": "application/json" }
+        headers: req.headers
       })
         .then(res => {
           console.log(res)
@@ -176,7 +176,7 @@ router.get('/:id/task_orientation',async(req,res)=>{
       var error = true;
     await fetch(`${server}/api/orientationinvitations`, {
       method: "get",
-      headers: { "Content-Type": "application/json" }
+      headers: req.headers
     })
       .then(res => {
         if (res.status === 200) {
@@ -218,7 +218,7 @@ router.get("/:id/notifications", async (req, res) => {
     var error = true;
     await fetch(`${server}/api/notifications`, {
       method: "get",
-      headers: { "Content-Type": "application/json" }
+      headers:req.headers
     })
       .then(res => {
         if (res.status === 200) {
@@ -244,6 +244,7 @@ router.get("/:id/notifications", async (req, res) => {
 
 // i want to be able to apply for a task or a project
 router.post("/:id1/projects/:id2/apply", async (req, res) => {
+  console.log("@1")
   const project_id = req.params.id2;
   const member_id = req.params.id1;
   if (
@@ -278,7 +279,7 @@ router.post("/:id1/projects/:id2/apply", async (req, res) => {
     await fetch(`${server}/api/applications`, {
       method: "post",
       body: JSON.stringify(application),
-      headers: { "Content-Type": "application/json" }
+      headers: req.headers
     })
       .then(res => res.json())
       .then(json => res.json(json))
@@ -311,7 +312,7 @@ router.put("/:id1/events/:id2", async (req, res) => {
     if (mem && event) {
       const events = mem.events;
       events.push(req.params.id2);
-      const j = await postevent(req.params.id1, events);
+      const j = await postevent(req.params.id1, events,req.headers);
       res.status(200).send(j);
     } else return res.status(404).send({ error: "invalid inputs" });
   } else {
@@ -325,16 +326,18 @@ router.put("/:id1/events/:id2", async (req, res) => {
 router.get("/:id/getProject", async (req, res) => {
   const id = req.params.id;
   if (ObjectId.isValid(id)) {
-    const j = await getProjects(id);
+    const j = await getProjects(id,req.headers);
     res.json({ data: j });
   } else {
     return res.status(404).send({ error: "ID NOT FOUND" });
   }
 });
 
-async function getProjects() {
+async function getProjects(id,headers) {
   var result = [];
-  await fetch(`${server}/api/projects`)
+  await fetch(`${server}/api/projects`,{
+    headers
+  })
     .then(res => res.json())
     .then(json => {
       const projects = json.data;
@@ -350,7 +353,7 @@ async function getProjects() {
 router.get("/:id/getEvent", async (req, res) => {
   const id = req.params.id;
   if (ObjectId.isValid(id)) {
-    const j = await getEvents(id);
+    const j = await getEvents(id,req.headers);
     const mye = j.filter(m=>!( m.bookedMembers.includes(id)))
     res.json({ data: mye });
   } else {
@@ -358,9 +361,9 @@ router.get("/:id/getEvent", async (req, res) => {
   }
 });
 
-async function getEvents() {
+async function getEvents(id,headers) {
   var result = [];
-  await fetch(`${server}/api/events`)
+  await fetch(`${server}/api/events`,{headers})
     .then(res => res.json())
     .then(json => {
       const events = json.data;
@@ -381,7 +384,7 @@ async function getEvents() {
 }
 
 //4.9 --As a candidate I want that the events I attended be added on my profile.
-async function postevent(cid, events) {
+async function postevent(cid, events,headers) {
   var error = true;
   events = events.filter(e =>e.bookedMembers.includes(cid));
   const body = { events: events };
@@ -389,7 +392,7 @@ async function postevent(cid, events) {
   await fetch(`${server}/api/members/${cid}`, {
     method: "put",
     body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" }
+    headers
   })
     .then(res => {
       if (res.status === 200) {
@@ -464,6 +467,7 @@ async function getAvailableProjects(id) {
 
 //4.8//As a candidate I want to book a place in an event (based on the event’s type).
 router.put("/:id1/bookEvent/:id2", async (req, res) => {
+  console.log("@11")
   const canId = req.params.id1;
   const eventId = req.params.id2;
   if (ObjectId.isValid(canId) && ObjectId.isValid(eventId)) {
@@ -477,7 +481,8 @@ router.put("/:id1/bookEvent/:id2", async (req, res) => {
       if (allowed === true&&event.remainingPlace!=0) {
         const members = event.bookedMembers;
         members.push(canId);
-        const j = await bookEvent(eventId, members,event.remainingPlace-1);
+        console.log("@2")
+        const j = await bookEvent(eventId, members,event.remainingPlace-1,req.headers);
         res.status(200).send(j);
       } else {
         res.send({ msg: "You can't book this event" });
@@ -488,14 +493,16 @@ router.put("/:id1/bookEvent/:id2", async (req, res) => {
   }
 });
 
-async function bookEvent(eid, members,remainingPlace) {
+async function bookEvent(eid, members,remainingPlace,headers) {
+  console.log("@3")
   var error = true;
   const body = { bookedMembers: members,remainingPlace };
   var j;
+  console.log(JSON.stringify(headers))
   await fetch(`${server}/api/events/${eid}`, {
     method: "put",
     body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" }
+    headers
   })
     .then(res => {
       if (res.status === 200) {
@@ -522,7 +529,7 @@ router.get("/:id/myProjects", async (req, res) => {
       var error = true;
       await fetch(`${server}/api/projects`, {
         method: "get",
-        headers: { "Content-Type": "application/json" }
+        headers: req.headers
       })
         .then(res => {
           if (res.status === 200) {

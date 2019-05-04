@@ -45,7 +45,11 @@ class PartnerApplyingCAsCard extends Component {
   }
 
   async componentDidMount(){
-    await axios(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.ID}/`)
+    await axios(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.ID}/`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
     .then(res=>{
       if(res.status===200)
         return res.data
