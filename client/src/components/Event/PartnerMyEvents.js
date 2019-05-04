@@ -21,7 +21,7 @@ class MyEvents extends Component {
   }
   render() {
     console.log(this.state.Event===null)
-    if(this.state.Event===null||typeof this.state.Event==="Undefined"||this.state.Event.length===0){
+    if(this.state.Event===null||typeof this.state.Event==="Undefined"){
         return (
             <div className="App">
             <LinearProgress/>

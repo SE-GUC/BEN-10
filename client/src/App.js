@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route,Switch } from "react-router-dom";
 import StrangeCard from "./components/Global/StrangerProfileCard";
 import Profile from "./pages/Profile";
 import ViewAllPartners from "./components/Partner/ViewAllPArtners";
@@ -19,6 +19,7 @@ import ForgotPassword from "./components/LogIn/forgotPassword";
 import style from "./pages/home.css";
 import Footer from "./components/Global/Footer";
 import PreSign from "./components/PreSign/PreSign";
+import NotFound from "./pages/NotFound"
 import About from "./pages/About"
 //import ViewAndAssign from "./components/ViewApplyingMemAndAssign";
 
@@ -119,6 +120,7 @@ class App extends Component {
     return (
       <div>
         <BrowserRouter>
+        <Switch>
           <Route
             exact
             path="/Events/:id"
@@ -137,7 +139,7 @@ class App extends Component {
           />
 
           <Route
-            exact
+            exact 
             path="/Home"
             render={props => (
               <Home {...props} type={this.state.type} user={this.state.user} />
@@ -254,17 +256,27 @@ class App extends Component {
 
           <Route exact path="/About" render={props => <About />} />
 
-          {/* <Route
+          <Route
           
-          path="/l"
-          render={props => (
-            <NotFound />
-          )}
-        /> */}
+          path="*"
+          component={NotFound}
+        />
+        </Switch>
         </BrowserRouter>
-        <div style={{ backgroundColor: "white" }}>
-          <footer class="page-footer font-small special-color-dark pt-4">
-            <div class="footer-copyright text-center py-3">
+        <div >
+          <footer style={{height:50, // Replace with the height your footer should be
+    width: "100%", // Don't change
+    backgroundImage: "none",
+    backgroundRepeat: "repeat",
+    backgroundAttachment: "scroll",
+    backgroundPosition: "0% 0%",
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    border:"2px solid white",
+    backgroundColor:"white"
+  }}>
+            <div style={{textAlign:"center"}}>
               © 2019 Copyright: Lirten CO.
               <br/>
               <a href="http://localhost:3000/about">About</a>
