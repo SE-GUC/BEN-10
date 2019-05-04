@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const fetch = require("node-fetch");
 const server = require("./config/config");
 const jwt = require("jsonwebtoken");
-const Member = require("./models/Member");
+const Member = require("./models/member");
 const nodemailer = require("nodemailer");
 // Require Router Handlers
 
@@ -20,7 +20,7 @@ const notification = require("./routes/api/notifications");
 var blackList = []; //to be not deleted
 const cors = require("cors");
 const app = express();
-
+const path = require('path')
 app.use(cors());
 
 app.use(function(req, res, next) {

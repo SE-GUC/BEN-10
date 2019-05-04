@@ -48,6 +48,11 @@ export default class ViewProject extends Component {
       });
   }
 
+  caapply = async() =>{
+    await axios.put(`${server}/api/consultancyagency/${this.state.user._id}/caApplyProject/${this.state.projectID}`)
+    .then(res=>console.log(res))
+  }
+
   handleChange = name => event => {
     event.preventDefault();
     this.setState({
@@ -143,7 +148,11 @@ export default class ViewProject extends Component {
                 : 
                   ""
                 }
-                
+                {
+                  (this.state.type==="consultancyagency"&&this.state.project.lifeCycle==="Waiting for consultancy Agency")?
+                  <Button onClick={this.caapply}>Apply</Button>:""
+
+                }
                 {(this.state.type==="admin"&&this.state.project.lifeCycle==="Negotiation")?
                 <SendFinalDraft
                 class="js-selected-navigation-item selected menu-item"

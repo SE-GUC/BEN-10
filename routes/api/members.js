@@ -7,7 +7,7 @@ const server = require("../../config/config");
 const Application = require("../../models/Application");
 
 const Event = require("../../models/Event");
-const member = require("../../models/Member");
+const member = require("../../models/member");
 const validator = require("../../validations/memberValidations");
 const notificationValidator = require("../../validations/notificationsValidation");
 const project = require("../../models/Project");

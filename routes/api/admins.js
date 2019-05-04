@@ -7,7 +7,7 @@ const fetch = require("node-fetch");
 const server = require("../../config/config");
 const CAs = require("../../models/ConsultancyAgency");
 const Admin = require("../../models/Admin");
-const member = require("../../models/Member");
+const member = require("../../models/member");
 const Event = require("../../models/Event");
 const Application = require("../../models/Application");
 const Project = require("../../models/Project");
@@ -459,7 +459,8 @@ async function getApplyingMembers(pid) {
 //-----------
 
 // 3.4 as an admin i want to assign one of the candidates who applied for the task/project
-router.use("/:aid/assign/:pid/to/:mid", async (req, res) => {
+router.put("/:aid/assign/:pid/to/:mid", async (req, res) => {
+  console.log("alaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
   try {
     if (
       ObjectId.isValid(req.params.aid) &&
@@ -485,12 +486,20 @@ router.use("/:aid/assign/:pid/to/:mid", async (req, res) => {
           break;
         }
       }
+      console.log("yessssssssssss")
+
       if (found) {
         if(project.memberID == null){
+          console.log("yessssssssssss")
           const url = `${server}/api/projects/${req.params.pid}`;
+          const body={
+            memberID: req.params.mid,
+            lifeCycle: "In Progress"
+          }
+          console.log(body)
           fetch(url, {
             method: "put",
-            body: JSON.stringify({ memberID: req.params.mid, lifeCycle: "In Progress" }),
+            body: JSON.stringify(body),
             headers: { "Content-Type": "application/json" }
           })
             .then(res => {

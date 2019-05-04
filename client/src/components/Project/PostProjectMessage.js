@@ -21,10 +21,13 @@ class PostProjectMessage extends React.Component {
 
   submitRequest = () => {
     const body ={
-        description: this.props.description,
-        category: this.props.category,
-        wantConsultancy: this.props.wantConsultancy
+      name: this.props.name,
+      description: this.props.description,
+      category: this.props.category,
+      wantConsultancy: this.props.wantConsultancy
     }
+    console.log("consalrnlsfdm")
+    console.log(this.props.wantConsultancy)
 
     axios.post(`${server}/api/partners/${this.props.companyID}/addProject/`, body)
     .then(function (response) {

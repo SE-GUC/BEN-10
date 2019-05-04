@@ -89,7 +89,17 @@ onUpdate =async()=>{
    return res.data
 })
 .then(json => this.setState({project : json}))
-// window.location.reload();
+await axios
+      .get(`${server}/api/admins/${this.props.admin._id}`)
+      .then(res => {
+        return res.data;
+      })
+      .then(a =>{
+        localStorage.setItem('type',"admin");
+        localStorage.setItem('user',JSON.stringify(a.data));
+        window.location.reload();
+      }
+      );
 
 
 }

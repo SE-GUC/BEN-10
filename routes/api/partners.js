@@ -7,7 +7,7 @@ const event = require("../../models/Event");
 const Partner = require("../../models/Partner");
 const fetch = require("node-fetch");
 const server = require("../../config/config");
-const Member = require("../../models/Member");
+const Member = require("../../models/member");
 const Event = require("../../models/Event");
 const validator = require("../../validations/partnerValidations");
 const ObjectId = require("mongodb").ObjectID;
@@ -252,7 +252,7 @@ router.use("/:cid/assign/:pid/to/:mid", async (req, res) => {
               const url = `${server}/api/projects/${req.params.pid}`;
               fetch(url, {
                 method: "put",
-                body: JSON.stringify({ memberID: req.params.mid, lifeCycle: "Negotiation" }),
+                body: JSON.stringify({ memberID: req.params.mid, lifeCycle: "In Progress" }),
                 headers: { "Content-Type": "application/json" }
               })
                 .then(res => {
@@ -291,7 +291,9 @@ router.post("/:id/addProject", async (req, res) => {
           const company_id = req.params.id;
           var life;
           var date = Date.now();
-          if (req.body.wantConsultancy == true) {
+          console.log("bbbbbbbbbbbbbbb")
+          console.log(req.body.wantConsultancy)
+          if (req.body.wantConsultancy) {
             life = "Waiting for consultancy Agency";
           } else {
             life = "Negotiation";
@@ -299,6 +301,7 @@ router.post("/:id/addProject", async (req, res) => {
           var result;
           var error = true;
           const Project = {
+            name:req.body.name,
             description: req.body.description,
             companyId: company_id,
             category: req.body.category,
@@ -950,12 +953,17 @@ router.use("/:id/cancelproject/:pid", async (req, res) => {
     const partner = await Partner.findById(req.params.id);
     const project = await Project.findById(req.params.pid);
     var result;
+    console.log(partner)
+    console.log(project)
+
     if (partner && project) {
       if (project.companyId == req.params.id) {
+        console.log("aaaaaaaa")
+
         if (
           project.lifeCycle == "Negotiation" ||
           project.lifeCycle == "Final Draft" ||
-          project.lifeCycle == "Waiting For Consultancy Agency"
+          project.lifeCycle == "Waiting for consultancy Agency"
         ) {
           var error = true;
           await fetch(`${server}/api/projects/${req.params.pid}`, {
