@@ -65,19 +65,11 @@ class ApplyingMembersOnProject extends Component {
     if( this.state.applyingMembers !== null){
     return (
       <div className={classes.root}>
-        <GridList cellHeight={180} className={classes.gridList}>
-          <GridListTile key="Subheader" cols={1} style={{ height: "auto" }}>
-            <ListSubheader component="div">
-            Applying Members On this Project
-            </ListSubheader>
-          </GridListTile>
+        
           
           {this.state.applyingMembers.map(i => (
-            <GridListTile key={i}>
               <ApplyingMemberCard project={this.props.project} admin={this.props.admin} mem={i._id} />
-            </GridListTile>
           ))}
-        </GridList>
       </div>
     );
   } else {

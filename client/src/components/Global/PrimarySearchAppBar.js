@@ -397,8 +397,9 @@ class PrimarySearchAppBar extends React.Component {
     }else{
       console.log("hai bbe boy")
       // return <SearchPage searchWord={this.state.searchWord} />
+      localStorage.setItem('search',this.state.searchWord);
       return <Redirect to={{ pathname:"/Search" ,
-      state:{searchWord:this.state.searchWord}  }}/>
+       }}/>
   
       
   

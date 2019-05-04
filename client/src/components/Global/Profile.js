@@ -149,38 +149,38 @@ class Profile extends React.Component {
         <div class="paper">
         <Paper  >
         
-        <Typography class="text1" variant="h6"> SSN </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.SSN}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> SSN </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.SSN}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Birth Date </Typography> 
-         <Typography class="text2" component="p" >{new Date(this.state.user.birthDate).getFullYear()+"-"+new Date(this.state.user.birthDate).getMonth()+"-"+new Date(this.state.user.birthDate).getDate()}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Birth Date </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{new Date(this.state.user.birthDate).getFullYear()+"-"+new Date(this.state.user.birthDate).getMonth()+"-"+new Date(this.state.user.birthDate).getDate()}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Gender </Typography> 
-         <Typography class="text2" component="p" >{(this.state.user.gender)?"Female":"Male"}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Gender </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{(this.state.user.gender)?"Female":"Male"}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Nationality </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.nationality}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Nationality </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.nationality}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Marital Status </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.maritalStatus}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Marital Status </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.maritalStatus}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Driving License </Typography> 
-         <Typography class="text2" component="p" >{(this.state.user.drivingLicense)?"user have a driving license":"user can not drive"}<br></br></Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Driving License </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{(this.state.user.drivingLicense)?"user have a driving license":"user can not drive"}<br></br></Typography>
         </Paper>
      </div>
       </TabContainer>}
@@ -188,27 +188,27 @@ class Profile extends React.Component {
         <div class="paper">
         <Paper  >
         
-        <Typography class="text1" variant="h6"> Country </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.country}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Country </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.country}</Typography>
         </Paper>
         </div>
         
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> City </Typography> 
-         <Typography class="text2" component="p" >{(this.state.user.city)?"Female":"Male"}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> City </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{(this.state.user.city)?"Female":"Male"}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Area </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.area}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Area </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.area}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Postal Code </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.postalCode}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Postal Code </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.postalCode}</Typography>
         </Paper>
         </div>
         
@@ -219,26 +219,26 @@ class Profile extends React.Component {
       {this.state.value === 2 && <TabContainer>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Email </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.email}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Email </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.email}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Mobile Number </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.mobileNumber}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Mobile Number </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.mobileNumber}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Alternative Mobile Number </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.alternativeMobileNumber}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Alternative Mobile Number </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.alternativeMobileNumber}</Typography>
         </Paper>
         </div>
         {(this.state.type=="member")? <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Skills Set </Typography> 
-         <Typography class="text2" component="p" >{(this.state.user.skillSet.length>0)?this.state.user.skillSet.map(s=> s+" "):"None"}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Skills Set </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{(this.state.user.skillSet.length>0)?this.state.user.skillSet.map(s=> s+" "):"None"}</Typography>
         </Paper>
         </div> :""}
         
@@ -285,39 +285,39 @@ class Profile extends React.Component {
         <div class="paper">
         <Paper  >
         
-        <Typography class="text1" variant="h6"> About </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.about}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> About </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.about}</Typography>
         </Paper>
         </div>
         
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Phone Number </Typography> 
-         <Typography class="text2" component="p" >{(this.state.user.telephoneNumber)}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Phone Number </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{(this.state.user.telephoneNumber)}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Email </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.email}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Email </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.email}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Agency Location </Typography> 
-         <Typography class="text2" component="p" >{this.state.user.location}</Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Agency Location </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{this.state.user.location}</Typography>
         </Paper>
         </div>
         <div class="paper">
         <Paper >
-        <Typography class="text1" variant="h6"> Experience Years </Typography> 
-         <Typography class="text2" component="p" >{(this.state.user.yearsOfExperience)?"user have a driving license":"user can not drive"}<br></br></Typography>
+        <Typography class="text1" variant="h6" style={{fontSize:20}}> Experience Years </Typography> 
+         <Typography class="text2" component="p" style={{fontSize:18}}>{(this.state.user.yearsOfExperience)?"user have a driving license":"user can not drive"}<br></br></Typography>
         </Paper>
      </div>
      <div class="paper">
         <Paper  >
         
-        <Typography class="text1" variant="h6"> Rating </Typography> 
+        <Typography class="text1" variant="h6" style={{fontSize:20}}>  Rating </Typography> 
         <Rating
           onRate={() => console.log('onRate')}
           value={3}
@@ -347,7 +347,7 @@ class Profile extends React.Component {
         <div class="paper">
           <Paper>
           <Typography class="text2" component="p" >
-            <Typography class="text1" component="p">
+            <Typography class="text1" component="p" style={{fontSize:20}}>
             This Profile didn't upload any reports :(
             </Typography>
             </Typography>

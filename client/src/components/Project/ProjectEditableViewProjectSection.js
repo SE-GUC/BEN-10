@@ -135,7 +135,7 @@ export default class EditableView extends React.Component {
              <div id="ProjectAttributes">
              <br></br>
 
-<div class="headerArea"> <Typography variant="h4" gutterBottom>
+<div class="headerArea"> <Typography variant="h4" style={{color:"#283593",fontWeight:"bold"}} gutterBottom>
 Project Attributes
 </Typography>
               <div class="col-2 float-left"> 

@@ -14,14 +14,12 @@ const server = require("../../config");
 
 const styles = {
   block:{
-    
-
   },
   card: {
     minWidth: 475,
     maxWidth: 800,
-    display:"inline-block",
     marginBottom:5,
+    
     
   },
   Link:{

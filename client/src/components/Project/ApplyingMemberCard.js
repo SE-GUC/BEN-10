@@ -10,7 +10,9 @@ const server = require("../../config");
 
 const styles = theme => ({
   card: {
-    minWidth: 275,
+    minWidth: 400,
+    maxWidth:800,
+    display:"inline-block"
   },
   bullet: {
     display: 'inline-block',
@@ -69,18 +71,26 @@ class ApplyingMemberCard extends Component {
       <div>
         <Card className={classes.card}>
           <CardContent>
-            <Typography className={classes.title} color="textSecondary" gutterBottom>
-             name: {this.state.name}
+          <Typography  style={{fontSize:25,fontWeight:"bold",fontFamily:"Arial",fontVariant:"small-caps",textAlign:"center"}} color="textSecondary" gutterBottom>
+             name: 
             </Typography>
-            <Typography variant="h5" component="h2">
-            email: {this.state.email}
+            <Typography style={{fontSize:20,fontFamily:"Arial",textAlign:"center"}}>
+            {this.state.name}</Typography>
+            <Typography  style={{fontSize:25,fontWeight:"bold",fontFamily:"Arial",fontVariant:"small-caps",textAlign:"center"}} color="textSecondary" gutterBottom>
+             email: 
             </Typography>
-            <Typography className={classes.pos} color="textSecondary">
-            country: {this.state.country}
+            <Typography style={{fontSize:20,fontFamily:"Arial",textAlign:"center"}}>
+            {this.state.email}</Typography>
+            <Typography  style={{fontSize:25,fontWeight:"bold",fontFamily:"Arial",fontVariant:"small-caps",textAlign:"center"}} color="textSecondary" gutterBottom>
+            country:
             </Typography>
-            <Typography component="p">
-            set of skills: {this.state.skillSet}
+            <Typography style={{fontSize:20,fontFamily:"Arial",textAlign:"center"}}>
+            {this.state.country}</Typography>
+            <Typography  style={{fontSize:25,fontWeight:"bold",fontFamily:"Arial",fontVariant:"small-caps",textAlign:"center"}} color="textSecondary" gutterBottom>
+            set of skills:
             </Typography>
+            <Typography style={{fontSize:20,fontFamily:"Arial",textAlign:"center"}}>
+            {this.state.skillSet}</Typography>
             <ApplyingMemberButton project={this.props.project} admin={this.props.admin} mem={this.props.mem} />
         </CardContent>
         

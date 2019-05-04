@@ -76,9 +76,9 @@ export default class EditableView extends React.Component {
             <div class="mainContainer">    
                 <div id="ProjectAttributes">
                 <br></br>
-                    <div class="headerArea"> <Typography variant="h4" gutterBottom>
+                    <div class="headerArea"> <Typography variant="h4" style={{color:"#283593",fontWeight:"bold"}} gutterBottom>
                     Consultancy Agency Info
-      </Typography>
+                    </Typography>
                         <div class="col-2 float-left">
                             <Card style={{ height: 'auto' ,width:'25rem'}}>
                             <TextField
@@ -170,7 +170,7 @@ export default class EditableView extends React.Component {
                 <div id="ProjectAttributes">
                 <br></br>
 
-                    <div class="headerArea" > <Typography variant="h4" gutterBottom>
+                    <div class="headerArea" > <Typography variant="h4" style={{color:"#283593",fontWeight:"bold"}} gutterBottom>
                     Consultancy Agency Info
       </Typography>
                   <ApplyingCAsOnProject project={this.state.project} admin={this.state.user}></ApplyingCAsOnProject>
@@ -184,9 +184,10 @@ export default class EditableView extends React.Component {
                 <div id="ProjectAttributes">
                 <br></br>
 
-                    <div class="headerArea" > <Typography variant="h4" gutterBottom>
+                    <div class="headerArea" > 
+                    <Typography variant="h4" style={{color:"#283593",fontWeight:"bold"}} gutterBottom>
                     Consultancy Agency Info
-      </Typography>
+                    </Typography>
                   <PartnerApplyingCAsOnProject project={this.state.project} partner={this.state.user}></PartnerApplyingCAsOnProject>
                 </div>
                 </div></div>

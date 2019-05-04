@@ -23,6 +23,7 @@ const styles = {
     maxWidth: 800,
     display:"inline-block",
     marginBottom:5,
+    marginTop:10
     
   },
   Link:{

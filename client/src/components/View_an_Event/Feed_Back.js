@@ -22,6 +22,11 @@ const theme = createMuiTheme({
     },
   },
   typography: { useNextVariants: true },
+  button:{
+    backgroundColor:"#283593",
+    marginLeft:550,
+    color:"#fff"
+  }
 });
 
 class feedBackSending extends React.Component {
@@ -111,10 +116,11 @@ class feedBackSending extends React.Component {
 
   
   render() {
+    const { classes } = this.props;
     if (this.state.show) {
       return (
         <div>
-             <MuiThemeProvider theme={theme}> <Button onClick={()=>{this.sendClicked()}} variant="primary">
+             <MuiThemeProvider theme={theme}> <Button className={classes.button} onClick={()=>{this.sendClicked()}} variant="primary">
                 Send FeedBack
               </Button></MuiThemeProvider>
               

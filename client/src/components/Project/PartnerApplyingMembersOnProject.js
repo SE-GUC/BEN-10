@@ -67,18 +67,9 @@ class PartnerApplyingMembersOnProject extends Component {
     if( this.state.applyingMembers ){
     return (
       <div className={classes.root}>
-        <GridList cellHeight={180} className={classes.gridList}>
-          <GridListTile key="Subheader" cols={1} style={{ height: "auto" }}>
-            <ListSubheader component="div">Applying Members On this Project
-            </ListSubheader>
-          </GridListTile>
-          
           {this.state.applyingMembers.map(i => (
-            <GridListTile key={i}>
               <PartnerApplyingMemberCard project={this.props.project} partner={this.props.partner} mem={i._id} />
-            </GridListTile>
           ))}
-        </GridList>
         <SendTaskOrientation Id={this.props.partner._id} projectId={this.props.project._id}/>
 
       </div>

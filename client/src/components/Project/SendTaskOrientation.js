@@ -56,7 +56,7 @@ class SendTaskOrientation extends React.Component {
     const { vertical, horizontal, open } = this.state;
     return (
       <div>
-        <Button onClick={this.handleClick({ vertical: 'bottom', horizontal: 'left' })} color="secondary" variant="contained" className={this.props.className}>
+        <Button onClick={this.handleClick({ vertical: 'bottom', horizontal: 'left' })} style={{backgroundColor:"#283593",marginLeft:450}} variant="contained" className={this.props.className}>
         Send Task Orientation Invitation
         </Button>
         

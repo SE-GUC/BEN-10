@@ -61,7 +61,9 @@ class EventRequestMessage extends React.Component {
       <div>
         <Button style={{
         borderRadius: 35,
-        backgroundColor: "#9e9e9e"
+        backgroundColor: "#283593",
+        color:"#fff",
+        marginLeft:550
     }}onClick={this.handleClick({ vertical: 'bottom', horizontal: 'left' })} variant="contained" className={this.props.className}>
          <h style={{color:"#fff",fontWeight:"bold"}}> Submit Request</h>  
         </Button>

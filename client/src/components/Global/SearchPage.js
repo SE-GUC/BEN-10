@@ -72,7 +72,7 @@ class SearchPage extends Component{
     constructor(props){
         super(props);
         this.state={
-            searchWord:this.props.location.state.searchWord,
+            searchWord:localStorage.getItem('search'),
             type:localStorage.getItem('type'),
             value: 0,
             partner:null,
@@ -147,6 +147,7 @@ class SearchPage extends Component{
       };
     render(){
         const { classes } = this.props;
+        console.log(this.state.searchWord)
 
             return (
               <div>

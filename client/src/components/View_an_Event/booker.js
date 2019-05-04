@@ -98,6 +98,7 @@ readOnly: true,
 }}
 variant="outlined"
 />
+<br/>
 
 <TextField
 id="outlined-read-only-input"
@@ -110,7 +111,7 @@ readOnly: true,
 }}
 variant="outlined"
 />
-
+<br/>
 <TextField
 id="outlined-read-only-input"
 label="Gender"
@@ -124,6 +125,7 @@ readOnly: true,
 }}
 variant="outlined"
 />
+<br/>
 <Grid container spacing={16}>
           <Grid item xs={12} md={6}>
             <Typography variant="h6" className={classes.title}>
@@ -142,6 +144,7 @@ variant="outlined"
             </div>
           </Grid>
           </Grid>
+          <br/>
 
 <TextField
 id="outlined-read-only-input"
@@ -154,6 +157,7 @@ readOnly: true,
 }}
 variant="outlined"
 />
+<br/>
 
 <TextField
 id="outlined-read-only-input"

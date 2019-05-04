@@ -44,6 +44,7 @@ export default class EditableView extends React.Component {
         }    
     }
     componentDidMount=async ()=>{
+        if(this.state.memberID!=null){
        
             await  axios
             .get(`${server}/api/members/${this.state.memberID}`)
@@ -60,6 +61,7 @@ export default class EditableView extends React.Component {
                     memberMobileNumber:a.data.MobileNumber,   
                 })
                 });  
+            }
         
 
     }
@@ -71,7 +73,7 @@ export default class EditableView extends React.Component {
                 <div id="ProjectAttributes">
                 <br></br>
 
-                    <div class="headerArea"> <Typography variant="h4" gutterBottom>
+                    <div class="headerArea"> <Typography variant="h4" style={{color:"#283593",fontWeight:"bold"}} gutterBottom>
                     Member Info
       </Typography>
                         <div class="col-2 float-left">
@@ -139,7 +141,7 @@ export default class EditableView extends React.Component {
                     <div id="ProjectAttributes">
                     <br></br>
 
-                        <div class="headerArea" > <Typography variant="h4" gutterBottom>
+                        <div class="headerArea" > <Typography variant="h4" style={{color:"#283593",fontWeight:"bold"}} gutterBottom>
                     Member Info
       </Typography>
                       <PartnerApplyingMembersOnProject project={this.state.project} partner={this.state.user}/>
@@ -153,7 +155,7 @@ export default class EditableView extends React.Component {
                     <div id="ProjectAttributes">
                     <br></br>
 
-                        <div class="headerArea" > <Typography variant="h4" gutterBottom>
+                        <div class="headerArea" > <Typography variant="h4" style={{color:"#283593",fontWeight:"bold"}} gutterBottom>
                     Member Info
       </Typography>
                       <CAApplyingMembersOnProject project={this.state.project} ca={this.state.user}></CAApplyingMembersOnProject>
@@ -167,7 +169,7 @@ export default class EditableView extends React.Component {
                     <div id="ProjectAttributes">
                     <br></br>
 
-                        <div class="headerArea" > <Typography variant="h4" gutterBottom>
+                        <div class="headerArea" > <Typography variant="h4" style={{color:"#283593",fontWeight:"bold"}} gutterBottom>
                     Member Info
       </Typography>
                       <ApplyingMembersOnProject project={this.state.project} admin={this.state.user}></ApplyingMembersOnProject>

@@ -14,10 +14,11 @@ const styles = theme => ({
     width: '80%',
   },
   heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
+    fontSize: 16,
+    fontWeight: "bold",
     marginLeft:10,
-    color:"#9e9e9e",
+    color:"#212121",
+
   },
 });
 

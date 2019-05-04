@@ -105,6 +105,7 @@ class requestor extends React.Component{
               }}
               variant="outlined"
             />
+             <br/>
     
              <TextField
               id="outlined-read-only-input"
@@ -120,6 +121,7 @@ class requestor extends React.Component{
               }}
               variant="outlined"
             />
+             <br/>
             <TextField
               id="outlined-read-only-input"
               label="Experience Years"
@@ -131,7 +133,7 @@ class requestor extends React.Component{
               }}
               variant="outlined"
             />
-            
+             <br/>
            
     
             <TextField
@@ -145,7 +147,7 @@ class requestor extends React.Component{
               }}
               variant="outlined"
             />
-    
+     <br/>
             <TextField
               id="outlined-read-only-input"
               label="Mobile Number"
@@ -157,6 +159,7 @@ class requestor extends React.Component{
               }}
               variant="outlined"
             />
+             <br/>
             <Typography variant={"h6"} className={classes.title}>Rating</Typography>
             <Rating
           onRate={() => console.log('onRate')}

@@ -14,10 +14,10 @@ const styles = theme => ({
     width: '80%',
   },
   heading: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight:"bold",
     marginLeft:10,
-    color:"#616161",
+    color:"#212121",
     fontFamily:"Arial"
   },
 });

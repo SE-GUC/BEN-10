@@ -24,12 +24,12 @@ class Projects extends Component {
     this.state={
       user:JSON.parse(localStorage.getItem('user')),
       type:localStorage.getItem('type'),
-      MemAllProjects:false,
+      MemAllProjects:true,
       MemMyProjects:false,
       MemMyRec:false,
-      CAallProj:false,
+      CAallProj:true,
       CAmyProj:false,
-      PAllProj:false,
+      PAllProj:true,
       PSubmit:false,
       PMyProj:false
 
@@ -128,7 +128,7 @@ class Projects extends Component {
       return (
         <div className="App">
         <Nav value={1}/>
-        <div style={{width:"20%" ,height:"100vh",float:"left",border:"2px solid yellow"}}>
+        <div style={{width:"20%" ,height:"100vh",float:"left",border:"2px solid white"}}>
         <List component="nav" >
       <ListItem button onClick={this.handelClick1}>
         <ListItemText primary="All Projects" />
@@ -157,7 +157,7 @@ class Projects extends Component {
       return (
         <div className="App">
         <Nav value={1}/>
-        <div style={{backgroundColor:"red",width:"20%" ,height:"100vh",float:"left"}}>
+        <div style={{width:"20%" ,height:"100vh",float:"left"}}>
         
         <List component="nav" >
       <ListItem button onClick={this.handelClick4}>

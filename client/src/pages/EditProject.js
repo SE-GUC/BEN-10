@@ -125,24 +125,6 @@ export default class EditProject extends Component {
                       <MenuItem  onClick={this.viewSection1}>Project attributes</MenuItem>
                       <MenuItem  onClick={this.viewSection2}>Consultancy Agency</MenuItem>
                       <MenuItem  onClick={this.viewSection3}>Candidate</MenuItem>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
-                      <br></br>
                       <MenuItem class="js-selected-navigation-item selected menu-item" onClick={this.cancelProject}>Delete project</MenuItem>
                     </MenuList>
                 </Paper>

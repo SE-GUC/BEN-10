@@ -10,7 +10,9 @@ const server = require("../../config");
 
 const styles = theme => ({
   card: {
-    minWidth: 275,
+    minWidth: 400,
+    maxWidth:800,
+    display:"inline-block"
   },
   bullet: {
     display: 'inline-block',
@@ -69,18 +71,26 @@ class ApplyingCAsCard extends Component {
       <div>
         <Card className={classes.card}>
           <CardContent>
-            <Typography className={classes.title} color="textSecondary" gutterBottom>
-             name: {this.state.name}
+          <Typography  style={{fontSize:25,fontWeight:"bold",fontFamily:"Arial",fontVariant:"small-caps",textAlign:"center"}} color="textSecondary" gutterBottom>
+             name: 
             </Typography>
-            <Typography variant="h5" component="h2">
-             location: {this.state.location}
+            <Typography style={{fontSize:20,fontFamily:"Arial",textAlign:"center"}}>
+            {this.state.name}</Typography>
+            <Typography  style={{fontSize:25,fontWeight:"bold",fontFamily:"Arial",fontVariant:"small-caps",textAlign:"center"}} color="textSecondary" gutterBottom>
+             location: 
             </Typography>
-            <Typography className={classes.pos} color="textSecondary">
-            years of experience: {this.state.yearsOfExperience}
+            <Typography style={{fontSize:20,fontFamily:"Arial",textAlign:"center"}}>
+            {this.state.location}</Typography>
+            <Typography  style={{fontSize:25,fontWeight:"bold",fontFamily:"Arial",fontVariant:"small-caps",textAlign:"center"}} color="textSecondary" gutterBottom>
+            years of experience: 
             </Typography>
-            <Typography component="p">
-             about: {this.state.about}
+            <Typography style={{fontSize:20,fontFamily:"Arial",textAlign:"center"}}>
+            {this.state.yearsOfExperience}</Typography>
+            <Typography  style={{fontSize:25,fontWeight:"bold",fontFamily:"Arial",fontVariant:"small-caps",textAlign:"center"}} color="textSecondary" gutterBottom>
+             about: 
             </Typography>
+            <Typography style={{fontSize:20,fontFamily:"Arial",textAlign:"center"}}>
+            {this.state.about}</Typography>
             {console.log(this.props.project)}
             <ApplyingCAButton project={this.props.project} admin={this.props.admin} ca={this.props.ca} />
         </CardContent>

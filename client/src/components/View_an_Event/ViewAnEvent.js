@@ -21,7 +21,7 @@ class SimpleCard extends React.Component {
     super(props);
     this.state={
       showBooker:false,
-      showEvent:false,
+      showEvent:true,
       showMember:false,
       Event:null,
       eventId:this.props.match.params.id
