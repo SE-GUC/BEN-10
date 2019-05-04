@@ -128,11 +128,12 @@ class MyProjectCard extends Component {
       return <Redirect to={path} />;
     } else if (this.state.company) {
       return (
-        <Link to={`/Projects/${this.props.project._id}`}>
+     
         <div 
     className={classes.block}
     
     >
+    <Link to={`/Projects/${this.props.project._id}`}>
         <Paper 
         className={classes.card}
         >
@@ -170,9 +171,9 @@ class MyProjectCard extends Component {
             </div>:"" }
 
         </Paper>
-    
+        </Link>
     </div>
-    </Link>
+
 
 
       );
