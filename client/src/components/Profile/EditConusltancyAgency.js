@@ -20,6 +20,7 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     width:300,
+    marginBottom:50
   },
   textField: {
     marginLeft: theme.spacing.unit,
