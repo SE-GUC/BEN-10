@@ -100,14 +100,14 @@ onUpdate =async()=>{
      events:this.state.events, 
   }
   
-  await axios.put(`/api/consultancyagency/${this.props.agency._id}`,body)
+  await axios.put(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.props.agency._id}`,body)
   .then(res=>{ 
     console.log(res.status);
    return res.data
 })
 .then(json => this.setState({project : json}))
 await axios
-      .get(`/api/consultancyagency/${this.props.agency._id}`)
+      .get(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.props.agency._id}`)
       .then(res => {
         return res.data;
       })

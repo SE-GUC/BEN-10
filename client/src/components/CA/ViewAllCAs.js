@@ -16,7 +16,7 @@ class allCAs extends React.Component {
   }
   componentDidMount() {
     axios
-      .get(`/api/consultancyagency/`)
+      .get(`https://lirtenben.herokuapp.com/api/consultancyagency/`)
       .then(res => {
         return res.data;
       })

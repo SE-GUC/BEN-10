@@ -42,7 +42,7 @@ class ApplyingMembersOnProject extends Component {
   }
 
   async componentDidMount(){
-    await axios(`/api/admins/${this.props.admin._id}/myProjects/${this.props.project._id}/applyingMembers`)
+    await axios(`https://lirtenben.herokuapp.com/api/admins/${this.props.admin._id}/myProjects/${this.props.project._id}/applyingMembers`)
     .then(res=>{
       if(res.status===200)
         return res.data

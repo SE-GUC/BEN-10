@@ -36,7 +36,7 @@ class ApplyingMemberButton extends Component {
     console.log(body)
     axios
       .put(
-        `/api/admins/${this.state.admin._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body
+        `https://lirtenben.herokuapp.comhttps://lirtenben.herokuapp.com/api/admins/${this.state.admin._id}/assign/${this.state.project._id}/to/${this.state.mem}`,body
       )
       .then(function(response) {
         console.log(response.status);

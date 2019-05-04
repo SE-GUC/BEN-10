@@ -37,7 +37,7 @@ class ApplyingCAButton extends Component {
     };
     axios
       .put(
-        `/api/admins/${this.state.admin._id}/assignCA/${this.state.project._id}/to/${this.state.ca}`,body
+        `https://lirtenben.herokuapp.com/api/admins/${this.state.admin._id}/assignCA/${this.state.project._id}/to/${this.state.ca}`,body
       )
       .then(function(response) {
         console.log(response);

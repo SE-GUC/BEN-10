@@ -17,7 +17,7 @@ class CAMyProjects extends Component {
     }
   }
   componentDidMount(){
-    fetch(`/api/consultancyagency/${this.state.caId}/myprojects`).then(res=>res.json())
+    fetch(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.caId}/myprojects`).then(res=>res.json())
     .then(projects=>this.setState({Project:projects.data}))
     
   }

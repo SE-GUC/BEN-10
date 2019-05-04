@@ -29,7 +29,7 @@ class PostProjectMessage extends React.Component {
     console.log("consalrnlsfdm")
     console.log(this.props.wantConsultancy)
 
-    axios.post(`/api/partners/${this.props.companyID}/addProject/`, body)
+    axios.post(`https://lirtenben.herokuapp.com/api/partners/${this.props.companyID}/addProject/`, body)
     .then(function (response) {
       console.log(response.status)
       return response.data;

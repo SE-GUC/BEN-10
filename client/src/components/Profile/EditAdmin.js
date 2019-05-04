@@ -84,14 +84,14 @@ onUpdate =async()=>{
     alternativeMobileNumber:this.state.alternativeMobileNumber
     
   }
-  await axios.put(`/api/admins/${this.props.admin._id}`,body)
+  await axios.put(`https://lirtenben.herokuapp.com/api/admins/${this.props.admin._id}`,body)
   .then(res=>{ 
     console.log(res.data);
    return res.data
 })
 .then(json => this.setState({project : json}))
 await axios
-      .get(`/api/admins/${this.props.admin._id}`)
+      .get(`https://lirtenben.herokuapp.com/api/admins/${this.props.admin._id}`)
       .then(res => {
         return res.data;
       })

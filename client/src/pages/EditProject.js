@@ -30,7 +30,7 @@ export default class EditProject extends Component {
   }
   async  componentDidMount(){
     await  axios
-      .get(`/api/projects/${this.state.projectID}`)
+      .get(`https://lirtenben.herokuapp.com/api/projects/${this.state.projectID}`)
       .then(res => {
         
         return  res.data;
@@ -57,7 +57,7 @@ export default class EditProject extends Component {
     const requestOptions = {
       method: 'DELETE'
     };
-    await fetch(`/api/projects/${this.state.projectID}` , requestOptions).then((response) => {
+    await fetch(`https://lirtenben.herokuapp.com/api/projects/${this.state.projectID}` , requestOptions).then((response) => {
       return response.json();
     }).then((result) => {
       console.log(result)
@@ -76,7 +76,7 @@ export default class EditProject extends Component {
     const requestOptions = {
       method: 'DELETE'
     };
-    await fetch(`/api/partners/${this.state.userID}/cancelproject/${this.state.projectID}` , requestOptions).then((response) => {
+    await fetch(`https://lirtenben.herokuapp.com/api/partners/${this.state.userID}/cancelproject/${this.state.projectID}` , requestOptions).then((response) => {
       return response.json();
     }).then((result) => {
       console.log(result)

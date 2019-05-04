@@ -216,7 +216,7 @@ export default class SignUp extends Component {
               headers: { "Content-Type": "application/json" }
              
             };
-            await fetch(`/signUp` , requestOptions).then((response) => {
+            await fetch(`https://lirtenben.herokuapp.com/signUp` , requestOptions).then((response) => {
               return response.json();
             }).then((result) => {
               console.log(result.status)
@@ -264,7 +264,7 @@ export default class SignUp extends Component {
             
             
             // console.log("fetch")
-           await fetch(`/signUp` , requestOptions).then((response) => {
+           await fetch(`https://lirtenben.herokuapp.com/signUp` , requestOptions).then((response) => {
             console.log(response);
             console.log(response.data);
             // console.log(response.json());

@@ -154,7 +154,7 @@ class bookEvent extends React.Component {
     if(this.state.type==="member"){
       await axios
       .put(
-        `/api/members/${this.state.member._id}/bookEvent/${this.state.eventId}`
+        `https://lirtenben.herokuapp.com/api/members/${this.state.member._id}/bookEvent/${this.state.eventId}`
       )
       .then(res => {
         console.log(res);

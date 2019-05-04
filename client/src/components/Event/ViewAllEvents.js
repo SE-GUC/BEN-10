@@ -35,7 +35,7 @@ class ViewAllEvents extends React.Component {
   }
   componentDidMount(){
     axios 
-    .get(`/api/events`)
+    .get(`https://lirtenben.herokuapp.com/api/events`)
     .then(res => res.data)
     .then(a =>{
       console.log(a)

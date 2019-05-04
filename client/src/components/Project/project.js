@@ -23,7 +23,7 @@ class Project extends Component {
     const requestOptions = {
       method: 'DELETE'
     };
-    fetch(`/api/partners/${this.state.project.companyID}/deleteProject/${this.state.project._id}` , requestOptions).then((response) => {
+    fetch(`https://lirtenben.herokuapp.com/api/partners/${this.state.project.companyID}/deleteProject/${this.state.project._id}` , requestOptions).then((response) => {
       return response.json();
     }).then((result) => {
       console.log(result)
