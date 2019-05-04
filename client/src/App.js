@@ -263,7 +263,7 @@ class App extends Component {
         />
         </Switch>
         </BrowserRouter>
-        <div >
+        {/* <div >
           <footer style={{height:50, // Replace with the height your footer should be
     width: "100%", // Don't change
     backgroundImage: "none",
@@ -283,8 +283,8 @@ class App extends Component {
     
             </div>
           </footer>
-        </div>
-      </div>
+        </div>*/}
+      </div> 
     );
   }
 }
