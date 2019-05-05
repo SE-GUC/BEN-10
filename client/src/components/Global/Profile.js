@@ -258,7 +258,7 @@ class Profile extends React.Component {
         <div class="paper">
         <Paper >
         <Typography class="text1" variant="h6" style={{fontSize:20}}> City </Typography> 
-         <Typography class="text2" component="p" style={{fontSize:18}}>{(this.state.user.city)?"Female":"Male"}</Typography>
+         <Typography class="text2" component="p" style={{fontSize:18}}>{(this.state.user.city)}</Typography>
         </Paper>
         </div>
         <div class="paper">
