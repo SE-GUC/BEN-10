@@ -41,7 +41,7 @@ export default class LogIn extends Component {
     state={
         email:'',
         password:'',
-        redirect:false,
+        redirect:false
     }
     handleChange = name => event => {
       this.setState({
@@ -78,6 +78,7 @@ export default class LogIn extends Component {
           j=result;
            if(result.data){      
              this.setState({redirect:true})
+             window.location.reload();
            }
            else{
              alert(result.error)
@@ -89,6 +90,7 @@ export default class LogIn extends Component {
             // localStorage.setItem('type',j.data.type)
             // localStorage.setItem('token',j.token)
           }
+
 
 }
   render() {
