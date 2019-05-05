@@ -10,6 +10,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import UpdateButton from './UpdateButton'
+import { Card } from "react-bootstrap";
+import Chip from '@material-ui/core/Chip';
+import Snackbar from '@material-ui/core/Snackbar';
+
 import axios from "axios";
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -90,7 +94,9 @@ class OutlinedTextFields extends React.Component {
     showPassword: false,
     personal:true,
     location:false,
-    account:false
+    account:false,
+    skillVariable:'',
+    snackupdate:false,
   }
   console.log(this.props.member)
 }
@@ -115,7 +121,8 @@ onUpdate =async ()=>{
     alternativeMobileNumber:this.state.alternativeMobileNumber,
     events:this.state.events,
     projects:this.state.projects,
-    skillSet:this.state.skillSet
+    skillSet:this.state.skillSet,
+   
   }
   await axios.put(`https://lirtenben.herokuapp.com/api/members/${this.props.member._id}`,body,{
     headers: { "Content-Type": "application/json",
@@ -142,8 +149,32 @@ onUpdate =async ()=>{
       }
       );
 
-
+      this.setState({snackupdate:true})
 }
+handleDelete = data => (event) => {
+  event.preventDefault();
+  const arr = this.state.skillSet
+  arr.splice( arr.indexOf(data), 1 );
+  this.setState({skillSet:arr})
+
+  }
+  addSkill =event=>{
+    event.preventDefault();
+     const arr = this.state.skillSet
+     console.log(arr)
+    
+     arr.push(this.state.skillVariable)
+       this.setState({requiredSkillsSet:arr})
+     
+   }
+    
+   CloseSnackupdate = () =>{
+    this.setState({snackupdate:false})
+  }
+  CloseSnack1 = () =>{
+    this.setState({skillVariable:false})
+  }
+
 handlePersonal = () =>{
   this.setState({personal:true})
   this.setState({location:false})
@@ -165,6 +196,15 @@ handleAccount = () =>{
 
 
   handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+
+  handleChangeSSet = name => event => {
+   // var arr=[];
+   // arr=this.state.skillSet;
+   // arr.push(event.target.value)
     this.setState({
       [name]: event.target.value,
     });
@@ -295,15 +335,43 @@ handleAccount = () =>{
           variant="outlined"
         />
         <br></br>
-        <TextField
-          id="skillSet"
-          label="Skill Set"
-          className={classes.textField}
-          value={this.state.skillSet}
-          onChange={this.handleChange('skillSet')}
-          margin="normal"
-          variant="outlined"
-        />
+        <div class = "SkillCard">
+
+                   <div class="addSkill">   
+                 <TextField style={{width:'25rem',paddingLeft:"10px"}}
+                    id="outlined-set"
+                    label="required Skills"
+                    className={classNames.textField}
+                    value={this.setState.skillVariable}
+                    onChange={this.handleChange('skillVariable')}
+                    margin="normal"
+                    variant="outlined"
+                    style={{float:"left"}}
+                  />
+                  <br></ br>
+                  <Button variant="primary" onClick={this.addSkill}>Add</Button>
+                  
+                  </div>     
+                 
+                 
+                 
+                 <div class="addedSkills"> 
+                 <Card style={{width:'200px'}} >
+              
+                 <h3>Skill Set</h3>
+                 {this.state.skillSet.map(option => (
+                  <Chip 
+                  key={option}
+                  label={option}
+                  className={classNames.chip}
+                  onDelete={this.handleDelete(option)}
+                  style={{width: 'fit-content',float:'left'}}
+                  >
+                  </Chip>
+                 ))}  
+                </Card>
+                </div>
+                </div>
        
         </div>
         </div>
@@ -427,7 +495,21 @@ handleAccount = () =>{
 
         </div>
         
-       
+        <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            open={this.state.snackupdate}
+            autoHideDuration={2500}
+            onClose={this.CloseSnackupdate}
+            ContentProps={{
+              'aria-describedby': 'message-id',
+            }}
+            message={<span id="message-id">{"Your profile is updated"}</span>}
+            
+          />
+        
       </div>
     );
   }
