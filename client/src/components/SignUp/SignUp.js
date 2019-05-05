@@ -741,18 +741,7 @@ export default class SignUp extends Component {
                         style={{width:"250px"}}
                         />
                         <br/>
-                        {(this.props.type==="Partner")?"":<TextField
-                        required
-                        id="outlined-name"
-                        label="Skills Set"
-                        className={classNames.textField}
-                        value={this.state.skillSet}
-                        onChange={this.handleChange('skillSet')}
-                        margin="normal"
-                        variant="outlined"
-                        style={{width:"250px"}}
-                        />}  
-                        <br/>
+                      
                    </div>
                  </div>
                 )
