@@ -10,6 +10,8 @@ import Event from "./event";
 import Requestor from "./requestor";
 import Booker from "./booker"
 import Axios from "axios";
+import Loading from "../Global/loading";
+
 const server = require("../../config");
 
 const styles = {
@@ -24,7 +26,8 @@ class SimpleCard extends React.Component {
       showEvent:true,
       showMember:false,
       Event:null,
-      eventId:this.props.match.params.id
+      eventId:this.props.match.params.id,
+      loading:false
 
     }
   }
@@ -46,16 +49,18 @@ class SimpleCard extends React.Component {
     this.setState({showMember:true})
 
   }
-  componentDidMount(){
+  async componentDidMount(){
     // console.log(`${server}/api/events/${}`)
-    Axios.get(`https://lirtenben.herokuapp.com/api/events/${this.state.eventId}`,{
+    await Axios.get(`https://lirtenben.herokuapp.com/api/events/${this.props.match.params.id}`,{
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')
      }
     })
       .then(res => res.data)
-      .then(event =>
+      .then(event =>{
         localStorage.setItem('event',JSON.stringify(event.data))
+        this.setState({loading:true})
+      }
         )
         }
       
@@ -63,6 +68,7 @@ class SimpleCard extends React.Component {
   
 
   render(){
+    if(this.state.loading){
     return(
         <div> 
         <Nav value={2}/>
@@ -109,7 +115,10 @@ class SimpleCard extends React.Component {
                 </div>
 
 
-    )
+    )}
+    else{
+      return(<Loading />)
+    }
   }
   
 }
