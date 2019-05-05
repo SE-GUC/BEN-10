@@ -24,8 +24,7 @@ class SimpleCard extends React.Component {
       showEvent:true,
       showMember:false,
       Event:null,
-      eventId:this.props.match.params.id,
-      load
+      eventId:this.props.match.params.id
 
     }
   }
