@@ -37,7 +37,7 @@
   },
   "scripts": {
     "client-install": "npm install --prefix client",
-    "start": "node server.js",
+    "start": "npm run build && node server.js",
     "build": "webpack",
     "start:dev": "react-scripts start",
     "server": "nodemon server",
