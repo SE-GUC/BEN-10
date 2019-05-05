@@ -147,7 +147,7 @@ class CreateEvent extends React.Component {
           <Nav value={2}/>
             <header className={classes.header}>
             <h1>
-            Event Informations
+            Event Information
             </h1>
             </header>
 
