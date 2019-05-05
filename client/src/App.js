@@ -240,9 +240,9 @@ class App extends Component {
               />
 
               <Route exact path="/" render={props => <PreSign />} />
-              <Route render={props => <NotFound />} />
+              <Route render={props => <LogInErrorMessage />} />
 
-              <Route path="*" component={NotFound} />
+              <Route path="*" component={LogInErrorMessage} />
 
           <Route
           
