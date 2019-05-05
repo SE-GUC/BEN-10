@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Redirect , BrowserRouter} from 'react-router-dom';
+import {Redirect , BrowserRouter , Link} from 'react-router-dom';
 import style  from './LogIn.css';
 import background from './3D.png';
 import { classes } from 'istanbul-lib-coverage';
@@ -143,7 +143,7 @@ export default class LogIn extends Component {
           
 
            <button type="button" class="btn btn-success" onClick={this.handleSubmit} style={{width:"150px",margin:"auto"}}>Login</button>
-
+            <Link to="/" style ={{marginLeft:"120px"}}><p>Sign Up</p></Link>
               
              </Card>
              
