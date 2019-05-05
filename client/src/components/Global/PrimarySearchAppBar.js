@@ -258,7 +258,7 @@ class PrimarySearchAppBar extends React.Component {
          <Link to="/EditProfile">
             <MenuItem onClick={this.editClicked}>Edit My Profile</MenuItem>
          </Link>
-          <MenuItem onClick={this.logoutClicked}>logout</MenuItem>
+          <MenuItem onClick={this.logoutClicked}>Logout</MenuItem>
         </Menu>
       );
       const notificationsMenu = (
