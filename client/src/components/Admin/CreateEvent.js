@@ -12,6 +12,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import Message from "../Member/SubmitWork/Message"
 import  { Redirect } from 'react-router-dom'
+import Nav from '../Global/PrimarySearchAppBar'
+
 const server = require("../../config");
 
 const styles = theme => ({
@@ -142,6 +144,7 @@ class CreateEvent extends React.Component {
 
     return (
         <div>
+          <Nav value={2}/>
             <header className={classes.header}>
             <h1>
             Event Informations

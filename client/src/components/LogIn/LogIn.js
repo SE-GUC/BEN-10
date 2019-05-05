@@ -143,7 +143,7 @@ export default class LogIn extends Component {
           
 
            <button type="button" class="btn btn-success" onClick={this.handleSubmit} style={{width:"150px",margin:"auto"}}>Login</button>
-            <Link to="/" style ={{marginLeft:"120px"}}><p>sign Up</p></Link>
+            <Link to="/" style ={{marginLeft:"120px"}}><p>Sign Up</p></Link>
               
              </Card>
              
