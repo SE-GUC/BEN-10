@@ -244,35 +244,38 @@ class App extends Component {
 
               <Route path="*" component={NotFound} />
 
-              <div>
-                <footer
-                  style={{
-                    height: 50, // Replace with the height your footer should be
-                    width: "100%", // Don't change
-                    backgroundImage: "none",
-                    backgroundRepeat: "repeat",
-                    backgroundAttachment: "scroll",
-                    backgroundPosition: "0% 0%",
-                    position: "fixed",
-                    bottom: 0,
-                    left: 0,
-                    border: "2px solid white",
-                    backgroundColor: "white"
-                  }}
-                >
-                  <div style={{ textAlign: "center" }}>
-                    © 2019 Copyright: Lirten CO.
-                    <br />
-                    <a href="http://localhost:3000/about">About</a>
-                  </div>
-                </footer>
-              </div>
-            </Switch>
-          </BrowserRouter>
+          <Route
+          
+          path="*"
+          component={NotFound}
+        />
+        </Switch>
+        </BrowserRouter>
+        <div >
+          <footer style={{height:50, // Replace with the height your footer should be
+    width: "100%", // Don't change
+    backgroundImage: "none",
+    backgroundRepeat: "repeat",
+    backgroundAttachment: "scroll",
+    backgroundPosition: "0% 0%",
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    border:"2px solid white",
+    backgroundColor:"white"
+  }}>
+            <div style={{textAlign:"center"}}>
+              © 2019 Copyright: Lirten CO.
+              <br/>
+              <a href="http://localhost:3000/about">About</a>
+    
+            </div>
+          </footer>
         </div>
-      );
-    }
+      </div> 
+    );
   }
+}
 }
 
 export default App;
