@@ -318,7 +318,7 @@ class PrimarySearchAppBar extends React.Component {
                   </div>
               <div className={classes.tabs}>
               <Tabs value={this.state.value}>
-              <Tab className={classes.label} label="Explore" />
+              <Tab className={classes.label} label="Explore" disabled />
               <Link to="/Projects" style={{ color: '#FFF' }}>
                  <Tab className={classes.label} label="Projects" />
               </Link>
