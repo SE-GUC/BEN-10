@@ -51,11 +51,12 @@ class ViewAllProjects extends React.Component {
   }
   componentDidMount(){
     axios 
-    .get(`https://lirtenben.herokuapp.com/api/projects`)
-    .then(res => {
-      console.log(res)
-      return res.data
+    .get(`https://lirtenben.herokuapp.com/api/projects`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
     })
+    .then(res => res.data)
     .then(a =>{
       console.log(a)
       this.setState({
@@ -68,7 +69,6 @@ class ViewAllProjects extends React.Component {
   render(){
   const { classes } = this.props;
   if(this.state.projects){
-    console.log("yessss")
   return (
     <div className={classes.root}>
     <br></br>

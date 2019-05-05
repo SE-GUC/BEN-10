@@ -21,13 +21,14 @@ var blackList = []; //to be not deleted
 const cors = require("cors");
 const app = express();
 const path = require('path')
+const events = require("./routes/api/events")
 app.use(cors());
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
   next();
 });
@@ -64,35 +65,185 @@ app.use(cors());
 app.get("/", (req, res) => res.send(`<h1>Lirten Hub </h1>`));
 
 // Direct to Route Handlers
-app.use("/api/notifications", notification);
-app.use("/api/eventrequests", eventrequests);
-app.use("/api/projects", projects);
-app.use("/api/admins", admins);
-app.use("/api/events", require("./routes/api/events"));
-app.use("/api/partners", partners);
-app.use("/api/members", member);
-app.use("/api/orientationinvitations", orientationinvitations);
-app.use("/api/applications", applications);
-app.use("/api/consultancyagency", consultancyagencys);
-// app.use(
-//   "/api/members",
-//   verifyToken,
-//   (req, res, next) => {
-//     jwt.verify(req.token, "nada", (err, authData) => {
-//       if (err || blackList.includes(req.token)) {
-//         return res.status(403).send({
-//           blackList: blackList.includes(req.token),
-//           error: err.toString()
-//         });
-//       } else {
-//         // res.json({authData})
-//         next();
-//       }
-//     });
-//   },
-//   member
-// );
-app.use("/api/notifications", notification);
+app.use("/api/eventrequests",verifyToken,(req,res,next)=>{
+  jwt.verify(req.token, "nada", (err, authData) => {
+    if (err || blackList.includes(req.token)) {
+      
+      return res.status(403).send({
+        blackList: blackList.includes(req.token)
+      });
+    } else {
+      // res.json({authData})
+      next();
+    }
+  });
+}, eventrequests);
+app.use("/api/projects",verifyToken,(req,res,next)=>{
+  jwt.verify(req.token, "nada", (err, authData) => {
+    if (err || blackList.includes(req.token)) {
+      
+      return res.status(403).send({
+        blackList: blackList.includes(req.token)
+      });
+    } else {
+      // res.json({authData})
+      next();
+    }
+  });
+}, projects);
+app.use("/api/admins",verifyToken,(req,res,next)=>{
+  jwt.verify(req.token, "nada", (err, authData) => {
+    if (err || blackList.includes(req.token)) {
+      
+      return res.status(403).send({
+        blackList: blackList.includes(req.token)
+      });
+    } else {
+      // res.json({authData})
+      next();
+    }
+  });
+}, admins);
+app.use("/api/events",verifyToken,(req,res,next)=>{
+  jwt.verify(req.token, "nada", (err, authData) => {
+    if (err || blackList.includes(req.token)) {
+      
+      return res.status(403).send({
+        blackList: blackList.includes(req.token)
+      });
+    } else {
+      // res.json({authData})
+      next();
+    }
+  });
+}, events);
+app.use("/api/partners",verifyToken,(req,res,next)=>{
+  jwt.verify(req.token, "nada", (err, authData) => {
+    if (err || blackList.includes(req.token)) {
+      
+      return res.status(403).send({
+        blackList: blackList.includes(req.token)
+      });
+    } else {
+      // res.json({authData})
+      next();
+    }
+  });
+}, partners);
+// app.use("/api/members", member);
+
+app.use("/api/projects",verifyToken,(req,res,next)=>{
+  jwt.verify(req.token, "nada", (err, authData) => {
+    if (err || blackList.includes(req.token)) {
+      
+      return res.status(403).send({
+        blackList: blackList.includes(req.token)
+      });
+    } else {
+      // res.json({authData})
+      next();
+    }
+  });
+}, projects);
+app.use("/api/admins",verifyToken,(req,res,next)=>{
+  jwt.verify(req.token, "nada", (err, authData) => {
+    if (err || blackList.includes(req.token)) {
+      
+      return res.status(403).send({
+        blackList: blackList.includes(req.token)
+      });
+    } else {
+      // res.json({authData})
+      next();
+    }
+  });
+}, admins);
+app.use("/api/orientationinvitations",verifyToken,(req,res,next)=>{
+  jwt.verify(req.token, "nada", (err, authData) => {
+    if (err || blackList.includes(req.token)) {
+      
+      return res.status(403).send({
+        blackList: blackList.includes(req.token)
+      });
+    } else {
+      // res.json({authData})
+      next();
+    }
+  });
+}, orientationinvitations);
+app.use("/api/partners",verifyToken,(req,res,next)=>{
+  jwt.verify(req.token, "nada", (err, authData) => {
+    if (err || blackList.includes(req.token)) {
+      
+      return res.status(403).send({
+        blackList: blackList.includes(req.token)
+      });
+    } else {
+      // res.json({authData})
+      next();
+    }
+  });
+}, partners);
+
+app.use("/api/applications",verifyToken,(req,res,next)=>{
+  jwt.verify(req.token, "nada", (err, authData) => {
+    if (err || blackList.includes(req.token)) {
+      
+      return res.status(403).send({
+        blackList: blackList.includes(req.token)
+      });
+    } else {
+      // res.json({authData})
+      next();
+    }
+  });
+}, applications);
+app.use("/api/consultancyagency",verifyToken,(req,res,next)=>{
+  jwt.verify(req.token, "nada", (err, authData) => {
+    if (err || blackList.includes(req.token)) {
+      
+      return res.status(403).send({
+        blackList: blackList.includes(req.token)
+      });
+    } else {
+      // res.json({authData})
+      next();
+    }
+  });
+}, consultancyagencys);
+app.use(
+  "/api/members",
+  verifyToken,
+  (req, res, next) => {
+    jwt.verify(req.token, "nada", (err, authData) => {
+      if (err || blackList.includes(req.token)) {
+        return res.status(403).send({
+          blackList: blackList.includes(req.token),
+          error: err.toString()
+        });
+      } else {
+        // res.json({authData})
+        next();
+      }
+    });
+  },
+  member
+);
+app.use("/api/notifications",verifyToken,(req,res,next)=>{
+  jwt.verify(req.token, "nada", (err, authData) => {
+    if (err || blackList.includes(req.token)) {
+
+      return res.status(403).send({
+        blackList: blackList.includes(req.token)
+      });
+    } else {
+      // res.json({authData})
+      next();
+    }
+  });
+}, notification);
+
+
 // as a user i want to login
 app.put("/login", async (req, res) => {
   console.log("the req is  :" + req.body.email + ":");
@@ -665,12 +816,13 @@ function verifyToken(req, res, next) {
   const bearerHeader = req.headers["authorization"];
   console.log(bearerHeader)
   if (typeof bearerHeader !== "undefined") {
+    console.log("in")
     const bearer = bearerHeader.split(" ");
     const bearerToken = bearer[1];
     req.token = bearerToken;
     next();
   } else {
-    res.json({ error: "Not Logged In" });
+    res.json({ error: "Not Logged In"});
   }
 }
 //---------------------------------- Mail

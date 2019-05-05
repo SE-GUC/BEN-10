@@ -50,7 +50,11 @@ class requestor extends React.Component{
     }
      componentDidMount(){
         
-            Axios.get(`https://lirtenben.herokuapp.com/api/partners/${this.state.id}`)
+            Axios.get(`https://lirtenben.herokuapp.com/api/partners/${this.state.id}`,{
+              headers: { "Content-Type": "application/json",
+              "Authorization": "bearer " + localStorage.getItem('token')
+             }
+            })
             .then(res => res.data)
             .then(p =>
                 { 
@@ -62,12 +66,15 @@ class requestor extends React.Component{
         )
 
         
-       Axios.get(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.id}`)
+       Axios.get(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.id}`,{
+        headers: { "Content-Type": "application/json",
+        "Authorization": "bearer " + localStorage.getItem('token')
+       }
+       })
             .then(res => res.data)
             .then(p => {
                 
                 if((typeof p.data).toString()!=="undefined"){
-                    console.log("hello")
                 this.setState({requestor:p.data})
                 this.setState({num:2})
 
@@ -81,7 +88,6 @@ class requestor extends React.Component{
     }
     render(){
         const { classes } = this.props;
-        console.log(this.state.requestor)
         if(this.state.num==0){
         return(
         <div>

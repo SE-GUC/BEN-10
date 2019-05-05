@@ -14,7 +14,11 @@ class MemberMyProjects extends Component {
     }
   }
   componentDidMount(){
-    fetch(`https://lirtenben.herokuapp.com/api/members/${this.state.partnerId}/recommendations`).then(res=>res.json())
+    fetch(`https://lirtenben.herokuapp.com/api/members/${this.state.partnerId}/recommendations`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    }).then(res=>res.json())
     .then(projects=>this.setState({Project:projects.data}))
     }
 

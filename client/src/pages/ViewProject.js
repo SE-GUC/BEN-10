@@ -39,7 +39,11 @@ export default class ViewProject extends Component {
   }
   async componentDidMount() {
     await axios
-      .get(`https://lirtenben.herokuapp.com/api/projects/${this.state.projectID}`)
+      .get(`https://lirtenben.herokuapp.com/api/projects/${this.state.projectID}`,{
+        headers: { "Content-Type": "application/json",
+        "Authorization": "bearer " + localStorage.getItem('token')
+       }
+      })
       .then(res => {
         return res.data;
       })
@@ -49,7 +53,11 @@ export default class ViewProject extends Component {
   }
 
   caapply = async() =>{
-    await axios.put(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.user._id}/caApplyProject/${this.state.projectID}`)
+    await axios.put(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.user._id}/caApplyProject/${this.state.projectID}`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
     .then(res=>console.log(res))
   }
 

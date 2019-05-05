@@ -69,7 +69,11 @@ class EventRequest extends Component{
         }
     }
     componentDidMount(){
-        fetch(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.body.requestorId}`)
+        fetch(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.body.requestorId}`,{
+          headers: { "Content-Type": "application/json",
+          "Authorization": "bearer " + localStorage.getItem('token')
+         }
+        })
     .then(res=>{return res.json()}).then(
        result=>{
          if(result.error!==undefined){
@@ -87,7 +91,12 @@ class EventRequest extends Component{
        }
     )
     if(this.state.requestorName==null){
-    fetch(`https://lirtenben.herokuapp.com/api/partners/${this.state.body.requestorId}`)
+    fetch(`https://lirtenben.herokuapp.com/api/partners/${this.state.body.requestorId}`,
+    {
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
     .then(res=>{return res.json()}).then(
        result=>{
         if(result.msg!==undefined){

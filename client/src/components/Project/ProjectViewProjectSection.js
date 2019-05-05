@@ -61,9 +61,6 @@ export default class EditableView extends React.Component {
     }
     }
       render() {
-      console.log("skills : "+this.state.skillVariable)
-      console.log(this.state.requiredSkillsSet)
-      console.log(this.state.category)
       if(this.state.project !==null){
         console.log(this.state.project)
 

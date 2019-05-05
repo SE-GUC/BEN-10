@@ -19,7 +19,7 @@ module.exports = {
             postalCode: Joi.number().max(200),
             //
             email: Joi.string().max(100).required().regex(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
-            password: Joi.string().min(8).max(50).required().regex(/^(?=.*\d).{4,20}$/),
+            password: Joi.string().min(5).max(50).required().regex(/^(?=.*\d).{4,20}$/),
             mobileNumber:Joi.string().required(),
             alternativeMobileNumber:Joi.string(),
         }
@@ -45,7 +45,7 @@ module.exports = {
             //
 
             email: Joi.string().max(100).regex(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
-            password: Joi.string().min(8).max(50).regex(/^(?=.*\d).{4,20}$/),
+            password: Joi.string().min(5).max(50).regex(/^(?=.*\d).{4,20}$/),
             mobileNumber:Joi.string(),
             alternativeMobileNumber:Joi.string(),
         }

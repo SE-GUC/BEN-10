@@ -62,7 +62,11 @@ class booker extends React.Component{
 
 
 
-            Axios.get(`https://lirtenben.herokuapp.com/api/members/${i}`)
+            Axios.get(`https://lirtenben.herokuapp.com/api/members/${i}`,{
+              headers: { "Content-Type": "application/json",
+              "Authorization": "bearer " + localStorage.getItem('token')
+             }
+            })
             .then(res => res.data)
             .then(p =>
                 { 

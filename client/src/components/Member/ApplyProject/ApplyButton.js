@@ -31,11 +31,16 @@ const styles = theme => ({
         this.applyClick=this.applyClick.bind(this)
     }
     applyClick(){
+      console.log("token " + localStorage.getItem('token'))
         fetch(`https://lirtenben.herokuapp.com/api/members/${this.state.member_id}/projects/${this.state.project_id}/apply`, {
         method: 'POST',
-        body: {}
+        headers: { "Content-Type": "application/json",
+        "Authorization": "bearer " + localStorage.getItem('token')
+       }
     })
-    .then((response) => {return response})
+    .then((response) => {
+      console.log(response)
+      return response})
     .then((result)=>{
 
         if(result.status===200){
