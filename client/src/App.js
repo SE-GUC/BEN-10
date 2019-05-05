@@ -267,7 +267,7 @@ class App extends Component {
             <div style={{textAlign:"center"}}>
               © 2019 Copyright: Lirten CO.
               <br/>
-              <a href="http://localhost:3000/about">About</a>
+              <a href="https://lirtenhub.herokuapp.com/about">About</a>
     
             </div>
           </footer>
