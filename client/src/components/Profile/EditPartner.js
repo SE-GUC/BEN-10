@@ -222,7 +222,7 @@ handleAccount = () =>{
           id="birthdate"
           label="Birthdate"
           className={classes.textField}
-          value={new Date(this.state.birthdate).getFullYear()+"-"+new Date(this.state.birthdate).getMonth()+"-"+new Date(this.state.birthdate).getDate()}
+          value={new Date(this.state.birthDate).getFullYear()+"-"+new Date(this.state.birthDate).getMonth()+"-"+new Date(this.state.birthDate).getDate()}
           onChange={this.handleChange('birthdate')}
           margin="normal"
           variant="outlined"
