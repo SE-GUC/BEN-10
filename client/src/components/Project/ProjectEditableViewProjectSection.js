@@ -60,7 +60,8 @@ export default class EditableView extends React.Component {
         caTelephoneNumber:null,
         //other variables
         skillVariable:null,
-        snackBarAddSkillExist:false
+        snackBarAddSkillExist:false,
+        snackchange:false
 
     
     }
@@ -123,7 +124,14 @@ export default class EditableView extends React.Component {
     })
     .then(json => this.setState({project : json}))
 
+
+    this.setState({snackchange:true})
+
     };
+
+    CloseSnack2 = () =>{
+      this.setState({snackchange:false})
+    }
     
     render() {
       if(this.state.project !==null){
@@ -301,6 +309,20 @@ Project Attributes
               message={<span id="message-id">{"this skill is already in the skill set"}</span>}
               
             />
+            <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            open={this.state.snackchange}
+            autoHideDuration={2500}
+            onClose={this.CloseSnack2}
+            ContentProps={{
+              'aria-describedby': 'message-id',
+            }}
+            message={<span id="message-id">{"Your project is updated"}</span>}
+            
+          />
             </div>
         );
         }
