@@ -46,9 +46,9 @@ class SimpleCard extends React.Component {
     this.setState({showMember:true})
 
   }
-  componentDidMount(){
+  async componentDidMount(){
     // console.log(`${server}/api/events/${}`)
-    Axios.get(`https://lirtenben.herokuapp.com/api/events/${this.state.eventId}`,{
+    await Axios.get(`https://lirtenben.herokuapp.com/api/events/${this.state.eventId}`,{
       headers: { "Content-Type": "application/json",
       "Authorization": "bearer " + localStorage.getItem('token')
      }
