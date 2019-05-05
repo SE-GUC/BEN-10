@@ -114,7 +114,11 @@ class Profile extends React.Component {
   addReport=async()=>{
     // step 1 : get the consultancy
     var reports =[];
-    await axios.get(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.user._id}`)
+    await axios.get(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.user._id}`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
      .then(res=>res.data)
      .then(c=>{
        console.log(c.data.reports)
@@ -124,7 +128,11 @@ class Profile extends React.Component {
      console.log(reports)
      const body={reports}
      var msg = ''
-     axios.put(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.user._id}`,body)
+     axios.put(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.user._id}`,body,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
      .then(res=>res.data)
      .then(c=>{
      msg=c.msg
@@ -132,7 +140,11 @@ class Profile extends React.Component {
      }) 
      this.setState({snackBarRepoAdded:true,snackmsg:msg});
      var usern=null;
-     await axios.get(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.user._id}`)
+     await axios.get(`https://lirtenben.herokuapp.com/api/consultancyagency/${this.state.user._id}`,{
+      headers: { "Content-Type": "application/json",
+      "Authorization": "bearer " + localStorage.getItem('token')
+     }
+    })
      .then(res=>res.data)
      .then(c=>{
        usern=c.data

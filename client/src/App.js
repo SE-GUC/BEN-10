@@ -193,7 +193,7 @@ class App extends Component {
               />
               <Route exact path="/" render={props => <PreSign />} />
               <Route exact path="/About" render={props => <About />} />
-              <Route path="/l" render={props => <NotFound />} /> */}
+              <Route path="/" render={props => <NotFound />} /> */}
             </Switch>
           </BrowserRouter>
           <div>
